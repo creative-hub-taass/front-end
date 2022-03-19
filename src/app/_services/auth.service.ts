@@ -12,7 +12,7 @@ const opts : any = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin':'*'
   }),
-  responseType: 'text/plain'
+  responseType: 'text'
 };
 
 @Injectable({

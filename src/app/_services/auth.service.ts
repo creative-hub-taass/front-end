@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 const AUTH_API = 'http://localhost:8080/api/v1/access/';
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'})
+  headers: new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
 };
-const opts : any = {
+const opts: any = {
   headers: new HttpHeaders({
     'Accept': '*/*',
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin':'*'
+    'Access-Control-Allow-Origin': '*'
   }),
   responseType: 'text'
 };
@@ -27,7 +27,8 @@ const opts : any = {
  */
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(AUTH_API + 'login', {
@@ -41,6 +42,6 @@ export class AuthService {
       nickname: nickname,
       email: email,
       password: password
-    }, opts );
+    }, opts);
   }
 }

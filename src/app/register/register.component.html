@@ -74,12 +74,14 @@
         <button class="btn btn-primary btn-block">Sign Up</button>
       </div>
       <div class="alert alert-warning" *ngIf="f.submitted && isRegistrationFailed">
-        Signup failed!<br />{{ errorMessage }}
+        Signup failed!<br/>{{ errorMessage }}
       </div>
     </form>
     <div class="alert alert-success" *ngIf="isSuccessful">
       Your registration is successful! Check your e-mail.
     </div>
-    <p>Hai già un account?<a href="javascript:void(0)" [routerLink]="['/login']"> Login</a></p>
+    <div class="alert alert-login" *ngIf="!isSuccessful">
+      <p>Hai già un account?<a href="javascript:void(0)" [routerLink]="['/login']"> Login</a></p>
+    </div>
   </div>
 </div>

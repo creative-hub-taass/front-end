@@ -70,6 +70,8 @@
     <div class="alert alert-success" *ngIf="isLoggedIn">
       Logged in as {{ role }}.
     </div>
-    <p>Non hai un account?<a href="javascript:void(0)" [routerLink]="['/registration']"> Registrati</a></p>
+    <div class="alert login" *ngIf="!isLoggedIn">
+      <p>Non hai un account?<a href="javascript:void(0)" [routerLink]="['/registration']"> Registrati</a></p>
+    </div>
   </div>
 </div>

@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-
-const AUTH_API = 'http://localhost:8080/api/v1/access/';
+const AUTH_PORT = "30001"
+const AUTH_API = 'http://192.168.49.2:'+AUTH_PORT+'/api/v1/access/';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
 };

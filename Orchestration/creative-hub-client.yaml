@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: creative-hub-client
+spec:
+  selector:
+    matchLabels:
+      app: creative-hub-client
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: creative-hub-client
+    spec:
+      containers:
+        - name: creative-hub-client
+          image: ghcr.io/creative-hub-taass/creative-hub-client:latest
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 4200
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: creative-hub-client
+spec:
+  selector:
+    app: creative-hub-client
+  ports:
+    - protocol: TCP
+      port: 90
+      targetPort: 4200
+      nodePort: 30006
+  type: NodePort

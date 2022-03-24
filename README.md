@@ -28,7 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 #docker build command
 
-docker build -t creativeHubClient -f Dockerfile .
+docker build -t creative-hub-client -f Dockerfile .
 
 
 #docker run comman

@@ -31,6 +31,25 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 docker build -t creative-hub-client -f Dockerfile .
 
 
-#docker run comman
+#docker run command
 
 docker run --rm -it -p 4200:4200 creative-client
+
+
+#kubernetes command
+
+minikube start
+
+minikube ip 
+
+docker build -t creative-hub-client -f Dockerfile path/CreativeHubClient
+
+docker tag creative-hub-client ghcr.io/creative-hub-taass/creative-hub-client
+
+docker push ghcr.io/creative-hub-taass/creative-hub-client
+
+kubectl apply -f  path/CreativeHubClient/Orchestration
+
+#client web interface
+
+{minikube ip}:30006

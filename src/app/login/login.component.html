@@ -1,10 +1,6 @@
 <div class="col-md-12">
-  <div class="card card-container">
-    <img
-      id="profile-img"
-      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-      class="profile-img-card"
-    />
+  <div class="login-box">
+    <p>Login Form</p>
     <form
       *ngIf="!isLoggedIn"
       name="form"
@@ -12,8 +8,7 @@
       #f="ngForm"
       novalidate
     >
-      <div class="form-group">
-        <label>E-mail</label>
+      <div class="user-box">
         <input
           type="text"
           class="form-control"
@@ -22,6 +17,7 @@
           required
           #email="ngModel"
         />
+        <label>E-mail</label>
         <div
           class="alert alert-danger"
           role="alert"
@@ -30,8 +26,7 @@
           Email is required!
         </div>
       </div>
-      <div class="form-group">
-        <label>Password</label>
+      <div class="user-box">
         <input
           type="password"
           class="form-control"
@@ -41,6 +36,7 @@
           minlength="6"
           #password="ngModel"
         />
+        <label>Password</label>
         <div
           class="alert alert-danger"
           role="alert"
@@ -52,11 +48,13 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <button class="btn btn-primary btn-block">
-          Login
-        </button>
-      </div>
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <button><a href="#">Login</a></button>
+
       <div class="form-group">
         <div
           class="alert alert-danger"
@@ -67,11 +65,23 @@
         </div>
       </div>
     </form>
+    <div *ngIf="!isLoggedIn">
+      <div style="text-align: center">
+        <cool-google-button (click)="loginWithGoogle()">
+          Login With Google
+        </cool-google-button>
+      </div><br>
+      <div style="text-align: center">
+        <cool-facebook-button (click)="loginWithFacebook()">
+          Login With Facebook
+        </cool-facebook-button>
+      </div>
+    </div>
     <div class="alert alert-success" *ngIf="isLoggedIn">
-      Logged in as {{ role }}.
+      Logged in successfully.
     </div>
     <div class="alert login" *ngIf="!isLoggedIn">
-      <p>Non hai un account?<a href="javascript:void(0)" [routerLink]="['/registration']"> Registrati</a></p>
+      <p>Non hai un account?<a href="javascript:void(0)" [routerLink]="['/registration']">Registrati</a></p>
     </div>
   </div>
 </div>

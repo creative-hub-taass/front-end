@@ -1,8 +1,18 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 const API_PORT = "30001"
-const API_URL = 'http://192.168.49.2:'+API_PORT+'/api/v1/';
+const API_URL = 'https://192.168.49.2:'+API_PORT+'/api/v1/';
+
+
+const opts: any = {
+  headers: new HttpHeaders({
+    'Accept': '*/*',
+    'Content-Type': 'text/html; charset=utf-8',
+    'Access-Control-Allow-Origin': '*'
+  }),
+  responseType: 'application/json'
+};
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +24,7 @@ export class UserService {
   }
 
   getUserBoard(): Observable<any> {
-    return this.http.get(API_URL + 'users', {responseType: 'json'});
+    return this.http.get(API_URL + 'users/', opts);
   }
 
 }

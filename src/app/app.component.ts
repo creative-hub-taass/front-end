@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "./_services/token-storage.service";
+import {JwtHelperService} from "@auth0/angular-jwt";
+import {Router, RouterModule} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -8,24 +10,32 @@ import {TokenStorageService} from "./_services/token-storage.service";
 })
 
 export class AppComponent implements OnInit {
-  private role: string = '';
   isLoggedIn = false;
   nickname?: string;
+  title: string | undefined;
 
-  constructor(private tokenStorageService: TokenStorageService) {
+  public jwtHelper: JwtHelperService = new JwtHelperService();
+
+  constructor(private tokenStorageService: TokenStorageService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
-    if (this.isLoggedIn) {
+  }
+
+  isUserAuthenticated() {
+    const token: string | null = this.tokenStorageService.getToken();
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
       const user = this.tokenStorageService.getUser();
-      this.role = user.role;
       this.nickname = user.nickname;
+      return true;
+    }
+    else {
+      return false;
     }
   }
 
   logout(): void {
     this.tokenStorageService.logout();
-    window.location.reload();
+    this.router.navigate(["/login"]);
   }
 }

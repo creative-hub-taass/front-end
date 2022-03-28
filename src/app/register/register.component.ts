@@ -30,7 +30,6 @@ export class RegisterComponent implements OnInit {
       () => {
         this.isSuccessful = true;
         this.isRegistrationFailed = false;
-
       },
       ((error: HttpErrorResponse) => {
         this.errorMessage = error.error;

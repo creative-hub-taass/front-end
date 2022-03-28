@@ -7,21 +7,47 @@ import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {authInterceptorProviders} from 'src/_helpers/auth.interceptor';
 import {FormsModule} from "@angular/forms";
+import {GoogleLoginProvider,
+        FacebookLoginProvider,
+        SocialLoginModule,
+        SocialAuthServiceConfig} from 'angularx-social-login'
+import {CoolSocialLoginButtonsModule} from '@angular-cool/social-login-buttons';
+import { ProfileComponent } from './profile/profile.component';
+import {AuthGuard} from "./guard/auth-guard.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SocialLoginModule,
+    CoolSocialLoginButtonsModule
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('560270769175115')
+          },
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('420683265133-6d5kfiedo8shhorjhi3du2ia8ue210un.apps.googleusercontent.com')
+          }
+        ]
+      } as SocialAuthServiceConfig
+    }, AuthGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+
+export class AppModule {}

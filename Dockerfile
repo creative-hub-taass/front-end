@@ -10,7 +10,10 @@ WORKDIR /usr/src/app
 COPY package.json .
 COPY package-lock.json .
 RUN npm install
-
+RUN npm install bootstrap --save
+RUN npm install @auth0/angular-jwt
+RUN npm install angularx-social-login --legacy-peer-deps
+RUN npm install --save @angular-cool/social-login-buttons
 # copy over all code files
 COPY . .
 

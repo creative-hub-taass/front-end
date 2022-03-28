@@ -2,10 +2,13 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 const AUTH_PORT = "30001"
-const AUTH_API = 'http://192.168.49.2:'+AUTH_PORT+'/api/v1/access/';
+const AUTH_API = 'https://192.168.49.2:'+AUTH_PORT+'/api/v1/access/';
+
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
+  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }),
+  observe: 'response' as 'response'
 };
+
 const opts: any = {
   headers: new HttpHeaders({
     'Accept': '*/*',
@@ -43,5 +46,14 @@ export class AuthService {
       email: email,
       password: password
     }, opts);
+  }
+
+  //password è l'authtoken
+    loginSocial(nickname: string, email: string, password: string): Observable<any> {
+    return this.http.post<string>(AUTH_API + 'loginsocial', {
+      nickname: nickname,
+      email: email,
+      password: password
+    }, httpOptions);
   }
 }

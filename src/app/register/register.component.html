@@ -1,10 +1,5 @@
-<div class="col-md-12">
-  <div class="card card-container">
-    <img
-      id="profile-img"
-      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-      class="profile-img-card"
-    />
+<div class="col-md-12" xmlns="http://www.w3.org/1999/html">
+  <div class="login-box">
     <form
       *ngIf="!isSuccessful"
       name="form"
@@ -12,8 +7,7 @@
       #f="ngForm"
       novalidate
     >
-      <div class="form-group">
-        <label>Nickname</label>
+      <div class="user-box">
         <input
           type="text"
           class="form-control"
@@ -24,6 +18,7 @@
           maxlength="20"
           #nickname="ngModel"
         />
+        <label>Nickname</label>
         <div class="alert-danger" *ngIf="nickname.errors && f.submitted">
           <div *ngIf="nickname.errors?.['required']">Nickname is required</div>
           <div *ngIf="nickname.errors?.['minlength']">
@@ -34,8 +29,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label>E-mail</label>
+      <div class="user-box">
         <input
           type="email"
           class="form-control"
@@ -45,6 +39,7 @@
           email
           #email="ngModel"
         />
+        <label>E-mail</label>
         <div class="alert-danger" *ngIf="email.errors && f.submitted">
           <div *ngIf="email.errors?.['required']">Email is required</div>
           <div *ngIf="email.errors?.['email']">
@@ -52,8 +47,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label>Password</label>
+      <div class="user-box">
         <input
           type="password"
           class="form-control"
@@ -63,6 +57,7 @@
           minlength="6"
           #password="ngModel"
         />
+        <label>Password</label>
         <div class="alert-danger" *ngIf="password.errors && f.submitted">
           <div *ngIf="password.errors?.['required']">Password is required</div>
           <div *ngIf="password.errors?.['minlength']">
@@ -70,9 +65,13 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <button class="btn btn-primary btn-block">Sign Up</button>
-      </div>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+     <button> <a href="#">Sign up</a></button>
+
+
       <div class="alert alert-warning" *ngIf="f.submitted && isRegistrationFailed">
         Signup failed!<br/>{{ errorMessage }}
       </div>
@@ -81,7 +80,7 @@
       Your registration is successful! Check your e-mail.
     </div>
     <div class="alert alert-login" *ngIf="!isSuccessful">
-      <p>Hai già un account?<a href="javascript:void(0)" [routerLink]="['/login']"> Login</a></p>
+      <p>Hai già un account?<a href="javascript:void(0)" [routerLink]="['/login']">Login</a></p>
     </div>
   </div>
 </div>

@@ -52,4 +52,4 @@ kubectl apply -f  path/CreativeHubClient/Orchestration
 
 #client web interface
 
-{minikube ip}:30006
+https://{minikube ip}.nip.io:30006

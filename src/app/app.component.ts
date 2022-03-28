@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "./_services/token-storage.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
-import {Router, RouterModule} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ import {Router, RouterModule} from "@angular/router";
 })
 
 export class AppComponent implements OnInit {
-  isLoggedIn = false;
+
   nickname?: string;
   title: string | undefined;
 

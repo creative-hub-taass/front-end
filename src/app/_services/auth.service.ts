@@ -48,12 +48,18 @@ export class AuthService {
     }, opts);
   }
 
-  //password è l'authtoken
-    loginSocial(nickname: string, email: string, password: string): Observable<any> {
+
+  loginSocial(nickname: string, email: string, token: string): Observable<any> {
     return this.http.post<string>(AUTH_API + 'loginsocial', {
       nickname: nickname,
       email: email,
-      password: password
+      password: token
+    }, httpOptions);
+  }
+
+  refreshToken(token: string) {
+    return this.http.post(AUTH_API + 'refresh', {
+      refreshToken: token
     }, httpOptions);
   }
 }

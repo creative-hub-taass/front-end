@@ -3,10 +3,10 @@
 
   <div class="navbar">
     <a href="javascript:void(0)">CreativeHub</a>
-    <a href="javascript:void(0)"  [routerLink]="['/users']" *ngIf="isUserAuthenticated" ><i class="fa fa-fw fa-home"></i> Users</a>
-    <a href="javascript:void(0)" [routerLink]="['/login']" *ngIf="!isUserAuthenticated()"><i class="fa fa-fw fa-user"></i> Login</a>
-    <a href="javascript:void(0)" [routerLink]="['/registration']" *ngIf="!isUserAuthenticated()"><i class="fa fa-fw fa-user"></i> Registration</a>
-    <a href="javascript:void(0)" (click)="logout()" *ngIf="isUserAuthenticated()"><i class="fa fa-fw fa-user"></i> Logout</a>
+    <a href="javascript:void(0)"  [routerLink]="['/users']" *ngIf="isLoggedIn" ><i class="fa fa-fw fa-home"></i> Users</a>
+    <a href="javascript:void(0)" [routerLink]="['/login']" *ngIf="!isLoggedIn"><i class="fa fa-fw fa-user"></i> Login</a>
+    <a href="javascript:void(0)" [routerLink]="['/registration']" *ngIf="!isLoggedIn"><i class="fa fa-fw fa-user"></i> Registration</a>
+    <a href="javascript:void(0)" (click)="logout()" *ngIf="isLoggedIn"><i class="fa fa-fw fa-user"></i> Logout</a>
   </div>
 
   <div class="container">

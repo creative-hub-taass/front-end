@@ -13,7 +13,7 @@ import {GoogleLoginProvider,
         SocialAuthServiceConfig} from 'angularx-social-login'
 import {CoolSocialLoginButtonsModule} from '@angular-cool/social-login-buttons';
 import { ProfileComponent } from './profile/profile.component';
-import {AuthGuard} from "./guard/auth-guard.service";
+
 
 @NgModule({
   declarations: [
@@ -46,7 +46,7 @@ import {AuthGuard} from "./guard/auth-guard.service";
           }
         ]
       } as SocialAuthServiceConfig
-    }, AuthGuard],
+    }],
   bootstrap: [AppComponent]
 })
 

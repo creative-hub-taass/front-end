@@ -53,3 +53,7 @@ kubectl apply -f  path/CreativeHubClient/Orchestration
 #client web interface
 
 https://{minikube ip}.nip.io:30006
+
+#start chrome 
+
+google-chrome --disable-web-security --disable-gpu --user-data-dir="/tmp/MiCarpeta" -ignore-certificate-errors

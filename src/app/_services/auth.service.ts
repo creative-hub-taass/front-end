@@ -1,14 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-const AUTH_PORT = "30001"
-const AUTH_API = 'https://192.168.49.2:'+AUTH_PORT+'/api/v1/access/';
+const AUTH_PORT = "30000"
+const AUTH_API = 'https://192.168.49.2:'+AUTH_PORT+'/api/v1/auth/access/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }),
   observe: 'response' as 'response'
 };
-
+const httpRefresh: any = {
+  headers: new HttpHeaders({'Content-Type':'text/plain','Access-Control-Allow-Origin': '*' }),
+  responseType: 'text/plain;charset=UTF-8'
+}
 const opts: any = {
   headers: new HttpHeaders({
     'Accept': '*/*',
@@ -59,7 +62,7 @@ export class AuthService {
 
   refreshToken(token: string) {
     return this.http.post(AUTH_API + 'refresh', {
-      refreshToken: token
-    }, httpOptions);
+      token
+    }, httpRefresh);
   }
 }

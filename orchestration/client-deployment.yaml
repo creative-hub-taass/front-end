@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: creative-hub-client
+  name: creative-hub-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: creative-hub-client
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        io.kompose.service: creative-hub-client
+    spec:
+      containers:
+        - image: ghcr.io/creative-hub-taass/creative-hub-client:latest
+          name : creative-hub-client
+          ports:
+            - containerPort: 4200
+      restartPolicy: Always

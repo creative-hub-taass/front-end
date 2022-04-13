@@ -1,8 +1,7 @@
-version: '3'
+version: "3"
 services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  creative-hub-client:
+    build: .
+    image: ghcr.io/creative-hub-taass/creative-hub-client:latest 
     ports: 
       - "4200:4200"

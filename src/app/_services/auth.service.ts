@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-const AUTH_PORT = "30000"
-const AUTH_API = 'https://192.168.49.2:'+AUTH_PORT+'/api/v1/auth/access/';
+import {environment} from "../../environments/environment";
+
+const PATH = '/api/v1/users/auth/';
+const API_GATEWAY_URL = environment.apiGatewayUrl + PATH;
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }),
@@ -37,14 +39,14 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API + 'login', {
+    return this.http.post(API_GATEWAY_URL + 'login', {
       email: email,
       password: password
     }, httpOptions);
   }
 
   register(nickname: string, email: string, password: string): Observable<any> {
-    return this.http.post<string>(AUTH_API + 'register', {
+    return this.http.post<string>(API_GATEWAY_URL + 'register', {
       nickname: nickname,
       email: email,
       password: password
@@ -53,7 +55,7 @@ export class AuthService {
 
 
   loginSocial(nickname: string, email: string, token: string): Observable<any> {
-    return this.http.post<string>(AUTH_API + 'loginsocial', {
+    return this.http.post<string>(API_GATEWAY_URL + 'loginsocial', {
       nickname: nickname,
       email: email,
       password: token
@@ -61,7 +63,7 @@ export class AuthService {
   }
 
   refreshToken(token: string) {
-    return this.http.post(AUTH_API + 'refresh', {
+    return this.http.post(API_GATEWAY_URL + 'refresh', {
       token
     }, httpRefresh);
   }

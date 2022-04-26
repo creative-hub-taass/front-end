@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-const API_PORT = "30000"
-const API_URL = 'https://192.168.49.2:'+API_PORT+'/api/v1/auth/';
+import {environment} from "../../environments/environment";
 
+const PATH = '/api/v1/users/';
+const API_GATEWAY_URL = environment.apiGatewayUrl + PATH;
 
 const opts: any = {
   headers: new HttpHeaders({
@@ -24,7 +25,7 @@ export class UserService {
   }
 
   getUserBoard(): Observable<any> {
-    return this.http.get(API_URL + 'users/', opts);
+    return this.http.get(API_GATEWAY_URL , opts);
   }
 
 }

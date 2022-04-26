@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiGatewayUrl: 'https://api-gateway-taass-zathsl.cloud.okteto.net/'
 };
 
 /*

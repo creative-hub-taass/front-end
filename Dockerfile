@@ -1,6 +1,5 @@
-
 # choose base image to build off of
-FROM node:alpine
+FROM node:latest
 
 # set the current working directory for all commands
 WORKDIR /usr/src/app
@@ -9,11 +8,9 @@ WORKDIR /usr/src/app
 # until the package.json / lock changes
 COPY package.json .
 COPY package-lock.json .
-RUN npm install
-RUN npm install bootstrap --save
+RUN npm install -g npm@8.8.0
 RUN npm install @auth0/angular-jwt
-RUN npm install angularx-social-login --legacy-peer-deps
-RUN npm install --save @angular-cool/social-login-buttons
+RUN npm install --save @abacritt/angularx-social-login --legacy-peer-deps
 # copy over all code files
 COPY . .
 

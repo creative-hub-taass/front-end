@@ -5,6 +5,7 @@ metadata:
     io.kompose.service: creative-hub-client
   name: creative-hub-client
 spec:
+  type: LoadBalancer
   ports:
     - name: api
       port: 4200

@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from "../../environments/environment";
 
-const PATH = '/api/v1/users/-/auth/';
+const PATH = 'api/v1/users/-/auth/';
 const API_GATEWAY_URL = environment.apiGatewayUrl + PATH;
 
 const httpOptionsLogin = {

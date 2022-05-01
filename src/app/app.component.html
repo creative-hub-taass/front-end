@@ -2,11 +2,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <div class="navbar">
-    <a href="javascript:void(0)">CreativeHub</a>
-    <a href="javascript:void(0)"  [routerLink]="['/users']" *ngIf="isLoggedIn" ><i class="fa fa-fw fa-home"></i> Users</a>
-    <a href="javascript:void(0)" [routerLink]="['/login']" *ngIf="!isLoggedIn"><i class="fa fa-fw fa-user"></i> Login</a>
-    <a href="javascript:void(0)" [routerLink]="['/registration']" *ngIf="!isLoggedIn"><i class="fa fa-fw fa-user"></i> Registration</a>
-    <a href="javascript:void(0)" (click)="logout()" *ngIf="isLoggedIn"><i class="fa fa-fw fa-user"></i> Logout</a>
+    <div class="logo" href="javascript:void(0)"  [routerLink]="['/']">
+      <div class="primary">creative</div>
+      <div class="secondary">Hub</div>
+    </div>
+    <div class="voices">
+      <a href="javascript:void(0)"  [routerLink]="['/users']" *ngIf="isLoggedIn" ><i class="fa fa-fw fa-home"></i> Users</a>
+      <a href="javascript:void(0)" [routerLink]="['/login']" *ngIf="!isLoggedIn">Login</a>
+      <a href="javascript:void(0)" [routerLink]="['/registration']" *ngIf="!isLoggedIn">Registration</a>
+      <a href="javascript:void(0)" (click)="logout()" *ngIf="isLoggedIn"><i class="fa fa-fw fa-user"></i> Logout</a>
+    </div>
   </div>
 
   <div class="container">

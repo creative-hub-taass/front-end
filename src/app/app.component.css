@@ -1,26 +1,54 @@
 /* Style the navigation bar */
 .navbar {
-  width: 100%;
-  background-color: #555;
-  overflow: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 73px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(4px);
+  padding-left: 15px;
+  padding-right: 5px;
+  position: static;
+}
+.navbar .logo {
+  font-family: "Jost";
+  display: flex;
+  font-size: 18px;
+}
+
+.navbar .logo .primary {
+  font-weight: 400;
+}
+
+.navbar .logo .secondary {
+  font-weight: 500;
+}
+
+.navbar .logo:hover {
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /* Navbar links */
-.navbar a {
+.navbar .voices a {
   float: left;
   text-align: center;
   padding: 12px;
-  color: white;
+  color: black;
   text-decoration: none;
   font-size: 17px;
+  font-family: "Jost";
+  font-weight: 400;
 }
 
 /* Navbar links on mouse-over */
-.navbar a:hover {
-  background-color: #000;
+.navbar .voices a:hover {
+  text-decoration: underline;
+  text-decoration-color: #00A3FF;
+  text-decoration-style: solid;
+  text-decoration-thickness: 2px;
 }
-
-
 
 /* Add responsiveness - will automatically display the navbar vertically instead of horizontally on screens less than 500 pixels */
 @media screen and (max-width: 500px) {

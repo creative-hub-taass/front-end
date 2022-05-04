@@ -7,11 +7,11 @@ const PATH = 'api/v1/users/-/auth/';
 const API_GATEWAY_URL = environment.apiGatewayUrl + PATH;
 
 const httpOptionsLogin = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }),
+  headers: new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}),
   observe: 'response' as 'response'
 };
 const httpOptionsRefresh: any = {
-  headers: new HttpHeaders({'Content-Type':'text/plain','Access-Control-Allow-Origin': '*' }),
+  headers: new HttpHeaders({'Content-Type': 'text/plain', 'Access-Control-Allow-Origin': '*'}),
   responseType: 'text/plain;charset=UTF-8'
 }
 const httpOptionsRegister: any = {

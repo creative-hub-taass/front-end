@@ -3,14 +3,14 @@ import {PublicUser} from "./PublicUser";
 
 export class Post {
 
-  private likes! : number;
+  private likes!: number;
   private listComments!: any[];
-  private infoPost! : Publication;
-  private infoUser! : PublicUser[];
+  private infoPost!: Publication;
+  private infoUser!: PublicUser[];
 
   constructor(info: any, users: any[]) {
-      this.infoPost = new Publication(info);
-      this.infoUser = users;
+    this.infoPost = new Publication(info);
+    this.infoUser = users;
   }
 
   public setInfo(info: any): void {
@@ -41,10 +41,15 @@ export class Post {
     return this.infoPost;
   }
 
+  public getUsers(): PublicUser[] {
+    return this.infoUser;
+  }
+
+  public getUser(index: number): PublicUser {
+    return this.infoUser[index];
+  }
 
   public equals(idPublication: string): boolean {
     return this.infoPost.getId() == idPublication;
   }
-
-
 }

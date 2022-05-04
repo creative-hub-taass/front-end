@@ -15,11 +15,12 @@ import {EventData} from "./event";
  * così non abbiamo bisogno di avere dipendenze dirette
  */
 
-export class EventBusService{
+export class EventBusService {
 
   private subject$ = new Subject<EventData>();
 
-  constructor() {}
+  constructor() {
+  }
 
 
   emit(event: EventData) {

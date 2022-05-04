@@ -1,4 +1,3 @@
-
 export class Publication {
 
   private attributes!: any[];
@@ -40,10 +39,143 @@ export class Publication {
     this.type = infoPost.type;
   }
 
-  getId() : string {
+  public setAttributes(attributes: any[]): void {
+    this.attributes = attributes;
+  }
+
+  public setAvailablecopies(availableCopies: number): void {
+    this.availableCopies = availableCopies;
+  }
+
+  public setCopies(copies: number): void {
+    this.copies = copies;
+  }
+
+  public setCreationdatetime(creationDatetime: Date): void {
+    this.creationDateTime = creationDatetime;
+  }
+
+  public setCreations(creations: any[]): void {
+    this.creations = creations;
+  }
+
+  public setCurrency(currency: string): void {
+    this.currency = currency;
+  }
+
+  public setDescription(description: string): void {
+    this.description = description;
+  }
+
+  public setId(id: string): void {
+    this.id = id;
+  }
+
+  public setImages(images: string[]): void {
+    this.images = images;
+  }
+
+  public setLastupdate(lastUpdate: Date): void {
+    this.lastUpdate = lastUpdate;
+  }
+
+  public setName(name: string): void {
+    this.name = name;
+  }
+
+  public setOnsale(onSale: boolean): void {
+    this.onSale = onSale;
+  }
+
+  public setPaymentemail(paymentEmail: string): void {
+    this.paymentEmail = paymentEmail;
+  }
+
+  public setPrice(price: number): void {
+    this.price = price;
+  }
+
+  public setTime(time: number): void {
+    this.time = time;
+  }
+
+  public setTimestamp(timestamp: Date): void {
+    this.timestamp = timestamp;
+  }
+
+  public setType(type: string): void {
+    this.type = type;
+  }
+
+  public getAttributes(): any[] {
+    return this.attributes;
+  }
+
+  public getAvailablecopies(): number {
+    return this.availableCopies;
+  }
+
+  public getCopies(): number {
+    return this.copies;
+  }
+
+  public getCreationdatetime(): Date {
+    return this.creationDateTime;
+  }
+
+  public getCreations(): any[] {
+    return this.creations;
+  }
+
+  public getCurrency(): string {
+    return this.currency;
+  }
+
+  public getDescription(): string {
+    return this.description;
+  }
+
+  public getId(): string {
     return this.id;
   }
+
+  public getImages(): string[] {
+    return this.images;
+  }
+
+  public getLastupdate(): Date {
+    return this.lastUpdate;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public getOnsale(): boolean {
+    return this.onSale;
+  }
+
+  public getPaymentemail(): string {
+    return this.paymentEmail;
+  }
+
+  public getPrice(): number {
+    return this.price;
+  }
+
+  public getTime(): number {
+    return this.time;
+  }
+
+  public getTimestamp(): Date {
+    return this.timestamp;
+  }
+
+  public getType(): string {
+    return this.type;
+  }
 }
+
 /*    attributes: {size: '45.7 × 47.7 cm', medium: 'Includes etchings; engravings; lithographs; monoprints; screen prints; woodcuts.'}
 availableCopies: 40
 copies: 40

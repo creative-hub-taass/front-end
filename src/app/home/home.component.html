@@ -1,38 +1,39 @@
 <section class="main">
-<div class="wrapper">
-  <div class="left-col">
-    // status wrappers
-    <div class="post" *ngFor="let element of listFeed">
-      <div class="info" >
-        <div class="user">
-          <div class="profile-pic"><img src="" alt=""></div> //inserire immagine del profilo
-          <p class="namePost">{{element.getInfoPost().name}}</p>
+  <div class="wrapper">
+    <div class="left-col">
+      // status wrappers
+      <div class="post" *ngFor="let element of listFeed">
+        <div class="info" *ngFor="let user of element.getUsers()">
+          <div class="user">
+            <div class="profile-pic"><img src="" alt="">{{this.getUser(user).getNickname()}}</div>
+            //inserire immagine del profilo
+            <p class="namePost">{{element.getInfoPost().name}}</p>
+          </div>
+          <img src="../../assets/img/option.PNG" class="options" alt="">
         </div>
-        <img src="../../assets/img/option.PNG" class="options" alt="">
-      </div>
-      <img *ngFor="let images of element.getInfoPost().images" src="{{images}}" class="post-image" alt="">
-      <div class="post-content">
-        <div class="reaction-wrapper">
-          <img src="../../assets/img/like.PNG" class="icon" alt="">
-          <img src="../../assets/img/comment.PNG" class="icon" alt="">
-          <img src="../../assets/img/send.PNG" class="icon" alt="">
-          <img src="../../assets/img/save.PNG" class="save icon" alt="">
+        <img *ngFor="let images of element.getInfoPost().images" src="{{images}}" class="post-image" alt="">
+        <div class="post-content">
+          <div class="reaction-wrapper">
+            <img src="../../assets/img/like.PNG" class="icon" alt="">
+            <img src="../../assets/img/comment.PNG" class="icon" alt="">
+            <img src="../../assets/img/send.PNG" class="icon" alt="">
+            <img src="../../assets/img/save.PNG" class="save icon" alt="">
+          </div>
+          <p class="likes">{{element.getLikes()}} likes</p>
+          <p class="description"><span>{{element.getInfoPost().description}}</span></p>
+          <p class="post-time">{{element.getInfoPost().lastUpdate}}</p>
         </div>
-        <p class="likes">{{element.getLikes()}} likes</p>
-        <p class="description"><span>{{element.getInfoPost().description}}</span></p>
-        <p class="post-time">{{element.getInfoPost().lastUpdate}}</p>
-      </div>
-      <div class="list-comment">
-        <div class="comment">
-          <p *ngFor="let comment of element.getComments()">{{comment}}</p>
+        <div class="list-comment">
+          <div class="comment">
+            <p *ngFor="let comment of element.getComments()">{{comment}}</p>
+          </div>
         </div>
-      </div>
-      <div class="comment-wrapper" *ngIf="this.isLoggedIn">
-        <img src="../../assets/img/smile.PNG" class="icon" alt="">
-        <input type="text" class="comment-box" placeholder="Add a comment">
-        <button class="comment-btn">post</button>
+        <div class="comment-wrapper" *ngIf="this.isLoggedIn">
+          <img src="../../assets/img/smile.PNG" class="icon" alt="">
+          <input type="text" class="comment-box" placeholder="Add a comment">
+          <button class="comment-btn">post</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </section>

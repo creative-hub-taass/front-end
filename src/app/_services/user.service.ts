@@ -25,7 +25,7 @@ export class UserService {
   }
 
   getUserBoard(): Observable<any> {
-    return this.http.get(API_GATEWAY_URL , opts);
+    return this.http.get(API_GATEWAY_URL, opts);
   }
 
 }

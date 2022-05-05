@@ -51,7 +51,8 @@ import { HomeComponent } from './home/home.component';
           }
         ]
       } as SocialAuthServiceConfig
-    }],
+    },
+      LoginComponent],
   bootstrap: [AppComponent]
 })
 

@@ -3,18 +3,19 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from "../../environments/environment";
 
-const PATH = 'api/v1/users/auth/';
+const PATH = 'api/v1/users/-/auth/';
+
 const API_GATEWAY_URL = environment.apiGatewayUrl + PATH;
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }),
+const httpOptionsLogin = {
+  headers: new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'}),
   observe: 'response' as 'response'
 };
-const httpRefresh: any = {
-  headers: new HttpHeaders({'Content-Type':'text/plain','Access-Control-Allow-Origin': '*' }),
+const httpOptionsRefresh: any = {
+  headers: new HttpHeaders({'Content-Type': 'text/plain', 'Access-Control-Allow-Origin': '*'}),
   responseType: 'text/plain;charset=UTF-8'
 }
-const opts: any = {
+const httpOptionsRegister: any = {
   headers: new HttpHeaders({
     'Accept': '*/*',
     'Content-Type': 'application/json',
@@ -42,7 +43,7 @@ export class AuthService {
     return this.http.post(API_GATEWAY_URL + 'login', {
       email: email,
       password: password
-    }, httpOptions);
+    }, httpOptionsLogin);
   }
 
   register(nickname: string, email: string, password: string): Observable<any> {
@@ -50,7 +51,7 @@ export class AuthService {
       nickname: nickname,
       email: email,
       password: password
-    }, opts);
+    }, httpOptionsRegister);
   }
 
 
@@ -59,12 +60,12 @@ export class AuthService {
       nickname: nickname,
       email: email,
       password: token
-    }, httpOptions);
+    }, httpOptionsLogin);
   }
 
   refreshToken(token: string) {
     return this.http.post(API_GATEWAY_URL + 'refresh', {
       token
-    }, httpRefresh);
+    }, httpOptionsRefresh);
   }
 }

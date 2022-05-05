@@ -10,7 +10,7 @@ import {FormsModule} from "@angular/forms";
 import {GoogleLoginProvider,
         FacebookLoginProvider,
         SocialLoginModule,
-        SocialAuthServiceConfig} from 'angularx-social-login'
+        SocialAuthServiceConfig} from '@abacritt/angularx-social-login'
 import {CoolSocialLoginButtonsModule} from '@angular-cool/social-login-buttons';
 import { ProfileComponent } from './profile/profile.component';
 

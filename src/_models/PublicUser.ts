@@ -1,13 +1,12 @@
 import {PublicCreator} from "./PublicCreator";
 
 export class PublicUser {
-  public id!: string;
-  private username!: string;
-  private nickname!: string;
-  private creator!: PublicCreator;
-  private inspirerIds!: string[];
-  private fanIds!: string[];
-
+  readonly id: string;
+  readonly username: string;
+  readonly nickname: string;
+  readonly creator: PublicCreator;
+  readonly inspirerIds: string[];
+  readonly fanIds: string[];
 
   constructor(publicUserDto: any) {
     this.id = publicUserDto.id;
@@ -17,31 +16,6 @@ export class PublicUser {
     this.inspirerIds = publicUserDto.inspirerIds;
     this.fanIds = publicUserDto.fanIds;
   }
-
-  public setId(id: string): void {
-    this.id = id;
-  }
-
-  public setUsername(username: string): void {
-    this.username = username;
-  }
-
-  public setNickname(nickname: string): void {
-    this.nickname = nickname;
-  }
-
-  public setCreator(creator: PublicCreator): void {
-    this.creator = creator;
-  }
-
-  public setInspirers(inspirers: string[]): void {
-    this.inspirerIds = inspirers;
-  }
-
-  public setFan(fans: string[]): void {
-    this.fanIds = fans;
-  }
-
 
   public getId(): string {
     return this.id;
@@ -55,9 +29,8 @@ export class PublicUser {
     return this.nickname;
   }
 
-
   public getCreator(): PublicCreator {
-    return this.getCreator();
+    return this.creator;
   }
 
   public getInspirer(): string[] {
@@ -71,5 +44,4 @@ export class PublicUser {
   public equals(idUser: string): boolean {
     return this.id == idUser;
   }
-
 }

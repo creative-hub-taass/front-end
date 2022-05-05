@@ -3,7 +3,7 @@ import {EventBusService} from "../../_shared/event-bus.service";
 import {LoginComponent} from "../login/login.component";
 import {FeedService} from "../_services/feed.service";
 import {EventData} from "../../_shared/event";
-import {Post} from "../../_models/Post";
+import {PublicationInfo} from "../../_models/PublicationInfo";
 import {PublicUser} from "../../_models/PublicUser";
 
 @Component({
@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   listPublicationsID!: any[];
   listUsersID!: any[];
 
-  listFeed!: Post[];
+  listFeed!: PublicationInfo[];
 
   listUsers!: PublicUser[];
 
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
                 })
 
                 //creo il feed
-                this.listFeed.push(new Post(publicationDto, usersofCreation));
+                this.listFeed.push(new PublicationInfo(publicationDto, usersofCreation));
               })
 
               //ho le informazioni degli utenti in this.listUsers
@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit {
                 })
 
                 //creo il feed
-                this.listFeed.push(new Post(publicationDto, usersofCreation));
+                this.listFeed.push(new PublicationInfo(publicationDto, usersofCreation));
               })
 
               //ho le informazioni degli utenti in this.listUsers

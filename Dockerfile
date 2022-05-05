@@ -1,6 +1,5 @@
-
 # choose base image to build off of
-FROM node:alpine
+FROM node:latest
 
 # set the current working directory for all commands
 WORKDIR /usr/src/app

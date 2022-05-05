@@ -1,4 +1,5 @@
 <div class="col-md-12" xmlns="http://www.w3.org/1999/html">
+  <div class="container">
   <div class="login-box">
     <h2>Registration</h2>
     <form
@@ -9,6 +10,7 @@
       novalidate
     >
       <div class="user-box">
+        <label>Nickname</label>
         <input
           type="text"
           class="form-control"
@@ -19,8 +21,7 @@
           maxlength="20"
           #nickname="ngModel"
         />
-        <label>Nickname</label>
-        <div class="alert-danger" *ngIf="nickname.errors && f.submitted">
+        <div class="alert alert-danger" *ngIf="nickname.errors && f.submitted">
           <div *ngIf="nickname.errors?.['required']">Nickname is required</div>
           <div *ngIf="nickname.errors?.['minlength']">
             Nickname must be at least 3 characters
@@ -31,6 +32,7 @@
         </div>
       </div>
       <div class="user-box">
+        <label>E-mail</label>
         <input
           type="email"
           class="form-control"
@@ -40,8 +42,7 @@
           email
           #email="ngModel"
         />
-        <label>E-mail</label>
-        <div class="alert-danger" *ngIf="email.errors && f.submitted">
+        <div class="alert alert-danger" *ngIf="email.errors && f.submitted">
           <div *ngIf="email.errors?.['required']">Email is required</div>
           <div *ngIf="email.errors?.['email']">
             Email must be a valid email address
@@ -49,6 +50,7 @@
         </div>
       </div>
       <div class="user-box">
+        <label>Password</label>
         <input
           type="password"
           class="form-control"
@@ -58,8 +60,7 @@
           minlength="6"
           #password="ngModel"
         />
-        <label>Password</label>
-        <div class="alert-danger" *ngIf="password.errors && f.submitted">
+        <div class="alert alert-danger" *ngIf="password.errors && f.submitted">
           <div *ngIf="password.errors?.['required']">Password is required</div>
           <div *ngIf="password.errors?.['minlength']">
             Password must be at least 6 characters
@@ -67,7 +68,7 @@
         </div>
       </div>
 
-     <button> <a href="#">Sign up</a></button>
+     <button class="full-button">Sign up</button>
 
 
       <div class="alert alert-warning" *ngIf="f.submitted && isRegistrationFailed">
@@ -78,7 +79,8 @@
       Your registration is successful! Check your e-mail.
     </div>
     <div class="alert alert-login" *ngIf="!isSuccessful">
-      <p>Hai già un account?<a href="javascript:void(0)" [routerLink]="['/login']">Login</a></p>
+      <p>Already have an account?<br><a href="javascript:void(0)" [routerLink]="['/login']">Login</a></p>
     </div>
+  </div>
   </div>
 </div>

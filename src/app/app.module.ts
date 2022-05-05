@@ -14,6 +14,9 @@ import {GoogleLoginProvider,
 import {CoolSocialLoginButtonsModule} from '@angular-cool/social-login-buttons';
 import { ProfileComponent } from './profile/profile.component';
 
+import { HomeComponent } from './home/home.component';
+
+
 
 @NgModule({
   declarations: [
@@ -21,6 +24,8 @@ import { ProfileComponent } from './profile/profile.component';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    HomeComponent,
+
   ],
   imports: [
     BrowserModule,

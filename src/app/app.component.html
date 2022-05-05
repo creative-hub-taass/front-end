@@ -2,11 +2,42 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <div class="navbar">
-    <a href="javascript:void(0)">CreativeHub</a>
-    <a href="javascript:void(0)"  [routerLink]="['/users']" *ngIf="isLoggedIn" ><i class="fa fa-fw fa-home"></i> Users</a>
-    <a href="javascript:void(0)" [routerLink]="['/login']" *ngIf="!isLoggedIn"><i class="fa fa-fw fa-user"></i> Login</a>
-    <a href="javascript:void(0)" [routerLink]="['/registration']" *ngIf="!isLoggedIn"><i class="fa fa-fw fa-user"></i> Registration</a>
-    <a href="javascript:void(0)" (click)="logout()" *ngIf="isLoggedIn"><i class="fa fa-fw fa-user"></i> Logout</a>
+    <div class="side-menu">
+      <img src="https://img.icons8.com/ios-filled/50/000000/delete-sign--v1.png" class="close-icon"/>
+      <div class="primary-pages">
+        <div class="page">
+          <img src="https://img.icons8.com/ios-glyphs/30/000000/home-page--v1.png" class="page-icon"/>
+          <a href="#">Home</a>
+        </div>
+        <div class="page">
+          <img src="https://img.icons8.com/ios-glyphs/30/000000/user--v1.png" class="page-icon"/>
+          <a href="#">My page</a>
+        </div>
+        <div class="page">
+          <img src="https://img.icons8.com/ios-filled/50/000000/shopping-bag.png" class="page-icon"/>
+          <a href="#">Orders</a>
+        </div>
+      </div>
+      <div class="secondary-pages">
+        <div class="page">
+          <img src="https://img.icons8.com/ios-glyphs/30/000000/exit.png" class="page-icon"/>
+          <a href="#">Logout</a>
+        </div>
+      </div>
+    </div>
+    <div class="left-nav">
+      <img src="https://img.icons8.com/ios-filled/50/000000/menu-rounded.png" class="menu"/>
+      <div class="logo" href="javascript:void(0)"  [routerLink]="['/']">
+        <div class="primary">creative</div>
+        <div class="secondary">Hub</div>
+      </div>
+    </div>
+    <div class="voices">
+      <a href="javascript:void(0)"  [routerLink]="['/users']" *ngIf="isLoggedIn" ><i class="fa fa-fw fa-home"></i> Users</a>
+      <a href="javascript:void(0)" [routerLink]="['/login']" *ngIf="!isLoggedIn">Login</a>
+      <a href="javascript:void(0)" [routerLink]="['/registration']" *ngIf="!isLoggedIn">Registration</a>
+      <a href="javascript:void(0)" (click)="logout()" *ngIf="isLoggedIn"><i class="fa fa-fw fa-user"></i> Logout</a>
+    </div>
   </div>
 
   <div class="container">

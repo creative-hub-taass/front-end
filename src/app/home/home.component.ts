@@ -2,7 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {EventBusService} from "../../_shared/event-bus.service";
 import {LoginComponent} from "../login/login.component";
 import {FeedService} from "../_services/feed.service";
-import {Post} from "../../_models/Post";
+
+import {EventData} from "../../_shared/event";
+import {PublicationInfo} from "../../_models/PublicationInfo";
+
 import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
 import {PublicCreator} from "../../_models/PublicCreator";
@@ -18,7 +21,7 @@ export class HomeComponent implements OnInit {
   listPublicationsID!: any[];
   listUsersID!: any[];
 
-  listFeed!: Post[];
+  listFeed!: PublicationInfo[];
 
   listUsers!: PublicUser[];
 
@@ -65,7 +68,7 @@ export class HomeComponent implements OnInit {
                 })
 
                 //creo il feed
-                this.listFeed.push(new Post(publicationDto, usersofCreation));
+                this.listFeed.push(new PublicationInfo(publicationDto, usersofCreation));
               })
 
               //ho le informazioni degli utenti in this.listUsers
@@ -117,7 +120,7 @@ export class HomeComponent implements OnInit {
                 })
 
                 //creo il feed
-                this.listFeed.push(new Post(publicationDto, usersofCreation));
+                this.listFeed.push(new PublicationInfo(publicationDto, usersofCreation));
               })
 
               //ho le informazioni degli utenti in this.listUsers

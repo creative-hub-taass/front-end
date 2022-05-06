@@ -1,55 +1,20 @@
-import {Publication} from "./Publication";
-import {PublicUser} from "./PublicUser";
+import {Creation, Publication} from "./Publication";
 
-export class Post {
+export class Post implements Publication {
+  readonly publicationType = "post" as const;
+  readonly id: string;
+  readonly timestamp: Date;
+  readonly lastUpdate: Date;
+  readonly creations: Creation[];
+  readonly title: string;
+  readonly body: string;
 
-  private likes!: number;
-  private listComments!: any[];
-  private infoPost!: Publication;
-  private infoUser!: PublicUser[];
-
-  constructor(info: any, users: any[]) {
-    this.infoPost = new Publication(info);
-    this.infoUser = users;
-  }
-
-  public setInfo(info: any): void {
-    this.infoPost = new Publication(info);
-  }
-
-  public setUsers(users: any): void {
-    this.infoUser = users;
-  }
-
-  public setLikes(nrLikes: number): void {
-    this.likes = nrLikes;
-  }
-
-  public setListComments(list: any[]): void {
-    this.listComments = list;
-  }
-
-  public getLikes(): number {
-    return this.likes;
-  }
-
-  public getComments(): any[] {
-    return this.listComments;
-  }
-
-  public getInfoPost(): any {
-    return this.infoPost;
-  }
-
-  public getUsers(): PublicUser[] {
-    return this.infoUser;
-  }
-
-  public getUser(index: number): PublicUser {
-    return this.infoUser[index];
-  }
-
-  public equals(idPublication: string): boolean {
-    return this.infoPost.getId() == idPublication;
+  constructor(dto: any) {
+    this.id = dto.id;
+    this.timestamp = new Date(dto.timestamp);
+    this.lastUpdate = new Date(dto.lastUpdate);
+    this.creations = dto.creations;
+    this.title = dto.title;
+    this.body = dto.body;
   }
 }

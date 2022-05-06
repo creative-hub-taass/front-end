@@ -15,6 +15,7 @@ import {CoolSocialLoginButtonsModule} from '@angular-cool/social-login-buttons';
 import { ProfileComponent } from './profile/profile.component';
 
 import { HomeComponent } from './home/home.component';
+import { ArtworkComponent } from './artwork/artwork.component';
 
 
 
@@ -25,6 +26,7 @@ import { HomeComponent } from './home/home.component';
     RegisterComponent,
     ProfileComponent,
     HomeComponent,
+    ArtworkComponent,
 
   ],
   imports: [

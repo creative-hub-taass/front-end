@@ -2,15 +2,15 @@
   <div class="wrapper">
     <div class="left-col">
       // status wrappers
-      <div class="post" *ngFor="let element of listFeed">
-        <div class="info" *ngFor="let user of element.getUsers()">
+      <div class="post">
+        <div class="info">
           <div class="user">
-            <div class="profile-pic"><img src="{{this.getCreator(user).getAvatar()}}" alt="">{{this.getUser(user).getUsername()}}</div>
-            <p class="namePost" href="javascript:void(0)" [routerLink]="['/artwork/'+element.getInfoPost().id]">{{element.getInfoPost().name}} </p>
+            <div class="profile-pic"><img src="{{this.getCreator(this.listUsers[0]).getAvatar()}}" alt=""></div>
+            <p class="namePost">{{this.artwork.getName()}}</p>
           </div>
           <img src="../../assets/img/option.PNG" class="options" alt="">
         </div>
-        <img *ngFor="let images of element.getInfoPost().images" src="{{images}}" class="post-image" alt="">
+        <img class="post-image" src="{{this.artwork.getImages()[0]}}" alt="">
         <div class="post-content">
           <div class="reaction-wrapper">
             <img src="../../assets/img/like.PNG" class="icon" alt="">
@@ -18,13 +18,13 @@
             <img src="../../assets/img/send.PNG" class="icon" alt="">
             <img src="../../assets/img/save.PNG" class="save icon" alt="">
           </div>
-          <p class="likes">{{element.getLikes()}} likes</p>
-          <p class="description"><span>{{element.getInfoPost().description}}</span></p>
-          <p class="post-time">{{element.getInfoPost().lastUpdate}}</p>
+          <p class="likes">{{this.countLikes}} likes</p>
+          <p class="description"><span>{{this.artwork.getDescription()}}</span></p>
+          <p class="post-time"></p>
         </div>
         <div class="list-comment">
           <div class="comment">
-            <p *ngFor="let comment of element.getComments()">{{comment}}</p>
+            <p></p>
           </div>
         </div>
         <div class="comment-wrapper" *ngIf="this.isLoggedIn">

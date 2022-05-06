@@ -26,6 +26,7 @@ export class PublicationInfo {
     }
   }
 
+
   public setLikes(likes: number): void {
     this.likes = likes;
   }

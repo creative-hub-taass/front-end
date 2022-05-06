@@ -6,11 +6,11 @@
         <div class="info">
           <div class="user">
             <div class="profile-pic"><img src="{{this.getCreator(this.listUsers[0]).getAvatar()}}" alt=""></div>
-            <p class="namePost">{{this.artwork.getName()}}</p>
+            <p class="namePost">{{this.artwork.name}}</p>
           </div>
           <img src="../../assets/img/option.PNG" class="options" alt="">
         </div>
-        <img class="post-image" src="{{this.artwork.getImages()[0]}}" alt="">
+        <img class="post-image" src="{{this.artwork.images[0]}}" alt="">
         <div class="post-content">
           <div class="reaction-wrapper">
             <img src="../../assets/img/like.PNG" class="icon" alt="">
@@ -19,7 +19,7 @@
             <img src="../../assets/img/save.PNG" class="save icon" alt="">
           </div>
           <p class="likes">{{this.countLikes}} likes</p>
-          <p class="description"><span>{{this.artwork.getDescription()}}</span></p>
+          <p class="description"><span>{{this.artwork.description}}</span></p>
           <p class="post-time"></p>
         </div>
         <div class="list-comment">

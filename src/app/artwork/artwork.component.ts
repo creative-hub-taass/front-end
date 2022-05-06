@@ -3,10 +3,10 @@ import {LoginComponent} from "../login/login.component";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {ActivatedRoute} from "@angular/router";
 import {PublicationService} from "../_services/publication.service";
-import {Publication} from "../../_models/Publication";
 import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
 import {PublicCreator} from "../../_models/PublicCreator";
+import {Artwork} from "../../_models/Artwork";
 
 @Component({
   selector: 'app-artwork',
@@ -17,7 +17,7 @@ export class ArtworkComponent implements OnInit {
 
   isLoggedIn!: boolean;
   artworkId: string | null;
-  artwork!: Publication;
+  artwork!: Artwork;
   listUsersID!: string[];
   listUsers!: PublicUser[];
   countLikes!: number;
@@ -38,9 +38,8 @@ export class ArtworkComponent implements OnInit {
     if(this.artworkId!=null){
       this.publicationService.getPublication(this.artworkId).subscribe(
         (artwork) => {
-          this.artwork = new Publication(artwork);
-          console.log(this.artwork);
-          this.listUsersID = utility.buildUsersIDfromArtwork(this.artwork.getCreations());
+          this.artwork = new Artwork(artwork);
+          this.listUsersID = utility.buildUsersIDfromArtwork(this.artwork.creations);
 
           //chiamo il servizio utenti per avere le informazioni sui creator
           this.publicationService.getListofUser(this.listUsersID).subscribe(
@@ -51,7 +50,6 @@ export class ArtworkComponent implements OnInit {
                 this.listUsers.push(new PublicUser(element));
               })
               this.callServiceInteractions();
-              console.log(this.artwork);
               },
             (error) => { utility.onError(error, this.eventBusService);}
           )

@@ -11,6 +11,7 @@
   flex-direction: column;
   justify-content: space-around;
   display: none;
+  z-index: 2;
 }
 
 .side-menu .primary-pages .page, .side-menu .secondary-pages .page {
@@ -65,8 +66,10 @@
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(4px);
   padding-left: 15px;
-  padding-right: 5px;
-  position: static;
+  padding-right: 15px;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 }
 
 .navbar .logo {
@@ -88,6 +91,9 @@
   cursor: pointer;
 }
 
+.navbar .voices {
+  margin-right: 20px
+}
 /* Navbar links */
 .navbar .voices a {
   float: left;

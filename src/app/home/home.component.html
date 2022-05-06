@@ -1,28 +1,36 @@
 <section class="main">
   <div class="wrapper">
     <div class="left-col">
-      // status wrappers
+      <div class="grid">
       <div *ngFor="let element of listFeed" class="post">
         <div *ngFor="let user of element.getUsers()" class="info">
           <div class="user">
-            <div class="profile-pic"><img alt="" src="{{this.getCreator(user).getAvatar()}}">{{this.getUser(user).getUsername()}}
+            <div class="profile-pic">
+              <img alt="" src="{{this.getCreator(user).getAvatar()}}" class="profile-pic">
             </div>
-            <p [routerLink]="['/artwork/'+element.getInfoPost().id]" class="namePost" href="javascript:void(0)">
-              {{element.getInfoPost().name}} </p>
+            <div class="names">
+              <p class="nickname"> {{this.getUser(user).getNickname()}}</p>
+              <p class="username">@{{this.getUser(user).getUsername()}}</p>
+            </div>
           </div>
           <img alt="" class="options" src="../../assets/img/option.PNG">
         </div>
         <img *ngFor="let images of element.getInfoPost().images" alt="" class="post-image" src="{{images}}">
         <div class="post-content">
-          <div class="reaction-wrapper">
-            <img alt="" class="icon" src="../../assets/img/like.PNG">
-            <img alt="" class="icon" src="../../assets/img/comment.PNG">
-            <img alt="" class="icon" src="../../assets/img/send.PNG">
-            <img alt="" class="save icon" src="../../assets/img/save.PNG">
-          </div>
-          <p class="likes">{{element.getLikes()}} likes</p>
+          <p [routerLink]="['/artwork/'+element.getInfoPost().id]" class="post-name" href="javascript:void(0)">
+            {{element.getInfoPost().name}} </p>
           <p class="description"><span>{{element.getInfoPost().description}}</span></p>
-          <p class="post-time">{{element.getInfoPost().lastUpdate}}</p>
+          <p class="post-time">{{element.getInfoPost().lastUpdate | date:"dd MMM yyyy, HH:mm"}}</p>
+          <div class="reaction-wrapper">
+            <div class="count">
+              <img alt="" class="icon" src="../../assets/heart-outline.png">
+              <p class="count-label">{{element.getLikes()}} likes</p>
+            </div>
+            <div class="count">
+              <img alt="" class="icon" src="../../assets/bubble-outline.png">
+              <p class="count-label">{{element.getLikes()}} comments</p>
+            </div>
+          </div>
         </div>
         <div class="list-comment">
           <div class="comment">
@@ -33,6 +41,7 @@
           <img alt="" class="icon" src="../../assets/img/smile.PNG">
           <input class="comment-box" placeholder="Add a comment" type="text">
           <button class="comment-btn">post</button>
+        </div>
         </div>
       </div>
     </div>

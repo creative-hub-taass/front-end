@@ -4,11 +4,11 @@ export class PublicCreator {
   private creatorType!: string;
   private avatar!: string;
 
-  constructor(id: string, bio: string, creatorType: string, avatar: string) {
-    this.id = id;
-    this.bio = bio;
-    this.creatorType = creatorType;
-    this.avatar = avatar;
+  constructor(publicCreatorDto: any) {
+    this.id = publicCreatorDto.id;
+    this.bio = publicCreatorDto.bio;
+    this.creatorType = publicCreatorDto.creatorType;
+    this.avatar = publicCreatorDto.avatar;
   }
 
   public setId(id: string): void {

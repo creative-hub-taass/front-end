@@ -57,7 +57,7 @@ export class PublicUser {
 
 
   public getCreator(): PublicCreator {
-    return this.getCreator();
+    return this.creator;
   }
 
   public getInspirer(): string[] {

@@ -2,9 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {EventBusService} from "../../_shared/event-bus.service";
 import {LoginComponent} from "../login/login.component";
 import {FeedService} from "../_services/feed.service";
-import {EventData} from "../../_shared/event";
 import {Post} from "../../_models/Post";
 import {PublicUser} from "../../_models/PublicUser";
+import * as utility from "../../_shared/functions";
+import {PublicCreator} from "../../_models/PublicCreator";
+import {Publication} from "../../_models/Publication";
 
 @Component({
   selector: 'app-home',
@@ -22,36 +24,37 @@ export class HomeComponent implements OnInit {
 
   isLoggedIn!: boolean;
 
+
   constructor(
     private loginComponent: LoginComponent,
     private eventBusService: EventBusService,
     private feedService: FeedService
   ) {
-    this.isLoggedIn = loginComponent.isLoggedIn
+    this.isLoggedIn = loginComponent.isLoggedIn;
   }
 
   ngOnInit(): void {
     if (this.loginComponent.isLoggedIn) {
       this.feedService.getUserFeed(this.loginComponent.socialUser.id, 0).subscribe(
-        (listPublicationsDto) => {
+        (listPublicationsDto: Publication[]) => {
           //creo la lista degli ID pubblicazioni
           this.listPublicationsID = this.buildPublicationsID(listPublicationsDto);
           //creo la lista degli ID utenti
-          this.listUsersID = this.buildUsersID(listPublicationsDto);
+          this.listUsersID = utility.buildUsersIDfromPublication(listPublicationsDto);
 
           //chiamo il servizio utenti per avere le informazioni sui creator
           this.feedService.getListofUser(this.listUsersID).subscribe(
             (usersList: PublicUser[]) => {
               //ho la lista di tutti gli utenti del feed
-              this.listUsers = [];
+              this.listUsers = new Array<PublicUser>();
               usersList.forEach((element) => {
                 this.listUsers.push(new PublicUser(element));
               })
               //per ogni pubblicazione prendo la lista degli utenti
-              this.listFeed = [];
-              listPublicationsDto.forEach((publicationDto: any) => {
-                let usersofCreation: PublicUser[] = [];
-                let creationArray: any[] = publicationDto.creations;
+              this.listFeed = new Array<Post>();
+              listPublicationsDto.forEach((publicationDto: Publication) => {
+                let usersofCreation: PublicUser[] = new Array<PublicUser>();
+                let creationArray: any[] = (new Publication(publicationDto)).getCreations();
                 //per ogni utente nella lista degli utenti inserisco le informazioni all'interno di una lista temporanea
                 //della pubblicazione
                 creationArray.forEach((userCreation: any) => {
@@ -75,35 +78,35 @@ export class HomeComponent implements OnInit {
               console.log(this.listFeed);
             },
             (error) => {
-              this.onError(error);
+              utility.onError(error, this.eventBusService);
             }
           )
         },
         (error) => {
-          this.onError(error);
+          utility.onError(error, this.eventBusService);
         }
       )
     } else {
       this.feedService.getPublicFeed(0).subscribe(
-        (listPublicationsDto) => {
+        (listPublicationsDto: Publication[]) => {
           //creo la lista degli ID pubblicazioni
           this.listPublicationsID = this.buildPublicationsID(listPublicationsDto);
           //creo la lista degli ID utenti
-          this.listUsersID = this.buildUsersID(listPublicationsDto);
+          this.listUsersID = utility.buildUsersIDfromPublication(listPublicationsDto);
 
           //chiamo il servizio utenti per avere le informazioni sui creator
           this.feedService.getListofUser(this.listUsersID).subscribe(
             (usersList: PublicUser[]) => {
               //ho la lista di tutti gli utenti del feed
-              this.listUsers = [];
+              this.listUsers = new Array<PublicUser>();
               usersList.forEach((element) => {
                 this.listUsers.push(new PublicUser(element));
               })
               //per ogni pubblicazione prendo la lista degli utenti
-              this.listFeed = [];
-              listPublicationsDto.forEach((publicationDto: any) => {
-                let usersofCreation: PublicUser[] = [];
-                let creationArray: any[] = publicationDto.creations;
+              this.listFeed = new Array<Post>();
+              listPublicationsDto.forEach((publicationDto: Publication) => {
+                let usersofCreation: PublicUser[] = new Array<PublicUser>();
+                let creationArray: any[] = (new Publication(publicationDto)).getCreations();
                 //per ogni utente nella lista degli utenti inserisco le informazioni all'interno di una lista temporanea
                 //della pubblicazione
                 creationArray.forEach((userCreation: any) => {
@@ -127,28 +130,17 @@ export class HomeComponent implements OnInit {
               console.log(this.listFeed);
             },
             (error) => {
-              this.onError(error);
+              utility.onError(error, this.eventBusService);
             }
           )
         },
         (error) => {
-          this.onError(error);
+          utility.onError(error, this.eventBusService);
         }
       )
     }
   }
 
-  //costruisce la lista di id utente da mandare al servizio utenti
-  private buildUsersID(list: any[]): any[] {
-    let tmp: any[] = [];
-    list.forEach((PublicationDto) => {
-      let creationsDto: any[] = PublicationDto.creations;
-      creationsDto.forEach((userDto) => {
-        if (!tmp.includes(userDto.user)) tmp.push(userDto.user);
-      })
-    })
-    return tmp;
-  }
 
   //costruisce la lista di id pubblicazioni da mandare al servizio interazioni
   private buildPublicationsID(list: any[]): any[] {
@@ -181,7 +173,7 @@ export class HomeComponent implements OnInit {
         })
       },
       (error) => {
-        this.onError(error);
+        utility.onError(error, this.eventBusService);
       }
     )
     this.feedService.getCommentsList(this.listPublicationsID).subscribe(
@@ -191,27 +183,20 @@ export class HomeComponent implements OnInit {
         })
       },
       (error) => {
-        this.onError(error);
+        utility.onError(error, this.eventBusService);
       }
     )
   }
 
-  //restituisce un errore in console;
-  //nel caso sia errore http 403, manda evento di logout
-  private onError(error: any): void {
-    let message = error.error.message || error.error || error.message;
-    if (message.status == 403)
-      this.eventBusService.emit(new EventData('logout', null));
-    console.log(message.toString());
-  }
-
   //restituisce un oggetto PublicUser con le informazioni di un utente
+  //il metodo richiede il PublicUser e la lista di PublicUser in cui cercare
   getUser(userParam: PublicUser): PublicUser {
-    let tmp = new PublicUser(userParam);
-    let index = this.listUsers.findIndex((Object) => {
-      return Object.getId() == tmp.getId();
-    });
-    return this.listUsers[index];
+    return utility.getUser(userParam, this.listUsers);
   }
 
+  //restituisce un oggetto PublicCreator con le informazioni dell'utente creator
+  //il metodo richiede il PublicUser e la lista di utenti in cui cercare
+  getCreator(userParam: PublicUser): PublicCreator {
+    return utility.getCreator(userParam, this.listUsers);
+  }
 }

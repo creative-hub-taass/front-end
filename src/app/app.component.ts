@@ -11,7 +11,6 @@ import {EventBusService} from "../_shared/event-bus.service";
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-
   isLoggedIn = false;
   nickname?: string;
   title: string | undefined;

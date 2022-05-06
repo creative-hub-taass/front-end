@@ -16,16 +16,13 @@ import {
 })
 
 export class LoginComponent implements OnInit {
-
-  form: any = {
-    email: null,
-    password: null
+  form: { password: string; email: string } = {
+    email: "",
+    password: ""
   };
-
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = "";
-  nickname: any;
   socialUser !: SocialUser;
 
   constructor(
@@ -35,7 +32,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.socialAuthService.authState.subscribe(
       (user) => {
         if (user != null) {

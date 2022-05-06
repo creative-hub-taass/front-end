@@ -1,22 +1,23 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from "@angular/core";
+import {BrowserModule} from "@angular/platform-browser";
 import {HttpClientModule} from "@angular/common/http";
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {LoginComponent} from './login/login.component';
-import {RegisterComponent} from './register/register.component';
-import {authInterceptorProviders} from 'src/_helpers/auth.interceptor';
+import {AppRoutingModule} from "./app-routing.module";
+import {AppComponent} from "./app.component";
+import {LoginComponent} from "./login/login.component";
+import {RegisterComponent} from "./register/register.component";
+import {authInterceptorProviders} from "src/_helpers/auth.interceptor";
 import {FormsModule} from "@angular/forms";
-import {GoogleLoginProvider,
-        FacebookLoginProvider,
-        SocialLoginModule,
-        SocialAuthServiceConfig} from '@abacritt/angularx-social-login'
-import {CoolSocialLoginButtonsModule} from '@angular-cool/social-login-buttons';
-import { ProfileComponent } from './profile/profile.component';
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+  SocialAuthServiceConfig,
+  SocialLoginModule
+} from "@abacritt/angularx-social-login";
+import {CoolSocialLoginButtonsModule} from "@angular-cool/social-login-buttons";
+import {ProfileComponent} from "./profile/profile.component";
 
-import { HomeComponent } from './home/home.component';
-import { ArtworkComponent } from './artwork/artwork.component';
-
+import {HomeComponent} from "./home/home.component";
+import {ArtworkComponent} from "./artwork/artwork.component";
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { ArtworkComponent } from './artwork/artwork.component';
     RegisterComponent,
     ProfileComponent,
     HomeComponent,
-    ArtworkComponent,
+    ArtworkComponent
 
   ],
   imports: [
@@ -39,22 +40,22 @@ import { ArtworkComponent } from './artwork/artwork.component';
   ],
   providers: [authInterceptorProviders,
     {
-      provide: 'SocialAuthServiceConfig',
+      provide: "SocialAuthServiceConfig",
       useValue: {
         autoLogin: false,
         providers: [
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('560270769175115')
+            provider: new FacebookLoginProvider("560270769175115")
           },
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('420683265133-6d5kfiedo8shhorjhi3du2ia8ue210un.apps.googleusercontent.com')
+            provider: new GoogleLoginProvider("420683265133-6d5kfiedo8shhorjhi3du2ia8ue210un.apps.googleusercontent.com")
           }
         ]
       } as SocialAuthServiceConfig
     },
-      LoginComponent],
+    LoginComponent],
   bootstrap: [AppComponent]
 })
 

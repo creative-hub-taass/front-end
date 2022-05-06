@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 
-const API_GATEWAY_PUBLICATIONS = environment.apiGatewayUrl + 'api/v1/publications/';
-const API_GATEWAY_INTERACTIONS = environment.apiGatewayUrl + 'api/v1/interactions/';
-const API_GATEWAY_USERS = environment.apiGatewayUrl + 'api/v1/users/';
+const API_GATEWAY_PUBLICATIONS = environment.apiGatewayUrl + "api/v1/publications/";
+const API_GATEWAY_INTERACTIONS = environment.apiGatewayUrl + "api/v1/interactions/";
+const API_GATEWAY_USERS = environment.apiGatewayUrl + "api/v1/users/";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class PublicationService {
 
@@ -18,23 +18,23 @@ export class PublicationService {
   ) { }
 
   public getPublication(idPublication: string): Observable<any> {
-    return this.http.get(API_GATEWAY_PUBLICATIONS + '-/artworks/' + idPublication);
+    return this.http.get(API_GATEWAY_PUBLICATIONS + "-/artworks/" + idPublication);
   }
 
 
   public getLikes(idPublication: string): Observable<any> {
-    return this.http.get<any[]>(API_GATEWAY_INTERACTIONS + '-/likes/count/' + idPublication);
+    return this.http.get<any[]>(API_GATEWAY_INTERACTIONS + "-/likes/count/" + idPublication);
   }
 
   public getComments(idPublication: string): Observable<any> {
-    return this.http.get(API_GATEWAY_INTERACTIONS + '-/comments/' + idPublication);
+    return this.http.get(API_GATEWAY_INTERACTIONS + "-/comments/" + idPublication);
   }
 
   public getUser(userId: string): Observable<any> {
-    return this.http.get<any[]>(API_GATEWAY_USERS + '-/' + userId);
+    return this.http.get<any[]>(API_GATEWAY_USERS + "-/" + userId);
   }
 
   getListofUser(userIDs: string[]): Observable<any> {
-    return this.http.post<any[]>(API_GATEWAY_USERS + '-/public', userIDs);
+    return this.http.post<any[]>(API_GATEWAY_USERS + "-/public", userIDs);
   }
 }

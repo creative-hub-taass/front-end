@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 
-const TOKEN_KEY = 'auth-token';
-const REFRESH_TOKEN_KEY = 'auth-refresh';
-const USER_KEY = 'auth-user';
+const TOKEN_KEY = "auth-token";
+const REFRESH_TOKEN_KEY = "auth-refresh";
+const USER_KEY = "auth-user";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 
 /*

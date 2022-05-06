@@ -5,18 +5,18 @@
       <div class="post">
         <div class="info">
           <div class="user">
-            <div class="profile-pic"><img src="{{this.getCreator(this.listUsers[0]).getAvatar()}}" alt=""></div>
+            <div class="profile-pic"><img alt="" src="{{this.getCreator(this.listUsers[0]).getAvatar()}}"></div>
             <p class="namePost">{{this.artwork.name}}</p>
           </div>
-          <img src="../../assets/img/option.PNG" class="options" alt="">
+          <img alt="" class="options" src="../../assets/img/option.PNG">
         </div>
-        <img class="post-image" src="{{this.artwork.images[0]}}" alt="">
+        <img alt="" class="post-image" src="{{this.artwork.images[0]}}">
         <div class="post-content">
           <div class="reaction-wrapper">
-            <img src="../../assets/img/like.PNG" class="icon" alt="">
-            <img src="../../assets/img/comment.PNG" class="icon" alt="">
-            <img src="../../assets/img/send.PNG" class="icon" alt="">
-            <img src="../../assets/img/save.PNG" class="save icon" alt="">
+            <img alt="" class="icon" src="../../assets/img/like.PNG">
+            <img alt="" class="icon" src="../../assets/img/comment.PNG">
+            <img alt="" class="icon" src="../../assets/img/send.PNG">
+            <img alt="" class="save icon" src="../../assets/img/save.PNG">
           </div>
           <p class="likes">{{this.countLikes}} likes</p>
           <p class="description"><span>{{this.artwork.description}}</span></p>
@@ -27,9 +27,9 @@
             <p></p>
           </div>
         </div>
-        <div class="comment-wrapper" *ngIf="this.isLoggedIn">
-          <img src="../../assets/img/smile.PNG" class="icon" alt="">
-          <input type="text" class="comment-box" placeholder="Add a comment">
+        <div *ngIf="this.isLoggedIn" class="comment-wrapper">
+          <img alt="" class="icon" src="../../assets/img/smile.PNG">
+          <input class="comment-box" placeholder="Add a comment" type="text">
           <button class="comment-btn">post</button>
         </div>
       </div>

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - image: ghcr.io/creative-hub-taass/creative-hub-client:latest
-          name : creative-hub-client
+          name: creative-hub-client
           ports:
             - containerPort: 4200
       restartPolicy: Always

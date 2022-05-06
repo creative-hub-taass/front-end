@@ -1,26 +1,26 @@
 <div class="container">
-<div class="login-box">
+  <div class="login-box">
     <h2>Login</h2>
     <form
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && onSubmit()"
       *ngIf="!isLoggedIn"
       name="form"
-      (ngSubmit)="f.form.valid && onSubmit()"
-      #f="ngForm"
       novalidate
     >
       <div class="user-box">
         <label>E-mail</label>
-        <input type="text"
+        <input #email="ngModel"
+          [(ngModel)]="form.email"
           class="form-control"
           name="email"
-          [(ngModel)]="form.email"
           required
-          #email="ngModel"
+          type="text"
         />
         <div
+          *ngIf="email.errors && f.submitted"
           class="alert alert-danger"
           role="alert"
-          *ngIf="email.errors && f.submitted"
         >
           Email is required!
         </div>
@@ -28,18 +28,18 @@
       <div class="user-box">
         <label>Password</label>
         <input
-          type="password"
-          class="form-control"
-          name="password"
-          [(ngModel)]="form.password"
-          required
-          minlength="6"
           #password="ngModel"
+          [(ngModel)]="form.password"
+          class="form-control"
+          minlength="6"
+          name="password"
+          required
+          type="password"
         />
         <div
+          *ngIf="password.errors && f.submitted"
           class="alert alert-danger"
           role="alert"
-          *ngIf="password.errors && f.submitted"
         >
           <div *ngIf="password.errors?.['required']">Password is required!</div>
           <div *ngIf="password.errors?.['minlength']">
@@ -52,12 +52,12 @@
       <div *ngIf="!isLoggedIn">
         <p>or login using</p>
         <div class="social-logins-button">
-          <button class="empty-button" (click)="loginWithGoogle()">
+          <button (click)="loginWithGoogle()" class="empty-button">
             <img src="https://img.icons8.com/ios-glyphs/30/000000/google-logo--v1.png">
             Google
           </button>
-          <button class="empty-button" (click)="loginWithFacebook()">
-            <img src="https://img.icons8.com/ios-filled/50/000000/facebook--v1.png"/>
+          <button (click)="loginWithFacebook()" class="empty-button">
+            <img src="https://img.icons8.com/ios-filled/50/000000/facebook--v1.png" />
             Facebook
           </button>
         </div>
@@ -65,19 +65,19 @@
 
       <div class="form-group">
         <div
+          *ngIf="f.submitted && isLoginFailed"
           class="alert alert-danger"
           role="alert"
-          *ngIf="f.submitted && isLoginFailed"
         >
           Login failed: {{ errorMessage }}
         </div>
       </div>
     </form>
-    <div class="alert alert-success" *ngIf="isLoggedIn">
+    <div *ngIf="isLoggedIn" class="alert alert-success">
       Logged in successfully.
     </div>
-    <div class="alert login" *ngIf="!isLoggedIn">
-      <p>Don't have an account yet?<br><a href="javascript:void(0)" [routerLink]="['/registration']">Sign up</a></p>
+    <div *ngIf="!isLoggedIn" class="alert login">
+      <p>Don't have an account yet?<br><a [routerLink]="['/registration']" href="javascript:void(0)">Sign up</a></p>
     </div>
   </div>
 </div>

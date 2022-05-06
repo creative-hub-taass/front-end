@@ -1,11 +1,17 @@
-import {HTTP_INTERCEPTORS, HttpErrorResponse, HttpEvent} from '@angular/common/http';
-import { Injectable } from "@angular/core";
-import { HttpInterceptor, HttpHandler, HttpRequest } from "@angular/common/http";
-import { TokenStorageService } from "../app/_services/token-storage.service";
+import {
+  HTTP_INTERCEPTORS,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest
+} from "@angular/common/http";
+import {Injectable} from "@angular/core";
+import {TokenStorageService} from "../app/_services/token-storage.service";
 import {BehaviorSubject, catchError, filter, Observable, switchMap, take, throwError} from "rxjs";
 import {AuthService} from "../app/_services/auth.service";
 
-const TOKEN_HEADER_KEY = 'Authorization'; //per Spring Boot back-end
+const TOKEN_HEADER_KEY = "Authorization"; //per Spring Boot back-end
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -33,21 +39,22 @@ export class AuthInterceptor implements HttpInterceptor {
       authReq = this.addTokenHeader(req, token);
     }
     return next.handle(authReq).pipe(catchError(error => {
-      if (error instanceof HttpErrorResponse && !authReq.url.includes('login') && !authReq.url.includes('loginsocial') && error.status === 401) {
+      if (error instanceof HttpErrorResponse && !authReq.url.includes("login") && !authReq.url.includes("loginsocial") && error.status === 401) {
         return this.handle401Error(authReq, next);
       }
       return throwError(error);
     }));
   }
-/*
- * Intercetta richieste e risposte prima che siano utilizzate dal metodo intercept()
- * Questo metodo intercetta solo errori di status 401 che non contengano uri riferite ai diversi login
- * Utilizza il refreshTokenSubject per tenere traccia del refresh token corrente.
- * Se il refresh token è null allora nessun token è disponibile.
- *
- * Ad esempio, quando il refresh è in processo (isRefreshing = true), aspetteremo
- * finché refreshTokenSubject non abbia un valore non null (il nuovo accessToken è pronto e possiamo rimandare la richiesta)
- */
+
+  /*
+   * Intercetta richieste e risposte prima che siano utilizzate dal metodo intercept()
+   * Questo metodo intercetta solo errori di status 401 che non contengano uri riferite ai diversi login
+   * Utilizza il refreshTokenSubject per tenere traccia del refresh token corrente.
+   * Se il refresh token è null allora nessun token è disponibile.
+   *
+   * Ad esempio, quando il refresh è in processo (isRefreshing = true), aspetteremo
+   * finché refreshTokenSubject non abbia un valore non null (il nuovo accessToken è pronto e possiamo rimandare la richiesta)
+   */
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
@@ -78,9 +85,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private addTokenHeader(request: HttpRequest<any>, token: string) {
 
-      return request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) })
-    }
+    return request.clone({headers: request.headers.set(TOKEN_HEADER_KEY, "Bearer " + token)});
   }
+}
+
 export const authInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
 ];

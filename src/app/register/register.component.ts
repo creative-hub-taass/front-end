@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {AuthService} from "../_services/auth.service";
 import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"]
 })
 export class RegisterComponent implements OnInit {
 
@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   };
   isSuccessful = false;
   isRegistrationFailed = false;
-  errorMessage = '';
+  errorMessage = "";
 
   constructor(private authService: AuthService) {
   }

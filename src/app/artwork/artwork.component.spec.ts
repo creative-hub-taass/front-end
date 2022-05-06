@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
 
-import { ArtworkComponent } from './artwork.component';
+import {ArtworkComponent} from "./artwork.component";
 
-describe('ArtworkComponent', () => {
+describe("ArtworkComponent", () => {
   let component: ArtworkComponent;
   let fixture: ComponentFixture<ArtworkComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ArtworkComponent ]
+      declarations: [ArtworkComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('ArtworkComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

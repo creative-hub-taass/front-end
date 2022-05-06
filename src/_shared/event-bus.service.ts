@@ -1,10 +1,9 @@
-import {Injectable, OnDestroy, OnInit} from '@angular/core';
+import {Injectable} from "@angular/core";
 import {filter, map, Subject, Subscription} from "rxjs";
-import {TokenStorageService} from "../app/_services/token-storage.service";
 import {EventData} from "./event";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 /*
  * Manderemo l'evento logout all'App component quando lo status di risposta ci dice

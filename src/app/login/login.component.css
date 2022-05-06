@@ -5,6 +5,7 @@
   height: 80vh;
 
 }
+
 .login-box {
   vertical-align: middle;
   margin: auto;
@@ -21,7 +22,7 @@
 }
 
 .login-box h2 {
- padding-top: 20px;
+  padding-top: 20px;
   font-weight: 500;
   color: #000;
 }

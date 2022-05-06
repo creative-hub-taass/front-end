@@ -1,14 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {TokenStorageService} from "./_services/token-storage.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
-import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {EventBusService} from "../_shared/event-bus.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
 })
 
 export class AppComponent implements OnInit, OnDestroy {
@@ -26,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
-    if(this.isLoggedIn){
+    if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
       this.nickname = user.nickname;
     }
@@ -34,13 +33,13 @@ export class AppComponent implements OnInit, OnDestroy {
    * Possiamo mandare eventi al bus e se un listener è registrato con l'eventName,
    * eseguirà una callback alla funzione action
    */
-    this.eventBusSub = this.eventBusService.on('logout', () => {
+    this.eventBusSub = this.eventBusService.on("logout", () => {
       this.logout();
-    })
+    });
   }
 
   ngOnDestroy(): void {
-    if(this.eventBusSub)
+    if (this.eventBusSub)
       this.eventBusSub.unsubscribe();
   }
 

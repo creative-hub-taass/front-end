@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {AuthService} from "../_services/auth.service";
 import {TokenStorageService} from "../_services/token-storage.service";
-import {HttpErrorResponse, HttpHeaderResponse, HttpHeaders, HttpResponse} from "@angular/common/http";
+import {HttpErrorResponse} from "@angular/common/http";
 import {
   FacebookLoginProvider,
   GoogleLoginProvider,
@@ -10,9 +10,9 @@ import {
 } from "@abacritt/angularx-social-login";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"]
 })
 
 export class LoginComponent implements OnInit {
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   isLoggedIn = false;
   isLoginFailed = false;
-  errorMessage = '';
+  errorMessage = "";
   nickname: any;
   socialUser !: SocialUser;
 
@@ -38,13 +38,13 @@ export class LoginComponent implements OnInit {
 
     this.socialAuthService.authState.subscribe(
       (user) => {
-        if(user != null){
+        if (user != null) {
           this.socialUser = user;
-          this.authService.loginSocial(this.socialUser.firstName+' '+this.socialUser.lastName, this.socialUser.email,this.socialUser.authToken).subscribe(
+          this.authService.loginSocial(this.socialUser.firstName + " " + this.socialUser.lastName, this.socialUser.email, this.socialUser.authToken).subscribe(
             (user) => {
               this.tokenStorage.saveUser(user.body);
-              this.tokenStorage.saveToken(user.headers.get('X-ACCESS-TOKEN'));
-              this.tokenStorage.saveRefresh(user.headers.get('X-REFRESH-TOKEN'));
+              this.tokenStorage.saveToken(user.headers.get("X-ACCESS-TOKEN"));
+              this.tokenStorage.saveRefresh(user.headers.get("X-REFRESH-TOKEN"));
               this.isLoginFailed = false;
               this.isLoggedIn = true;
               window.location.reload();
@@ -53,23 +53,23 @@ export class LoginComponent implements OnInit {
               this.isLoginFailed = true;
               this.errorMessage = error.error;
             }
-          )
+          );
         }
       },
       (error) => {
         this.isLoginFailed = true;
         this.errorMessage = error.errorMessage;
       }
-    )
+    );
   }
 
   onSubmit(): void {
     const {email, password} = this.form;
     this.authService.login(email, password).subscribe(
-      (data)=> {
+      (data) => {
         this.tokenStorage.saveUser(data.body);
-        this.tokenStorage.saveToken(data.headers.get('X-ACCESS-TOKEN'));
-        this.tokenStorage.saveRefresh(data.headers.get('X-REFRESH-TOKEN'));
+        this.tokenStorage.saveToken(data.headers.get("X-ACCESS-TOKEN"));
+        this.tokenStorage.saveRefresh(data.headers.get("X-REFRESH-TOKEN"));
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         window.location.reload();
@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
       ((error: HttpErrorResponse) => {
         this.isLoginFailed = true;
         this.errorMessage = error.error;
-      }))
+      }));
   }
 
   loginWithGoogle() {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {LoginComponent} from "../login/login.component";
 import {FeedService} from "../_services/feed.service";
@@ -8,9 +8,9 @@ import * as utility from "../../_shared/functions";
 import {PublicCreator} from "../../_models/PublicCreator";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit {
 
@@ -48,10 +48,10 @@ export class HomeComponent implements OnInit {
               this.listUsers = new Array<PublicUser>();
               usersList.forEach((element) => {
                 this.listUsers.push(new PublicUser(element));
-              })
+              });
               //per ogni pubblicazione prendo la lista degli utenti
               this.listFeed = new Array<PublicationInfo>();
-              listPublicationsDto.forEach((publicationDto : any) => {
+              listPublicationsDto.forEach((publicationDto: any) => {
                 let usersofCreation: PublicUser[] = new Array<PublicUser>();
                 let creationArray: any[] = (publicationDto.creations);
                 //per ogni utente nella lista degli utenti inserisco le informazioni all'interno di una lista temporanea
@@ -59,13 +59,13 @@ export class HomeComponent implements OnInit {
                 creationArray.forEach((userCreation: any) => {
                   let index = this.listUsers.findIndex(object => {
                     return object.id == userCreation.user;
-                  })
+                  });
                   usersofCreation.push(usersList[index]);
-                })
+                });
 
                 //creo il feed
                 this.listFeed.push(new PublicationInfo(publicationDto, usersofCreation));
-              })
+              });
 
               //ho le informazioni degli utenti in this.listUsers
               //ho le informazioni delle pubblicazioni in listPublicationsDto
@@ -79,12 +79,12 @@ export class HomeComponent implements OnInit {
             (error) => {
               utility.onError(error, this.eventBusService);
             }
-          )
+          );
         },
         (error) => {
           utility.onError(error, this.eventBusService);
         }
-      )
+      );
     } else {
       this.feedService.getPublicFeed(0).subscribe(
         (listPublicationsDto) => {
@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit {
               this.listUsers = new Array<PublicUser>();
               usersList.forEach((element) => {
                 this.listUsers.push(new PublicUser(element));
-              })
+              });
               //per ogni pubblicazione prendo la lista degli utenti
               this.listFeed = new Array<PublicationInfo>();
               listPublicationsDto.forEach((publicationDto: any) => {
@@ -112,13 +112,13 @@ export class HomeComponent implements OnInit {
                 creationArray.forEach((userCreation: any) => {
                   let index = this.listUsers.findIndex(object => {
                     return object.id == userCreation.user;
-                  })
+                  });
                   usersofCreation.push(usersList[index]);
-                })
+                });
 
                 //creo il feed
                 this.listFeed.push(new PublicationInfo(publicationDto, usersofCreation));
-              })
+              });
 
               //ho le informazioni degli utenti in this.listUsers
               //ho le informazioni delle pubblicazioni in listPublicationsDto
@@ -132,25 +132,18 @@ export class HomeComponent implements OnInit {
             (error) => {
               utility.onError(error, this.eventBusService);
             }
-          )
+          );
         },
         (error) => {
           utility.onError(error, this.eventBusService);
         }
-      )
+      );
     }
   }
 
-
-  //costruisce la lista di id pubblicazioni da mandare al servizio interazioni
-  private buildPublicationsID(list: any[]): any[] {
-    if (list == undefined) return [];
-
-    let tmp: any[] = [];
-    list.forEach((element) => {
-      tmp.push(element.id);
-    })
-    return tmp;
+  //il metodo richiede il PublicUser e la lista di PublicUser in cui cercare
+  getUser(userParam: PublicUser): PublicUser {
+    return utility.getUser(userParam, this.listUsers);
   }
 
   /*
@@ -164,39 +157,47 @@ export class HomeComponent implements OnInit {
     }
   */
 
+  //il metodo richiede il PublicUser e la lista di utenti in cui cercare
+  getCreator(userParam: PublicUser): PublicCreator {
+    return utility.getCreator(userParam, this.listUsers);
+  }
+
+  //restituisce un oggetto PublicUser con le informazioni di un utente
+
+  //costruisce la lista di id pubblicazioni da mandare al servizio interazioni
+  private buildPublicationsID(list: any[]): any[] {
+    if (list == undefined) return [];
+
+    let tmp: any[] = [];
+    list.forEach((element) => {
+      tmp.push(element.id);
+    });
+    return tmp;
+  }
+
+  //restituisce un oggetto PublicCreator con le informazioni dell'utente creator
+
   //esegue le chiamate al servizio interazioni per ricevere i likes e i commenti di tutte le pubblicazioni
   private callServiceInteractions() {
     this.feedService.getLikesList(this.listPublicationsID).subscribe(
       (likesList) => {
         this.listFeed.forEach((feedHome) => {
           feedHome.setLikes(likesList[feedHome.getInfoPost().id]);
-        })
+        });
       },
       (error) => {
         utility.onError(error, this.eventBusService);
       }
-    )
+    );
     this.feedService.getCommentsList(this.listPublicationsID).subscribe(
       (commentList) => {
         this.listFeed.forEach((feedHome) => {
           feedHome.setListComments(commentList[feedHome.getInfoPost().id]);
-        })
+        });
       },
       (error) => {
         utility.onError(error, this.eventBusService);
       }
-    )
-  }
-
-  //restituisce un oggetto PublicUser con le informazioni di un utente
-  //il metodo richiede il PublicUser e la lista di PublicUser in cui cercare
-  getUser(userParam: PublicUser): PublicUser {
-    return utility.getUser(userParam, this.listUsers);
-  }
-
-  //restituisce un oggetto PublicCreator con le informazioni dell'utente creator
-  //il metodo richiede il PublicUser e la lista di utenti in cui cercare
-  getCreator(userParam: PublicUser): PublicCreator {
-    return utility.getCreator(userParam, this.listUsers);
+    );
   }
 }

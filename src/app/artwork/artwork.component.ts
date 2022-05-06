@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {LoginComponent} from "../login/login.component";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {ActivatedRoute} from "@angular/router";
@@ -9,9 +9,9 @@ import {PublicCreator} from "../../_models/PublicCreator";
 import {Artwork} from "../../_models/Artwork";
 
 @Component({
-  selector: 'app-artwork',
-  templateUrl: './artwork.component.html',
-  styleUrls: ['./artwork.component.css']
+  selector: "app-artwork",
+  templateUrl: "./artwork.component.html",
+  styleUrls: ["./artwork.component.css"]
 })
 export class ArtworkComponent implements OnInit {
 
@@ -30,12 +30,12 @@ export class ArtworkComponent implements OnInit {
     private publicationService: PublicationService,
     public route: ActivatedRoute
   ) {
-    this.artworkId = this.route.snapshot.paramMap.get('id');
+    this.artworkId = this.route.snapshot.paramMap.get("id");
     this.isLoggedIn = loginComponent.isLoggedIn;
   }
 
   ngOnInit(): void {
-    if(this.artworkId!=null){
+    if (this.artworkId != null) {
       this.publicationService.getPublication(this.artworkId).subscribe(
         (artwork) => {
           this.artwork = new Artwork(artwork);
@@ -48,44 +48,46 @@ export class ArtworkComponent implements OnInit {
               this.listUsers = new Array<PublicUser>();
               usersList.forEach((element) => {
                 this.listUsers.push(new PublicUser(element));
-              })
+              });
               this.callServiceInteractions();
-              },
+            },
             (error) => { utility.onError(error, this.eventBusService);}
-          )
+          );
         },
         (error) => { utility.onError(error, this.eventBusService);}
-      )
+      );
     }
   }
 
-  private callServiceInteractions() {
-    if(this.artworkId!=null){
-      this.publicationService.getLikes(this.artworkId).subscribe(
-        (likesCount) => {
-          this.countLikes = likesCount;
-        },
-        (error) => { utility.onError(error,this.eventBusService); }
-      )
-      this.publicationService.getComments(this.artworkId).subscribe(
-        (listComments) => {
-          this.listComments = listComments;
-        },
-        (error) => { utility.onError(error, this.eventBusService); }
-      )
-    }
-
-  }
-
-  //restituisce un oggetto PublicUser con le informazioni di un utente
   //il metodo richiede il PublicUser e la lista di PublicUser in cui cercare
   getUser(userParam: PublicUser): PublicUser {
     return utility.getUser(userParam, this.listUsers);
   }
 
-  //restituisce un oggetto PublicCreator con le informazioni dell'utente creator
+  //restituisce un oggetto PublicUser con le informazioni di un utente
+
   //il metodo richiede il PublicUser e la lista di utenti in cui cercare
   getCreator(userParam: PublicUser): PublicCreator {
     return utility.getCreator(userParam, this.listUsers);
+  }
+
+  //restituisce un oggetto PublicCreator con le informazioni dell'utente creator
+
+  private callServiceInteractions() {
+    if (this.artworkId != null) {
+      this.publicationService.getLikes(this.artworkId).subscribe(
+        (likesCount) => {
+          this.countLikes = likesCount;
+        },
+        (error) => { utility.onError(error, this.eventBusService); }
+      );
+      this.publicationService.getComments(this.artworkId).subscribe(
+        (listComments) => {
+          this.listComments = listComments;
+        },
+        (error) => { utility.onError(error, this.eventBusService); }
+      );
+    }
+
   }
 }

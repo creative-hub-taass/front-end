@@ -24,6 +24,7 @@
 .primary-pages {
   margin-top: 80px;
 }
+
 .side-menu .primary-pages .page a, .side-menu .secondary-pages .page a {
   font-family: "Jost";
   font-weight: 100;
@@ -67,6 +68,7 @@
   padding-right: 5px;
   position: static;
 }
+
 .navbar .logo {
   font-family: "Jost";
   display: flex;

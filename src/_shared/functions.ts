@@ -7,7 +7,7 @@ import {PublicCreator} from "../_models/PublicCreator";
 //nel caso sia errore http 403, manda evento di logout
 export function onError(error: any, eventBusService: EventBusService): void {
   let message = error.error.message || error.error || error.message;
-  if (message.status == 403) eventBusService.emit(new EventData('logout', null));
+  if (message.status == 403) eventBusService.emit(new EventData("logout", null));
   console.log(message.toString());
 }
 
@@ -18,16 +18,16 @@ export function buildUsersIDfromPublication(list: any[]): any[] {
     let creationsDto: any[] = PublicationDto.creations;
     creationsDto.forEach((userDto) => {
       if (!tmp.includes(userDto.user)) tmp.push(userDto.user);
-    })
-  })
+    });
+  });
   return tmp;
 }
 
 export function buildUsersIDfromArtwork(list: any[]): any[] {
-  let tmp: any[] = []
+  let tmp: any[] = [];
   list.forEach((userDto) => {
-    if(!tmp.includes(userDto.user)) tmp.push(userDto.user);
-  })
+    if (!tmp.includes(userDto.user)) tmp.push(userDto.user);
+  });
   return tmp;
 }
 
@@ -46,7 +46,7 @@ export function getUser(userParam: PublicUser, listUsers: PublicUser[]): PublicU
 export function getCreator(userParam: PublicUser, listUsers: PublicUser[]): PublicCreator {
   let tmp = new PublicUser(userParam);
   let index = listUsers.findIndex((Object) => {
-    return Object.getId() == tmp.getId()
+    return Object.getId() == tmp.getId();
   });
   return new PublicCreator(listUsers[index].getCreator());
 }

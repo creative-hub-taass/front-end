@@ -2,6 +2,6 @@ version: "3"
 services:
   creative-hub-client:
     build: .
-    image: ghcr.io/creative-hub-taass/creative-hub-client:latest 
-    ports: 
+    image: ghcr.io/creative-hub-taass/creative-hub-client:latest
+    ports:
       - "4200:4200"

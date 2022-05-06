@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiGatewayUrl: process.env.NG_APP_GATEWAY_URL + "/"
 };

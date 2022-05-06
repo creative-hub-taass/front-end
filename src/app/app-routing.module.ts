@@ -7,6 +7,7 @@ import {ProfileComponent} from "./profile/profile.component";
 import {HomeComponent} from "./home/home.component";
 import {ArtworkComponent} from "./artwork/artwork.component";
 import {EventComponent} from "./event/event.component";
+import {PostComponent} from "./post/post.component";
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: "login", component: LoginComponent},
   {path: "users", component: ProfileComponent},
   {path: "artwork/:id", component: ArtworkComponent},
-  {path: "event/:id", component: EventComponent}
+  {path: "event/:id", component: EventComponent},
+  {path: "post/:id", component: PostComponent}
 ];
 
 @NgModule({

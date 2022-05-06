@@ -19,6 +19,7 @@ import {ProfileComponent} from "./profile/profile.component";
 import {HomeComponent} from "./home/home.component";
 import {ArtworkComponent} from "./artwork/artwork.component";
 import { EventComponent } from './event/event.component';
+import { PostComponent } from './post/post.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { EventComponent } from './event/event.component';
     ProfileComponent,
     HomeComponent,
     ArtworkComponent,
-    EventComponent
+    EventComponent,
+    PostComponent
 
   ],
   imports: [

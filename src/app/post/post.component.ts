@@ -1,28 +1,27 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit } from '@angular/core';
+import {Post} from "../../_models/Post";
+import {PublicUser} from "../../_models/PublicUser";
 import {LoginComponent} from "../login/login.component";
 import {EventBusService} from "../../_shared/event-bus.service";
-import {ActivatedRoute} from "@angular/router";
 import {PublicationService} from "../_services/publication.service";
-import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
+import {ActivatedRoute} from "@angular/router";
 import {PublicCreator} from "../../_models/PublicCreator";
-import {Artwork} from "../../_models/Artwork";
 
 @Component({
-  selector: "app-artwork",
-  templateUrl: "./artwork.component.html",
-  styleUrls: ["./artwork.component.css"]
+  selector: 'app-post',
+  templateUrl: './post.component.html',
+  styleUrls: ['./post.component.css']
 })
-export class ArtworkComponent implements OnInit {
+export class PostComponent implements OnInit {
 
   isLoggedIn!: boolean;
-  artworkId: string | null;
-  artwork!: Artwork;
+  postId: string | null;
+  post!: Post;
   listUsersID!: string[];
   listUsers!: PublicUser[];
   countLikes!: number;
   listComments!: any[];
-
 
   constructor(
     private loginComponent: LoginComponent,
@@ -30,32 +29,33 @@ export class ArtworkComponent implements OnInit {
     private publicationService: PublicationService,
     public route: ActivatedRoute
   ) {
-    this.artworkId = this.route.snapshot.paramMap.get("id");
+    this.postId = this.route.snapshot.paramMap.get("id");
     this.isLoggedIn = loginComponent.isLoggedIn;
   }
 
   ngOnInit(): void {
-    if (this.artworkId != null) {
-      this.publicationService.getArtwork(this.artworkId).subscribe(
-        (artwork) => {
-          this.artwork = new Artwork(artwork);
-          this.listUsersID = utility.buildUsersIDfromSpecificType(this.artwork.creations);
+    if(this.postId != null) {
+      this.publicationService.getPost(this.postId).subscribe(
+        (post) => {
+          this.post = post;
+          this.listUsersID = utility.buildUsersIDfromSpecificType(this.post.creations);
 
           //chiamo il servizio utenti per avere le informazioni sui creator
           this.publicationService.getListofUser(this.listUsersID).subscribe(
             (usersList: PublicUser[]) => {
-              //ho la lista di tutti gli utenti dell'artwork
+              //ho la lista di tutti gli utenti del post
               this.listUsers = new Array<PublicUser>();
               usersList.forEach((element) => {
                 this.listUsers.push(new PublicUser(element));
               });
               this.callServiceInteractions();
             },
-            (error) => { utility.onError(error, this.eventBusService);}
-          );
+            (error) => { utility.onError(error, this.eventBusService); }
+          )
+
         },
-        (error) => { utility.onError(error, this.eventBusService);}
-      );
+        (error) => { utility.onError(error, this.eventBusService); }
+      )
     }
   }
 
@@ -72,14 +72,14 @@ export class ArtworkComponent implements OnInit {
 
 
   private callServiceInteractions() {
-    if (this.artworkId != null) {
-      this.publicationService.getLikes(this.artworkId).subscribe(
+    if (this.postId!= null) {
+      this.publicationService.getLikes(this.postId).subscribe(
         (likesCount) => {
           this.countLikes = likesCount;
         },
         (error) => { utility.onError(error, this.eventBusService); }
       );
-      this.publicationService.getComments(this.artworkId).subscribe(
+      this.publicationService.getComments(this.postId).subscribe(
         (listComments) => {
           this.listComments = listComments;
         },

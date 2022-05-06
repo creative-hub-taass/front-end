@@ -6,7 +6,9 @@ import {PublicationInfo} from "../../_models/PublicationInfo";
 import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
 import {PublicCreator} from "../../_models/PublicCreator";
-
+import {Artwork} from "../../_models/Artwork";
+import {Event} from "../../_models/Event"
+import {Post} from "../../_models/Post";
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
@@ -199,5 +201,17 @@ export class HomeComponent implements OnInit {
         utility.onError(error, this.eventBusService);
       }
     );
+  }
+
+  //restituisce un oggetto Artwork | Event | Post in base al currentType
+  getCurrentPublication(publicationInfo: PublicationInfo): Event | Post | Artwork{
+    switch (publicationInfo.publication.publicationType){
+      case "artwork":
+        return new Artwork(publicationInfo);
+      case "event":
+        return new Event(publicationInfo);
+      case "post":
+        return new Post(publicationInfo);
+    }
   }
 }

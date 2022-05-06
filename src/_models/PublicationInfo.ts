@@ -1,22 +1,27 @@
 import {Artwork} from "./Artwork";
 import {PublicUser} from "./PublicUser";
-import {Publication} from "./Publication";
 import {Event} from "./Event";
 import {Post} from "./Post";
 
+export interface Comment {
+  readonly id: string;
+  readonly userId: string;
+  readonly publicationId: string;
+  readonly message: string;
+}
 
 export class PublicationInfo {
-  readonly publication: Publication;
+  readonly publication: Artwork | Event | Post;
   readonly creators: PublicUser[];
   private likes: number = 0;
-  private comments: any[] = [];
+  private comments: Comment[] = [];
 
   constructor(dto: any, users: any[]) {
     this.publication = PublicationInfo.parseDto(dto);
     this.creators = users;
   }
 
-  private static parseDto(dto: any): Publication {
+  private static parseDto(dto: any): Artwork | Event | Post {
     if ("creationDateTime" in dto) {
       return new Artwork(dto);
     } else if ("startDateTime" in dto) {
@@ -26,28 +31,23 @@ export class PublicationInfo {
     }
   }
 
-
-  public setLikes(likes: number): void {
+  public setLikes(likes: number) {
     this.likes = likes;
   }
 
-  public setListComments(list: any[]): void {
+  public setListComments(list: any[]) {
     this.comments = list;
   }
 
-  public getLikes(): number {
+  public getLikes() {
     return this.likes;
   }
 
-  public getComments(): any[] {
+  public getComments() {
     return this.comments;
   }
 
-  public getInfoPost(): any {
-    return this.publication;
-  }
-
-  public getUsers(): PublicUser[] {
+  public getUsers() {
     return this.creators;
   }
 

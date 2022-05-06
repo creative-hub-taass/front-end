@@ -3,36 +3,40 @@
     <div class="left-col">
       // status wrappers
       <div *ngFor="let element of listFeed" class="post">
-        <div *ngFor="let user of element.getUsers()" class="info">
-          <div class="user">
-            <div class="profile-pic"><img alt="" src="{{this.getCreator(user).getAvatar()}}" [routerLink]="['/post/'+element.getInfoPost().id]">{{this.getUser(user).getUsername()}}
+        <div *ngIf="element.publication.publicationType == 'artwork'">
+          <div *ngFor="let user of element.getUsers()" class="info">
+            <div class="user">
+              <div class="profile-pic">
+                <img alt="" src="{{this.getCreator(user).getAvatar()}}">{{this.getUser(user).getUsername()}}
+              </div>
+              <p [routerLink]="['/artwork/'+element.publication.id]" class="namePost" href="javascript:void(0)">
+                {{element.publication.name}} </p>
             </div>
-            <p [routerLink]="['/artwork/'+element.getInfoPost().id]" class="namePost" href="javascript:void(0)">
-              {{element.getInfoPost().name}} </p>
+            <img alt="" class="options" src="../../assets/img/option.PNG">
           </div>
-          <img alt="" class="options" src="../../assets/img/option.PNG">
-        </div>
-        <img *ngFor="let images of element.getInfoPost().images" alt="" class="post-image" src="{{images}}">
-        <div class="post-content">
-          <div class="reaction-wrapper">
-            <img alt="" class="icon" src="../../assets/img/like.PNG">
-            <img alt="" class="icon" src="../../assets/img/comment.PNG">
-            <img alt="" class="icon" src="../../assets/img/send.PNG">
-            <img alt="" class="save icon" src="../../assets/img/save.PNG">
+          <img *ngFor="let images of element.publication.images" alt="" class="post-image" src="{{images}}">
+          <div class="post-content">
+            <div class="reaction-wrapper">
+              <img alt="" class="icon" src="../../assets/img/like.PNG">
+              <img alt="" class="icon" src="../../assets/img/comment.PNG">
+              <img alt="" class="icon" src="../../assets/img/send.PNG">
+              <img alt="" class="save icon" src="../../assets/img/save.PNG">
+            </div>
+            <p class="likes">{{element.getLikes()}} likes</p>
+            <p class="description"><span>{{element.publication.description}}</span></p>
+            <p [routerLink]="['/event/'+element.publication.id]"
+              class="post-time">{{element.publication.lastUpdate}}</p>
           </div>
-          <p class="likes">{{element.getLikes()}} likes</p>
-          <p class="description"><span>{{element.getInfoPost().description}}</span></p>
-          <p class="post-time" [routerLink]="['/event/'+element.getInfoPost().id]">{{element.publication.lastUpdate}}</p>
-        </div>
-        <div class="list-comment">
-          <div class="comment">
-            <p *ngFor="let comment of element.getComments()">{{comment}}</p>
+          <div class="list-comment">
+            <div class="comment">
+              <p *ngFor="let comment of element.getComments()">{{comment}}</p>
+            </div>
           </div>
-        </div>
-        <div *ngIf="this.isLoggedIn" class="comment-wrapper">
-          <img alt="" class="icon" src="../../assets/img/smile.PNG">
-          <input class="comment-box" placeholder="Add a comment" type="text">
-          <button class="comment-btn">post</button>
+          <div *ngIf="this.isLoggedIn" class="comment-wrapper">
+            <img alt="" class="icon" src="../../assets/img/smile.PNG">
+            <input class="comment-box" placeholder="Add a comment" type="text">
+            <button class="comment-btn">post</button>
+          </div>
         </div>
       </div>
     </div>

@@ -7,24 +7,20 @@ import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
 import {PublicCreator} from "../../_models/PublicCreator";
 import {Artwork} from "../../_models/Artwork";
-import {Event} from "../../_models/Event"
+import {Event} from "../../_models/Event";
 import {Post} from "../../_models/Post";
+
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit {
-
   listPublicationsID!: any[];
   listUsersID!: any[];
-
   listFeed!: PublicationInfo[];
-
   listUsers!: PublicUser[];
-
   isLoggedIn!: boolean;
-
 
   constructor(
     private loginComponent: LoginComponent,
@@ -143,12 +139,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  //il metodo richiede il PublicUser e la lista di PublicUser in cui cercare
+  //restituisce un oggetto PublicUser con le informazioni di un utente
   getUser(userParam: PublicUser): PublicUser {
     return utility.getUser(userParam, this.listUsers);
   }
 
   /*
+  //il metodo richiede il PublicUser e la lista di PublicUser in cui cercare
     private callServiceUsers() {
       this.feedService.getListofUser(this.listUsersID).subscribe(
         (usersList) => {
@@ -159,14 +156,24 @@ export class HomeComponent implements OnInit {
     }
   */
 
-  //il metodo richiede il PublicUser e la lista di utenti in cui cercare
+  //restituisce un oggetto PublicCreator con le informazioni dell'utente creator
   getCreator(userParam: PublicUser): PublicCreator {
     return utility.getCreator(userParam, this.listUsers);
   }
 
-  //restituisce un oggetto PublicUser con le informazioni di un utente
+  //restituisce un oggetto Artwork | Event | Post in base al currentType
+  getCurrentPublication(publicationInfo: PublicationInfo): Event | Post | Artwork {
+    switch (publicationInfo.publication.publicationType) {
+      case "artwork":
+        return publicationInfo.publication;
+      case "event":
+        return publicationInfo.publication;
+      case "post":
+        return publicationInfo.publication;
+    }
+  }
 
-  //costruisce la lista di id pubblicazioni da mandare al servizio interazioni
+  //costruisce la lista di ID pubblicazioni da mandare al servizio interazioni
   private buildPublicationsID(list: any[]): any[] {
     if (list == undefined) return [];
 
@@ -177,14 +184,12 @@ export class HomeComponent implements OnInit {
     return tmp;
   }
 
-  //restituisce un oggetto PublicCreator con le informazioni dell'utente creator
-
   //esegue le chiamate al servizio interazioni per ricevere i likes e i commenti di tutte le pubblicazioni
   private callServiceInteractions() {
     this.feedService.getLikesList(this.listPublicationsID).subscribe(
       (likesList) => {
         this.listFeed.forEach((feedHome) => {
-          feedHome.setLikes(likesList[feedHome.getInfoPost().id]);
+          feedHome.setLikes(likesList[feedHome.publication.id]);
         });
       },
       (error) => {
@@ -194,24 +199,12 @@ export class HomeComponent implements OnInit {
     this.feedService.getCommentsList(this.listPublicationsID).subscribe(
       (commentList) => {
         this.listFeed.forEach((feedHome) => {
-          feedHome.setListComments(commentList[feedHome.getInfoPost().id]);
+          feedHome.setListComments(commentList[feedHome.publication.id]);
         });
       },
       (error) => {
         utility.onError(error, this.eventBusService);
       }
     );
-  }
-
-  //restituisce un oggetto Artwork | Event | Post in base al currentType
-  getCurrentPublication(publicationInfo: PublicationInfo): Event | Post | Artwork{
-    switch (publicationInfo.publication.publicationType){
-      case "artwork":
-        return new Artwork(publicationInfo);
-      case "event":
-        return new Event(publicationInfo);
-      case "post":
-        return new Post(publicationInfo);
-    }
   }
 }

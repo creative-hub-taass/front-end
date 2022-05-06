@@ -23,7 +23,7 @@ export function buildUsersIDfromPublication(list: any[]): any[] {
   return tmp;
 }
 
-export function buildUsersIDfromArtwork(list: any[]): any[] {
+export function buildUsersIDfromSpecificType(list: any[]): any[] {
   let tmp: any[] = [];
   list.forEach((userDto) => {
     if (!tmp.includes(userDto.user)) tmp.push(userDto.user);

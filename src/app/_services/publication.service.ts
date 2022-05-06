@@ -17,10 +17,17 @@ export class PublicationService {
     private http: HttpClient
   ) { }
 
-  public getPublication(idPublication: string): Observable<any> {
+  public getArtwork(idPublication: string): Observable<any> {
     return this.http.get(API_GATEWAY_PUBLICATIONS + "-/artworks/" + idPublication);
   }
 
+  public getEvent(idPublication: string): Observable<any> {
+    return this.http.get(API_GATEWAY_PUBLICATIONS + "-/events/" + idPublication);
+  }
+
+  public getPost(idPublication: string): Observable<any> {
+    return this.http.get(API_GATEWAY_PUBLICATIONS + "-/posts/" + idPublication);
+  }
 
   public getLikes(idPublication: string): Observable<any> {
     return this.http.get<any[]>(API_GATEWAY_INTERACTIONS + "-/likes/count/" + idPublication);

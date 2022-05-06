@@ -36,15 +36,15 @@ export class ArtworkComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.artworkId != null) {
-      this.publicationService.getPublication(this.artworkId).subscribe(
+      this.publicationService.getArtwork(this.artworkId).subscribe(
         (artwork) => {
           this.artwork = new Artwork(artwork);
-          this.listUsersID = utility.buildUsersIDfromArtwork(this.artwork.creations);
+          this.listUsersID = utility.buildUsersIDfromSpecificType(this.artwork.creations);
 
           //chiamo il servizio utenti per avere le informazioni sui creator
           this.publicationService.getListofUser(this.listUsersID).subscribe(
             (usersList: PublicUser[]) => {
-              //ho la lista di tutti gli utenti della pubblicazione
+              //ho la lista di tutti gli utenti dell'artwork
               this.listUsers = new Array<PublicUser>();
               usersList.forEach((element) => {
                 this.listUsers.push(new PublicUser(element));
@@ -59,19 +59,17 @@ export class ArtworkComponent implements OnInit {
     }
   }
 
-  //il metodo richiede il PublicUser e la lista di PublicUser in cui cercare
+  //il metodo richiede il PublicUser e restituisce l'utente cercato all'interno della lista
   getUser(userParam: PublicUser): PublicUser {
     return utility.getUser(userParam, this.listUsers);
   }
 
   //restituisce un oggetto PublicUser con le informazioni di un utente
-
-  //il metodo richiede il PublicUser e la lista di utenti in cui cercare
+  //il metodo richiede il PublicUser
   getCreator(userParam: PublicUser): PublicCreator {
     return utility.getCreator(userParam, this.listUsers);
   }
 
-  //restituisce un oggetto PublicCreator con le informazioni dell'utente creator
 
   private callServiceInteractions() {
     if (this.artworkId != null) {

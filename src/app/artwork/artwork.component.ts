@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {LoginComponent} from "../login/login.component";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {ActivatedRoute} from "@angular/router";
 import {PublicationService} from "../_services/publication.service";
@@ -7,6 +6,9 @@ import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
 import {PublicCreator} from "../../_models/PublicCreator";
 import {Artwork} from "../../_models/Artwork";
+import {PaymentService} from "../_services/payment.service";
+import {Order} from "../../_models/Order";
+import {TokenStorageService} from "../_services/token-storage.service";
 
 @Component({
   selector: "app-artwork",
@@ -15,7 +17,8 @@ import {Artwork} from "../../_models/Artwork";
 })
 export class ArtworkComponent implements OnInit {
 
-  isLoggedIn!: boolean;
+
+  isLoggedIn: boolean = false;
   artworkId: string | null;
   artwork!: Artwork;
   listUsersID!: string[];
@@ -25,13 +28,14 @@ export class ArtworkComponent implements OnInit {
 
 
   constructor(
-    private loginComponent: LoginComponent,
     private eventBusService: EventBusService,
     private publicationService: PublicationService,
+    private paymentService: PaymentService,
+    private tokenStorageService: TokenStorageService,
     public route: ActivatedRoute
   ) {
     this.artworkId = this.route.snapshot.paramMap.get("id");
-    this.isLoggedIn = loginComponent.isLoggedIn;
+    if(this.tokenStorageService.getUser() != null) this.isLoggedIn = true;
   }
 
   ngOnInit(): void {
@@ -86,5 +90,15 @@ export class ArtworkComponent implements OnInit {
         (error) => { utility.onError(error, this.eventBusService); }
       );
     }
+  }
+
+  public buyArtwork(destinationAddress: string): void {
+    this.paymentService.buyArtwork(new Order(this.artwork, this.tokenStorageService.getUser().id, destinationAddress)).subscribe(
+      (urlPaypal: string) => {
+        let url: string =urlPaypal.substring(9,urlPaypal.length);
+        window.location.href = encodeURI(url);
+      },
+      (error) => { utility.onError(error, this.eventBusService); }
+    )
   }
 }

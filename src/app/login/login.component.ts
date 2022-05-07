@@ -33,14 +33,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.socialAuthService.authState.subscribe(
-      (user) => {
-        if (user != null) {
-          this.socialUser = user;
+      (userSocial) => {
+        if (userSocial != null) {
+          this.socialUser = userSocial;
           this.authService.loginSocial(this.socialUser.firstName + " " + this.socialUser.lastName, this.socialUser.email, this.socialUser.authToken).subscribe(
-            (user) => {
-              this.tokenStorage.saveUser(user.body);
-              this.tokenStorage.saveToken(user.headers.get("X-ACCESS-TOKEN"));
-              this.tokenStorage.saveRefresh(user.headers.get("X-REFRESH-TOKEN"));
+            (userCreative) => {
+              console.log(userCreative.headers);
+              this.tokenStorage.saveUser(userCreative.body);
+              this.tokenStorage.saveToken(userCreative.headers.get("X-ACCESS-TOKEN"));
+              this.tokenStorage.saveRefresh(userCreative.headers.get("X-REFRESH-TOKEN"));
               this.isLoginFailed = false;
               this.isLoggedIn = true;
               window.location.reload();
@@ -78,7 +79,6 @@ export class LoginComponent implements OnInit {
 
   loginWithGoogle() {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
-
   }
 
   loginWithFacebook() {

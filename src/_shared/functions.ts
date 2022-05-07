@@ -7,8 +7,9 @@ import {PublicCreator} from "../_models/PublicCreator";
 //nel caso sia errore http 403, manda evento di logout
 export function onError(error: any, eventBusService: EventBusService): void {
   let message = error.error.message || error.error || error.message;
-  if (message.status == 403) eventBusService.emit(new EventData("logout", null));
-  console.log(message.toString());
+  console.log(message);
+  if (message.status == 403 || message.status == 401) eventBusService.emit(new EventData("logout", null));
+  console.log(message);
 }
 
 //costruisce la lista di id utente da mandare al servizio utenti (campo creation di PublicUserDto)

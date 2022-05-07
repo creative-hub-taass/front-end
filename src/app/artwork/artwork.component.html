@@ -19,7 +19,7 @@
             <img alt="" class="save icon" src="../../assets/img/save.PNG">
           </div>
           <p class="likes">{{this.countLikes}} likes</p>
-          <p class="description"><span>{{this.artwork.description}}</span></p>
+          <p class="description" (click)="buyArtwork(this.artwork.name)" ><span>{{this.artwork.description}}</span></p>
           <p class="post-time"></p>
         </div>
         <div class="list-comment">

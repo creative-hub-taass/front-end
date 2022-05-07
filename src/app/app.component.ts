@@ -3,15 +3,28 @@ import {TokenStorageService} from "./_services/token-storage.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {Subscription} from "rxjs";
 import {EventBusService} from "../_shared/event-bus.service";
+import { trigger, transition, animate, style } from '@angular/animations'
+
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  styleUrls: ["./app.component.css"],
+  animations: [
+    trigger('showSideMenu', [
+      transition(':true', [
+        style({transform: 'translateY(-100%)'}),
+        animate('200ms ease-in', style({transform: 'translateY(0%)'}))
+      ]),
+      transition(':false', [
+        animate('200ms ease-in', style({transform: 'translateY(-100%)'}))
+      ])
+    ])
+  ]
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-
+  showSideMenu = false;
   isLoggedIn = false;
   nickname?: string;
   title: string | undefined;
@@ -47,5 +60,9 @@ export class AppComponent implements OnInit, OnDestroy {
   logout(): void {
     this.tokenStorageService.logout();
     this.isLoggedIn = false;
+  }
+
+  toggleMenu(){
+    this.showSideMenu = !this.showSideMenu;
   }
 }

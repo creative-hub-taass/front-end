@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {TokenStorageService} from "./_services/token-storage.service";
-import {JwtHelperService} from "@auth0/angular-jwt";
 import {Subscription} from "rxjs";
 import {EventBusService} from "../_shared/event-bus.service";
 
@@ -15,8 +14,6 @@ export class AppComponent implements OnInit, OnDestroy {
   nickname?: string;
   title: string | undefined;
   eventBusSub?: Subscription;
-
-  public jwtHelper: JwtHelperService = new JwtHelperService();
 
   constructor(private tokenStorageService: TokenStorageService, private eventBusService: EventBusService) {
   }

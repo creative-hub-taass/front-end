@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from "../../_models/Event"
-import {LoginComponent} from "../login/login.component";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
 import * as utility from "../../_shared/functions";
 import {ActivatedRoute} from "@angular/router";
 import {PublicUser} from "../../_models/PublicUser";
 import {PublicCreator} from "../../_models/PublicCreator";
+import {TokenStorageService} from "../_services/token-storage.service";
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
@@ -14,7 +14,7 @@ import {PublicCreator} from "../../_models/PublicCreator";
 })
 export class EventComponent implements OnInit {
 
-  isLoggedIn!: boolean;
+  isLoggedIn: boolean = false;
   eventId: string | null;
   event!: Event;
   listUsersID!: string[];
@@ -23,13 +23,13 @@ export class EventComponent implements OnInit {
   listComments!: any[];
 
   constructor(
-    private loginComponent: LoginComponent,
+    private tokenStorageService: TokenStorageService,
     private eventBusService: EventBusService,
     private publicationService: PublicationService,
     public route: ActivatedRoute
   ) {
     this.eventId = this.route.snapshot.paramMap.get("id");
-    this.isLoggedIn = loginComponent.isLoggedIn;
+    if(this.tokenStorageService.getUser() != null) this.isLoggedIn = true;
   }
 
   ngOnInit(): void {

@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {EventBusService} from "../../_shared/event-bus.service";
-import {LoginComponent} from "../login/login.component";
 import {FeedService} from "../_services/feed.service";
 import {PublicationInfo} from "../../_models/PublicationInfo";
 import {PublicUser} from "../../_models/PublicUser";
@@ -9,6 +8,7 @@ import {PublicCreator} from "../../_models/PublicCreator";
 import {Artwork} from "../../_models/Artwork";
 import {Event} from "../../_models/Event";
 import {Post} from "../../_models/Post";
+import {TokenStorageService} from "../_services/token-storage.service";
 
 @Component({
   selector: "app-home",
@@ -16,23 +16,24 @@ import {Post} from "../../_models/Post";
   styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit {
+
+  isLoggedIn: boolean = false;
   listPublicationsID!: any[];
   listUsersID!: any[];
   listFeed!: PublicationInfo[];
   listUsers!: PublicUser[];
-  isLoggedIn!: boolean;
 
   constructor(
-    private loginComponent: LoginComponent,
+    private tokenStorageService: TokenStorageService,
     private eventBusService: EventBusService,
     private feedService: FeedService
   ) {
-    this.isLoggedIn = loginComponent.isLoggedIn;
+    if(this.tokenStorageService.getUser() != null) this.isLoggedIn = true;
   }
 
   ngOnInit(): void {
-    if (this.loginComponent.isLoggedIn) {
-      this.feedService.getUserFeed(this.loginComponent.socialUser.id, 0).subscribe(
+    if (this.isLoggedIn) {
+      this.feedService.getUserFeed(this.tokenStorageService.getUser().id, 0).subscribe(
         (listPublicationsDto) => {
           //creo la lista degli ID pubblicazioni
           this.listPublicationsID = this.buildPublicationsID(listPublicationsDto);

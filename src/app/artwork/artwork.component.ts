@@ -35,7 +35,7 @@ export class ArtworkComponent implements OnInit {
     public route: ActivatedRoute
   ) {
     this.artworkId = this.route.snapshot.paramMap.get("id");
-    if(this.tokenStorageService.getUser() != null) this.isLoggedIn = true;
+    this.isLoggedIn = (Object.keys(this.tokenStorageService.getUser()).length != 0)
   }
 
   ngOnInit(): void {

@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
     private eventBusService: EventBusService,
     private feedService: FeedService
   ) {
-    if(this.tokenStorageService.getUser() != null) this.isLoggedIn = true;
+    this.isLoggedIn = (Object.keys(this.tokenStorageService.getUser()).length != 0)
   }
 
   ngOnInit(): void {

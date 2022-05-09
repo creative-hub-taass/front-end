@@ -5,23 +5,23 @@ export type Attributes = {
 };
 
 export class Artwork implements Publication {
-  readonly publicationType = "artwork" as const;
-  readonly id: string;
-  readonly timestamp: Date;
-  readonly lastUpdate: Date;
-  readonly creations: Creation[];
-  readonly attributes: Attributes;
-  readonly availableCopies: number;
-  readonly copies: number;
-  readonly creationDateTime: Date;
-  readonly currency?: string;
-  readonly description: string;
-  readonly images: string[];
-  readonly name: string;
-  readonly onSale: boolean;
-  readonly paymentEmail?: string;
-  readonly price?: number;
-  readonly type: string;
+  publicationType = "artwork" as const;
+  id: string;
+  timestamp: Date;
+  lastUpdate: Date;
+  creations: Creation[];
+  attributes: Attributes;
+  availableCopies: number;
+  copies: number;
+  creationDateTime: Date;
+  currency?: string;
+  description: string;
+  images: string[];
+  name: string;
+  onSale: boolean;
+  paymentEmail?: string;
+  price?: number;
+  type: string;
 
   constructor(dto: any) {
     this.id = dto.id;
@@ -41,4 +41,6 @@ export class Artwork implements Publication {
     this.price = dto.price;
     this.type = dto.type;
   }
+
+
 }

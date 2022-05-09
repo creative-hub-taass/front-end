@@ -8,6 +8,7 @@ import {HomeComponent} from "./home/home.component";
 import {ArtworkComponent} from "./artwork/artwork.component";
 import {EventComponent} from "./event/event.component";
 import {PostComponent} from "./post/post.component";
+import {ModifyArtworkComponent} from "./modify-artwork/modify-artwork.component";
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -16,7 +17,9 @@ const routes: Routes = [
   {path: "users", component: ProfileComponent},
   {path: "artwork/:id", component: ArtworkComponent},
   {path: "event/:id", component: EventComponent},
-  {path: "post/:id", component: PostComponent}
+  {path: "post/:id", component: PostComponent},
+  {path: "modify-artwork/:id", component: ModifyArtworkComponent},
+  {path: "modify-artwork", component: ModifyArtworkComponent}
 ];
 
 @NgModule({

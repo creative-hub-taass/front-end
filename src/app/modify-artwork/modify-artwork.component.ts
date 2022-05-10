@@ -1,3 +1,4 @@
+
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
@@ -30,8 +31,8 @@ export class CreationArtwork implements Creation {
   templateUrl: './modify-artwork.component.html',
   styleUrls: ['./modify-artwork.component.css']
 })
-export class ModifyArtworkComponent implements OnInit, OnDestroy {
 
+export class ModifyArtworkComponent implements OnInit, OnDestroy {
 
   sent: boolean = false;
   artworkId: string | null;
@@ -43,7 +44,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
 
   listFollowers!: PublicUser[];
 
-  listCreation!: any[];
+
   listCreationArtwork!: CreationArtwork[];
 
   formArtwork: {
@@ -115,6 +116,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
           }
 
           this.buildFormArtworkOrigin()
+
           this.publicationService.getListofUser(this.listUsersID).subscribe(
             (usersList: PublicUser[]) => {
               this.listUsers = new Array<PublicUser>();
@@ -167,6 +169,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
     this.formArtwork.type = this.artworkResult.type;
   }
 
+
   private buildFormArtworkEmpty() {
     this.artworkResult = {
       id: "",
@@ -211,6 +214,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
     this.artworkResult.paymentEmail = this.formArtwork.paymentEmail;
     this.artworkResult.price = (this.formArtwork.price != undefined) ? +this.formArtwork.price : undefined;
     this.artworkResult.type = this.formArtwork.type;
+
   }
 
   public addAttributes() {

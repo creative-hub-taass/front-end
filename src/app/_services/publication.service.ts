@@ -4,7 +4,9 @@ import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {PublicUser} from "../../_models/PublicUser";
 import {Artwork} from "../../_models/Artwork";
+
 import {Creation} from "../../_models/Publication";
+
 
 const API_GATEWAY_PUBLICATIONS = environment.apiGatewayUrl + "api/v1/publications/";
 const API_GATEWAY_INTERACTIONS = environment.apiGatewayUrl + "api/v1/interactions/";
@@ -49,6 +51,7 @@ export class PublicationService {
     return this.http.post<any[]>(API_GATEWAY_USERS + "-/public", userIDs);
   }
 
+
   public getListFollower(userID: string): Observable<any> {
     return this.http.get<PublicUser[]>(API_GATEWAY_USERS + userID + "/followers");
   }
@@ -68,5 +71,6 @@ export class PublicationService {
   public deleteArtworkCreation(idCreation: string): void {
     this.http.delete(API_GATEWAY_PUBLICATIONS + "artworks/creations/" + idCreation);
   }
+
 
 }

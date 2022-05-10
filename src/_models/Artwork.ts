@@ -7,6 +7,7 @@ export type Attributes = {
 export class Artwork implements Publication {
   publicationType = "artwork" as const;
   id: string;
+
   timestamp: string;
   lastUpdate: string;
   creations: Creation[];

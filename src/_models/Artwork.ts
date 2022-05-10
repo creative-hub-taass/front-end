@@ -7,13 +7,14 @@ export type Attributes = {
 export class Artwork implements Publication {
   publicationType = "artwork" as const;
   id: string;
-  timestamp: Date;
-  lastUpdate: Date;
+
+  timestamp: string;
+  lastUpdate: string;
   creations: Creation[];
   attributes: Attributes;
   availableCopies: number;
   copies: number;
-  creationDateTime: Date;
+  creationDateTime: string;
   currency?: string;
   description: string;
   images: string[];
@@ -25,13 +26,13 @@ export class Artwork implements Publication {
 
   constructor(dto: any) {
     this.id = dto.id;
-    this.timestamp = new Date(dto.timestamp);
-    this.lastUpdate = new Date(dto.lastUpdate);
+    this.timestamp = new Date(dto.timestamp).toISOString();
+    this.lastUpdate = new Date(dto.lastUpdate).toISOString();
     this.creations = dto.creations;
     this.attributes = dto.attributes;
     this.availableCopies = dto.availableCopies;
     this.copies = dto.copies;
-    this.creationDateTime = new Date(dto.creationDateTime);
+    this.creationDateTime = new Date(dto.creationDateTime).toISOString();
     this.currency = dto.currency;
     this.description = dto.description;
     this.images = dto.images;

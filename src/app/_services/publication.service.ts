@@ -5,6 +5,9 @@ import {Observable} from "rxjs";
 import {PublicUser} from "../../_models/PublicUser";
 import {Artwork} from "../../_models/Artwork";
 
+import {Creation} from "../../_models/Publication";
+
+
 const API_GATEWAY_PUBLICATIONS = environment.apiGatewayUrl + "api/v1/publications/";
 const API_GATEWAY_INTERACTIONS = environment.apiGatewayUrl + "api/v1/interactions/";
 const API_GATEWAY_USERS = environment.apiGatewayUrl + "api/v1/users/";
@@ -17,7 +20,8 @@ export class PublicationService {
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+  }
 
   public getArtwork(idPublication: string): Observable<any> {
     return this.http.get(API_GATEWAY_PUBLICATIONS + "-/artworks/" + idPublication);
@@ -47,7 +51,8 @@ export class PublicationService {
     return this.http.post<any[]>(API_GATEWAY_USERS + "-/public", userIDs);
   }
 
-  public getListFollower(userID: string): Observable<any>{
+
+  public getListFollower(userID: string): Observable<any> {
     return this.http.get<PublicUser[]>(API_GATEWAY_USERS + userID + "/followers");
   }
 
@@ -58,4 +63,14 @@ export class PublicationService {
   public saveArtwork(artwork: Artwork): Observable<any> {
     return this.http.post<any>(API_GATEWAY_PUBLICATIONS + "artworks/", artwork);
   }
+
+  public saveArtworkCreation(artworkCreation: Creation): Observable<any> {
+    return this.http.post<any>(API_GATEWAY_PUBLICATIONS + "artworks/creations/", artworkCreation);
+  }
+
+  public deleteArtworkCreation(idCreation: string): void {
+    this.http.delete(API_GATEWAY_PUBLICATIONS + "artworks/creations/" + idCreation);
+  }
+
+
 }

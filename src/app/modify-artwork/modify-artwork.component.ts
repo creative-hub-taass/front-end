@@ -1,21 +1,28 @@
-import {Component, OnInit} from '@angular/core';
+
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Artwork, Attributes} from "../../_models/Artwork";
 import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
 import {TokenStorageService} from "../_services/token-storage.service";
+import {Creation} from "../../_models/Publication";
 
-export class CreationArtwork {
+
+export class CreationArtwork implements Creation {
   id: string;
+  user: string;
   nickname: string;
   creationType: string;
+  artworkId: string;
 
-  constructor(id: string, nickname: string, creationType: string) {
+  constructor(id: string, artworkId: string, user: string, nickname: string, creationType: string) {
     this.id = id;
+    this.user = user;
     this.nickname = nickname;
     this.creationType = creationType;
+    this.artworkId = artworkId;
   }
 }
 
@@ -24,10 +31,8 @@ export class CreationArtwork {
   templateUrl: './modify-artwork.component.html',
   styleUrls: ['./modify-artwork.component.css']
 })
-export class ModifyArtworkComponent implements OnInit {
 
-  updatedInfo: boolean = true;
-  updatedUsers: boolean = true;
+export class ModifyArtworkComponent implements OnInit, OnDestroy {
 
   sent: boolean = false;
   artworkId: string | null;
@@ -38,6 +43,7 @@ export class ModifyArtworkComponent implements OnInit {
   listKey!: string[];
 
   listFollowers!: PublicUser[];
+
 
   listCreationArtwork!: CreationArtwork[];
 
@@ -90,13 +96,14 @@ export class ModifyArtworkComponent implements OnInit {
     private eventBusService: EventBusService,
     private publicationService: PublicationService,
     private tokenStorageService: TokenStorageService,
+    private router: Router,
     public route: ActivatedRoute
   ) {
     this.artworkId = this.route.snapshot.paramMap.get("id");
     if (this.artworkId != null) {
       this.publicationService.getArtwork(this.artworkId).subscribe(
         (artwork: Artwork) => {
-          window.sessionStorage.setItem("artworkOrigin",JSON.stringify(artwork));
+          window.sessionStorage.setItem("artworkOrigin", JSON.stringify(artwork));
           this.artworkResult = new Artwork(artwork);
           this.listUsersID = new Array<string>();
           this.artworkResult.creations.forEach((creation) => {
@@ -108,7 +115,8 @@ export class ModifyArtworkComponent implements OnInit {
             this.listKey.push(key);
           }
 
-          this.buildFormArtwork()
+          this.buildFormArtworkOrigin()
+
           this.publicationService.getListofUser(this.listUsersID).subscribe(
             (usersList: PublicUser[]) => {
               this.listUsers = new Array<PublicUser>();
@@ -124,29 +132,9 @@ export class ModifyArtworkComponent implements OnInit {
         }
       );
     } else {
-        this.listKey = new Array<string>();
-      this.artworkResult = {
-        id: "",
-        timestamp: new Date(),
-        lastUpdate: new Date(),
-        creations: [],
-        attributes: {},
-        images: [],
-        creationDateTime: new Date(),
-        publicationType: "artwork",
-        availableCopies: 0,
-        copies: 0,
-        currency: "",
-        description: "",
-        name: "",
-        onSale: false,
-        paymentEmail: "",
-        price: 0,
-        type: ""
-      }
+      this.listKey = new Array<string>();
+      this.buildFormArtworkEmpty();
       this.listCreationArtwork = new Array<CreationArtwork>();
-      this.updatedInfo = false;
-      this.updatedUsers = false;
     }
 
     this.publicationService.getListFollower(this.tokenStorageService.getUser().id).subscribe(
@@ -165,7 +153,11 @@ export class ModifyArtworkComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  private buildFormArtwork() {
+  ngOnDestroy(): void {
+    window.sessionStorage.removeItem("artworkOrigin");
+  }
+
+  private buildFormArtworkOrigin() {
     this.formArtwork.availableCopies = this.artworkResult.availableCopies;
     this.formArtwork.copies = this.artworkResult.copies;
     this.formArtwork.currency = this.artworkResult.currency;
@@ -178,15 +170,39 @@ export class ModifyArtworkComponent implements OnInit {
   }
 
 
+  private buildFormArtworkEmpty() {
+    this.artworkResult = {
+      id: "",
+      timestamp: new Date().toISOString(),
+      lastUpdate: new Date().toISOString(),
+      creations: [],
+      attributes: {},
+      images: [],
+      creationDateTime: new Date().toISOString(),
+      publicationType: "artwork",
+      availableCopies: 0,
+      copies: 0,
+      currency: "",
+      description: "",
+      name: "",
+      onSale: false,
+      paymentEmail: "",
+      price: 0,
+      type: ""
+    }
+  }
+
+
   private buildCreations() {
     this.listUsers.forEach((user) => {
       let index: number = this.artworkResult.creations.findIndex((Object) => {
         return Object.user == user.id;
       });
       this.listCreationArtwork = new Array<CreationArtwork>();
-      this.listCreationArtwork.push(new CreationArtwork(user.id, user.nickname, this.artworkResult.creations[index].creationType));
+      this.listCreationArtwork.push(new CreationArtwork(this.artworkResult.creations[index].id, this.artworkResult.id, user.id, user.nickname, this.artworkResult.creations[index].creationType));
     });
   }
+
 
   public addInformations() {
     this.artworkResult.availableCopies = (this.formArtwork.availableCopies != undefined) ? +this.formArtwork.availableCopies : 0;
@@ -198,7 +214,7 @@ export class ModifyArtworkComponent implements OnInit {
     this.artworkResult.paymentEmail = this.formArtwork.paymentEmail;
     this.artworkResult.price = (this.formArtwork.price != undefined) ? +this.formArtwork.price : undefined;
     this.artworkResult.type = this.formArtwork.type;
-    this.updatedInfo = (!this.updatedInfo);
+
   }
 
   public addAttributes() {
@@ -208,26 +224,39 @@ export class ModifyArtworkComponent implements OnInit {
   }
 
   public addImages() {
-    console.log(this.artworkResult.images);
-    console.log(this.formImages);
     if (this.artworkResult.images.indexOf(this.formImages.images) != -1) return;
     this.artworkResult.images.push(this.formImages.images);
   }
 
   public addUsers() {
     if (this.formCreations.user == undefined) return;
-    let tmpCreationArtwork = new CreationArtwork(this.formCreations.user.id, this.formCreations.user.nickname, this.formCreations.creationType);
+    let tmpCreation: any = {};
+    if (this.artworkId != null) {
+      tmpCreation = {
+        id: "",
+        user: this.formCreations.user.id,
+        creationType: this.formCreations.creationType,
+        artworkId: this.artworkId
+      }
+    } else {
+      tmpCreation = {
+        id: "",
+        user: this.formCreations.user.id,
+        creationType: this.formCreations.creationType,
+        artworkId: ""
+      }
+    }
     let index = this.listCreationArtwork.findIndex((elementCreationArtwork) => {
-      return elementCreationArtwork.id == tmpCreationArtwork.id;
+      return elementCreationArtwork.id == tmpCreation.id;
     });
     if (index != -1) return;
-    this.artworkResult.creations.push({
-      id: "",
-      user: tmpCreationArtwork.id,
-      creationType: tmpCreationArtwork.creationType
-    });
-    this.listCreationArtwork.push(tmpCreationArtwork);
-    this.updatedUsers = (!this.updatedUsers);
+    //indice dell'utente dalla lista dei follower con l'id selezionato nella view
+    //utile per prendere il nickname dell'utente inserito
+    let indexUser = this.listFollowers.findIndex((elementFollower) => {
+      return elementFollower.id == tmpCreation.user;
+    })
+
+    this.listCreationArtwork.push(new CreationArtwork("", tmpCreation.artworkId, tmpCreation.user, this.listFollowers[indexUser].nickname, this.formCreations.creationType));
   }
 
   public deleteAttribute(key: string) {
@@ -246,40 +275,75 @@ export class ModifyArtworkComponent implements OnInit {
       return Object.id == user;
     });
     this.listCreationArtwork.splice(index, 1);
-    this.updatedUsers =!(this.listCreationArtwork.length==0);
+
   }
 
   public resetForm() {
-    const artworkOrigin= window.sessionStorage.getItem("artworkOrigin");
-    if(!artworkOrigin) this.artworkResult
-    if(artworkOrigin) this.artworkResult = Object.assign<Artwork,Artwork>(this.artworkResult,JSON.parse(artworkOrigin))
+    const artworkOrigin = window.sessionStorage.getItem("artworkOrigin");
+    if (!artworkOrigin) this.buildFormArtworkEmpty;
+    if (artworkOrigin) this.artworkResult = Object.assign<Artwork, Artwork>(this.artworkResult, JSON.parse(artworkOrigin))
     //aggiorno this.listkey con le chiavi degli attributi
     this.listKey = new Array<string>();
     for (let key in this.artworkResult.attributes) this.listKey.push(key);
-    this.buildCreations();
-    this.buildFormArtwork();
+    this.buildFormArtworkOrigin();
   }
 
   onSubmit() {
-    if(!this.updatedInfo || !this.updatedUsers) return;
     const artwork = window.sessionStorage.getItem("artworkOrigin");
     //aggiorno il lastUpdate
-    this.artworkResult.lastUpdate = new Date();
+    this.artworkResult.lastUpdate = new Date().toISOString();
     //devo eseguire una PUT al server per aggiornare l'artwork
-    if(artwork) {
+    if (artwork) {
+      //mando nella richiesta solo le creation non presenti nell'artwork di origine
+      let artworkObj: Artwork = JSON.parse(artwork);
+      this.artworkResult.creations.forEach((elementCreation) => {
+        let index = artworkObj.creations.findIndex((elementOriginCreation) => {
+          return elementOriginCreation.user == elementCreation.user;
+        });
+        console.log(index);
+        console.log(artworkObj);
+        console.log(this.artworkResult);
+        if (index == -1) {
+          this.publicationService.saveArtworkCreation(elementCreation).subscribe(
+            (result) => {
+              console.log(result);
+            },
+            (error) => {
+              utility.onError(error, this.eventBusService);
+            }
+          );
+        }
+      });
+      //mando richieste di eliminazione delle creation presenti nell'artwork originale
+      artworkObj.creations.forEach((elementOriginCreation) => {
+        let index = this.artworkResult.creations.findIndex((elementCreation) => {
+          return elementCreation.id == elementOriginCreation.id;
+        });
+        if (index == -1) {
+          this.publicationService.deleteArtworkCreation(elementOriginCreation.id)
+        }
+      });
       this.publicationService.updateArtwork(this.artworkResult);
       this.sent = true;
-      console.log(this.sent);
       return;
     }
     //altrimenti devo eseguire una POST per creare l'artwork
     this.publicationService.saveArtwork(this.artworkResult).subscribe(
-      (response) => {
-        this.sent = true;
-        console.log(response);
-      },
-      (error) => { utility.onError(error, this.eventBusService); }
+      (responseArtwork) => {
+        this.listCreationArtwork.forEach(elementCreation => {
+          elementCreation.artworkId = responseArtwork.id;
+          this.publicationService.saveArtworkCreation(elementCreation).subscribe(
+            (responseCreation) => {
+              console.log(responseCreation);
+            }, (error) => {
+              utility.onError(error, this.eventBusService);
+            }
+          );
+        });
+        this.router.navigate(['modify-artwork/' + responseArtwork.id]);
+      }, (error) => {
+        utility.onError(error, this.eventBusService);
+      }
     )
   }
-
 }

@@ -53,12 +53,13 @@
         <label>Currency: {{this.artworkResult?.currency}}</label>
       </div>
       <div class="artwork-box">
-        <input #currency="ngModel"
-               [(ngModel)]="formArtwork.currency"
-               class="form-control"
-               name="currency"
-               type="text"
-        />
+        <select #user="ngModel"
+                [(ngModel)]="formArtwork.currency"
+                class="form-control"
+                name="creationNickname"
+        >
+          <option *ngFor="let curr of getCurrency()" [ngValue]="curr">{{curr}}</option>
+        </select>
       </div>
 
       <div class="artwork-box">
@@ -268,12 +269,13 @@
         <label>Creator {{i}} - nickname: {{user.nickname}}; creationType: {{user.creationType}}</label><button (click)="deleteUser(user.id)">delete</button>
       </div>
       <div class="artwork-box">
-        <input #creationType="ngModel"
-               [(ngModel)]="formCreations.creationType"
-               class="form-control"
-               name="creationType"
-               type="text"
-        />
+        <select #creationType="ngModel"
+                [(ngModel)]="formCreations.creationType"
+                class="form-control"
+                name="creationType"
+        >
+          <option *ngFor="let creation of getCreation()" [ngValue]="creation">{{creation}}</option>
+        </select>
         <select #user="ngModel"
                 [(ngModel)]="formCreations.user"
                 class="form-control"

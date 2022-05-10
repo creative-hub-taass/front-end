@@ -8,7 +8,7 @@ import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {Creation} from "../../_models/Publication";
-
+import {getListCreationTypeAP, getListCurrency} from "../../_models/Enum";
 
 export class CreationArtwork implements Creation {
   id: string;
@@ -41,7 +41,6 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
   listUsers!: PublicUser[];
   errorMessage: string | undefined;
   listKey!: string[];
-
   listFollowers!: PublicUser[];
 
 
@@ -115,8 +114,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
             this.listKey.push(key);
           }
 
-          this.buildFormArtworkOrigin()
-
+          this.buildFormArtworkOrigin();
           this.publicationService.getListofUser(this.listUsersID).subscribe(
             (usersList: PublicUser[]) => {
               this.listUsers = new Array<PublicUser>();
@@ -323,7 +321,9 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
           this.publicationService.deleteArtworkCreation(elementOriginCreation.id)
         }
       });
-      this.publicationService.updateArtwork(this.artworkResult);
+      let temp = Object.assign<{},Artwork>({}, this.artworkResult);
+      temp.creations = [];
+      this.publicationService.updateArtwork(temp);
       this.sent = true;
       return;
     }
@@ -345,5 +345,13 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
         utility.onError(error, this.eventBusService);
       }
     )
+  }
+
+  getCreation(): string[]{
+    return getListCreationTypeAP();
+  }
+
+  getCurrency(): string[]{
+    return getListCurrency();
   }
 }

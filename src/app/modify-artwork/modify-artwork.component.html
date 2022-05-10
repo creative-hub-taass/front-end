@@ -1,6 +1,6 @@
 <div class="container">
   <div class="publication-box">
-    <h2>Publication</h2> <button *ngIf="(artworkId!=null)" (click)="resetForm()">Reset</button>
+    <h2>Publication</h2> <button (click)="resetForm()">Reset</button>
     <form
       #f="ngForm"
       (ngSubmit)="f.form.valid && addInformations()"

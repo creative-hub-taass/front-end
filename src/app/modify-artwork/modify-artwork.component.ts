@@ -1,23 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Artwork, Attributes} from "../../_models/Artwork";
 import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
 import {TokenStorageService} from "../_services/token-storage.service";
+import {Creation} from "../../_models/Publication";
 
 
-
-export class CreationArtwork {
+export class CreationArtwork implements Creation {
   id: string;
+  user: string;
   nickname: string;
   creationType: string;
+  artworkId: string;
 
-  constructor(id: string, nickname: string, creationType: string) {
+  constructor(id: string, artworkId: string, user: string, nickname: string, creationType: string) {
     this.id = id;
+    this.user = user;
     this.nickname = nickname;
     this.creationType = creationType;
+    this.artworkId = artworkId;
   }
 }
 
@@ -26,10 +30,8 @@ export class CreationArtwork {
   templateUrl: './modify-artwork.component.html',
   styleUrls: ['./modify-artwork.component.css']
 })
-export class ModifyArtworkComponent implements OnInit {
+export class ModifyArtworkComponent implements OnInit, OnDestroy {
 
-  updatedInfo: boolean = true;
-  updatedUsers: boolean = true;
 
   sent: boolean = false;
   artworkId: string | null;
@@ -41,6 +43,7 @@ export class ModifyArtworkComponent implements OnInit {
 
   listFollowers!: PublicUser[];
 
+  listCreation!: any[];
   listCreationArtwork!: CreationArtwork[];
 
   formArtwork: {
@@ -92,13 +95,14 @@ export class ModifyArtworkComponent implements OnInit {
     private eventBusService: EventBusService,
     private publicationService: PublicationService,
     private tokenStorageService: TokenStorageService,
+    private router: Router,
     public route: ActivatedRoute
   ) {
     this.artworkId = this.route.snapshot.paramMap.get("id");
     if (this.artworkId != null) {
       this.publicationService.getArtwork(this.artworkId).subscribe(
         (artwork: Artwork) => {
-          window.sessionStorage.setItem("artworkOrigin",JSON.stringify(artwork));
+          window.sessionStorage.setItem("artworkOrigin", JSON.stringify(artwork));
           this.artworkResult = new Artwork(artwork);
           this.listUsersID = new Array<string>();
           this.artworkResult.creations.forEach((creation) => {
@@ -110,7 +114,7 @@ export class ModifyArtworkComponent implements OnInit {
             this.listKey.push(key);
           }
 
-          this.buildFormArtwork()
+          this.buildFormArtworkOrigin()
           this.publicationService.getListofUser(this.listUsersID).subscribe(
             (usersList: PublicUser[]) => {
               this.listUsers = new Array<PublicUser>();
@@ -126,28 +130,9 @@ export class ModifyArtworkComponent implements OnInit {
         }
       );
     } else {
-        this.listKey = new Array<string>();
-      this.artworkResult = {
-        id: "",
-        timestamp: new Date(),
-        lastUpdate: new Date(),
-        creations: [],
-        attributes: {},
-        images: [],
-        creationDateTime: new Date(),
-        publicationType: "artwork",
-        availableCopies: 0,
-        copies: 0,
-        currency: "",
-        description: "",
-        name: "",
-        onSale: false,
-        paymentEmail: "",
-        price: 0,
-        type: ""
-      }
+      this.listKey = new Array<string>();
+      this.buildFormArtworkEmpty();
       this.listCreationArtwork = new Array<CreationArtwork>();
-
     }
 
     this.publicationService.getListFollower(this.tokenStorageService.getUser().id).subscribe(
@@ -166,7 +151,11 @@ export class ModifyArtworkComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  private buildFormArtwork() {
+  ngOnDestroy(): void {
+    window.sessionStorage.removeItem("artworkOrigin");
+  }
+
+  private buildFormArtworkOrigin() {
     this.formArtwork.availableCopies = this.artworkResult.availableCopies;
     this.formArtwork.copies = this.artworkResult.copies;
     this.formArtwork.currency = this.artworkResult.currency;
@@ -178,6 +167,28 @@ export class ModifyArtworkComponent implements OnInit {
     this.formArtwork.type = this.artworkResult.type;
   }
 
+  private buildFormArtworkEmpty() {
+    this.artworkResult = {
+      id: "",
+      timestamp: new Date().toISOString(),
+      lastUpdate: new Date().toISOString(),
+      creations: [],
+      attributes: {},
+      images: [],
+      creationDateTime: new Date().toISOString(),
+      publicationType: "artwork",
+      availableCopies: 0,
+      copies: 0,
+      currency: "",
+      description: "",
+      name: "",
+      onSale: false,
+      paymentEmail: "",
+      price: 0,
+      type: ""
+    }
+  }
+
 
   private buildCreations() {
     this.listUsers.forEach((user) => {
@@ -185,9 +196,10 @@ export class ModifyArtworkComponent implements OnInit {
         return Object.user == user.id;
       });
       this.listCreationArtwork = new Array<CreationArtwork>();
-      this.listCreationArtwork.push(new CreationArtwork(user.id, user.nickname, this.artworkResult.creations[index].creationType));
+      this.listCreationArtwork.push(new CreationArtwork(this.artworkResult.creations[index].id, this.artworkResult.id, user.id, user.nickname, this.artworkResult.creations[index].creationType));
     });
   }
+
 
   public addInformations() {
     this.artworkResult.availableCopies = (this.formArtwork.availableCopies != undefined) ? +this.formArtwork.availableCopies : 0;
@@ -215,8 +227,9 @@ export class ModifyArtworkComponent implements OnInit {
   public addUsers() {
     if (this.formCreations.user == undefined) return;
     let tmpCreation: any = {};
-    if(this.artworkId!=null){
-      tmpCreation = {id: "",
+    if (this.artworkId != null) {
+      tmpCreation = {
+        id: "",
         user: this.formCreations.user.id,
         creationType: this.formCreations.creationType,
         artworkId: this.artworkId
@@ -233,9 +246,13 @@ export class ModifyArtworkComponent implements OnInit {
       return elementCreationArtwork.id == tmpCreation.id;
     });
     if (index != -1) return;
-    this.artworkResult.creations.push(tmpCreation);
-    this.listCreationArtwork.push(new CreationArtwork(tmpCreation.id,this.formCreations.user.nickname,tmpCreation.creationType));
+    //indice dell'utente dalla lista dei follower con l'id selezionato nella view
+    //utile per prendere il nickname dell'utente inserito
+    let indexUser = this.listFollowers.findIndex((elementFollower) => {
+      return elementFollower.id == tmpCreation.user;
+    })
 
+    this.listCreationArtwork.push(new CreationArtwork("", tmpCreation.artworkId, tmpCreation.user, this.listFollowers[indexUser].nickname, this.formCreations.creationType));
   }
 
   public deleteAttribute(key: string) {
@@ -258,35 +275,71 @@ export class ModifyArtworkComponent implements OnInit {
   }
 
   public resetForm() {
-    const artworkOrigin= window.sessionStorage.getItem("artworkOrigin");
-    if(!artworkOrigin) this.artworkResult
-    if(artworkOrigin) this.artworkResult = Object.assign<Artwork,Artwork>(this.artworkResult,JSON.parse(artworkOrigin))
+    const artworkOrigin = window.sessionStorage.getItem("artworkOrigin");
+    if (!artworkOrigin) this.buildFormArtworkEmpty;
+    if (artworkOrigin) this.artworkResult = Object.assign<Artwork, Artwork>(this.artworkResult, JSON.parse(artworkOrigin))
     //aggiorno this.listkey con le chiavi degli attributi
     this.listKey = new Array<string>();
     for (let key in this.artworkResult.attributes) this.listKey.push(key);
-    this.buildCreations();
-    this.buildFormArtwork();
+    this.buildFormArtworkOrigin();
   }
 
   onSubmit() {
     const artwork = window.sessionStorage.getItem("artworkOrigin");
     //aggiorno il lastUpdate
-    this.artworkResult.lastUpdate = new Date();
+    this.artworkResult.lastUpdate = new Date().toISOString();
     //devo eseguire una PUT al server per aggiornare l'artwork
-    if(artwork) {
+    if (artwork) {
+      //mando nella richiesta solo le creation non presenti nell'artwork di origine
+      let artworkObj: Artwork = JSON.parse(artwork);
+      this.artworkResult.creations.forEach((elementCreation) => {
+        let index = artworkObj.creations.findIndex((elementOriginCreation) => {
+          return elementOriginCreation.user == elementCreation.user;
+        });
+        console.log(index);
+        console.log(artworkObj);
+        console.log(this.artworkResult);
+        if (index == -1) {
+          this.publicationService.saveArtworkCreation(elementCreation).subscribe(
+            (result) => {
+              console.log(result);
+            },
+            (error) => {
+              utility.onError(error, this.eventBusService);
+            }
+          );
+        }
+      });
+      //mando richieste di eliminazione delle creation presenti nell'artwork originale
+      artworkObj.creations.forEach((elementOriginCreation) => {
+        let index = this.artworkResult.creations.findIndex((elementCreation) => {
+          return elementCreation.id == elementOriginCreation.id;
+        });
+        if (index == -1) {
+          this.publicationService.deleteArtworkCreation(elementOriginCreation.id)
+        }
+      });
       this.publicationService.updateArtwork(this.artworkResult);
       this.sent = true;
       return;
     }
     //altrimenti devo eseguire una POST per creare l'artwork
     this.publicationService.saveArtwork(this.artworkResult).subscribe(
-      (response) => {
-        this.sent = true;
-        console.log(response);
-        console.log(this.artworkResult);
-      },
-      (error) => { utility.onError(error, this.eventBusService); }
+      (responseArtwork) => {
+        this.listCreationArtwork.forEach(elementCreation => {
+          elementCreation.artworkId = responseArtwork.id;
+          this.publicationService.saveArtworkCreation(elementCreation).subscribe(
+            (responseCreation) => {
+              console.log(responseCreation);
+            }, (error) => {
+              utility.onError(error, this.eventBusService);
+            }
+          );
+        });
+        this.router.navigate(['modify-artwork/' + responseArtwork.id]);
+      }, (error) => {
+        utility.onError(error, this.eventBusService);
+      }
     )
   }
-
 }

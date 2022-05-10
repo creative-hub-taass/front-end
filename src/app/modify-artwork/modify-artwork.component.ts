@@ -8,7 +8,7 @@ import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {Creation} from "../../_models/Publication";
-
+import {getListCreationTypeAP, getListCurrency} from "../../_models/Enum";
 
 export class CreationArtwork implements Creation {
   id: string;
@@ -41,7 +41,6 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
   listUsers!: PublicUser[];
   errorMessage: string | undefined;
   listKey!: string[];
-
   listFollowers!: PublicUser[];
 
 
@@ -92,6 +91,8 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
     creationType: ""
   };
 
+  onSale: boolean = false;
+
   constructor(
     private eventBusService: EventBusService,
     private publicationService: PublicationService,
@@ -105,6 +106,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
         (artwork: Artwork) => {
           window.sessionStorage.setItem("artworkOrigin", JSON.stringify(artwork));
           this.artworkResult = new Artwork(artwork);
+          this.onSale = artwork.onSale;
           this.listUsersID = new Array<string>();
           this.artworkResult.creations.forEach((creation) => {
             this.listUsersID.push(creation.user);
@@ -115,8 +117,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
             this.listKey.push(key);
           }
 
-          this.buildFormArtworkOrigin()
-
+          this.buildFormArtworkOrigin();
           this.publicationService.getListofUser(this.listUsersID).subscribe(
             (usersList: PublicUser[]) => {
               this.listUsers = new Array<PublicUser>();
@@ -286,9 +287,17 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
     this.listKey = new Array<string>();
     for (let key in this.artworkResult.attributes) this.listKey.push(key);
     this.buildFormArtworkOrigin();
+    this.onSale = this.artworkResult.onSale;
   }
 
   onSubmit() {
+
+    if(!this.onSale){
+      this.artworkResult.paymentEmail = undefined;
+      this.artworkResult.availableCopies = 0;
+      this.artworkResult.price = undefined;
+      this.artworkResult.currency = undefined;
+    }
     const artwork = window.sessionStorage.getItem("artworkOrigin");
     //aggiorno il lastUpdate
     this.artworkResult.lastUpdate = new Date().toISOString();
@@ -300,9 +309,6 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
         let index = artworkObj.creations.findIndex((elementOriginCreation) => {
           return elementOriginCreation.user == elementCreation.user;
         });
-        console.log(index);
-        console.log(artworkObj);
-        console.log(this.artworkResult);
         if (index == -1) {
           this.publicationService.saveArtworkCreation(elementCreation).subscribe(
             (result) => {
@@ -323,7 +329,9 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
           this.publicationService.deleteArtworkCreation(elementOriginCreation.id)
         }
       });
-      this.publicationService.updateArtwork(this.artworkResult);
+      let temp = Object.assign<{},Artwork>({}, this.artworkResult);
+      temp.creations = [];
+      this.publicationService.updateArtwork(temp);
       this.sent = true;
       return;
     }
@@ -345,5 +353,19 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
         utility.onError(error, this.eventBusService);
       }
     )
+  }
+
+  getCreation(): string[]{
+    return getListCreationTypeAP();
+  }
+
+  getCurrency(): string[]{
+    return getListCurrency();
+  }
+
+  onCheckChange(x: string) {
+    this.formArtwork.onSale = x;
+    this.artworkResult.onSale = false;
+    this.onSale = (x == "true");
   }
 }

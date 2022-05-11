@@ -126,11 +126,9 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
               });
               this.buildCreations();
             },
-            (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
+            (error) => { this.errorMessage = utility.onError(error, this.eventBusService); }
           );
-        }
+        }, (error) => { this.errorMessage = utility.onError(error, this.eventBusService); }
       );
     } else {
       this.listKey = new Array<string>();
@@ -145,9 +143,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
           this.listFollowers.push(new PublicUser(follower));
         });
       },
-      (error) => {
-        utility.onError(error, this.eventBusService);
-      }
+      (error) => { this.errorMessage = utility.onError(error, this.eventBusService); }
     )
   }
 
@@ -196,8 +192,8 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
 
   private buildCreations() {
     this.listUsers.forEach((user) => {
-      let index: number = this.artworkResult.creations.findIndex((Object) => {
-        return Object.user == user.id;
+      let index: number = this.artworkResult.creations.findIndex((elementCreation) => {
+        return elementCreation.user == user.id;
       });
       this.listCreationArtwork = new Array<CreationArtwork>();
       this.listCreationArtwork.push(new CreationArtwork(this.artworkResult.creations[index].id, this.artworkResult.id, user.id, user.nickname, this.artworkResult.creations[index].creationType));
@@ -255,8 +251,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
     //utile per prendere il nickname dell'utente inserito
     let indexUser = this.listFollowers.findIndex((elementFollower) => {
       return elementFollower.id == tmpCreation.user;
-    })
-
+    });
     this.listCreationArtwork.push(new CreationArtwork("", tmpCreation.artworkId, tmpCreation.user, this.listFollowers[indexUser].nickname, this.formCreations.creationType));
   }
 
@@ -272,8 +267,8 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
   }
 
   public deleteUser(user: string) {
-    const index = this.listCreationArtwork.findIndex((Object) => {
-      return Object.id == user;
+    const index = this.listCreationArtwork.findIndex((elementCreationArtwork) => {
+      return elementCreationArtwork.id == user;
     });
     this.listCreationArtwork.splice(index, 1);
 
@@ -314,9 +309,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
             (result) => {
               console.log(result);
             },
-            (error) => {
-              utility.onError(error, this.eventBusService);
-            }
+            (error) => { this.errorMessage = utility.onError(error, this.eventBusService); }
           );
         }
       });
@@ -343,16 +336,12 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
           this.publicationService.saveArtworkCreation(elementCreation).subscribe(
             (responseCreation) => {
               console.log(responseCreation);
-            }, (error) => {
-              utility.onError(error, this.eventBusService);
-            }
+            }, (error) => { this.errorMessage = utility.onError(error, this.eventBusService); }
           );
         });
         this.router.navigate(['modify-artwork/' + responseArtwork.id]);
-      }, (error) => {
-        utility.onError(error, this.eventBusService);
-      }
-    )
+      }, (error) => { this.errorMessage = utility.onError(error, this.eventBusService); }
+    );
   }
 
   getCreation(): string[]{

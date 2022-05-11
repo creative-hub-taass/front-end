@@ -4,7 +4,7 @@ import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {PublicUser} from "../../_models/PublicUser";
 import {Artwork} from "../../_models/Artwork";
-
+import {Event} from "../../_models/Event"
 import {Creation} from "../../_models/Publication";
 
 
@@ -61,7 +61,7 @@ export class PublicationService {
   }
 
   public saveArtwork(artwork: Artwork): Observable<any> {
-    return this.http.post<any>(API_GATEWAY_PUBLICATIONS + "artworks/", artwork);
+    return this.http.post<Artwork>(API_GATEWAY_PUBLICATIONS + "artworks/", artwork);
   }
 
   public saveArtworkCreation(artworkCreation: Creation): Observable<any> {
@@ -72,5 +72,20 @@ export class PublicationService {
     this.http.delete(API_GATEWAY_PUBLICATIONS + "artworks/creations/" + idCreation);
   }
 
+  public updateEvent(event: Event): Observable<any> {
+    return this.http.put(API_GATEWAY_PUBLICATIONS + "events/" + event.id, event);
+  }
+
+  public saveEvent(event: Event): Observable<any> {
+    return this.http.post<Event>(API_GATEWAY_PUBLICATIONS + "events/", event);
+  }
+
+  public saveEventCreation(eventCreation: Creation): Observable<any> {
+    return this.http.post<any>(API_GATEWAY_PUBLICATIONS + "events/creations/", eventCreation);
+  }
+
+  public deleteEventCreation(idCreation: string): void {
+    this.http.delete(API_GATEWAY_PUBLICATIONS + "events/creations/" + idCreation);
+  }
 
 }

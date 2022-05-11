@@ -9,6 +9,7 @@ import {ArtworkComponent} from "./artwork/artwork.component";
 import {EventComponent} from "./event/event.component";
 import {PostComponent} from "./post/post.component";
 import {ModifyArtworkComponent} from "./modify-artwork/modify-artwork.component";
+import {ModifyEventComponent} from "./modify-event/modify-event.component";
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -19,7 +20,9 @@ const routes: Routes = [
   {path: "event/:id", component: EventComponent},
   {path: "post/:id", component: PostComponent},
   {path: "modify-artwork/:id", component: ModifyArtworkComponent},
-  {path: "modify-artwork", component: ModifyArtworkComponent}
+  {path: "modify-artwork", component: ModifyArtworkComponent},
+  {path: "modify-event/:id", component: ModifyEventComponent},
+  {path: "modify-event", component: ModifyEventComponent}
 ];
 
 @NgModule({

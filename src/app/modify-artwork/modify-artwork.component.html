@@ -1,7 +1,8 @@
 <div class="container">
   <div class="publication-box">
 
-    <h2>Publication</h2> <button (click)="resetForm()">Reset</button>
+    <h2>Publication</h2>
+    <button (click)="resetForm()">Reset</button>
 
     <form
       #f="ngForm"
@@ -9,25 +10,6 @@
       name="formPublication"
       novalidate
     >
-
-      <div class="artwork-box">
-        <label>Available Copies: {{this.artworkResult?.availableCopies}}</label>
-      </div>
-      <div class="artwork-box">
-        <input #availableCopies="ngModel"
-               [(ngModel)]="this.formArtwork.availableCopies"
-               class="form-control"
-               name="availableCopies"
-               required
-               type="text"
-        />
-        <div *ngIf="availableCopies.errors && f.submitted"
-             class="alert alert-danger"
-             role="alert"
-        >
-          Available Copies is required!
-        </div>
-      </div>
 
       <div class="artwork-box">
         <label>Copies: {{this.artworkResult?.copies}}</label>
@@ -44,22 +26,9 @@
           *ngIf="copies.errors && f.submitted"
           class="alert alert-danger"
           role="alert"
-          >
+        >
           Copies is required!
         </div>
-      </div>
-
-      <div class="artwork-box">
-        <label>Currency: {{this.artworkResult?.currency}}</label>
-      </div>
-      <div class="artwork-box">
-        <select #user="ngModel"
-                [(ngModel)]="formArtwork.currency"
-                class="form-control"
-                name="creationNickname"
-        >
-          <option *ngFor="let curr of getCurrency()" [ngValue]="curr">{{curr}}</option>
-        </select>
       </div>
 
       <div class="artwork-box">
@@ -103,51 +72,6 @@
       </div>
 
       <div class="artwork-box">
-        <label>on Sale: {{this.artworkResult?.onSale}}</label>
-      </div>
-      <div class="artwork-box">
-        <input #onSale="ngModel"
-               [(ngModel)]="formArtwork.onSale"
-               class="form-control"
-               name="onSale"
-               required
-               type="text"
-        />
-        <div
-          *ngIf="onSale.errors && f.submitted"
-          class="alert alert-danger"
-          role="alert"
-        >
-         on Sale is required!
-        </div>
-      </div>
-
-      <div class="artwork-box">
-        <label>Payment E-mail: {{this.artworkResult?.paymentEmail}}</label>
-      </div>
-      <div class="artwork-box">
-        <input #paymentEmail="ngModel"
-               [(ngModel)]="formArtwork.paymentEmail"
-               class="form-control"
-               name="paymentEmail"
-               type="text"
-        />
-      </div>
-
-      <div class="artwork-box">
-        <label>Price: {{this.artworkResult?.price}}</label>
-      </div>
-      <div class="artwork-box">
-        <input #price="ngModel"
-               [(ngModel)]="formArtwork.price"
-               class="form-control"
-               name="price"
-               type="text"
-        />
-      </div>
-
-
-      <div class="artwork-box">
         <label>Type: {{this.artworkResult?.type}}</label>
       </div>
       <div class="artwork-box">
@@ -163,9 +87,80 @@
           class="alert alert-danger"
           role="alert"
         >
-         Type is required!
+          Type is required!
         </div>
       </div>
+
+      <div class="artwork-box">
+        <label>on Sale: {{this.artworkResult?.onSale}}</label>
+      </div>
+      <div class="artwork-box" *ngFor="let x of ['true','false']">
+        <label><input
+          (change)="onCheckChange(x)"
+          [value]="x"
+          class="form-control"
+          name="onSale"
+          required
+          type="radio"
+        />{{x}}</label>
+      </div>
+
+      <div class="artwork-box" *ngIf="this.onSale">
+        <label>Currency: {{this.artworkResult?.currency}}</label>
+      </div>
+      <div class="artwork-box" *ngIf="this.onSale">
+        <select #currency="ngModel"
+                [(ngModel)]="formArtwork.currency"
+                class="form-control"
+                name="currency"
+        >
+          <option *ngFor="let curr of getCurrency()" [ngValue]="curr">{{curr}}</option>
+        </select>
+      </div>
+
+      <div class="artwork-box" *ngIf="this.onSale">
+        <label>Available Copies: {{this.artworkResult?.availableCopies}}</label>
+      </div>
+      <div class="artwork-box" *ngIf="this.onSale">
+        <input #availableCopies="ngModel"
+               [(ngModel)]="this.formArtwork.availableCopies"
+               class="form-control"
+               name="availableCopies"
+               required
+               type="text"
+        />
+        <div *ngIf="availableCopies.errors && f.submitted"
+             class="alert alert-danger"
+             role="alert"
+        >
+          Available Copies is required!
+        </div>
+      </div>
+
+      <div class="artwork-box" *ngIf="this.onSale">
+        <label>Price: {{this.artworkResult?.price}}</label>
+      </div>
+      <div class="artwork-box" *ngIf="this.onSale">
+        <input #price="ngModel"
+               [(ngModel)]="formArtwork.price"
+               class="form-control"
+               name="price"
+               type="text"
+        />
+      </div>
+
+      <div class="artwork-box" *ngIf="this.onSale">
+        <label>Payment E-mail: {{this.artworkResult?.paymentEmail}}</label>
+      </div>
+      <div class="artwork-box" *ngIf="this.onSale">
+        <input #paymentEmail="ngModel"
+               [(ngModel)]="formArtwork.paymentEmail"
+               class="form-control"
+               name="paymentEmail"
+               type="text"
+        />
+      </div>
+
       <button class="full-button">Update informations</button>
 
       <div class="form-group">
@@ -177,9 +172,10 @@
           {{ errorMessage }}
         </div>
       </div>
+
     </form>
 
-      <h3>Attributes</h3>
+    <h3>Attributes</h3>
 
     <form
       #f="ngForm"
@@ -188,7 +184,8 @@
       novalidate
     >
       <div class="artwork-box" *ngFor="let key of this.listKey">
-        <label>{{key}}: {{this.artworkResult.attributes[key]}}</label><button (click)="deleteAttribute(key)">delete</button>
+        <label>{{key}}: {{this.artworkResult.attributes[key]}}</label>
+        <button (click)="deleteAttribute(key)">delete</button>
       </div>
       <div class="artwork-box">
         <input #attributes="ngModel"
@@ -209,7 +206,7 @@
           class="alert alert-danger"
           role="alert"
         >
-         Value is required!
+          Value is required!
         </div>
       </div>
 
@@ -226,7 +223,7 @@
       </div>
     </form>
 
-      <h3>Images</h3>
+    <h3>Images</h3>
     <form
       #f="ngForm"
       (ngSubmit)="f.form.valid && addImages()"
@@ -234,7 +231,8 @@
       novalidate
     >
       <div class="artwork-box" *ngFor="let image of this.artworkResult?.images; index as i;">
-        <label>Image {{i}}: {{image}}</label><button (click)="deleteImage(image)">delete</button>
+        <label>Image {{i}}: {{image}}</label>
+        <button (click)="deleteImage(image)">delete</button>
       </div>
       <div class="artwork-box">
         <input #type="ngModel"
@@ -258,7 +256,7 @@
       </div>
     </form>
 
-      <h3>Users</h3>
+    <h3>Users</h3>
     <form
       #f="ngForm"
       (ngSubmit)="f.form.valid && addUsers()"
@@ -266,7 +264,8 @@
       novalidate
     >
       <div class="artwork-box" *ngFor="let user of this.listCreationArtwork; index as i;">
-        <label>Creator {{i}} - nickname: {{user.nickname}}; creationType: {{user.creationType}}</label><button (click)="deleteUser(user.id)">delete</button>
+        <label>Creator {{i}} - nickname: {{user.nickname}}; creationType: {{user.creationType}}</label>
+        <button (click)="deleteUser(user.id)">delete</button>
       </div>
       <div class="artwork-box">
         <select #creationType="ngModel"
@@ -279,7 +278,7 @@
         <select #user="ngModel"
                 [(ngModel)]="formCreations.user"
                 class="form-control"
-                name="creationNickname"
+                name="creationUser"
         >
           <option *ngFor="let user of this.listFollowers" [ngValue]="user">{{user.nickname}}</option>
         </select>

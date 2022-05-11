@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {Post} from "../../_models/Post";
 import {PublicUser} from "../../_models/PublicUser";
-import {LoginComponent} from "../login/login.component";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
 import * as utility from "../../_shared/functions";
 import {ActivatedRoute} from "@angular/router";
 import {PublicCreator} from "../../_models/PublicCreator";
+import {TokenStorageService} from "../_services/token-storage.service";
 
 @Component({
   selector: 'app-post',
@@ -15,7 +15,7 @@ import {PublicCreator} from "../../_models/PublicCreator";
 })
 export class PostComponent implements OnInit {
 
-  isLoggedIn!: boolean;
+  isLoggedIn: boolean = false;
   postId: string | null;
   post!: Post;
   listUsersID!: string[];
@@ -24,13 +24,13 @@ export class PostComponent implements OnInit {
   listComments!: any[];
 
   constructor(
-    private loginComponent: LoginComponent,
     private eventBusService: EventBusService,
     private publicationService: PublicationService,
+    private tokenStorageService: TokenStorageService,
     public route: ActivatedRoute
   ) {
     this.postId = this.route.snapshot.paramMap.get("id");
-    this.isLoggedIn = loginComponent.isLoggedIn;
+    if(this.tokenStorageService.getUser() != null) this.isLoggedIn = true;
   }
 
   ngOnInit(): void {

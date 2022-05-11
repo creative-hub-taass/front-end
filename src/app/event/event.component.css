@@ -127,3 +127,9 @@
 .reaction-wrapper .icon.save {
   margin-left: auto;
 }
+
+#map {
+  height: 200px;
+  width: 100%;
+  max-width: 300px;
+}

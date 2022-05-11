@@ -142,7 +142,7 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private loadMap(): void {
-    this.map = L.map('map').setView([0,0], 1);
+    this.map = L.map('map').setView([0,0], 2);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
@@ -157,15 +157,15 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
       this.eventResult.coordinates.latitude = e.latlng.lat;
       this.eventResult.coordinates.longitude = e.latlng.lng;
       this.map.flyTo([e.latlng.lat,e.latlng.lng], e.zoom);
-      this.marker = L.marker([e.latlng.lat, e.latlng.lng], {icon}).bindPopup('Angular Leaflet');
+      this.marker = L.marker([e.latlng.lat, e.latlng.lng], {icon}).bindPopup('The event is located here');
       this.marker.addTo(this.map);
     });
 
     this.getCurrentPosition()
       .subscribe((position: any) => {
-        this.map.flyTo([position.latitude,position.longitude], 13);
+        this.map.flyTo([position.latitude,position.longitude], 10);
 
-        this.marker = L.marker([position.latitude, position.longitude], {icon}).bindPopup('Angular Leaflet');
+        this.marker = L.marker([position.latitude, position.longitude], {icon}).bindPopup('The event is located here');
         this.marker.addTo(this.map);
       });
   }

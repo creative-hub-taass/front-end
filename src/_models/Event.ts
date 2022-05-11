@@ -1,24 +1,24 @@
 import {Creation, Publication} from "./Publication";
 
 interface Coordinates {
-  readonly latitude: number;
-  readonly longitude: number;
+  latitude: number;
+  longitude: number;
 }
 
 export class Event implements Publication {
-  readonly publicationType = "event" as const;
-  readonly id: string;
-  readonly timestamp: string;
-  readonly lastUpdate: string;
-  readonly creations: Creation[];
-  readonly name: string;
-  readonly description: string;
-  readonly image: string;
-  readonly locationName: string;
-  readonly coordinates: Coordinates;
-  readonly startDateTime: string;
-  readonly endDateTime: string;
-  readonly bookingURL?: string;
+  publicationType = "event" as const;
+  id: string;
+  timestamp: string;
+  lastUpdate: string;
+  creations: Creation[];
+  name: string;
+  description: string;
+  image: string;
+  locationName: string;
+  coordinates: Coordinates;
+  startDateTime: string;
+  endDateTime: string;
+  bookingURL?: string;
 
   constructor(dto: any) {
     this.id = dto.id;

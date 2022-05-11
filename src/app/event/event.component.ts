@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Event } from "../../_models/Event"
+import {Component, OnInit} from '@angular/core';
+import {Event} from "../../_models/Event"
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
 import * as utility from "../../_shared/functions";
@@ -7,6 +7,8 @@ import {ActivatedRoute} from "@angular/router";
 import {PublicUser} from "../../_models/PublicUser";
 import {PublicCreator} from "../../_models/PublicCreator";
 import {TokenStorageService} from "../_services/token-storage.service";
+
+
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
@@ -22,6 +24,8 @@ export class EventComponent implements OnInit {
   countLikes!: number;
   listComments!: any[];
 
+
+
   constructor(
     private tokenStorageService: TokenStorageService,
     private eventBusService: EventBusService,
@@ -33,7 +37,7 @@ export class EventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.eventId != null) {
+    if (this.eventId != null) {
       this.publicationService.getEvent(this.eventId).subscribe(
         (event) => {
           this.event = new Event(event);
@@ -49,10 +53,14 @@ export class EventComponent implements OnInit {
               });
               this.callServiceInteractions();
             },
-            (error) => { utility.onError(error, this.eventBusService); }
+            (error) => {
+              utility.onError(error, this.eventBusService);
+            }
           )
         },
-        (error) => { utility.onError(error, this.eventBusService); }
+        (error) => {
+          utility.onError(error, this.eventBusService);
+        }
       )
     }
   }
@@ -63,13 +71,17 @@ export class EventComponent implements OnInit {
         (likesCount) => {
           this.countLikes = likesCount;
         },
-        (error) => { utility.onError(error, this.eventBusService); }
+        (error) => {
+          utility.onError(error, this.eventBusService);
+        }
       );
       this.publicationService.getComments(this.eventId).subscribe(
         (listComments) => {
           this.listComments = listComments;
         },
-        (error) => { utility.onError(error, this.eventBusService); }
+        (error) => {
+          utility.onError(error, this.eventBusService);
+        }
       );
     }
   }

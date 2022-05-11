@@ -368,4 +368,5 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
     this.artworkResult.onSale = false;
     this.onSale = (x == "true");
   }
+
 }

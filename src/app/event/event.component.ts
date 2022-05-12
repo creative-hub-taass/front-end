@@ -17,6 +17,9 @@ const icon = L.icon({
   popupAnchor: [13,0]
 });
 
+const AUTH_TOKEN = environment.accessToken;
+
+
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
@@ -115,13 +118,13 @@ export class EventComponent implements OnInit, AfterViewInit {
 
   private loadMap(): void {
     this.map = L.map('map').setView([0,0], 2);
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + AUTH_TOKEN, {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
       id: 'mapbox/streets-v11',
       tileSize: 512,
       zoomOffset: -1,
-      accessToken: environment.accessToken
+      accessToken: AUTH_TOKEN
     }).addTo(this.map);
 
     this.getCurrentPosition()

@@ -1,4 +1,3 @@
-
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
@@ -126,9 +125,13 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
               });
               this.buildCreations();
             },
-            (error) => { this.errorMessage = utility.onError(error, this.eventBusService); }
+            (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
           );
-        }, (error) => { this.errorMessage = utility.onError(error, this.eventBusService); }
+        }, (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
       );
     } else {
       this.listKey = new Array<string>();
@@ -143,7 +146,9 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
           this.listFollowers.push(new PublicUser(follower));
         });
       },
-      (error) => { this.errorMessage = utility.onError(error, this.eventBusService); }
+      (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
     )
   }
 
@@ -277,7 +282,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
   public resetForm() {
     const artworkOrigin = window.sessionStorage.getItem("artworkOrigin");
     if (!artworkOrigin) this.buildFormArtworkEmpty;
-    if (artworkOrigin) this.artworkResult = Object.assign<Artwork, Artwork>(this.artworkResult, JSON.parse(artworkOrigin))
+    else this.artworkResult = Object.assign<Artwork, Artwork>(this.artworkResult, JSON.parse(artworkOrigin))
     //aggiorno this.listkey con le chiavi degli attributi
     this.listKey = new Array<string>();
     for (let key in this.artworkResult.attributes) this.listKey.push(key);
@@ -287,7 +292,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
 
   onSubmit() {
 
-    if(!this.onSale){
+    if (!this.onSale) {
       this.artworkResult.paymentEmail = undefined;
       this.artworkResult.availableCopies = 0;
       this.artworkResult.price = undefined;
@@ -309,7 +314,9 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
             (result) => {
               console.log(result);
             },
-            (error) => { this.errorMessage = utility.onError(error, this.eventBusService); }
+            (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
           );
         }
       });
@@ -322,9 +329,9 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
           this.publicationService.deleteArtworkCreation(elementOriginCreation.id)
         }
       });
-      let temp = Object.assign<{},Artwork>({}, this.artworkResult);
-      temp.creations = [];
-      this.publicationService.updateArtwork(temp);
+      let tmpResult = Object.assign<{}, Artwork>({}, this.artworkResult);
+      tmpResult.creations = [];
+      this.publicationService.updateArtwork(tmpResult);
       this.sent = true;
       return;
     }
@@ -336,19 +343,23 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
           this.publicationService.saveArtworkCreation(elementCreation).subscribe(
             (responseCreation) => {
               console.log(responseCreation);
-            }, (error) => { this.errorMessage = utility.onError(error, this.eventBusService); }
+            }, (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
           );
         });
         this.router.navigate(['modify-artwork/' + responseArtwork.id]);
-      }, (error) => { this.errorMessage = utility.onError(error, this.eventBusService); }
+      }, (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
     );
   }
 
-  getCreation(): string[]{
+  getCreation(): string[] {
     return getListCreationTypeAP();
   }
 
-  getCurrency(): string[]{
+  getCurrency(): string[] {
     return getListCurrency();
   }
 

@@ -1,13 +1,13 @@
 import {Creation, Publication} from "./Publication";
 
 export class Post implements Publication {
-  readonly publicationType = "post" as const;
-  readonly id: string;
-  readonly timestamp: string;
-  readonly lastUpdate: string;
-  readonly creations: Creation[];
-  readonly title: string;
-  readonly body: string;
+  publicationType = "post" as const;
+  id: string;
+  timestamp: string;
+  lastUpdate: string;
+  creations: Creation[];
+  title: string;
+  body: string;
 
   constructor(dto: any) {
     this.id = dto.id;

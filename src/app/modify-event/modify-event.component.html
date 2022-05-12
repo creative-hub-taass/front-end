@@ -8,10 +8,10 @@
       (ngSubmit)="f.form.valid && addInformations()"
       name="formPublication"
       novalidate
-      >
+    >
 
       <div class="event-box">
-        <label>name: {{this.eventResult.name}}</label>
+        <label>name: {{this.eventResult?.name}}</label>
       </div>
       <div class="event-box">
         <input #name="ngModel"
@@ -31,7 +31,7 @@
       </div>
 
       <div class="event-box">
-        <label>Description: {{this.eventResult.description}}</label>
+        <label>Description: {{this.eventResult?.description}}</label>
       </div>
       <div class="event-box">
         <input #description="ngModel"
@@ -45,13 +45,13 @@
           *ngIf="description.errors && f.submitted"
           class="alert alert-danger"
           role="alert"
-          >
+        >
           Description is required!
         </div>
       </div>
 
       <div class="event-box">
-        <label>Image: {{this.eventResult.image}}</label>
+        <label>Image: {{this.eventResult?.image}}</label>
       </div>
       <div class="event-box">
         <input #image="ngModel"
@@ -65,13 +65,13 @@
           *ngIf="image.errors && f.submitted"
           class="alert alert-danger"
           role="alert"
-          >
+        >
           Image is required!
         </div>
       </div>
 
       <div class="event-box">
-        <label>locationName: {{this.eventResult.locationName}}</label>
+        <label>locationName: {{this.eventResult?.locationName}}</label>
       </div>
       <div class="event-box">
         <input #locationName="ngModel"
@@ -85,13 +85,13 @@
           *ngIf="locationName.errors && f.submitted"
           class="alert alert-danger"
           role="alert"
-          >
+        >
           Location name is required!
         </div>
       </div>
 
       <div class="event-box">
-        <label>Start time: {{this.eventResult.startDateTime}}</label>
+        <label>Start time: {{this.eventResult?.startDateTime}}</label>
       </div>
       <div class="event-box">
         <input #startDateTime="ngModel"
@@ -105,13 +105,13 @@
           *ngIf="startDateTime.errors && f.submitted"
           class="alert alert-danger"
           role="alert"
-          >
+        >
           Start time is required!
         </div>
       </div>
 
       <div class="event-box">
-        <label>End time: {{this.eventResult.endDateTime}}</label>
+        <label>End time: {{this.eventResult?.endDateTime}}</label>
       </div>
       <div class="event-box">
         <input #endDateTime="ngModel"
@@ -125,13 +125,13 @@
           *ngIf="endDateTime.errors && f.submitted"
           class="alert alert-danger"
           role="alert"
-          >
+        >
           End time is required!
         </div>
       </div>
 
       <div class="event-box">
-        <label>Booking URL: {{this.eventResult.bookingURL}}</label>
+        <label>Booking URL: {{this.eventResult?.bookingURL}}</label>
       </div>
       <div class="event-box">
         <input #booking="ngModel"
@@ -147,7 +147,7 @@
           *ngIf="f.submitted && (errorMessage!=undefined)"
           class="alert alert-danger"
           role="alert"
-          >
+        >
           {{errorMessage}}
         </div>
       </div>
@@ -159,27 +159,27 @@
       #f="ngForm"
       (ngSubmit)="f.form.valid && addUsers()"
       name="formUsers"
-      novalidate>
-      >
+      novalidate
+    >
       <div class="event-box" *ngFor="let user of this.listCreationEvent; index as i;">
         <label>Creator {{i}} - nickname: {{user.nickname}}; creationType: {{user.creationType}}</label>
         <button (click)="deleteUser(user.id)">delete</button>
       </div>
       <div class="event-box">
-           <select #creationType="ngModel"
-                   [(ngModel)]="formCreations.creationType"
-                   class="form-control"
-                   name="creationType"
-           >
-             <option *ngFor="let creation of getCreation()" [ngValue]="creation">{{creation}}</option>
-           </select>
-      <select #user="ngModel"
-              [(ngModel)]="formCreations.user"
-              class="form-control"
-              name="creationUser"
-      >
-        <option *ngFor="let user of this.listFollowers" [ngValue]="user">{{user.nickname}}</option>
-      </select>
+        <select #creationType="ngModel"
+                [(ngModel)]="formCreations.creationType"
+                class="form-control"
+                name="creationType"
+        >
+          <option *ngFor="let creation of getCreation()" [ngValue]="creation">{{creation}}</option>
+        </select>
+        <select #user="ngModel"
+                [(ngModel)]="formCreations.user"
+                class="form-control"
+                name="creationUser"
+        >
+          <option *ngFor="let user of this.listFollowers" [ngValue]="user">{{user.nickname}}</option>
+        </select>
 
       </div>
       <button class="full-button">Update creator</button>
@@ -199,5 +199,7 @@
 <div class="map-container" #map>
   <div id="map"></div>
 </div>
-<button (click)="onSubmit()">Save Artwork</button>
-<label *ngIf="this.sent">Artwork salvato con successo!</label>
+<div class="event-box">
+  <button (click)="onSubmit()">Save Event</button>
+  <label *ngIf="this.sent">Event saved successfully!</label>
+</div>

@@ -6,6 +6,7 @@ import {PublicUser} from "../../_models/PublicUser";
 import {Artwork} from "../../_models/Artwork";
 import {Event} from "../../_models/Event"
 import {Creation} from "../../_models/Publication";
+import {Post} from "../../_models/Post";
 
 
 const API_GATEWAY_PUBLICATIONS = environment.apiGatewayUrl + "api/v1/publications/";
@@ -88,4 +89,19 @@ export class PublicationService {
     this.http.delete(API_GATEWAY_PUBLICATIONS + "events/creations/" + idCreation);
   }
 
+  public savePost(post: Post): Observable<any> {
+    return this.http.post<Post>(API_GATEWAY_PUBLICATIONS + "posts/", post);
+  }
+
+  public updatePost(post: Post): Observable<any> {
+    return this.http.put<Post>(API_GATEWAY_PUBLICATIONS + "posts/" + post.id, post);
+  }
+
+  public savePostCreation(postCreation: Creation): Observable<any> {
+    return this.http.post<any>(API_GATEWAY_PUBLICATIONS + "posts/creations/", postCreation);
+  }
+
+  public deletePostCreation(idCreation: string): void {
+   this.http.delete(API_GATEWAY_PUBLICATIONS + "/posts/creations/" + idCreation);
+  }
 }

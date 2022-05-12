@@ -1,0 +1,109 @@
+<div class="container">
+  <div class="publication-box">
+    <h2>Publication</h2>
+    <button (click)="resetForm()">Reset</button>
+
+    <form
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && addInformations()"
+      name="formPublication"
+      novalidate
+    >
+
+      <div class="post-box">
+        <label>Title: {{this.postResult?.title}}</label>
+      </div>
+      <div class="post-box">
+        <input #title="ngModel"
+               [(ngModel)]="formPost.title"
+               class="form-control"
+               name="title"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="title.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Title is required!
+        </div>
+      </div>
+
+      <div class="post-box">
+        <label>Body: {{this.postResult?.body}}</label>
+      </div>
+      <div class="post-box">
+        <input #body="ngModel"
+               [(ngModel)]="formPost.body"
+               class="form-control"
+               name="body"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="body.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Body of post is required!
+        </div>
+      </div>
+      <button class="full-button">Update informations</button>
+      <div class="form-group">
+        <div
+          *ngIf="f.submitted && (errorMessage!=undefined)"
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{errorMessage}}
+        </div>
+      </div>
+    </form>
+
+    <h3>Users</h3>
+
+    <form
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && addUsers()"
+      name="formUsers"
+      novalidate
+    >
+      <div class="post-box" *ngFor="let user of this.listCreationPost; index as i;">
+        <label>Creator {{i}} - nickname: {{user.nickname}}; creationType: {{user.creationType}}</label>
+        <button (click)="deleteUser(user.id)">delete</button>
+      </div>
+      <div class="post-box">
+        <select #creationType="ngModel"
+                [(ngModel)]="formCreations.creationType"
+                class="form-control"
+                name="creationType"
+        >
+          <option *ngFor="let creation of getCreation()" [ngValue]="creation">{{creation}}</option>
+        </select>
+        <select #user="ngModel"
+                [(ngModel)]="formCreations.user"
+                class="form-control"
+                name="creationUser"
+        >
+          <option *ngFor="let user of this.listFollowers" [ngValue]="user">{{user.nickname}}</option>
+        </select>
+      </div>
+      <button class="full-button">Update creator</button>
+
+      <div class="form-group">
+        <div
+          *ngIf="f.submitted && (errorMessage!=undefined)"
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{ errorMessage }}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="post-box">
+  <button (click)="onSubmit()">Save Post</button>
+  <label *ngIf="this.sent">Post saved successfully!</label>
+</div>

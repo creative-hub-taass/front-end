@@ -40,7 +40,7 @@ export function buildUsersIDfromSpecificType(list: any[]): any[] {
 export function getUser(userParam: PublicUser, listUsers: PublicUser[]): PublicUser {
   let tmp = new PublicUser(userParam);
   let index = listUsers.findIndex((Object) => {
-    return Object.getId() == tmp.getId();
+    return Object.id == tmp.id;
   });
   return listUsers[index];
 }

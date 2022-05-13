@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import * as utility from "../../_shared/functions";
 import {PublicCreator} from "../../_models/PublicCreator";
 import {TokenStorageService} from "../_services/token-storage.service";
+import {Browser} from "leaflet";
 
 @Component({
   selector: 'app-about',
@@ -31,7 +32,7 @@ export class AboutComponent implements OnInit {
       let userStorage: string | null = window.sessionStorage.getItem(this.userId);
       if(userStorage != null){
         this.user = new PublicUser(JSON.parse(userStorage));
-        this.creator = new PublicCreator(this.user);
+        this.creator = new PublicCreator(this.user.creator);
       }
     }
     this.sameId = (this.tokenStorageService.getUser().id == this.userId);
@@ -47,6 +48,7 @@ export class AboutComponent implements OnInit {
       (publicUser) => {
         this.user = new PublicUser(publicUser);
         this.creator = new PublicCreator(this.user.creator);
+        window.sessionStorage.setItem(publicUser.id,JSON.stringify(this.user));
       }, (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }

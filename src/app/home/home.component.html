@@ -7,7 +7,7 @@
           <div *ngFor="let user of element.getUsers()" class="info">
             <div class="user">
               <div class="profile-pic">
-                <img alt="" src="{{this.getCreator(user).getAvatar()}}">{{this.getUser(user).getUsername()}}
+                <img alt="" src="{{this.getCreator(user).getAvatar()}}">{{this.getUser(user).username}}
               </div>
               <p [routerLink]="['/artwork/'+element.publication.id]" class="namePost" href="javascript:void(0)">
                 {{element.publication.name}} </p>

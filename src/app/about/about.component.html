@@ -1,0 +1,82 @@
+<header>
+
+  <div class="container">
+
+    <div class="profile">
+
+      <div class="profile-image">
+
+        <img src="{{this.creator?.getAvatar()}}" alt="Avatar">
+
+      </div>
+
+      <div class="profile-user-settings">
+
+        <h1 class="profile-user-name">{{this.user?.nickname}}</h1>
+
+        <button class="btn profile-edit-btn" *ngIf="sameId">Edit Profile</button>
+
+
+      </div>
+
+      <div class="profile-stats">
+
+        <ul>
+          <li><span class="profile-stat-count">{{this.user?.fanIds?.length}}</span> followers</li>
+          <li><span class="profile-stat-count">{{this.user?.inspirerIds?.length}}</span> following</li>
+        </ul>
+
+      </div>
+
+      <div class="profile-name">
+
+        <p><span class="profile-real-name">@{{this.user?.username}}</span></p>
+
+      </div>
+
+    </div>
+    <!-- End of profile section -->
+
+  </div>
+  <!-- End of container -->
+
+</header>
+
+<main>
+
+  <div class="container">
+    <div class="nav">
+      <a class="active" href="javascript:void(0)" [routerLink]="'/about/' + this.userId">About</a>
+      <a href="javascript:void(0)" [routerLink]="'/portfolio/' + this.userId">Portfolio</a>
+      <a href="javascript:void(0)" [routerLink]="'/collaborations/' + this.userId">Collaborations</a>
+      <a href="javascript:void(0)" [routerLink]="'/events/' + this.userId">Events</a>
+      <a href="javascript:void(0)" [routerLink]="'/shop/' + this.userId">Shop</a>
+    </div>
+
+  </div>
+  <!-- End of container -->
+
+  <div class="container">
+    <div class="profile-bio">
+      <h3>Biography</h3>
+      <p>{{this.creator?.getBio()}}</p>
+    </div>
+  </div>
+</main>
+<!-- Outro -->
+
+<div class="container">
+  <div class="row text-xs-center p-t-1 p-b-4">
+    <div class="col-md-12">
+      <div class="contacts">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <a href="javascript:void(0)" title="Spotify" class="fa fa-spotify"></a>
+        <a href="javascript:void(0)" title="Facebook" class="fa fa-facebook"></a>
+        <a href="javascript:void(0)" title="Twitter" class="fa fa-twitter"></a>
+        <a href="javascript:void(0)" title="Instagram" class="fa fa-instagram"></a>
+      </div>
+    </div>
+  </div>
+</div>
+

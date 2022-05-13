@@ -16,4 +16,12 @@ export class CreatorService {
   public getCreator(idCreator: string): Observable<any> {
     return this.http.get<PublicUser>(API_GATEWAY_USERS + "-/" + idCreator);
   }
+
+  public setFollower(idFollower: string, idFollowed: string): Observable<any> {
+    return this.http.put<PublicUser>(API_GATEWAY_USERS + idFollower + "/follow/" + idFollowed, null);
+  }
+
+  public deleteFollower(idFollower: string, idFollowed: string): Observable<any> {
+    return this.http.put<PublicUser>(API_GATEWAY_USERS + idFollower + "/unfollow/" + idFollowed, null);
+  }
 }

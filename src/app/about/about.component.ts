@@ -6,7 +6,6 @@ import {ActivatedRoute} from "@angular/router";
 import * as utility from "../../_shared/functions";
 import {PublicCreator} from "../../_models/PublicCreator";
 import {TokenStorageService} from "../_services/token-storage.service";
-import {Browser} from "leaflet";
 
 @Component({
   selector: 'app-about',
@@ -15,6 +14,7 @@ import {Browser} from "leaflet";
 })
 export class AboutComponent implements OnInit {
 
+  followed: boolean;
   sameId: boolean = false;
   userId!: string | null;
   user!: PublicUser;
@@ -35,6 +35,10 @@ export class AboutComponent implements OnInit {
         this.creator = new PublicCreator(this.user.creator);
       }
     }
+    let index = this.tokenStorageService.getUser().inspirerIds.findIndex((idUser:string) => {
+      return idUser == this.userId;
+    });
+    this.followed = (index != -1);
     this.sameId = (this.tokenStorageService.getUser().id == this.userId);
   }
 
@@ -49,10 +53,44 @@ export class AboutComponent implements OnInit {
         this.user = new PublicUser(publicUser);
         this.creator = new PublicCreator(this.user.creator);
         window.sessionStorage.setItem(publicUser.id,JSON.stringify(this.user));
+        let index = this.user.fanIds.findIndex((fanId) => {
+          return fanId == this.tokenStorageService.getUser().id;
+        });
+        if (index != -1) this.followed = true;
       }, (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     );
   }
 
+
+
+  follow() {
+    if(this.tokenStorageService.getUser() == null) return;
+    this.creatorService.setFollower(this.tokenStorageService.getUser().id,this.user.id).subscribe(
+      (user) => {
+        this.tokenStorageService.saveUser(user);
+        this.user.fanIds.push(user.id);
+        window.sessionStorage.setItem(this.user.id,JSON.stringify(this.user));
+        this.followed = true;
+      }, (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    )
+  }
+
+  unfollow() {
+    if(this.tokenStorageService.getUser() == null) return;
+    this.creatorService.deleteFollower(this.tokenStorageService.getUser().id,this.user.id).subscribe(
+      (user) => {
+        let tmp: PublicUser = this.tokenStorageService.getUser();
+        tmp.inspirerIds.splice(user.id,1);
+        this.tokenStorageService.saveUser(tmp);
+        this.user = user;
+        this.creator = user.creator;
+        this.followed = false;
+        window.sessionStorage.setItem(this.user.id,JSON.stringify(this.user));
+      }
+    )
+  }
 }

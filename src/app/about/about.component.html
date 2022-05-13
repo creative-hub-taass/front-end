@@ -29,9 +29,8 @@
       </div>
 
       <div class="profile-name">
-
-        <p><span class="profile-real-name">@{{this.user?.username}}</span></p>
-
+        <p><span class="profile-real-name">@{{this.user?.username}}</span>  <button class="btn-follow" *ngIf="!this.sameId && !this.followed" (click)="this.follow()">Follow</button> <button class="btn-follow" *ngIf="!this.sameId && this.followed" (click)="this.unfollow()">Unfollow</button> </p>
+        <h3>{{this.creator?.creatorType}}</h3>
       </div>
 
     </div>
@@ -59,7 +58,7 @@
   <div class="container">
     <div class="profile-bio">
       <h3>Biography</h3>
-      <p>{{this.creator?.getBio()}}</p>
+      <p>{{this.creator?.bio}}</p>
     </div>
   </div>
 </main>

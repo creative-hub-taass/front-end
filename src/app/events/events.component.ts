@@ -1,28 +1,28 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {PublicUser} from "../../_models/PublicUser";
 import {PublicCreator} from "../../_models/PublicCreator";
+import {Event} from "../../_models/Event"
+import {PublicationInfo} from "../../_models/PublicationInfo";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {CreatorService} from "../_services/creator.service";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {ActivatedRoute} from "@angular/router";
 import * as utility from "../../_shared/functions";
-import {PublicationInfo} from "../../_models/PublicationInfo";
-import {Artwork} from "../../_models/Artwork";
 
 @Component({
-  selector: 'app-portfolio',
-  templateUrl: './portfolio.component.html',
-  styleUrls: ['./portfolio.component.css']
+  selector: 'app-events',
+  templateUrl: './events.component.html',
+  styleUrls: ['./events.component.css']
 })
-export class PortfolioComponent implements OnInit {
+export class EventsComponent implements OnInit {
 
   followed: boolean = false;
   sameId: boolean = false;
-  userId!: string | null;
+  userId: string | null;
   user!: PublicUser;
   creator!: PublicCreator;
   errorMessage: string | undefined;
-  listArtworks!: Artwork[];
+  listEvents!: Event[];
   listPublicationInfo!: PublicationInfo[];
 
   constructor(
@@ -34,18 +34,18 @@ export class PortfolioComponent implements OnInit {
     this.userId = this.route.snapshot.paramMap.get("id");
     if (this.userId != null) {
       let userStorage: string | null = window.sessionStorage.getItem(this.userId);
-      if (userStorage != null) {
+      if (userStorage != null){
         this.user = new PublicUser(JSON.parse(userStorage));
         this.creator = new PublicCreator(this.user.creator);
-        this.creatorService.getArtworks(this.user.id).subscribe(
-          (listArtworks: Artwork[]) => {
-            this.listArtworks = new Array<Artwork>();
-            let listPublicationsID : string[] = new Array<string>();
+        this.creatorService.getEvents(this.user.id).subscribe(
+          (listEvents: Event[]) => {
+            this.listEvents = new Array<Event>();
+            let listPublicationsID: string[] = new Array<string>();
             this.listPublicationInfo = new Array<PublicationInfo>();
-            listArtworks.forEach((elementArtwork) => {
-              this.listArtworks.push(elementArtwork);
-              listPublicationsID.push(elementArtwork.id);
-              this.listPublicationInfo.push(new PublicationInfo(elementArtwork,elementArtwork.creations))
+            listEvents.forEach((elementEvent) => {
+              this.listEvents.push(elementEvent);
+              listPublicationsID.push(elementEvent.id);
+              this.listPublicationInfo.push(new PublicationInfo(elementEvent, elementEvent.creations));
             });
             this.callServiceInteractions(listPublicationsID);
           }, (error) => {
@@ -63,26 +63,27 @@ export class PortfolioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.userId == null) {
+    if(this.userId == null) {
       this.errorMessage = "Error";
       return;
     }
-    if (this.user != null) return;
+    if(this.user != null) return;
     this.creatorService.getCreator(this.userId).subscribe(
       (publicUser) => {
         this.user = new PublicUser(publicUser);
         this.creator = new PublicCreator(this.user.creator);
         window.sessionStorage.setItem(publicUser.id, JSON.stringify(this.user));
-        this.creatorService.getArtworks(this.user.id).subscribe(
-          (listArtworks: Artwork[]) => {
-            this.listArtworks = new Array<Artwork>();
+        this.creatorService.getEvents(this.user.id).subscribe(
+          (listEvents: Event[]) => {
+            this.listEvents = new Array<Event>();
             let listPublicationsID: string[] = new Array<string>();
             this.listPublicationInfo = new Array<PublicationInfo>();
-            listArtworks.forEach((elementArtwork) => {
-              this.listArtworks.push(elementArtwork);
-              listPublicationsID.push(elementArtwork.id);
-              this.listPublicationInfo.push(new PublicationInfo(elementArtwork,elementArtwork.creations));
+            listEvents.forEach((elementEvent) => {
+              this.listEvents.push(elementEvent);
+              listPublicationsID.push(elementEvent.id);
+              this.listPublicationInfo.push(new PublicationInfo(elementEvent, elementEvent.creations));
             });
+
             this.callServiceInteractions(listPublicationsID);
           }, (error) => {
             this.errorMessage = utility.onError(error, this.eventBusService);
@@ -159,16 +160,16 @@ export class PortfolioComponent implements OnInit {
     );
   }
 
-  getLikesCount(artworkId: string): number {
+  getLikesCount(eventId: string): number {
     let index: number = this.listPublicationInfo.findIndex((elementPublication) => {
-      return elementPublication.publication.id == artworkId;
+      return elementPublication.publication.id == eventId;
     });
     return this.listPublicationInfo[index].getLikes();
   }
 
-  getCommentsCount(artworkId: string): number {
+  getCommentsCount(eventId: string): number {
     let index: number = this.listPublicationInfo.findIndex((elementPublication) => {
-      return elementPublication.publication.id == artworkId;
+      return elementPublication.publication.id == eventId;
     });
     return this.listPublicationInfo[index].getComments().length;
   }

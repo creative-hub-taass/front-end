@@ -297,15 +297,7 @@ img {
   }
 }
 
-/*
 
-The following code will only run if your browser supports CSS grid.
-
-Remove or comment-out the code block below to see how the browser will fall-back to flexbox & floated styling.
-
-*/
-
-/* Add a black background color to the top navigation */
 .nav {
   background-color: #06dbee;
   overflow: hidden;

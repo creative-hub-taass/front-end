@@ -5,9 +5,13 @@ import {Observable} from "rxjs";
 import {PublicUser} from "../../_models/PublicUser";
 import {PublicationInfo} from "../../_models/PublicationInfo";
 import {Post} from "../../_models/Post";
+import {Artwork} from "../../_models/Artwork";
+import {Event} from "../../_models/Event"
 
 const API_GATEWAY_USERS = environment.apiGatewayUrl + "api/v1/users/";
 const API_GATEWAY_PUBLICATIONS = environment.apiGatewayUrl + "api/v1/publications/";
+const API_GATEWAY_INTERACTIONS = environment.apiGatewayUrl + "api/v1/interactions/";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,5 +37,21 @@ export class CreatorService {
 
   public getPosts(idCreator: string): Observable<any> {
     return this.http.get<Post[]>(API_GATEWAY_PUBLICATIONS + "-/posts/creator/" + idCreator);
+  }
+
+  public getArtworks(idCreator: string): Observable<any> {
+    return this.http.get<Artwork[]>(API_GATEWAY_PUBLICATIONS + "-/artworks/creator/" + idCreator);
+  }
+
+  public getEvents(idCreator: string): Observable<any> {
+    return this.http.get<Event[]>(API_GATEWAY_PUBLICATIONS + "-/events/creator/" + idCreator);
+  }
+
+  getLikesList(listPublications: string[]): Observable<any> {
+    return this.http.post<any[]>(API_GATEWAY_INTERACTIONS + "-/likes/ids", listPublications);
+  }
+
+  getCommentsList(listPublications: string[]): Observable<any> {
+    return this.http.post(API_GATEWAY_INTERACTIONS + "-/comments/ids", listPublications);
   }
 }

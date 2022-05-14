@@ -1,39 +1,43 @@
 <header>
-
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
   <div class="container">
 
     <div class="profile">
 
       <div class="profile-image">
 
-        <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">
+        <img src="{{this.creator?.avatar}}" alt="Avatar">
 
       </div>
 
       <div class="profile-user-settings">
 
-        <h1 class="profile-user-name">janedoe_</h1>
+        <h1 class="profile-user-name">{{this.user?.nickname}}</h1>
 
-        <button class="btn profile-edit-btn">Edit Profile</button>
-
-        <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
-
+        <button class="btn profile-edit-btn" *ngIf="sameId">Edit Profile</button>
+        <button class="btn-reload" (click)="reload()">Reload<i class='fas fa-redo'></i></button>
       </div>
 
       <div class="profile-stats">
 
         <ul>
-          <li><span class="profile-stat-count">164</span> posts</li>
-          <li><span class="profile-stat-count">188</span> followers</li>
-          <li><span class="profile-stat-count">206</span> following</li>
+          <li><span class="profile-stat-count">{{this.user?.fanIds?.length}}</span> followers</li>
+          <li><span class="profile-stat-count">{{this.user?.inspirerIds?.length}}</span> following</li>
         </ul>
 
       </div>
 
-      <div class="profile-bio">
-
-        <p><span class="profile-real-name">Jane Doe</span> Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
-
+      <div class="profile-name">
+        <p><span class="profile-real-name">@{{this.user?.username}}</span>  <button class="btn-follow" *ngIf="!this.sameId && !this.followed" (click)="this.follow()">Follow</button> <button class="btn-follow" *ngIf="!this.sameId && this.followed" (click)="this.unfollow()">Unfollow</button> </p>
+        <h3>{{this.creator?.creatorType}}</h3>
+        <div class="contacts">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+          <a href="javascript:void(0)" title="Spotify" class="fa fa-spotify"></a>
+          <a href="javascript:void(0)" title="Facebook" class="fa fa-facebook"></a>
+          <a href="javascript:void(0)" title="Twitter" class="fa fa-twitter"></a>
+          <a href="javascript:void(0)" title="Instagram" class="fa fa-instagram"></a>
+        </div>
       </div>
 
     </div>
@@ -47,18 +51,29 @@
 <main>
 
   <div class="container">
+    <div class="nav">
+      <a href="javascript:void(0)" [routerLink]="'/about/' + this.userId">About</a>
+      <a class="active" href="javascript:void(0)" [routerLink]="'/portfolio/' + this.userId">Portfolio</a>
+      <a href="javascript:void(0)" [routerLink]="'/collaborations/' + this.userId">Collaborations</a>
+      <a href="javascript:void(0)" [routerLink]="'/events/' + this.userId">Events</a>
+      <a href="javascript:void(0)" [routerLink]="'/shop/' + this.userId">Shop</a>
+    </div>
+
+  </div>
+
+  <div class="container">
 
     <div class="gallery">
 
-      <div class="gallery-item" tabindex="0" *ngFor="let publication of listPublication">
+      <div class="gallery-item" tabindex="0" *ngFor="let publication of listArtworks" [routerLink]="'/artwork/' + publication.id">
 
-        <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="">
 
+        <img src="{{publication.images[0]}}" class="gallery-image" alt="">
         <div class="gallery-item-info">
 
           <ul>
-            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 56</li>
-            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 2</li>
+            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}</li>
+            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}</li>
           </ul>
 
         </div>

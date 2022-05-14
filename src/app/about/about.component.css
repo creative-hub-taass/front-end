@@ -1,3 +1,5 @@
+
+
 /* Add a hover effect if you want */
 .fa:hover {
   opacity: 0.7;
@@ -29,10 +31,10 @@
 }
 
 .contacts {
-  margin-top: 5px;
-  margin-left: 2.5em;
   padding: 10px 10px;
   display: inline-block;
+  position: relative;
+  left:65%;
 }
 
 
@@ -80,9 +82,9 @@ img {
 }
 
 .container {
-  max-width: 93.5rem;
+  max-width: 95rem;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 0;
 }
 
 .btn {
@@ -150,6 +152,8 @@ img {
 .profile-user-name {
   display: inline-block;
   font-size: 3.2rem;
+  position: relative;
+  top: 15px;
   font-weight: 300;
 }
 
@@ -170,7 +174,6 @@ img {
 .profile-stats {
   margin-top: 2.3rem;
   position: relative;
-  top: 20px;
   right:30px;
 }
 
@@ -193,15 +196,8 @@ img {
   margin-top: 2.3rem;
 }
 
-.profile-bio {
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 1.5;
-  margin-top: 2.3rem;
-  min-height: 200px;
-  min-width: 100%;
-  position: static;
-  padding-top: 30px;
+.profile-name h3{
+  font-family: "Sofia", serif;
 }
 
 .profile-real-name,
@@ -301,80 +297,12 @@ img {
   }
 }
 
-/*
 
-The following code will only run if your browser supports CSS grid.
-
-Remove or comment-out the code block below to see how the browser will fall-back to flexbox & floated styling.
-
-*/
-
-@supports (display: grid) {
-  .profile {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: repeat(3, auto);
-    grid-column-gap: 3rem;
-    align-items: center;
-  }
-
-  .profile-image {
-    grid-row: 1 / -1;
-  }
-
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
-    grid-gap: 2rem;
-  }
-
-  .profile-image,
-  .profile-user-settings,
-  .profile-stats,
-  .profile-bio,
-  .gallery-item,
-  .gallery {
-    width: auto;
-    margin: 0;
-  }
-
-  @media (max-width: 40rem) {
-    .profile {
-      grid-template-columns: auto 1fr;
-      grid-row-gap: 1.5rem;
-    }
-
-    .profile-image {
-      grid-row: 1 / 2;
-    }
-
-    .profile-user-settings {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      grid-gap: 1rem;
-    }
-
-    .profile-edit-btn,
-    .profile-stats,
-    .profile-bio {
-      grid-column: 1 / -1;
-    }
-
-    .profile-user-settings,
-    .profile-edit-btn,
-    .profile-settings-btn,
-    .profile-bio,
-    .profile-stats {
-      margin: 0;
-    }
-  }
-}
-/* Add a black background color to the top navigation */
 .nav {
   background-color: #06dbee;
   overflow: hidden;
   border-radius: 40px;
-  width: 47%;
+  width: 37.47rem;
   height: 30%;
   margin: auto;
 }
@@ -384,9 +312,10 @@ Remove or comment-out the code block below to see how the browser will fall-back
   float: right;
   color: #f2f2f2;
   text-align: center;
-  padding: 14px 16px;
+  padding: 14px 28px;
   text-decoration: none;
   font-size: 17px;
+  position: relative;
 }
 
 /* Change the color of links on hover */
@@ -406,7 +335,7 @@ Remove or comment-out the code block below to see how the browser will fall-back
   border-radius: 20px;
   border-width: 0;
   color: white;
-  padding: 5px 32px;
+  padding: 5px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -415,3 +344,85 @@ Remove or comment-out the code block below to see how the browser will fall-back
   left: 20px;
 }
 
+.post {
+  position: relative;
+  top:20px;
+  border-width: 20px;
+  border-color: #06dbee;
+  margin: auto;
+  background-color: #f5f1f1;
+  border-radius: 20px;
+  padding-left: 5px;
+}
+
+.post h4 {
+  left:70%;
+  font-family: Arial, cursive;
+  font-size: 30px;
+  margin: auto;
+}
+.list-post {
+  width: 55%;
+  position: absolute;
+  left:45%;
+  margin-top: 2.3rem;
+  padding-top: 30px;
+  padding-right: 15%;
+  padding-left: 5px;
+  border-width: 20px;
+}
+
+.profile-bio {
+  font-weight: 500;
+  line-height: 1.5;
+  margin-top: 2.3rem;
+  margin-right: 9rem;
+  width: 40%;
+  position: relative;
+  padding-top: 30px;
+  padding-right: 5px;
+}
+
+#lastUpdate {
+  margin-top: 10px  ;
+  font-size: small;
+}
+
+.btn-reload{
+  background-color: #06dbee;
+  border-radius: 100px;
+  border-width: 0;
+  color: white;
+  padding: 5px 6px;
+  text-align: center;
+  display: inline-block;
+  font-size: 13px;
+  position: relative;
+  left: 20px;
+}
+
+
+.contacts a {
+  position: relative;
+  margin: 5px;
+}
+
+/* Loader */
+
+.loader {
+  width: 5rem;
+  height: 5rem;
+  border: 0.6rem solid #999;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: loader 500ms linear infinite;
+}
+
+/* Spinner Animation */
+
+@keyframes loader {
+  to {
+    transform: rotate(360deg);
+  }
+}

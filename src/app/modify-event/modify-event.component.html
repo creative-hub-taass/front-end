@@ -91,7 +91,7 @@
       </div>
 
       <div class="event-box">
-        <label>Start time: {{this.eventResult?.startDateTime}}</label>
+        <label>Start time: {{this.eventResult?.startDateTime | date:'longDate'}}</label>
       </div>
       <div class="event-box">
         <input #startDateTime="ngModel"
@@ -111,7 +111,7 @@
       </div>
 
       <div class="event-box">
-        <label>End time: {{this.eventResult?.endDateTime}}</label>
+        <label>End time: {{this.eventResult?.endDateTime | date:'longDate'}}</label>
       </div>
       <div class="event-box">
         <input #endDateTime="ngModel"

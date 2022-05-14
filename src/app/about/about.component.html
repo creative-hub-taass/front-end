@@ -1,5 +1,6 @@
 <header>
-
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
   <div class="container">
 
     <div class="profile">
@@ -15,8 +16,7 @@
         <h1 class="profile-user-name">{{this.user?.nickname}}</h1>
 
         <button class="btn profile-edit-btn" *ngIf="sameId">Edit Profile</button>
-
-
+        <button class="btn-reload" (click)="reload()">Reload<i class='fas fa-redo'></i></button>
       </div>
 
       <div class="profile-stats">
@@ -31,6 +31,13 @@
       <div class="profile-name">
         <p><span class="profile-real-name">@{{this.user?.username}}</span>  <button class="btn-follow" *ngIf="!this.sameId && !this.followed" (click)="this.follow()">Follow</button> <button class="btn-follow" *ngIf="!this.sameId && this.followed" (click)="this.unfollow()">Unfollow</button> </p>
         <h3>{{this.creator?.creatorType}}</h3>
+        <div class="contacts">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+          <a href="javascript:void(0)" title="Spotify" class="fa fa-spotify"></a>
+          <a href="javascript:void(0)" title="Facebook" class="fa fa-facebook"></a>
+          <a href="javascript:void(0)" title="Twitter" class="fa fa-twitter"></a>
+          <a href="javascript:void(0)" title="Instagram" class="fa fa-instagram"></a>
+        </div>
       </div>
 
     </div>
@@ -61,21 +68,14 @@
       <p>{{this.creator?.bio}}</p>
     </div>
   </div>
-</main>
-<!-- Outro -->
-
-<div class="container">
-  <div class="row text-xs-center p-t-1 p-b-4">
-    <div class="col-md-12">
-      <div class="contacts">
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <a href="javascript:void(0)" title="Spotify" class="fa fa-spotify"></a>
-        <a href="javascript:void(0)" title="Facebook" class="fa fa-facebook"></a>
-        <a href="javascript:void(0)" title="Twitter" class="fa fa-twitter"></a>
-        <a href="javascript:void(0)" title="Instagram" class="fa fa-instagram"></a>
+  <div class="container">
+    <div class="list-post" *ngFor="let post of listPosts">
+      <div class="post">
+        <h3><a href="" [routerLink]="'/post/' + post.id">{{post.title}}</a><p id="lastUpdate">Last update: {{post.lastUpdate | date:'medium'}}</p></h3>
+        <p>{{post.body}}</p>
       </div>
     </div>
   </div>
-</div>
+  <div class="loader" *ngIf="user==null"></div>
+</main>
 

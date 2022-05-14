@@ -25,6 +25,7 @@ import { ModifyEventComponent } from './modify-event/modify-event.component';
 import { ModifyPostComponent } from './modify-post/modify-post.component';
 import { AboutComponent } from './about/about.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
+import { EventsComponent } from './events/events.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { PortfolioComponent } from './portfolio/portfolio.component';
     ModifyEventComponent,
     ModifyPostComponent,
     AboutComponent,
-    PortfolioComponent
+    PortfolioComponent,
+    EventsComponent
 
   ],
   imports: [

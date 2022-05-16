@@ -11,11 +11,11 @@
       <div class="user-box">
         <label>E-mail</label>
         <input #email="ngModel"
-          [(ngModel)]="form.email"
-          class="form-control"
-          name="email"
-          required
-          type="text"
+               [(ngModel)]="form.email"
+               class="form-control"
+               name="email"
+               required
+               type="text"
         />
         <div
           *ngIf="email.errors && f.submitted"
@@ -53,11 +53,11 @@
         <p>or login using</p>
         <div class="social-logins-button">
           <button (click)="loginWithGoogle()" class="empty-button">
-            <img src="https://img.icons8.com/ios-glyphs/30/000000/google-logo--v1.png">
+            <img src="https://img.icons8.com/ios-glyphs/30/000000/google-logo--v1.png" alt="Log in with Google">
             Google
           </button>
           <button (click)="loginWithFacebook()" class="empty-button">
-            <img src="https://img.icons8.com/ios-filled/50/000000/facebook--v1.png" />
+            <img src="https://img.icons8.com/ios-filled/50/000000/facebook--v1.png" alt="Log in with Facebook">
             Facebook
           </button>
         </div>

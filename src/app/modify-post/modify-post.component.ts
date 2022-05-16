@@ -96,7 +96,7 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
       this.listCreationPost = new Array<CreationPost>();
     }
     this.publicationService.getListFollower(this.tokenStorageService.getUser().id).subscribe({
-      next:(listFollower: PublicUser[]) => {
+      next: (listFollower: PublicUser[]) => {
         this.listFollowers = new Array<PublicUser>();
         listFollower.forEach((follower) => {
           this.listFollowers.push(new PublicUser(follower));
@@ -166,12 +166,12 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
         if (index == -1) {
           this.publicationService.savePostCreation(elementCreation).subscribe({
             next: (result) => {
-            console.log(result);
+              console.log(result);
             },
             error: (error) => {
-            this.errorMessage = utility.onError(error, this.eventBusService);
-          }
-        });
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
+          });
         }
       });
       postObj.creations.forEach((elementOriginCreation) => {
@@ -197,7 +197,7 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
       return;
     }
     this.publicationService.savePost(this.postResult).subscribe({
-      next:(responsePost) => {
+      next: (responsePost) => {
         this.listCreationPost.forEach((elementCreation) => {
           elementCreation.postId = responsePost.id;
           this.publicationService.savePostCreation(elementCreation).subscribe({
@@ -211,7 +211,7 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
         });
         this.router.navigate(['modify-post/' + responsePost.id]);
       },
-      error:(error) => {
+      error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });

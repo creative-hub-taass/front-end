@@ -108,7 +108,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
           this.onSale = artwork.onSale;
           this.listUsersID = new Array<string>();
           this.artworkResult.creations.forEach((creation) => {
-          this.listUsersID.push(creation.user);
+            this.listUsersID.push(creation.user);
           });
           this.listKey = new Array<string>();
           for (let key in this.artworkResult.attributes) {
@@ -124,14 +124,14 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
               this.buildCreations();
             },
             error: (error) => {
-            this.errorMessage = utility.onError(error, this.eventBusService);
+              this.errorMessage = utility.onError(error, this.eventBusService);
             }
-        });
-       },
-       error: (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    });
+          });
+        },
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
     } else {
       this.listKey = new Array<string>();
       this.buildFormArtworkEmpty();
@@ -309,13 +309,13 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
         });
         if (index == -1) {
           this.publicationService.saveArtworkCreation(elementCreation).subscribe({
-          next: (result) => {
-            console.log(result);
-          },
-          error: (error) => {
-            this.errorMessage = utility.onError(error, this.eventBusService);
-          }
-        });
+            next: (result) => {
+              console.log(result);
+            },
+            error: (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
+          });
         }
       });
       //mando richieste di eliminazione delle creation presenti nell'artwork originale
@@ -340,19 +340,19 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
           elementCreation.artworkId = responseArtwork.id;
           this.publicationService.saveArtworkCreation(elementCreation).subscribe({
             next: (responseCreation) => {
-            console.log(responseCreation);
-          },
+              console.log(responseCreation);
+            },
             error: (error) => {
               this.errorMessage = utility.onError(error, this.eventBusService);
             }
+          });
         });
-      });
-      this.router.navigate(['modify-artwork/' + responseArtwork.id]);
-    },
-    error: (error) => {
-      this.errorMessage = utility.onError(error, this.eventBusService);
-    }
-  });
+        this.router.navigate(['modify-artwork/' + responseArtwork.id]);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
   }
 
   getCreation(): string[] {

@@ -13,7 +13,8 @@ export class ProfileComponent implements OnInit {
 
   content?: string;
 
-  constructor(private UserService: UserService, private eventBusService: EventBusService) { }
+  constructor(private UserService: UserService, private eventBusService: EventBusService) {
+  }
 
   ngOnInit(): void {
 

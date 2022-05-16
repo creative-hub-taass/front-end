@@ -9,6 +9,7 @@ import {Artwork} from "../../_models/Artwork";
 import {Event} from "../../_models/Event";
 import {Post} from "../../_models/Post";
 import {TokenStorageService} from "../_services/token-storage.service";
+import {CreatorService} from "../_services/creator.service";
 
 @Component({
   selector: "app-home",
@@ -22,121 +23,36 @@ export class HomeComponent implements OnInit {
   listUsersID!: any[];
   listFeed!: PublicationInfo[];
   listUsers!: PublicUser[];
+  errorMessage: string = "";
 
   constructor(
     private tokenStorageService: TokenStorageService,
     private eventBusService: EventBusService,
-    private feedService: FeedService
+    private feedService: FeedService,
+    private creatorService: CreatorService
   ) {
     this.isLoggedIn = (Object.keys(this.tokenStorageService.getUser()).length != 0)
   }
 
   ngOnInit(): void {
     if (this.isLoggedIn) {
-      this.feedService.getUserFeed(this.tokenStorageService.getUser().id, 0).subscribe(
-        (listPublicationsDto) => {
-          //creo la lista degli ID pubblicazioni
-          this.listPublicationsID = this.buildPublicationsID(listPublicationsDto);
-          //creo la lista degli ID utenti
-          this.listUsersID = utility.buildUsersIDfromPublication(listPublicationsDto);
-
-          //chiamo il servizio utenti per avere le informazioni sui creator
-          this.feedService.getListofUser(this.listUsersID).subscribe(
-            (usersList: PublicUser[]) => {
-              //ho la lista di tutti gli utenti del feed
-              this.listUsers = new Array<PublicUser>();
-              usersList.forEach((element) => {
-                this.listUsers.push(new PublicUser(element));
-              });
-              //per ogni pubblicazione prendo la lista degli utenti
-              this.listFeed = new Array<PublicationInfo>();
-              listPublicationsDto.forEach((publicationDto: any) => {
-                let usersofCreation: PublicUser[] = new Array<PublicUser>();
-                let creationArray: any[] = (publicationDto.creations);
-                //per ogni utente nella lista degli utenti inserisco le informazioni all'interno di una lista temporanea
-                //della pubblicazione
-                creationArray.forEach((userCreation: any) => {
-                  let index = this.listUsers.findIndex(object => {
-                    return object.id == userCreation.user;
-                  });
-                  usersofCreation.push(usersList[index]);
-                });
-
-                //creo il feed
-                this.listFeed.push(new PublicationInfo(publicationDto, usersofCreation));
-              });
-
-              //ho le informazioni degli utenti in this.listUsers
-              //ho le informazioni delle pubblicazioni in listPublicationsDto
-
-              //chiamo il serviceInteractions che mi restituisce i like e commenti di tutti i post
-              this.callServiceInteractions();
-
-              //alla fine avrò una lista di Post
-              console.log(this.listFeed);
-            },
-            (error) => {
-              utility.onError(error, this.eventBusService);
-            }
-          );
+      this.feedService.getUserFeed(this.tokenStorageService.getUser().id, 0).subscribe({
+        next: (listPublicationsDto) => {
+          this.callServiceUsers(listPublicationsDto, utility.callServiceInteractions);
         },
-        (error) => {
-          utility.onError(error, this.eventBusService);
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
         }
-      );
+      });
     } else {
-      this.feedService.getPublicFeed(0).subscribe(
-        (listPublicationsDto) => {
-          //creo la lista degli ID pubblicazioni
-          this.listPublicationsID = this.buildPublicationsID(listPublicationsDto);
-          //creo la lista degli ID utenti
-          this.listUsersID = utility.buildUsersIDfromPublication(listPublicationsDto);
-
-          //chiamo il servizio utenti per avere le informazioni sui creator
-          this.feedService.getListofUser(this.listUsersID).subscribe(
-            (usersList: PublicUser[]) => {
-              //ho la lista di tutti gli utenti del feed
-              this.listUsers = new Array<PublicUser>();
-              usersList.forEach((element) => {
-                this.listUsers.push(new PublicUser(element));
-              });
-              //per ogni pubblicazione prendo la lista degli utenti
-              this.listFeed = new Array<PublicationInfo>();
-              listPublicationsDto.forEach((publicationDto: any) => {
-                let usersofCreation: PublicUser[] = new Array<PublicUser>();
-
-                let creationArray: any[] = (publicationDto.creations);
-                //per ogni utente nella lista degli utenti inserisco le informazioni all'interno di una lista temporanea
-                //della pubblicazione
-                creationArray.forEach((userCreation: any) => {
-                  let index = this.listUsers.findIndex(object => {
-                    return object.id == userCreation.user;
-                  });
-                  usersofCreation.push(usersList[index]);
-                });
-
-                //creo il feed
-                this.listFeed.push(new PublicationInfo(publicationDto, usersofCreation));
-              });
-
-              //ho le informazioni degli utenti in this.listUsers
-              //ho le informazioni delle pubblicazioni in listPublicationsDto
-
-              //chiamo il serviceInteractions che mi restituisce i like e commenti di tutti i post
-              this.callServiceInteractions();
-
-              //alla fine avrò una lista di Post
-              console.log(this.listFeed);
-            },
-            (error) => {
-              utility.onError(error, this.eventBusService);
-            }
-          );
+      this.feedService.getPublicFeed(0).subscribe({
+        next: (listPublicationsDto) => {
+          this.callServiceUsers(listPublicationsDto, utility.callServiceInteractions);
         },
-        (error) => {
-          utility.onError(error, this.eventBusService);
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
         }
-      );
+      });
     }
   }
 
@@ -144,18 +60,6 @@ export class HomeComponent implements OnInit {
   getUser(userParam: PublicUser): PublicUser {
     return utility.getUser(userParam, this.listUsers);
   }
-
-  /*
-  //il metodo richiede il PublicUser e la lista di PublicUser in cui cercare
-    private callServiceUsers() {
-      this.feedService.getListofUser(this.listUsersID).subscribe(
-        (usersList) => {
-          console.log(usersList);
-          this.listUsers = usersList; },
-        (error) => { this.onError(error); }
-      )
-    }
-  */
 
   //restituisce un oggetto PublicCreator con le informazioni dell'utente creator
   getCreator(userParam: PublicUser): PublicCreator {
@@ -185,27 +89,60 @@ export class HomeComponent implements OnInit {
     return tmp;
   }
 
-  //esegue le chiamate al servizio interazioni per ricevere i likes e i commenti di tutte le pubblicazioni
-  private callServiceInteractions() {
-    this.feedService.getLikesList(this.listPublicationsID).subscribe(
-      (likesList) => {
-        this.listFeed.forEach((feedHome) => {
-          feedHome.setLikes(likesList[feedHome.publication.id]);
+  callServiceUsers(listPublicationDto: PublicationInfo[], callServiceInteractions: any): void {
+    //creo la lista degli ID pubblicazioni
+    this.listPublicationsID = this.buildPublicationsID(listPublicationDto);
+    //creo la lista degli ID utenti
+    this.listUsersID = this.buildUsersIDfromPublication(listPublicationDto);
+    //chiamo il servizio utenti per avere le informazioni sui creator
+    this.feedService.getListofUser(this.listUsersID).subscribe({
+      next: (userList: PublicUser[]) => {
+        //ho la lista di tutti gli utenti del feed
+        this.listUsers = new Array<PublicUser>();
+        userList.forEach((elementUser: PublicUser) => {
+          this.listUsers.push(new PublicUser(elementUser));
         });
-      },
-      (error) => {
-        utility.onError(error, this.eventBusService);
-      }
-    );
-    this.feedService.getCommentsList(this.listPublicationsID).subscribe(
-      (commentList) => {
-        this.listFeed.forEach((feedHome) => {
-          feedHome.setListComments(commentList[feedHome.publication.id]);
+        //per ogni pubblicazione prendo la lista degli utenti
+        this.listFeed = new Array<PublicationInfo>();
+        listPublicationDto.forEach((publicationDto: any) => {
+          let usersofCreation: PublicUser[] = new Array<PublicUser>();
+          let creationArray: any[] = publicationDto.creations;
+          //per ogni utente nella lista degli utenti inserisco le informazioni all'interno di una lista temporanea
+          //della pubblicazione
+          creationArray.forEach((userCreation: any) => {
+            let index = this.listUsers.findIndex((user) => {
+              return user.id == userCreation.user;
+            });
+            usersofCreation.push(userList[index]);
+          });
+          //creo il feed
+          this.listFeed.push(new PublicationInfo(publicationDto, usersofCreation));
         });
+        //ho le informazioni degli utenti in this.listUsers
+        //ho le informazioni delle pubblicazioni in listPublicationsDto
+
+        //chiamo il serviceInteractions che mi restituisce i like e commenti di tutti i post
+        callServiceInteractions(this.listPublicationsID,
+          this.creatorService,
+          this.listFeed,
+          this.eventBusService,
+          this.errorMessage);
       },
-      (error) => {
-        utility.onError(error, this.eventBusService);
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
       }
-    );
+    })
+  }
+
+  //costruisce la lista di id utente da mandare al servizio utenti (campo creation di PublicUserDto)
+  private buildUsersIDfromPublication(list: any[]): any[] {
+    let tmp: any[] = [];
+    list.forEach((PublicationDto) => {
+      let creationsDto: any[] = PublicationDto.creations;
+      creationsDto.forEach((userDto) => {
+        if (!tmp.includes(userDto.user)) tmp.push(userDto.user);
+      });
+    });
+    return tmp;
   }
 }

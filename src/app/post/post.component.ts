@@ -22,6 +22,7 @@ export class PostComponent implements OnInit {
   listUsers!: PublicUser[];
   countLikes!: number;
   listComments!: any[];
+  errorMessage: string = "";
 
   constructor(
     private eventBusService: EventBusService,
@@ -39,20 +40,20 @@ export class PostComponent implements OnInit {
         (post) => {
           this.post = post;
           this.listUsersID = utility.buildUsersIDfromSpecificType(this.post.creations);
-
           //chiamo il servizio utenti per avere le informazioni sui creator
-          this.publicationService.getListofUser(this.listUsersID).subscribe(
-            (usersList: PublicUser[]) => {
+          this.publicationService.getListofUser(this.listUsersID).subscribe({
+            next: (usersList: PublicUser[]) => {
               //ho la lista di tutti gli utenti del post
               this.listUsers = new Array<PublicUser>();
-              usersList.forEach((element) => {
+              usersList.forEach((element: PublicUser) => {
                 this.listUsers.push(new PublicUser(element));
               });
               this.callServiceInteractions();
             },
-            (error) => { utility.onError(error, this.eventBusService); }
-          )
-
+            error: (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
+          });
         },
         (error) => { utility.onError(error, this.eventBusService); }
       )
@@ -70,21 +71,23 @@ export class PostComponent implements OnInit {
     return utility.getCreator(userParam, this.listUsers);
   }
 
-
   private callServiceInteractions() {
     if (this.postId!= null) {
-      this.publicationService.getLikes(this.postId).subscribe(
-        (likesCount) => {
+      this.publicationService.getLikes(this.postId).subscribe({
+        next: (likesCount) => {
           this.countLikes = likesCount;
         },
-        (error) => { utility.onError(error, this.eventBusService); }
-      );
-      this.publicationService.getComments(this.postId).subscribe(
-        (listComments) => {
+        error: (error) => {this.errorMessage = utility.onError(error, this.eventBusService);}
+      });
+      this.publicationService.getComments(this.postId).subscribe({
+        next: (listComments) => {
           this.listComments = listComments;
         },
-        (error) => { utility.onError(error, this.eventBusService); }
-      );
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
     }
   }
+
 }

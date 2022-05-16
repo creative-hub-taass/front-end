@@ -426,3 +426,19 @@ img {
     transform: rotate(360deg);
   }
 }
+
+
+.gallery-item-info li {
+  display: inline-block;
+  font-weight: 600;
+}
+
+
+.gallery-item-info li + li {
+  margin-left: 10px;
+  padding-bottom: 20px;
+}
+.gallery-item-likes {
+  margin-left: 300px;
+}
+

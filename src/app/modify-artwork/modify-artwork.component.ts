@@ -101,55 +101,53 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
   ) {
     this.artworkId = this.route.snapshot.paramMap.get("id");
     if (this.artworkId != null) {
-      this.publicationService.getArtwork(this.artworkId).subscribe(
-        (artwork: Artwork) => {
+      this.publicationService.getArtwork(this.artworkId).subscribe({
+        next: (artwork: Artwork) => {
           window.sessionStorage.setItem("artworkOrigin", JSON.stringify(artwork));
           this.artworkResult = new Artwork(artwork);
           this.onSale = artwork.onSale;
           this.listUsersID = new Array<string>();
           this.artworkResult.creations.forEach((creation) => {
-            this.listUsersID.push(creation.user);
+          this.listUsersID.push(creation.user);
           });
-
           this.listKey = new Array<string>();
           for (let key in this.artworkResult.attributes) {
             this.listKey.push(key);
           }
-
           this.buildFormArtworkOrigin();
-          this.publicationService.getListofUser(this.listUsersID).subscribe(
-            (usersList: PublicUser[]) => {
+          this.publicationService.getListofUser(this.listUsersID).subscribe({
+            next: (usersList: PublicUser[]) => {
               this.listUsers = new Array<PublicUser>();
               usersList.forEach((publicUser) => {
                 this.listUsers.push(new PublicUser(publicUser));
               });
               this.buildCreations();
             },
-            (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
+            error: (error) => {
+            this.errorMessage = utility.onError(error, this.eventBusService);
             }
-          );
-        }, (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      );
+        });
+       },
+       error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
     } else {
       this.listKey = new Array<string>();
       this.buildFormArtworkEmpty();
       this.listCreationArtwork = new Array<CreationArtwork>();
     }
-
-    this.publicationService.getListFollower(this.tokenStorageService.getUser().id).subscribe(
-      (listFollower: PublicUser[]) => {
+    this.publicationService.getListFollower(this.tokenStorageService.getUser().id).subscribe({
+      next: (listFollower: PublicUser[]) => {
         this.listFollowers = new Array<PublicUser>();
-        listFollower.forEach((follower) => {
+        listFollower.forEach((follower: PublicUser) => {
           this.listFollowers.push(new PublicUser(follower));
         });
       },
-      (error) => {
+      error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
-    )
+    });
   }
 
   ngOnInit(): void {
@@ -310,14 +308,14 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
           return elementOriginCreation.user == elementCreation.user;
         });
         if (index == -1) {
-          this.publicationService.saveArtworkCreation(elementCreation).subscribe(
-            (result) => {
-              console.log(result);
-            },
-            (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
-          );
+          this.publicationService.saveArtworkCreation(elementCreation).subscribe({
+          next: (result) => {
+            console.log(result);
+          },
+          error: (error) => {
+            this.errorMessage = utility.onError(error, this.eventBusService);
+          }
+        });
         }
       });
       //mando richieste di eliminazione delle creation presenti nell'artwork originale
@@ -336,23 +334,25 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
       return;
     }
     //altrimenti devo eseguire una POST per creare l'artwork
-    this.publicationService.saveArtwork(this.artworkResult).subscribe(
-      (responseArtwork) => {
+    this.publicationService.saveArtwork(this.artworkResult).subscribe({
+      next: (responseArtwork) => {
         this.listCreationArtwork.forEach(elementCreation => {
           elementCreation.artworkId = responseArtwork.id;
-          this.publicationService.saveArtworkCreation(elementCreation).subscribe(
-            (responseCreation) => {
-              console.log(responseCreation);
-            }, (error) => {
+          this.publicationService.saveArtworkCreation(elementCreation).subscribe({
+            next: (responseCreation) => {
+            console.log(responseCreation);
+          },
+            error: (error) => {
               this.errorMessage = utility.onError(error, this.eventBusService);
             }
-          );
         });
-        this.router.navigate(['modify-artwork/' + responseArtwork.id]);
-      }, (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    );
+      });
+      this.router.navigate(['modify-artwork/' + responseArtwork.id]);
+    },
+    error: (error) => {
+      this.errorMessage = utility.onError(error, this.eventBusService);
+    }
+  });
   }
 
   getCreation(): string[] {

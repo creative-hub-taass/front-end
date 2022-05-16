@@ -14,6 +14,7 @@ import {ModifyPostComponent} from "./modify-post/modify-post.component";
 import {AboutComponent} from "./about/about.component";
 import {PortfolioComponent} from "./portfolio/portfolio.component";
 import {EventsComponent} from "./events/events.component";
+import {ShopComponent} from "./shop/shop.component";
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -31,7 +32,8 @@ const routes: Routes = [
   {path: "modify-post", component: ModifyPostComponent},
   {path: "about/:id", component: AboutComponent},
   {path: "portfolio/:id", component: PortfolioComponent},
-  {path: "events/:id", component: EventsComponent}
+  {path: "events/:id", component: EventsComponent},
+  {path: "shop/:id", component: ShopComponent}
 ];
 
 @NgModule({

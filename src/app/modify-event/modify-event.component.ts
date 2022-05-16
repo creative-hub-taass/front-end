@@ -90,8 +90,8 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
     this.eventId = this.route.snapshot.paramMap.get("id");
     //modifico l'evento
     if (this.eventId != null) {
-      this.publicationService.getEvent(this.eventId).subscribe(
-        (event: Event) => {
+      this.publicationService.getEvent(this.eventId).subscribe({
+        next: (event: Event) => {
           //salvo in cache l'evento originale
           window.sessionStorage.setItem("eventOrigin", JSON.stringify(event));
           //salvo l'evento come risultato finale
@@ -104,22 +104,24 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
           //costruisco il form event con le informazioni dell'evento originale
           this.buildFormEventOrigin();
           //chiedo al server le informazioni degli utenti organizzatori
-          this.publicationService.getListofUser(this.listUsersID).subscribe(
-            (usersList: PublicUser[]) => {
+          this.publicationService.getListofUser(this.listUsersID).subscribe({
+            next: (usersList: PublicUser[]) => {
               this.listUsers = new Array<PublicUser>();
               usersList.forEach((publicUser) => {
                 this.listUsers.push(new PublicUser(publicUser));
               });
               //costruisco il form creations con le informazioni degli utenti recuperati
               this.buildCreations();
-            }, (error) => {
+            },
+            error: (error) => {
               this.errorMessage = utility.onError(error, this.eventBusService);
             }
-          )
-        }, (error) => {
+          })
+        },
+        error: (error) => {
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
-      )
+      })
     } else {
       //costruisco il form con informazioni di default
       this.buildFormEventEmpty();
@@ -264,13 +266,14 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
           return elementOriginCreation.user == elementCreation.user;
         });
         if (index == -1) {
-          this.publicationService.saveEventCreation(elementCreation).subscribe(
-            (result) => {
+          this.publicationService.saveEventCreation(elementCreation).subscribe({
+            next: (result) => {
               console.log(result);
-            }, (error) => {
+            },
+            error: (error) => {
               this.errorMessage = utility.onError(error, this.eventBusService);
             }
-          );
+          });
         }
       });
       //mando richieste di eliminazione delle creation presenti nell'event originale
@@ -285,34 +288,37 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
       let tmpResult = Object.assign<{}, Event>({}, this.eventResult);
       tmpResult.creations = [];
       console.log(tmpResult);
-      this.publicationService.updateEvent(tmpResult).subscribe(
-        (resultEvent) => {
+      this.publicationService.updateEvent(tmpResult).subscribe({
+        next: (resultEvent) => {
           console.log(resultEvent);
-        }, (error) => {
+        },
+        error: (error) => {
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
-      );
+      });
       this.sent = true;
       return;
     }
     //altrimenti devo eseguire una POST per creare l'artwork
-    this.publicationService.saveEvent(this.eventResult).subscribe(
-      (responseEvent) => {
+    this.publicationService.saveEvent(this.eventResult).subscribe({
+      next: (responseEvent) => {
         this.listCreationEvent.forEach((elementCreation) => {
           elementCreation.eventId = responseEvent.id;
-          this.publicationService.saveEventCreation(elementCreation).subscribe(
-            (responseCreation) => {
+          this.publicationService.saveEventCreation(elementCreation).subscribe({
+            next: (responseCreation) => {
               console.log(responseCreation);
-            }, (error) => {
+            },
+            error: (error) => {
               this.errorMessage = utility.onError(error, this.eventBusService);
             }
-          );
+          });
         });
         this.router.navigate(['modify-event/' + responseEvent.id]);
-      }, (error) => {
+      },
+      error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
-    );
+    });
   }
 
   addUsers() {

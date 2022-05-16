@@ -34,6 +34,7 @@ export class EventComponent implements OnInit, AfterViewInit {
   listUsers!: PublicUser[];
   countLikes!: number;
   listComments!: any[];
+  errorMessage: string = "";
   map: any;
   marker: any;
 
@@ -50,30 +51,29 @@ export class EventComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     if (this.eventId != null) {
-      this.publicationService.getEvent(this.eventId).subscribe(
-        (event) => {
+      this.publicationService.getEvent(this.eventId).subscribe({
+        next: (event) => {
           this.event = new Event(event);
           this.listUsersID = utility.buildUsersIDfromSpecificType(this.event.creations);
-
           //chiamo il servizio utenti per avere le informazioni sui creator
-          this.publicationService.getListofUser(this.listUsersID).subscribe(
-            (usersList: PublicUser[]) => {
+          this.publicationService.getListofUser(this.listUsersID).subscribe({
+            next: (usersList: PublicUser[]) => {
               //ho la lista di tutti gli utenti dell'evento
               this.listUsers = new Array<PublicUser>();
-              usersList.forEach((element) => {
+              usersList.forEach((element: PublicUser) => {
                 this.listUsers.push(new PublicUser(element));
               });
               this.callServiceInteractions();
             },
-            (error) => {
-              utility.onError(error, this.eventBusService);
+            error: (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
             }
-          )
+          });
         },
-        (error) => {
-          utility.onError(error, this.eventBusService);
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
         }
-      )
+      });
     }
   }
 
@@ -81,22 +81,22 @@ export class EventComponent implements OnInit, AfterViewInit {
 
   private callServiceInteractions() {
     if (this.eventId != null) {
-      this.publicationService.getLikes(this.eventId).subscribe(
-        (likesCount) => {
+      this.publicationService.getLikes(this.eventId).subscribe({
+        next: (likesCount) => {
           this.countLikes = likesCount;
         },
-        (error) => {
-          utility.onError(error, this.eventBusService);
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
         }
-      );
-      this.publicationService.getComments(this.eventId).subscribe(
-        (listComments) => {
+      });
+      this.publicationService.getComments(this.eventId).subscribe({
+        next: (listComments) => {
           this.listComments = listComments;
         },
-        (error) => {
-          utility.onError(error, this.eventBusService);
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
         }
-      );
+      });
     }
   }
 

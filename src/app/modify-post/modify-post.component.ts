@@ -65,8 +65,8 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
   ) {
     this.postId = this.route.snapshot.paramMap.get('id');
     if (this.postId != null) {
-      this.publicationService.getPost(this.postId).subscribe(
-        (post: Post) => {
+      this.publicationService.getPost(this.postId).subscribe({
+        next: (post: Post) => {
           window.sessionStorage.setItem("postOrigin", JSON.stringify(post));
           this.postResult = new Post(post);
           this.listUsersID = new Array<string>();
@@ -74,35 +74,38 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
             this.listUsersID.push(creation.user);
           });
           this.buildFormPostOrigin();
-          this.publicationService.getListofUser(this.listUsersID).subscribe(
-            (usersList: PublicUser[]) => {
+          this.publicationService.getListofUser(this.listUsersID).subscribe({
+            next: (usersList: PublicUser[]) => {
               this.listUsers = new Array<PublicUser>();
               usersList.forEach((publicUser) => {
                 this.listUsers.push(new PublicUser(publicUser));
               });
               this.buildCreations();
-            }, (error) => {
+            },
+            error: (error) => {
               this.errorMessage = utility.onError(error, this.eventBusService);
             }
-          )
-        }, (error) => {
+          });
+        },
+        error: (error) => {
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
-      )
+      });
     } else {
       this.buildFormPostEmpty();
       this.listCreationPost = new Array<CreationPost>();
     }
-    this.publicationService.getListFollower(this.tokenStorageService.getUser().id).subscribe(
-      (listFollower: PublicUser[]) => {
+    this.publicationService.getListFollower(this.tokenStorageService.getUser().id).subscribe({
+      next:(listFollower: PublicUser[]) => {
         this.listFollowers = new Array<PublicUser>();
         listFollower.forEach((follower) => {
           this.listFollowers.push(new PublicUser(follower));
         });
-      }, (error) => {
+      },
+      error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
-    )
+    });
   }
 
   ngOnInit(): void {
@@ -161,13 +164,14 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
           return elementOriginCreation.user == elementCreation.user;
         });
         if (index == -1) {
-          this.publicationService.savePostCreation(elementCreation).subscribe(
-            (result) => {
-              console.log(result);
-            }, (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
-          );
+          this.publicationService.savePostCreation(elementCreation).subscribe({
+            next: (result) => {
+            console.log(result);
+            },
+            error: (error) => {
+            this.errorMessage = utility.onError(error, this.eventBusService);
+          }
+        });
         }
       });
       postObj.creations.forEach((elementOriginCreation) => {
@@ -181,33 +185,36 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
       let tmpResult = Object.assign<{}, Post>({}, this.postResult);
       tmpResult.creations = [];
       console.log(tmpResult);
-      this.publicationService.updatePost(tmpResult).subscribe(
-        (resultPost) => {
+      this.publicationService.updatePost(tmpResult).subscribe({
+        next: (resultPost) => {
           console.log(resultPost);
-        }, (error) => {
+        },
+        error: (error) => {
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
-      );
+      });
       this.sent = true;
       return;
     }
-    this.publicationService.savePost(this.postResult).subscribe(
-      (responsePost) => {
+    this.publicationService.savePost(this.postResult).subscribe({
+      next:(responsePost) => {
         this.listCreationPost.forEach((elementCreation) => {
           elementCreation.postId = responsePost.id;
-          this.publicationService.savePostCreation(elementCreation).subscribe(
-            (responseCreation) => {
+          this.publicationService.savePostCreation(elementCreation).subscribe({
+            next: (responseCreation) => {
               console.log(responseCreation);
-            }, (error) => {
+            },
+            error: (error) => {
               this.errorMessage = utility.onError(error, this.eventBusService);
             }
-          );
+          });
         });
         this.router.navigate(['modify-post/' + responsePost.id]);
-      }, (error) => {
+      },
+      error:(error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
-    );
+    });
   }
 
   addUsers() {

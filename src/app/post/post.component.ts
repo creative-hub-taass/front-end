@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Post} from "../../_models/Post";
 import {PublicUser} from "../../_models/PublicUser";
 import {EventBusService} from "../../_shared/event-bus.service";
@@ -31,11 +31,11 @@ export class PostComponent implements OnInit {
     public route: ActivatedRoute
   ) {
     this.postId = this.route.snapshot.paramMap.get("id");
-    if(this.tokenStorageService.getUser() != null) this.isLoggedIn = true;
+    if (this.tokenStorageService.getUser() != null) this.isLoggedIn = true;
   }
 
   ngOnInit(): void {
-    if(this.postId != null) {
+    if (this.postId != null) {
       this.publicationService.getPost(this.postId).subscribe(
         (post) => {
           this.post = post;
@@ -55,7 +55,9 @@ export class PostComponent implements OnInit {
             }
           });
         },
-        (error) => { utility.onError(error, this.eventBusService); }
+        (error) => {
+          utility.onError(error, this.eventBusService);
+        }
       )
     }
   }
@@ -72,12 +74,14 @@ export class PostComponent implements OnInit {
   }
 
   private callServiceInteractions() {
-    if (this.postId!= null) {
+    if (this.postId != null) {
       this.publicationService.getLikes(this.postId).subscribe({
         next: (likesCount) => {
           this.countLikes = likesCount;
         },
-        error: (error) => {this.errorMessage = utility.onError(error, this.eventBusService);}
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
       });
       this.publicationService.getComments(this.postId).subscribe({
         next: (listComments) => {

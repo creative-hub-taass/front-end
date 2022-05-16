@@ -32,7 +32,7 @@
   padding: 10px 10px;
   display: inline-block;
   position: relative;
-  left:65%;
+  left: 65%;
 }
 
 
@@ -167,7 +167,7 @@ img {
 .profile-stats {
   margin-top: 2.3rem;
   position: relative;
-  right:30px;
+  right: 30px;
 }
 
 .profile-stats li {
@@ -188,7 +188,8 @@ img {
   line-height: 1.5;
   margin-top: 2.3rem;
 }
-.profile-name h3{
+
+.profile-name h3 {
   font-family: "Sofia", serif;
 }
 
@@ -275,7 +276,6 @@ img {
   margin: 0 auto;
   animation: loader 500ms linear infinite;
 }
-
 
 
 @supports (display: grid) {
@@ -375,7 +375,7 @@ img {
 }
 
 
-.btn-reload{
+.btn-reload {
   background-color: #06dbee;
   border-radius: 100px;
   border-width: 0;

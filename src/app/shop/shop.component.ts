@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EventBusService} from "../../_shared/event-bus.service";
 import {ActivatedRoute} from "@angular/router";
 import {PublicUser} from "../../_models/PublicUser";
@@ -32,28 +32,28 @@ export class ShopComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.userId = this.route.snapshot.paramMap.get("id");
-    if(this.userId != null) {
+    if (this.userId != null) {
       let userStorage: string | null = window.sessionStorage.getItem(this.userId);
-      if(userStorage != null) {
+      if (userStorage != null) {
         this.user = new PublicUser(JSON.parse(userStorage));
         this.creator = new PublicCreator(this.user.creator);
         this.callServicePublications(utility.callServiceInteractions);
       }
     }
-    if(this.tokenStorageService.getUser().id == undefined) return;
+    if (this.tokenStorageService.getUser().id == undefined) return;
     let index = this.tokenStorageService.getUser().inspirerIds.findIndex((idUser: string) => {
       return idUser == this.userId;
     });
-    this.followed = (index!=-1);
+    this.followed = (index != -1);
     this.sameId = (this.tokenStorageService.getUser().id == this.userId);
   }
 
   ngOnInit(): void {
-    if(this.userId == null) {
+    if (this.userId == null) {
       this.errorMessage = "Error";
       return;
     }
-    if(this.user != null) return;
+    if (this.user != null) return;
     this.creatorService.getCreator(this.userId).subscribe({
       next: (publicUser: PublicUser) => {
         this.user = new PublicUser(publicUser);
@@ -99,7 +99,7 @@ export class ShopComponent implements OnInit {
         let listPublicationsID: string[] = new Array<string>();
         this.listPublicationInfo = new Array<PublicationInfo>();
         listArtworks.forEach((elementArtwork: Artwork) => {
-          if(elementArtwork.onSale){
+          if (elementArtwork.onSale) {
             this.listSellArtwork.push(elementArtwork);
             listPublicationsID.push(elementArtwork.id);
             this.listPublicationInfo.push(new PublicationInfo(elementArtwork, elementArtwork.creations));
@@ -118,20 +118,20 @@ export class ShopComponent implements OnInit {
   }
 
   getLikesCount(artworkId: string): number {
-    if(this.listPublicationInfo == undefined)return 0;
+    if (this.listPublicationInfo == undefined) return 0;
     let index: number = this.listPublicationInfo.findIndex((elementPublication: PublicationInfo) => {
       return elementPublication.publication.id == artworkId;
     });
-    if(index != -1) return this.listPublicationInfo[index].getLikes();
+    if (index != -1) return this.listPublicationInfo[index].getLikes();
     return 0;
   }
 
   getCommentsCount(artworkId: string): number {
-    if(this.listPublicationInfo == undefined)return 0;
+    if (this.listPublicationInfo == undefined) return 0;
     let index: number = this.listPublicationInfo.findIndex((elementPublication: PublicationInfo) => {
       return elementPublication.publication.id == artworkId;
     });
-    if(index != -1)return this.listPublicationInfo[index].getLikes();
+    if (index != -1) return this.listPublicationInfo[index].getLikes();
     return 0;
   }
 

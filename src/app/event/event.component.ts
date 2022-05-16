@@ -14,7 +14,7 @@ import {Observable, Subscriber} from "rxjs";
 const icon = L.icon({
   iconUrl: '../../assets/img/marker-icon.png',
   shadowUrl: '../../assets/img/marker-shadow.png',
-  popupAnchor: [13,0]
+  popupAnchor: [13, 0]
 });
 
 const AUTH_TOKEN = environment.accessToken;
@@ -78,7 +78,6 @@ export class EventComponent implements OnInit, AfterViewInit {
   }
 
 
-
   private callServiceInteractions() {
     if (this.eventId != null) {
       this.publicationService.getLikes(this.eventId).subscribe({
@@ -117,7 +116,7 @@ export class EventComponent implements OnInit, AfterViewInit {
   }
 
   private loadMap(): void {
-    this.map = L.map('map').setView([0,0], 2);
+    this.map = L.map('map').setView([0, 0], 2);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + AUTH_TOKEN, {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,

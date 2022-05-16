@@ -18,15 +18,16 @@ import {ProfileComponent} from "./profile/profile.component";
 
 import {HomeComponent} from "./home/home.component";
 import {ArtworkComponent} from "./artwork/artwork.component";
-import { EventComponent } from './event/event.component';
-import { PostComponent } from './post/post.component';
-import { ModifyArtworkComponent } from './modify-artwork/modify-artwork.component';
-import { ModifyEventComponent } from './modify-event/modify-event.component';
-import { ModifyPostComponent } from './modify-post/modify-post.component';
-import { AboutComponent } from './about/about.component';
-import { PortfolioComponent } from './portfolio/portfolio.component';
-import { EventsComponent } from './events/events.component';
-import { ShopComponent } from './shop/shop.component';
+import {EventComponent} from './event/event.component';
+import {PostComponent} from './post/post.component';
+import {ModifyArtworkComponent} from './modify-artwork/modify-artwork.component';
+import {ModifyEventComponent} from './modify-event/modify-event.component';
+import {ModifyPostComponent} from './modify-post/modify-post.component';
+import {AboutComponent} from './about/about.component';
+import {PortfolioComponent} from './portfolio/portfolio.component';
+import {EventsComponent} from './events/events.component';
+import {ShopComponent} from './shop/shop.component';
+import {CollabsComponent} from './collabs/collabs.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { ShopComponent } from './shop/shop.component';
     AboutComponent,
     PortfolioComponent,
     EventsComponent,
-    ShopComponent
+    ShopComponent,
+    CollabsComponent
 
   ],
   imports: [
@@ -77,4 +79,5 @@ import { ShopComponent } from './shop/shop.component';
   bootstrap: [AppComponent]
 })
 
-export class AppModule {}
+export class AppModule {
+}

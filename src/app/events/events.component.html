@@ -29,10 +29,14 @@
       </div>
 
       <div class="profile-name">
-        <p><span class="profile-real-name">@{{this.user?.username}}</span>  <button class="btn-follow" *ngIf="!this.sameId && !this.followed" (click)="this.follow()">Follow</button> <button class="btn-follow" *ngIf="!this.sameId && this.followed" (click)="this.unfollow()">Unfollow</button> </p>
+        <p><span class="profile-real-name">@{{this.user?.username}}</span>
+          <button class="btn-follow" *ngIf="!this.sameId && !this.followed" (click)="this.follow()">Follow</button>
+          <button class="btn-follow" *ngIf="!this.sameId && this.followed" (click)="this.unfollow()">Unfollow</button>
+        </p>
         <h3>{{this.creator?.creatorType}}</h3>
         <div class="contacts">
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+          <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
           <a href="javascript:void(0)" title="Spotify" class="fa fa-spotify"></a>
           <a href="javascript:void(0)" title="Facebook" class="fa fa-facebook"></a>
           <a href="javascript:void(0)" title="Twitter" class="fa fa-twitter"></a>
@@ -65,15 +69,20 @@
 
     <div class="gallery">
 
-      <div class="gallery-item" tabindex="0" *ngFor="let publication of listEvents" [routerLink]="'/event/' + publication.id">
+      <div class="gallery-item" tabindex="0" *ngFor="let publication of listEvents"
+           [routerLink]="'/event/' + publication.id">
 
 
         <img src="{{publication.image}}" class="gallery-image" alt="">
         <div class="gallery-item-info">
 
           <ul>
-            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}</li>
-            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}</li>
+            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
+                                                                                         aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
+            </li>
+            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
+                                                                                               aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}
+            </li>
           </ul>
 
         </div>

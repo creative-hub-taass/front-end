@@ -37,27 +37,27 @@ export class LoginComponent implements OnInit {
         if (userSocial != null) {
           this.socialUser = userSocial;
           this.authService.loginSocial(this.socialUser.firstName + " " + this.socialUser.lastName, this.socialUser.email, this.socialUser.authToken).subscribe({
-          next: (userCreative) => {
-            console.log(userCreative.headers);
-            this.tokenStorage.saveUser(userCreative.body);
-            this.tokenStorage.saveToken(userCreative.headers.get("X-ACCESS-TOKEN"));
-            this.tokenStorage.saveRefresh(userCreative.headers.get("X-REFRESH-TOKEN"));
-            this.isLoginFailed = false;
-            this.isLoggedIn = true;
-            window.location.reload();
-          },
-          error: (error) => {
-            this.isLoginFailed = true;
-            this.errorMessage = error.error;
-          }
-        });
+            next: (userCreative) => {
+              console.log(userCreative.headers);
+              this.tokenStorage.saveUser(userCreative.body);
+              this.tokenStorage.saveToken(userCreative.headers.get("X-ACCESS-TOKEN"));
+              this.tokenStorage.saveRefresh(userCreative.headers.get("X-REFRESH-TOKEN"));
+              this.isLoginFailed = false;
+              this.isLoggedIn = true;
+              window.location.reload();
+            },
+            error: (error) => {
+              this.isLoginFailed = true;
+              this.errorMessage = error.error;
+            }
+          });
+        }
+      },
+      error: (error) => {
+        this.isLoginFailed = true;
+        this.errorMessage = error.errorMessage;
       }
-    },
-    error: (error) => {
-      this.isLoginFailed = true;
-      this.errorMessage = error.errorMessage;
-    }
-  });
+    });
   }
 
   onSubmit(): void {

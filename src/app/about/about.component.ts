@@ -32,16 +32,16 @@ export class AboutComponent implements OnInit {
     public route: ActivatedRoute
   ) {
     this.userId = this.route.snapshot.paramMap.get("id");
-    if(this.userId != null){
+    if (this.userId != null) {
       let userStorage: string | null = window.sessionStorage.getItem(this.userId);
-      if(userStorage != null){
+      if (userStorage != null) {
         this.user = new PublicUser(JSON.parse(userStorage));
         this.creator = new PublicCreator(this.user.creator);
         this.callServicePublications(utility.callServiceInteractions);
       }
     }
-    if(this.tokenStorageService.getUser().id==undefined)return;
-    let index = this.tokenStorageService.getUser().inspirerIds.findIndex((idUser:string) => {
+    if (this.tokenStorageService.getUser().id == undefined) return;
+    let index = this.tokenStorageService.getUser().inspirerIds.findIndex((idUser: string) => {
       return idUser == this.userId;
     });
     this.followed = (index != -1);
@@ -53,7 +53,7 @@ export class AboutComponent implements OnInit {
       this.errorMessage = "Error";
       return;
     }
-    if(this.user != null) return;
+    if (this.user != null) return;
     this.creatorService.getCreator(this.userId).subscribe({
       next: (publicUser: PublicUser) => {
         this.user = new PublicUser(publicUser);
@@ -117,20 +117,20 @@ export class AboutComponent implements OnInit {
   }
 
   getLikesCount(postId: string): number {
-    if(this.listPublicationInfo == undefined)return 0;
+    if (this.listPublicationInfo == undefined) return 0;
     let index: number = this.listPublicationInfo.findIndex((elementPublication: PublicationInfo) => {
       return elementPublication.publication.id == postId;
     });
-    if(index != -1) return this.listPublicationInfo[index].getLikes();
+    if (index != -1) return this.listPublicationInfo[index].getLikes();
     return 0;
   }
 
   getCommentsCount(postId: string): number {
-    if(this.listPublicationInfo == undefined)return 0;
+    if (this.listPublicationInfo == undefined) return 0;
     let index: number = this.listPublicationInfo.findIndex((elementPublication: PublicationInfo) => {
       return elementPublication.publication.id == postId;
     });
-    if(index != -1)return this.listPublicationInfo[index].getLikes();
+    if (index != -1) return this.listPublicationInfo[index].getLikes();
     return 0;
   }
 

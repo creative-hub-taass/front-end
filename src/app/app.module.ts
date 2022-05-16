@@ -26,6 +26,7 @@ import { ModifyPostComponent } from './modify-post/modify-post.component';
 import { AboutComponent } from './about/about.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { EventsComponent } from './events/events.component';
+import { ShopComponent } from './shop/shop.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { EventsComponent } from './events/events.component';
     ModifyPostComponent,
     AboutComponent,
     PortfolioComponent,
-    EventsComponent
+    EventsComponent,
+    ShopComponent
 
   ],
   imports: [

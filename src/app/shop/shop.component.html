@@ -53,10 +53,10 @@
   <div class="container">
     <div class="nav">
       <a href="javascript:void(0)" [routerLink]="'/about/' + this.userId">About</a>
-      <a class="active" href="javascript:void(0)" [routerLink]="'/portfolio/' + this.userId">Portfolio</a>
+      <a href="javascript:void(0)" [routerLink]="'/portfolio/' + this.userId">Portfolio</a>
       <a href="javascript:void(0)" [routerLink]="'/collaborations/' + this.userId">Collaborations</a>
       <a href="javascript:void(0)" [routerLink]="'/events/' + this.userId">Events</a>
-      <a href="javascript:void(0)" [routerLink]="'/shop/' + this.userId">Shop</a>
+      <a class="active" href="javascript:void(0)" [routerLink]="'/shop/' + this.userId">Shop</a>
     </div>
 
   </div>
@@ -65,7 +65,7 @@
 
     <div class="gallery">
 
-      <div class="gallery-item" tabindex="0" *ngFor="let publication of listArtworks" [routerLink]="'/artwork/' + publication.id">
+      <div class="gallery-item" tabindex="0" *ngFor="let publication of listSellArtwork" [routerLink]="'/artwork/' + publication.id">
 
 
         <img src="{{publication.images[0]}}" class="gallery-image" alt="">

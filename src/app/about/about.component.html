@@ -16,7 +16,7 @@
         <h1 class="profile-user-name">{{this.user?.nickname}}</h1>
 
         <button class="btn profile-edit-btn" *ngIf="sameId">Edit Profile</button>
-        <button class="btn-reload" (click)="reload()">Reload<i class='fas fa-redo'></i></button>
+        <button class="btn-reload" (click)="reload()">Refresh<i class='fas fa-redo'></i></button>
       </div>
 
       <div class="profile-stats">
@@ -69,10 +69,18 @@
     </div>
   </div>
   <div class="container">
-    <div class="list-post" *ngFor="let post of listPosts">
-      <div class="post">
-        <h3><a href="" [routerLink]="'/post/' + post.id">{{post.title}}</a><p id="lastUpdate">Last update: {{post.lastUpdate | date:'medium'}}</p></h3>
-        <p>{{post.body}}</p>
+    <div class="list-post">
+      <div class="post" *ngFor="let publication of listPosts" [routerLink]="'/post/' + publication.id">
+        <h3>{{publication.title}}<p id="lastUpdate">Last update: {{publication.lastUpdate | date:'medium'}}</p></h3>
+        <p>{{publication.body}}</p>
+        <div class="gallery-item-info">
+
+        <ul>
+          <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}</li>
+          <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>{{this.getCommentsCount(publication.id)}}</li>
+        </ul>
+
+      </div>
       </div>
     </div>
   </div>

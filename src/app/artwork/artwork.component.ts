@@ -10,6 +10,7 @@ import {PaymentService} from "../_services/payment.service";
 import {Order} from "../../_models/Order";
 import {TokenStorageService} from "../_services/token-storage.service";
 
+
 @Component({
   selector: "app-artwork",
   templateUrl: "./artwork.component.html",
@@ -25,7 +26,7 @@ export class ArtworkComponent implements OnInit {
   listUsers!: PublicUser[];
   countLikes!: number;
   listComments!: any[];
-
+  errorMessage: string = "";
 
   constructor(
     private eventBusService: EventBusService,
@@ -40,26 +41,29 @@ export class ArtworkComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.artworkId != null) {
-      this.publicationService.getArtwork(this.artworkId).subscribe(
-        (artwork) => {
+      this.publicationService.getArtwork(this.artworkId).subscribe({
+        next: (artwork) => {
           this.artwork = new Artwork(artwork);
           this.listUsersID = utility.buildUsersIDfromSpecificType(this.artwork.creations);
-
           //chiamo il servizio utenti per avere le informazioni sui creator
-          this.publicationService.getListofUser(this.listUsersID).subscribe(
-            (usersList: PublicUser[]) => {
+          this.publicationService.getListofUser(this.listUsersID).subscribe({
+            next: (usersList: PublicUser[]) => {
               //ho la lista di tutti gli utenti dell'artwork
               this.listUsers = new Array<PublicUser>();
-              usersList.forEach((element) => {
+              usersList.forEach((element: PublicUser) => {
                 this.listUsers.push(new PublicUser(element));
               });
               this.callServiceInteractions();
             },
-            (error) => { utility.onError(error, this.eventBusService);}
-          );
+            error: (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
+          });
         },
-        (error) => { utility.onError(error, this.eventBusService);}
-      );
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
     }
   }
 
@@ -77,28 +81,34 @@ export class ArtworkComponent implements OnInit {
 
   private callServiceInteractions() {
     if (this.artworkId != null) {
-      this.publicationService.getLikes(this.artworkId).subscribe(
-        (likesCount) => {
+      this.publicationService.getLikes(this.artworkId).subscribe({
+        next: (likesCount) => {
           this.countLikes = likesCount;
         },
-        (error) => { utility.onError(error, this.eventBusService); }
-      );
-      this.publicationService.getComments(this.artworkId).subscribe(
-        (listComments) => {
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
+      this.publicationService.getComments(this.artworkId).subscribe({
+        next: (listComments) => {
           this.listComments = listComments;
         },
-        (error) => { utility.onError(error, this.eventBusService); }
-      );
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
     }
   }
 
   public buyArtwork(destinationAddress: string): void {
-    this.paymentService.buyArtwork(new Order(this.artwork, this.tokenStorageService.getUser().id, destinationAddress)).subscribe(
-      (urlPaypal: string) => {
-        let url: string =urlPaypal.substring(9,urlPaypal.length);
+    this.paymentService.buyArtwork(new Order(this.artwork, this.tokenStorageService.getUser().id, destinationAddress)).subscribe({
+      next: (urlPaypal: string) => {
+        let url: string = urlPaypal.substring(9, urlPaypal.length);
         window.location.href = encodeURI(url);
       },
-      (error) => { utility.onError(error, this.eventBusService); }
-    )
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
   }
 }

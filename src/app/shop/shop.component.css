@@ -216,17 +216,17 @@ img {
   cursor: pointer;
 }
 
-  .gallery-item:hover .gallery-item-info,
-  .gallery-item:focus .gallery-item-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-  }
+.gallery-item:hover .gallery-item-info,
+.gallery-item:focus .gallery-item-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
 
 .gallery-item-info {
   display: none;
@@ -313,81 +313,81 @@ img {
   }
 }
 
-  /* Add a black background color to the top navigation */
-  .nav {
-    background-color: #06dbee;
-    overflow: hidden;
-    border-radius: 40px;
-    width: 37.47rem;
-    height: 30%;
-    margin: auto;
-  }
+/* Add a black background color to the top navigation */
+.nav {
+  background-color: #06dbee;
+  overflow: hidden;
+  border-radius: 40px;
+  width: 37.47rem;
+  height: 30%;
+  margin: auto;
+}
 
-  /* Style the links inside the navigation bar */
-  .nav a {
-    float: right;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 28px;
-    text-decoration: none;
-    font-size: 17px;
-    position: relative;
-  }
+/* Style the links inside the navigation bar */
+.nav a {
+  float: right;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 28px;
+  text-decoration: none;
+  font-size: 17px;
+  position: relative;
+}
 
-  /* Change the color of links on hover */
-  .nav a:hover {
-    background-color: #ddd;
-    color: black;
-  }
+/* Change the color of links on hover */
+.nav a:hover {
+  background-color: #ddd;
+  color: black;
+}
 
-  /* Add a color to the active/current link */
-  .nav a.active {
-    background-color: #0077ff;
-    color: white;
-  }
+/* Add a color to the active/current link */
+.nav a.active {
+  background-color: #0077ff;
+  color: white;
+}
 
-  .btn-follow {
-    background-color: #06dbee;
-    border-radius: 20px;
-    border-width: 0;
-    color: white;
-    padding: 5px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 13px;
-    position: relative;
-    left: 20px;
-  }
+.btn-follow {
+  background-color: #06dbee;
+  border-radius: 20px;
+  border-width: 0;
+  color: white;
+  padding: 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  position: relative;
+  left: 20px;
+}
 
-  .profile-bio {
-    font-weight: 500;
-    line-height: 1.5;
-    margin-top: 2.3rem;
-    margin-right: 9rem;
-    width: 40%;
-    position: relative;
-    padding-top: 30px;
-    padding-right: 5px;
-  }
-
-
-  .btn-reload{
-    background-color: #06dbee;
-    border-radius: 100px;
-    border-width: 0;
-    color: white;
-    padding: 5px 6px;
-    text-align: center;
-    display: inline-block;
-    font-size: 13px;
-    position: relative;
-    left: 20px;
-  }
+.profile-bio {
+  font-weight: 500;
+  line-height: 1.5;
+  margin-top: 2.3rem;
+  margin-right: 9rem;
+  width: 40%;
+  position: relative;
+  padding-top: 30px;
+  padding-right: 5px;
+}
 
 
-  .contacts a {
-    position: relative;
-    margin: 5px;
-  }
+.btn-reload{
+  background-color: #06dbee;
+  border-radius: 100px;
+  border-width: 0;
+  color: white;
+  padding: 5px 6px;
+  text-align: center;
+  display: inline-block;
+  font-size: 13px;
+  position: relative;
+  left: 20px;
+}
+
+
+.contacts a {
+  position: relative;
+  margin: 5px;
+}
 

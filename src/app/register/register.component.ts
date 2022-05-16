@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {AuthService} from "../_services/auth.service";
-import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: "app-register",
@@ -26,15 +25,15 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(): void {
     const {nickname, email, password} = this.form;
-    this.authService.register(nickname, email, password).subscribe(
-      () => {
+    this.authService.register(nickname, email, password).subscribe({
+      next: () => {
         this.isSuccessful = true;
         this.isRegistrationFailed = false;
       },
-      ((error: HttpErrorResponse) => {
+      error: (error) => {
         this.errorMessage = error.error;
-        this.isRegistrationFailed = true;
-      }));
+      }
+    });
   }
 
 }

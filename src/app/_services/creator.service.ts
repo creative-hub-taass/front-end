@@ -7,6 +7,7 @@ import {PublicationInfo} from "../../_models/PublicationInfo";
 import {Post} from "../../_models/Post";
 import {Artwork} from "../../_models/Artwork";
 import {Event} from "../../_models/Event"
+import {CollaborationRequest} from "../../_models/CollaborationRequest";
 
 const API_GATEWAY_USERS = environment.apiGatewayUrl + "api/v1/users/";
 const API_GATEWAY_PUBLICATIONS = environment.apiGatewayUrl + "api/v1/publications/";
@@ -54,5 +55,25 @@ export class CreatorService {
 
   getCommentsList(listPublications: string[]): Observable<any> {
     return this.http.post(API_GATEWAY_INTERACTIONS + "-/comments/ids", listPublications);
+  }
+
+  getSentRequestCollaboration(idCreator: string): Observable<any> {
+    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/sender/" + idCreator);
+  }
+
+  getReceivedRequestCollaboration(idCreator: string): Observable<any> {
+    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/receiver/" + idCreator);
+  }
+
+  getSentBroadcastRequest(idCreator: string): Observable<any> {
+    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/broadcast/" + idCreator);
+  }
+
+  getBroadcastRequest(): Observable<any> {
+    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/broadcast");
+  }
+
+  getListofUser(userIDs: string[]): Observable<any> {
+    return this.http.post<any[]>(API_GATEWAY_USERS + "-/public", userIDs);
   }
 }

@@ -29,6 +29,7 @@ import {EventsComponent} from './events/events.component';
 import {ShopComponent} from './shop/shop.component';
 import {CollabsComponent} from './collabs/collabs.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OwnCollabsComponent } from './own-collabs/own-collabs.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     PortfolioComponent,
     EventsComponent,
     ShopComponent,
-    CollabsComponent
+    CollabsComponent,
+    OwnCollabsComponent
 
   ],
   imports: [

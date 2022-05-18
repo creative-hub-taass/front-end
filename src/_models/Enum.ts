@@ -14,6 +14,13 @@ export enum CreationType {
   OTHER = "OTHER"
 }
 
+export enum CollaborationRequestStatus {
+  OPEN, CLOSED
+}
+export enum CollaborationRequestCategory{
+  MUSICAL
+}
+
 export function getListCurrency() {
   return ["USD","EUR","GBP"];
 }
@@ -23,4 +30,12 @@ export  function  getListCreationTypeAP() {
 
 export function getListCreationTypeE() {
   return ["ORGANIZER","PARTICIPANT"];
+}
+
+export function getListStatus() {
+  return ["OPEN","CLOSED"];
+}
+
+export function getListCategory() {
+  return ["MUSICAL"];
 }

@@ -1,0 +1,141 @@
+<div class="wrapper">
+
+  <div class="table">
+    <h2>Request Sent</h2>
+    <div class="row header" >
+      <div class="cell">
+        Recipient
+      </div>
+      <div class="cell">
+        Title
+      </div>
+      <div class="cell">
+        Description
+      </div>
+      <div class="cell">
+        Contact
+      </div>
+      <div class="cell">
+        Category
+      </div>
+      <div class="cell">
+        Status
+      </div>
+    </div>
+
+    <div class="row" *ngFor="let request of listSent">
+      <div class="cell" data-title="Receiver">
+        NOMEEE
+      </div>
+      <div class="cell" data-title="Title">
+        {{request.title}}
+      </div>
+      <div class="cell" data-title="Description">
+        {{request.description}}
+      </div>
+      <div class="cell" data-title="Contact">
+        {{request.contact}}
+      </div>
+      <div class="cell" data-title="Category">
+        {{request.category}}
+      </div>
+      <div class="cell" data-title="Status">
+        {{request.status}}
+      </div>
+    </div>
+
+  </div>
+
+  <div class="table">
+    <h2>Request received</h2>
+    <div class="row header green">
+      <div class="cell">
+        Sender
+      </div>
+      <div class="cell">
+        Title
+      </div>
+      <div class="cell">
+        Description
+      </div>
+      <div class="cell">
+        Contact
+      </div>
+      <div class="cell">
+        Category
+      </div>
+      <div class="cell">
+        Status
+      </div>
+    </div>
+
+    <div class="row" *ngFor="let request of listReceived">
+      <div class="cell" data-title="Sender">
+        NOMEE
+      </div>
+      <div class="cell" data-title="Title">
+        {{request.title}}
+      </div>
+      <div class="cell" data-title="Description">
+        {{request.description}}
+      </div>
+      <div class="cell" data-title="Contact">
+        {{request.contact}}
+      </div>
+      <div class="cell" data-title="Category">
+        {{request.category}}
+      </div>
+      <div class="cell" data-title="Status">
+        {{request.status}}
+      </div>
+    </div>
+
+  </div>
+
+  <div class="table">
+    <h2>Request broadcast</h2>
+    <div class="row header blue">
+      <div class="cell">
+        Sender
+      </div>
+      <div class="cell">
+        Title
+      </div>
+      <div class="cell">
+        Description
+      </div>
+      <div class="cell">
+        Contact
+      </div>
+      <div class="cell">
+        Category
+      </div>
+      <div class="cell">
+        Status
+      </div>
+    </div>
+
+    <div class="row" *ngFor="let request of listBroadcast">
+      <div class="cell" data-title="Sender">
+        NOMEEEE
+      </div>
+      <div class="cell" data-title="Title">
+        {{request.title}}
+      </div>
+      <div class="cell" data-title="Description">
+        {{request.description}}
+      </div>
+      <div class="cell" data-title="Contact">
+        {{request.contact}}
+      </div>
+      <div class="cell" data-title="Category">
+        {{request.category}}
+      </div>
+      <div class="cell" data-title="Status">
+        {{request.status}}
+      </div>
+    </div>
+
+  </div>
+
+</div>

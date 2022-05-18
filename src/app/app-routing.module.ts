@@ -16,6 +16,7 @@ import {PortfolioComponent} from "./portfolio/portfolio.component";
 import {EventsComponent} from "./events/events.component";
 import {ShopComponent} from "./shop/shop.component";
 import {CollabsComponent} from "./collabs/collabs.component";
+import {OwnCollabsComponent} from "./own-collabs/own-collabs.component";
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -35,7 +36,8 @@ const routes: Routes = [
   {path: "portfolio/:id", component: PortfolioComponent},
   {path: "events/:id", component: EventsComponent},
   {path: "shop/:id", component: ShopComponent},
-  {path: "collaborations/:id", component: CollabsComponent}
+  {path: "collaborations/:id", component: CollabsComponent},
+  {path: "collaborations-requests/:id", component: OwnCollabsComponent}
 ];
 
 @NgModule({

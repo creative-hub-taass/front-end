@@ -28,6 +28,7 @@ import {PortfolioComponent} from './portfolio/portfolio.component';
 import {EventsComponent} from './events/events.component';
 import {ShopComponent} from './shop/shop.component';
 import {CollabsComponent} from './collabs/collabs.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import {CollabsComponent} from './collabs/collabs.component';
     FormsModule,
     HttpClientModule,
     SocialLoginModule,
-    CoolSocialLoginButtonsModule
+    CoolSocialLoginButtonsModule,
+    NgbModule
   ],
   providers: [authInterceptorProviders,
     {

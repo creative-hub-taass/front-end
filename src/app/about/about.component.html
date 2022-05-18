@@ -14,8 +14,6 @@
       <div class="profile-user-settings">
 
         <h1 class="profile-user-name">{{this.user?.nickname}}</h1>
-
-        <button class="btn profile-edit-btn" *ngIf="sameId">Edit Profile</button>
         <button class="btn-reload" (click)="reload()">Refresh<i class='fas fa-redo'></i></button>
       </div>
 
@@ -42,8 +40,63 @@
           <a href="javascript:void(0)" title="Twitter" class="fa fa-twitter"></a>
           <a href="javascript:void(0)" title="Instagram" class="fa fa-instagram"></a>
         </div>
-      </div>
+        <button class="btn profile-edit-btn" *ngIf="sameId">Edit Profile</button>
+        <div class="box">
+          <button class="button" (click)="popup = true">Send a tip</button>
+        </div>
+        <div id="popup1" class="overlay" *ngIf="popup">
+          <div class="popup" >
+            <button class="button" (click)="popup = false">&times;</button>
+            <div class="content">
+              <form
+                #f="ngForm"
+                (ngSubmit)="f.form.valid && submitTip()"
+                name="form"
+                novalidate>
 
+                <div class="donation-box">
+                  <label>Import</label>
+                  <input #imp="ngModel"
+                         [(ngModel)]="form.imp"
+                         class="form-control"
+                         name="imp"
+                         required
+                         type="text"
+                         />
+                  <div
+                    *ngIf="imp.errors && f.submitted"
+                    class="alert alert-danger"
+                    role="alert"
+                    >
+                    Import is required!
+                  </div>
+                </div>
+                <div class="donation-box">
+                  <label>Currency</label>
+                  <select #currency="ngModel"
+                          [(ngModel)]="form.currency"
+                          class="form-control"
+                          name="currency"
+                  >
+                    <option *ngFor="let curr of getCurrency()" [ngValue]="curr">{{curr}}</option>
+                  </select>
+                  <div class="donation-box">
+                    <label>Message</label>
+                    <input
+                      #message="ngModel"
+                      [(ngModel)]="form.message"
+                      class="form-control"
+                      name="message"
+                      type="text"
+                      >
+                  </div>
+                </div>
+                <button class="full-button">Send</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- End of profile section -->
 

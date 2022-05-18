@@ -8,6 +8,9 @@ import {PublicCreator} from "../../_models/PublicCreator";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {Post} from "../../_models/Post";
 import {PublicationInfo} from "../../_models/PublicationInfo";
+import {PaymentService} from "../_services/payment.service";
+import {Donation} from "../../_models/Donation";
+import {getListCurrency} from "../../_models/Enum";
 
 @Component({
   selector: 'app-about',
@@ -25,10 +28,19 @@ export class AboutComponent implements OnInit {
   listPosts!: Post[];
   listPublicationInfo!: PublicationInfo[];
 
+
+  popup: boolean = false;
+  form: { imp: string; currency: string; message: string} = {
+    imp: "",
+    currency: "",
+    message: ""
+  };
+
   constructor(
     private eventBusService: EventBusService,
     private creatorService: CreatorService,
     private tokenStorageService: TokenStorageService,
+    private paymentService: PaymentService,
     public route: ActivatedRoute
   ) {
     this.userId = this.route.snapshot.paramMap.get("id");
@@ -132,6 +144,29 @@ export class AboutComponent implements OnInit {
     });
     if (index != -1) return this.listPublicationInfo[index].getLikes();
     return 0;
+  }
+
+  submitTip() {
+    let tmpDonation: any = {
+      idSender: this.tokenStorageService.getUser().id,
+      idCreator: this.userId,
+      importo: this.form.imp,
+      message: this.form.message,
+      currency: this.form.currency
+    };
+    this.paymentService.sendTip(new Donation(tmpDonation)).subscribe({
+      next: (urlPaypal: string) => {
+        let url: string = urlPaypal.substring(9, urlPaypal.length);
+        window.location.href = encodeURI(url);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+  }
+
+  getCurrency(): string[] {
+    return getListCurrency();
   }
 
 }

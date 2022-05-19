@@ -21,21 +21,39 @@ export enum CollaborationRequestCategory{
   MUSICAL
 }
 
-export function getListCurrency() {
+export enum CreatorType {
+  ARTIST, PAINTER, ILLUSTRATOR, DESIGNER,
+  GRAPHIC_DESIGNER, PHOTOGRAPHER, VIDEO_MAKER,
+  POET, WRITER,
+  MUSICIAN, DANCER
+}
+export enum UpgradeRequestStatus {
+  OPEN, ACCEPTED, REJECTED
+}
+
+export function getListCurrency(): string[] {
   return ["USD","EUR","GBP"];
 }
-export  function  getListCreationTypeAP() {
+export  function  getListCreationTypeAP(): string[] {
   return ["AUTHOR","COAUTHOR","FEATURING","COLLAB","OTHER"];
 }
 
-export function getListCreationTypeE() {
+export function getListCreationTypeE(): string[] {
   return ["ORGANIZER","PARTICIPANT"];
 }
 
-export function getListStatus() {
+export function getListCollaborationStatus(): string[] {
   return ["OPEN","CLOSED"];
 }
 
-export function getListCategory() {
+export function getListCategory(): string[] {
   return ["MUSICAL"];
+}
+
+export function getListUpgradeStatus(): string[] {
+  return ["OPEN", "ACCEPTED", "REJECTED"];
+}
+
+export function getListCreatorType(): string[] {
+  return ["ARTIST","PAINTER","ILLUSTRATOR","DESIGNER","GRAPHIC_DESIGNER","PHOTOGRAPHER","VIDEO_MAKER","POET","WRITER","MUSICIAN","DANCER"];
 }

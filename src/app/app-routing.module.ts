@@ -17,6 +17,7 @@ import {EventsComponent} from "./events/events.component";
 import {ShopComponent} from "./shop/shop.component";
 import {CollabsComponent} from "./collabs/collabs.component";
 import {OwnCollabsComponent} from "./own-collabs/own-collabs.component";
+import {RequestUpgradeComponent} from "./request-upgrade/request-upgrade.component";
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -37,7 +38,8 @@ const routes: Routes = [
   {path: "events/:id", component: EventsComponent},
   {path: "shop/:id", component: ShopComponent},
   {path: "collaborations/:id", component: CollabsComponent},
-  {path: "collaborations-requests/:id", component: OwnCollabsComponent}
+  {path: "collaborations-requests", component: OwnCollabsComponent},
+  {path: "upgrade-request", component: RequestUpgradeComponent}
 ];
 
 @NgModule({

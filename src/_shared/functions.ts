@@ -15,7 +15,7 @@ export function onError(error: any, eventBusService: EventBusService): string {
   console.log(message);
   if (message.status == 403 || message.status == 401) eventBusService.emit(new EventData("logout", null));
   console.log(message);
-  return message;
+  return message.error;
 }
 
 

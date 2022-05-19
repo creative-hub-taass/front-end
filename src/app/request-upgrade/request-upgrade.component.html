@@ -1,0 +1,203 @@
+<div class="container">
+  <div class="form-box">
+    <h2>Compile your upgrade request!</h2>
+    <form
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      name="form"
+      novalidate
+      >
+      <div class="user-box">
+        <label>Name</label>
+        <input #name="ngModel"
+               [(ngModel)]="form.name"
+               class="form-control"
+               name="name"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="name.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+          >
+          Name is required!
+        </div>
+      </div>
+      <div class="user-box">
+        <label>Surname</label>
+        <input #surname="ngModel"
+               [(ngModel)]="form.surname"
+               class="form-control"
+               name="surname"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="surname.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+          >
+          Surname is required!
+        </div>
+      </div>
+      <div class="user-box">
+        <label>Biography</label>
+        <input #bio="ngModel"
+               [(ngModel)]="form.bio"
+               class="form-control"
+               name="bio"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="bio.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+          >
+          Biography is required!
+        </div>
+      </div>
+      <div class="user-box">
+        <label>Portfolio</label>
+        <input #portfolio="ngModel"
+               [(ngModel)]="form.portfolio"
+               class="form-control"
+               name="portfolio"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="portfolio.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+          >
+          Portfolio is required!
+        </div>
+      </div>
+      <div class="user-box">
+        <label>Motivational text</label>
+        <input #motivationalText="ngModel"
+               [(ngModel)]="form.motivationalText"
+               class="form-control"
+               name="motivationalText"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="motivationalText.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+          >
+          Motivational text is required!
+        </div>
+      </div>
+      <div class="user-box">
+        <label>Art name</label>
+        <input #artName="ngModel"
+               [(ngModel)]="form.artName"
+               class="form-control"
+               name="artName"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="artName.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+          >
+          Art name is required!
+        </div>
+      </div>
+      <div class="user-box">
+        <label>Birth date</label>
+        <input #birthDate="ngModel"
+               [(ngModel)]="form.birthDate"
+               class="form-control"
+               name="birthDate"
+               required
+               type="date"
+        />
+        <div
+          *ngIf="birthDate.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+          >
+          Birth date is required!
+        </div>
+      </div>
+      <div class="user-box">
+        <label>Username</label>
+        <input #username="ngModel"
+               [(ngModel)]="form.username"
+               class="form-control"
+               name="username"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="username.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+          >
+          Username is required!
+        </div>
+      </div>
+      <div class="user-box">
+        <label>Avatar</label>
+        <input #avatar="ngModel"
+               [(ngModel)]="form.avatar"
+               class="form-control"
+               name="avatar"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="avatar.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+          >
+          Avatar is required!
+        </div>
+      </div>
+      <div class="user-box">
+        <label>Payment E-mail</label>
+        <input #paymentEmail="ngModel"
+               [(ngModel)]="form.paymentEmail"
+               class="form-control"
+               name="paymentEmail"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="paymentEmail.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Payment E-mail is required!
+        </div>
+      </div>
+      <div class="user-box">
+        <label>Creator Type</label>
+        <select #creatorType="ngModel"
+                [(ngModel)]="form.creatorType"
+                class="form-control"
+                name="creatorType"
+                required
+        >
+          <option *ngFor="let type of getCreatorType()" [ngValue]="type">{{type}}</option>
+        </select>
+      </div>
+      <div
+        *ngIf="creatorType.errors && f.submitted"
+        class="alert alert-danger"
+        role="alert"
+        >
+        Creator type is required!
+      </div>
+      <button class="full-button">Submit</button>
+    </form>
+    <h3 *ngIf="this.submitted">Request submitted!</h3>
+    <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
+  </div>
+</div>

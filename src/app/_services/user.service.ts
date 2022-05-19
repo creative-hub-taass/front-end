@@ -2,9 +2,10 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
+import {UpgradeRequest} from "../../_models/UpgradeRequest";
 
-const PATH = "api/v1/users/";
-const API_GATEWAY_URL = environment.apiGatewayUrl + PATH;
+
+const API_GATEWAY_USERS = environment.apiGatewayUrl + "api/v1/users/";
 
 const opts: any = {
   headers: new HttpHeaders({
@@ -25,7 +26,11 @@ export class UserService {
   }
 
   getUserBoard(): Observable<any> {
-    return this.http.get(API_GATEWAY_URL, opts);
+    return this.http.get(API_GATEWAY_USERS, opts);
+  }
+
+  addUpgradeRequest(upgradeRequest: UpgradeRequest): Observable<any> {
+    return this.http.post<UpgradeRequest>(API_GATEWAY_USERS + "upgrade/request", upgradeRequest);
   }
 
 }

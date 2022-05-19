@@ -94,7 +94,7 @@
   font-weight: 100;
   color: #636363;
   text-align: justify;
-  #display: none;
+  display: none;
 }
 
 .description span {

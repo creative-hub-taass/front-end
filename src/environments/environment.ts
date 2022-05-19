@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiGatewayUrl: "https://api-gateway-taass-zathsl.cloud.okteto.net/"
+  apiGatewayUrl: "https://api-gateway-taass-acontenti.cloud.okteto.net/"
 };
 
 /*

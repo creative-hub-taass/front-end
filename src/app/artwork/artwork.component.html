@@ -1,36 +1,38 @@
 <section class="main">
   <div class="wrapper">
     <div class="left-col">
-      // status wrappers
-      <div class="post">
-        <div class="info">
-          <div class="user">
-            <div class="profile-pic"><img alt="" src="{{this.getCreator(this.listUsers[0]).getAvatar()}}"></div>
-            <p class="namePost">{{this.artwork.name}}</p>
+      <div class="grid">
+        <div class="post">
+          <div class="artwork-pic">
+            <img src="{{this.artwork.images[0]}}">
           </div>
-          <img alt="" class="options" src="../../assets/img/option.PNG">
-        </div>
-        <img alt="" class="post-image" src="{{this.artwork.images[0]}}">
-        <div class="post-content">
-          <div class="reaction-wrapper">
-            <img alt="" class="icon" src="../../assets/img/like.PNG">
-            <img alt="" class="icon" src="../../assets/img/comment.PNG">
-            <img alt="" class="icon" src="../../assets/img/send.PNG">
-            <img alt="" class="save icon" src="../../assets/img/save.PNG">
+          <div class="artwork-info">
+            <p class="title">{{this.artwork.name}}</p>
+            <p class="type">{{this.artwork.type}}</p>
+            <p class="date"><img src="../assets/calendar.png">{{this.artwork.creationDateTime | date:"dd MMM yyyy"}}</p>
+            <p class="description">{{this.artwork.description}}</p>
+            <p class="artists">{{this.listUsers[0].getNickname()}}</p>
+            <div class="sales-info">
+              <p class="price">{{this.artwork.price}} €</p>
+              <p class="qty">{{this.artwork.availableCopies}} pieces left</p>
+            </div>
+            <div class="interactions">
+              <button class="buy-button">
+                <img src="../assets/coins-w.png">
+                Purchase
+              </button>
+              <div class="reaction-wrapper">
+                <div class="count">
+                  <img alt="" class="icon" src="../../assets/heart-outline.png">
+                  <p class="count-label">{{this.countLikes}} likes</p>
+                </div>
+                <div class="count">
+                  <img alt="" class="icon" src="../../assets/bubble-outline.png">
+                  <p class="count-label">{{this.listComments.length}} comments</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <p class="likes">{{this.countLikes}} likes</p>
-          <p class="description"><span>{{this.artwork.description}}</span></p>
-          <p class="post-time"></p>
-        </div>
-        <div class="list-comment">
-          <div class="comment">
-            <p></p>
-          </div>
-        </div>
-        <div *ngIf="this.isLoggedIn" class="comment-wrapper">
-          <img alt="" class="icon" src="../../assets/img/smile.PNG">
-          <input class="comment-box" placeholder="Add a comment" type="text">
-          <button class="comment-btn">post</button>
         </div>
       </div>
     </div>

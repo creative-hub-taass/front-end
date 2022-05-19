@@ -76,4 +76,12 @@ export class CreatorService {
   getListofUser(userIDs: string[]): Observable<any> {
     return this.http.post<any[]>(API_GATEWAY_USERS + "-/public", userIDs);
   }
+
+  addCollabRequest(collabRequest: CollaborationRequest): Observable<any> {
+    return this.http.post<CollaborationRequest>(API_GATEWAY_INTERACTIONS + "collabs/request", collabRequest);
+  }
+
+  getFollowed(idCreator: string): Observable<any> {
+    return this.http.get<PublicUser[]>(API_GATEWAY_USERS + idCreator + "/followed");
+  }
 }

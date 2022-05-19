@@ -30,6 +30,7 @@ import {ShopComponent} from './shop/shop.component';
 import {CollabsComponent} from './collabs/collabs.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OwnCollabsComponent } from './own-collabs/own-collabs.component';
+import { RequestUpgradeComponent } from './request-upgrade/request-upgrade.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { OwnCollabsComponent } from './own-collabs/own-collabs.component';
     EventsComponent,
     ShopComponent,
     CollabsComponent,
-    OwnCollabsComponent
+    OwnCollabsComponent,
+    RequestUpgradeComponent
 
   ],
   imports: [

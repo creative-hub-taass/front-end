@@ -18,8 +18,9 @@ export class RequestUpgradeComponent implements OnInit {
   userId: string | null;
   upgradeRequestResult!: UpgradeRequest;
   errorMessage: string = "";
+  submitted: boolean = false;
 
-  form!: {
+  form: {
     name: string,
     surname: string,
     bio: string,
@@ -31,6 +32,18 @@ export class RequestUpgradeComponent implements OnInit {
     avatar: string,
     paymentEmail: string,
     creatorType: string
+  } = {
+    name: "",
+    surname: "",
+    bio: "",
+    portfolio: "",
+    motivationalText: "",
+    artName: "",
+    birthDate: "",
+    username: "",
+    avatar: "",
+    paymentEmail: "",
+    creatorType: ""
   };
 
   constructor(
@@ -44,7 +57,6 @@ export class RequestUpgradeComponent implements OnInit {
       this.errorMessage = "Error, you aren't logged";
       return;
     }
-    this.resetForm();
   }
 
   ngOnInit(): void {
@@ -56,6 +68,7 @@ export class RequestUpgradeComponent implements OnInit {
     this.userService.addUpgradeRequest(this.upgradeRequestResult).subscribe({
       next: (upgradeRequest: UpgradeRequest) => {
         console.log(upgradeRequest);
+        this.submitted = true;
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -78,20 +91,23 @@ export class RequestUpgradeComponent implements OnInit {
   }
 
   buildRequest(){
-    this.upgradeRequestResult.id = "";
-    this.upgradeRequestResult.user = new PublicUser(this.tokenStorageService.getUser());
-    this.upgradeRequestResult.name = this.form.name;
-    this.upgradeRequestResult.surname = this.form.surname;
-    this.upgradeRequestResult.bio = this.form.bio;
-    this.upgradeRequestResult.portfolio = this.form.bio;
-    this.upgradeRequestResult.motivationalText = this.form.motivationalText;
-    this.upgradeRequestResult.artName = this.form.artName;
-    this.upgradeRequestResult.birthDate = this.form.birthDate;
-    this.upgradeRequestResult.username = this.form.username;
-    this.upgradeRequestResult.avatar = this.form.avatar;
-    this.upgradeRequestResult.paymentEmail = this.form.paymentEmail;
-    this.upgradeRequestResult.status = "OPEN";
-    this.upgradeRequestResult.creatorType = this.form.creatorType;
+    let tmp: any = {
+      id: "",
+      user: new PublicUser(this.tokenStorageService.getUser()),
+      name: this.form.name,
+      surname: this.form.surname,
+      bio: this.form.bio,
+      portfolio: this.form.portfolio,
+      motivationalText: this.form.motivationalText,
+      artName: this.form.artName,
+      birthDate: this.form.birthDate,
+      username: this.form.username,
+      avatar: this.form.avatar,
+      paymentEmail: this.form.paymentEmail,
+      status: "OPEN",
+      creatorType: this.form.creatorType
+    }
+    this.upgradeRequestResult = new UpgradeRequest(tmp);
   }
 
   getCreatorType(): string[] {

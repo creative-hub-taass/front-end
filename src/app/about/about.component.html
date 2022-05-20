@@ -1,0 +1,150 @@
+<header>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+  <div class="container">
+
+    <div class="profile">
+
+      <div class="profile-image">
+
+        <img src="{{this.creator?.avatar}}" alt="Avatar">
+
+      </div>
+
+      <div class="profile-user-settings">
+
+        <h1 class="profile-user-name">{{this.user?.nickname}}</h1>
+        <button class="btn-reload" (click)="reload()">Refresh<i class='fas fa-redo'></i></button>
+      </div>
+
+      <div class="profile-stats">
+
+        <ul>
+          <li><span class="profile-stat-count">{{this.user?.fanIds?.length}}</span> followers</li>
+          <li><span class="profile-stat-count">{{this.user?.inspirerIds?.length}}</span> following</li>
+        </ul>
+
+      </div>
+
+      <div class="profile-name">
+        <p><span class="profile-real-name">@{{this.user?.username}}</span>
+          <button class="btn-follow" *ngIf="!this.sameId && !this.followed" (click)="this.follow()">Follow</button>
+          <button class="btn-follow" *ngIf="!this.sameId && this.followed" (click)="this.unfollow()">Unfollow</button>
+        </p>
+        <h3>{{this.creator?.creatorType}}</h3>
+        <div class="contacts">
+          <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+          <a href="javascript:void(0)" title="Spotify" class="fa fa-spotify"></a>
+          <a href="javascript:void(0)" title="Facebook" class="fa fa-facebook"></a>
+          <a href="javascript:void(0)" title="Twitter" class="fa fa-twitter"></a>
+          <a href="javascript:void(0)" title="Instagram" class="fa fa-instagram"></a>
+        </div>
+        <button class="btn profile-edit-btn" *ngIf="sameId">Edit Profile</button>
+        <div class="box">
+          <button class="button" (click)="popup = true">Send a tip</button>
+        </div>
+        <div id="popup1" class="overlay" *ngIf="popup">
+          <div class="popup" >
+            <button class="button" (click)="popup = false">&times;</button>
+            <div class="content">
+              <form
+                #f="ngForm"
+                (ngSubmit)="f.form.valid && submitTip()"
+                name="form"
+                novalidate>
+
+                <div class="donation-box">
+                  <label>Import</label>
+                  <input #imp="ngModel"
+                         [(ngModel)]="form.imp"
+                         class="form-control"
+                         name="imp"
+                         required
+                         type="text"
+                         />
+                  <div
+                    *ngIf="imp.errors && f.submitted"
+                    class="alert alert-danger"
+                    role="alert"
+                    >
+                    Import is required!
+                  </div>
+                </div>
+                <div class="donation-box">
+                  <label>Currency</label>
+                  <select #currency="ngModel"
+                          [(ngModel)]="form.currency"
+                          class="form-control"
+                          name="currency"
+                  >
+                    <option *ngFor="let curr of getCurrency()" [ngValue]="curr">{{curr}}</option>
+                  </select>
+                  <div class="donation-box">
+                    <label>Message</label>
+                    <input
+                      #message="ngModel"
+                      [(ngModel)]="form.message"
+                      class="form-control"
+                      name="message"
+                      type="text"
+                      >
+                  </div>
+                </div>
+                <button class="full-button">Send</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of profile section -->
+
+  </div>
+  <!-- End of container -->
+
+</header>
+
+<main>
+
+  <div class="container">
+    <div class="nav">
+      <a class="active" href="javascript:void(0)" [routerLink]="'/about/' + this.userId">About</a>
+      <a href="javascript:void(0)" [routerLink]="'/portfolio/' + this.userId">Portfolio</a>
+      <a href="javascript:void(0)" [routerLink]="'/collaborations/' + this.userId">Collaborations</a>
+      <a href="javascript:void(0)" [routerLink]="'/events/' + this.userId">Events</a>
+      <a href="javascript:void(0)" [routerLink]="'/shop/' + this.userId">Shop</a>
+    </div>
+
+  </div>
+  <!-- End of container -->
+
+  <div class="container">
+    <div class="profile-bio">
+      <h3>Biography</h3>
+      <p>{{this.creator?.bio}}</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="list-post">
+      <div class="post" *ngFor="let publication of listPosts" [routerLink]="'/post/' + publication.id">
+        <h3>{{publication.title}}<p id="lastUpdate">Last update: {{publication.lastUpdate | date:'medium'}}</p></h3>
+        <p>{{publication.body}}</p>
+        <div class="gallery-item-info">
+
+          <ul>
+            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
+                                                                                         aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
+            </li>
+            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
+                                                                                               aria-hidden="true"></i>{{this.getCommentsCount(publication.id)}}
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="loader" *ngIf="user==null"></div>
+</main>
+

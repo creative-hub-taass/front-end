@@ -8,6 +8,6 @@ export interface Publication {
   publicationType: "artwork" | "event" | "post";
   creations: Creation[];
   id: string;
-  lastUpdate: Date;
-  timestamp: Date;
+  lastUpdate: string;
+  timestamp: string;
 }

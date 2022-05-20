@@ -1,8 +1,8 @@
 export class PublicCreator {
-  private id!: string;
-  private bio!: string;
-  private creatorType!: string;
-  private avatar!: string;
+  id!: string;
+  bio!: string;
+  creatorType!: string;
+  avatar!: string;
 
   constructor(publicCreatorDto: any) {
     this.id = publicCreatorDto.id;

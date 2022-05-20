@@ -1,12 +1,12 @@
 import {PublicCreator} from "./PublicCreator";
 
 export class PublicUser {
-  readonly id: string;
-  readonly username: string;
-  readonly nickname: string;
-  readonly creator: PublicCreator;
-  readonly inspirerIds: string[];
-  readonly fanIds: string[];
+  id: string;
+  username: string;
+  nickname: string;
+  creator: PublicCreator;
+  inspirerIds: string[];
+  fanIds: string[];
 
   constructor(publicUserDto: any) {
     this.id = publicUserDto.id;

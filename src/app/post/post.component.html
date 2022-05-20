@@ -1,0 +1,37 @@
+<section class="main">
+  <div class="wrapper">
+    <div class="left-col">
+      // status wrappers
+      <div class="post">
+        <div class="info">
+          <div class="user">
+            <div class="profile-pic"><img alt="" src="{{this.getCreator(this.listUsers[0]).avatar}}"></div>
+            <p class="namePost">{{this.post.title}}</p>
+          </div>
+          <img alt="" class="options" src="../../assets/img/option.PNG">
+        </div>
+        <div class="post-content">
+          <div class="reaction-wrapper">
+            <img alt="" class="icon" src="../../assets/img/like.PNG">
+            <img alt="" class="icon" src="../../assets/img/comment.PNG">
+            <img alt="" class="icon" src="../../assets/img/send.PNG">
+            <img alt="" class="save icon" src="../../assets/img/save.PNG">
+          </div>
+          <p class="likes">{{this.countLikes}} likes</p>
+          <p class="description"><span>{{this.post.body}}</span></p>
+          <p class="post-time"></p>
+        </div>
+        <div class="list-comment">
+          <div class="comment">
+            <p></p>
+          </div>
+        </div>
+        <div *ngIf="this.isLoggedIn" class="comment-wrapper">
+          <img alt="" class="icon" src="../../assets/img/smile.PNG">
+          <input class="comment-box" placeholder="Add a comment" type="text">
+          <button class="comment-btn">post</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

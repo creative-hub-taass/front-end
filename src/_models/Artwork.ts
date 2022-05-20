@@ -5,33 +5,34 @@ export type Attributes = {
 };
 
 export class Artwork implements Publication {
-  readonly publicationType = "artwork" as const;
-  readonly id: string;
-  readonly timestamp: Date;
-  readonly lastUpdate: Date;
-  readonly creations: Creation[];
-  readonly attributes: Attributes;
-  readonly availableCopies: number;
-  readonly copies: number;
-  readonly creationDateTime: Date;
-  readonly currency?: string;
-  readonly description: string;
-  readonly images: string[];
-  readonly name: string;
-  readonly onSale: boolean;
-  readonly paymentEmail?: string;
-  readonly price?: number;
-  readonly type: string;
+  publicationType = "artwork" as const;
+  id: string;
+
+  timestamp: string;
+  lastUpdate: string;
+  creations: Creation[];
+  attributes: Attributes;
+  availableCopies: number;
+  copies: number;
+  creationDateTime: string;
+  currency?: string;
+  description: string;
+  images: string[];
+  name: string;
+  onSale: boolean;
+  paymentEmail?: string;
+  price?: number;
+  type: string;
 
   constructor(dto: any) {
     this.id = dto.id;
-    this.timestamp = new Date(dto.timestamp);
-    this.lastUpdate = new Date(dto.lastUpdate);
+    this.timestamp = new Date(dto.timestamp).toISOString();
+    this.lastUpdate = new Date(dto.lastUpdate).toISOString();
     this.creations = dto.creations;
     this.attributes = dto.attributes;
     this.availableCopies = dto.availableCopies;
     this.copies = dto.copies;
-    this.creationDateTime = new Date(dto.creationDateTime);
+    this.creationDateTime = new Date(dto.creationDateTime).toISOString();
     this.currency = dto.currency;
     this.description = dto.description;
     this.images = dto.images;
@@ -41,4 +42,6 @@ export class Artwork implements Publication {
     this.price = dto.price;
     this.type = dto.type;
   }
+
+
 }

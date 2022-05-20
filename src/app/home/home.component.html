@@ -15,7 +15,9 @@
           </div>
           <img alt="" class="options" src="../../assets/img/option.PNG">
         </div>
+         <div *ngIf="element.publication.publicationType == 'artwork'">
         <img *ngFor="let images of element.getInfoPost().images" alt="" class="post-image" src="{{images}}">
+        </div>
         <div class="post-content">
           <p [routerLink]="['/artwork/'+element.getInfoPost().id]" class="post-name" href="javascript:void(0)">
             {{element.getInfoPost().name}} </p>
@@ -37,13 +39,14 @@
             <p *ngFor="let comment of element.getComments()">{{comment}}</p>
           </div>
         </div>
-        <div *ngIf="this.isLoggedIn" class="comment-wrapper">
-          <img alt="" class="icon" src="../../assets/img/smile.PNG">
-          <input class="comment-box" placeholder="Add a comment" type="text">
-          <button class="comment-btn">post</button>
-        </div>
+          <div *ngIf="this.isLoggedIn" class="comment-wrapper">
+            <img alt="" class="icon" src="../../assets/img/smile.PNG">
+            <input class="comment-box" placeholder="Add a comment" type="text">
+            <button class="comment-btn">post</button>
+          </div>
         </div>
       </div>
     </div>
+    <div class="loader" *ngIf="listFeed==null"></div>
   </div>
 </section>

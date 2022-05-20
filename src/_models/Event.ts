@@ -1,37 +1,37 @@
 import {Creation, Publication} from "./Publication";
 
 interface Coordinates {
-  readonly latitude: number;
-  readonly longitude: number;
+  latitude: number;
+  longitude: number;
 }
 
 export class Event implements Publication {
-  readonly publicationType = "event" as const;
-  readonly id: string;
-  readonly timestamp: Date;
-  readonly lastUpdate: Date;
-  readonly creations: Creation[];
-  readonly name: string;
-  readonly description: string;
-  readonly image: string;
-  readonly locationName: string;
-  readonly coordinates: Coordinates;
-  readonly startDateTime: Date;
-  readonly endDateTime: Date;
-  readonly bookingURL?: string;
+  publicationType = "event" as const;
+  id: string;
+  timestamp: string;
+  lastUpdate: string;
+  creations: Creation[];
+  name: string;
+  description: string;
+  image: string;
+  locationName: string;
+  coordinates: Coordinates;
+  startDateTime: string;
+  endDateTime: string;
+  bookingURL?: string;
 
   constructor(dto: any) {
     this.id = dto.id;
-    this.timestamp = new Date((dto.timestamp));
-    this.lastUpdate = new Date(dto.lastUpdate);
+    this.timestamp = new Date((dto.timestamp)).toISOString();
+    this.lastUpdate = new Date(dto.lastUpdate).toISOString();
     this.creations = dto.creations;
     this.name = dto.name;
     this.description = dto.description;
     this.image = dto.image;
     this.locationName = dto.locationName;
     this.coordinates = dto.coordinates;
-    this.startDateTime = new Date(dto.startDateTime);
-    this.endDateTime = new Date(dto.endDateTime);
+    this.startDateTime = new Date(dto.startDateTime).toISOString();
+    this.endDateTime = new Date(dto.endDateTime).toISOString();
     this.bookingURL = dto.bookingURL;
   }
 }

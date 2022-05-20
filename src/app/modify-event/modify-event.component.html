@@ -1,0 +1,205 @@
+<div class="container">
+  <div class="publication-box">
+    <h2>Publication</h2>
+    <button (click)="resetForm()">Reset</button>
+
+    <form
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && addInformations()"
+      name="formPublication"
+      novalidate
+    >
+
+      <div class="event-box">
+        <label>name: {{this.eventResult?.name}}</label>
+      </div>
+      <div class="event-box">
+        <input #name="ngModel"
+               [(ngModel)]="formEvent.name"
+               class="form-control"
+               name="name"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="name.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Name is required!
+        </div>
+      </div>
+
+      <div class="event-box">
+        <label>Description: {{this.eventResult?.description}}</label>
+      </div>
+      <div class="event-box">
+        <input #description="ngModel"
+               [(ngModel)]="formEvent.description"
+               class="form-control"
+               name="description"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="description.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Description is required!
+        </div>
+      </div>
+
+      <div class="event-box">
+        <label>Image: {{this.eventResult?.image}}</label>
+      </div>
+      <div class="event-box">
+        <input #image="ngModel"
+               [(ngModel)]="formEvent.image"
+               class="form-control"
+               name="image"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="image.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Image is required!
+        </div>
+      </div>
+
+      <div class="event-box">
+        <label>locationName: {{this.eventResult?.locationName}}</label>
+      </div>
+      <div class="event-box">
+        <input #locationName="ngModel"
+               [(ngModel)]="formEvent.locationName"
+               class="form-control"
+               name="locationName"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="locationName.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Location name is required!
+        </div>
+      </div>
+
+      <div class="event-box">
+        <label>Start time: {{this.eventResult?.startDateTime | date:'longDate'}}</label>
+      </div>
+      <div class="event-box">
+        <input #startDateTime="ngModel"
+               [(ngModel)]="formEvent.startDateTime"
+               class="form-control"
+               name="startDateTime"
+               required
+               type="date"
+        />
+        <div
+          *ngIf="startDateTime.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Start time is required!
+        </div>
+      </div>
+
+      <div class="event-box">
+        <label>End time: {{this.eventResult?.endDateTime | date:'longDate'}}</label>
+      </div>
+      <div class="event-box">
+        <input #endDateTime="ngModel"
+               [(ngModel)]="formEvent.endDateTime"
+               class="form-control"
+               name="endDateTime"
+               required
+               type="date"
+        />
+        <div
+          *ngIf="endDateTime.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          End time is required!
+        </div>
+      </div>
+
+      <div class="event-box">
+        <label>Booking URL: {{this.eventResult?.bookingURL}}</label>
+      </div>
+      <div class="event-box">
+        <input #booking="ngModel"
+               [(ngModel)]="formEvent.bookingURL"
+               class="form-control"
+               name="booking"
+               type="text"
+        />
+      </div>
+      <button class="full-button">Update informations</button>
+      <div class="form-group">
+        <div
+          *ngIf="f.submitted && (errorMessage!=undefined)"
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{errorMessage}}
+        </div>
+      </div>
+    </form>
+
+    <h3>Users</h3>
+
+    <form
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && addUsers()"
+      name="formUsers"
+      novalidate
+    >
+      <div class="event-box" *ngFor="let user of this.listCreationEvent; index as i;">
+        <label>Creator {{i}} - nickname: {{user.nickname}}; creationType: {{user.creationType}}</label>
+        <button (click)="deleteUser(user.id)">delete</button>
+      </div>
+      <div class="event-box">
+        <select #creationType="ngModel"
+                [(ngModel)]="formCreations.creationType"
+                class="form-control"
+                name="creationType"
+        >
+          <option *ngFor="let creation of getCreation()" [ngValue]="creation">{{creation}}</option>
+        </select>
+        <select #user="ngModel"
+                [(ngModel)]="formCreations.user"
+                class="form-control"
+                name="creationUser"
+        >
+          <option *ngFor="let user of this.listFollowers" [ngValue]="user">{{user.nickname}}</option>
+        </select>
+
+      </div>
+      <button class="full-button">Update creator</button>
+
+      <div class="form-group">
+        <div
+          *ngIf="f.submitted && (errorMessage!=undefined)"
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{ errorMessage }}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="map-container" #map>
+  <div id="map"></div>
+</div>
+<div class="event-box">
+  <button (click)="onSubmit()">Save Event</button>
+  <label *ngIf="this.sent">Event saved successfully!</label>
+</div>

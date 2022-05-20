@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {LoginComponent} from "../login/login.component";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {ActivatedRoute} from "@angular/router";
 import {PublicationService} from "../_services/publication.service";
@@ -7,6 +6,10 @@ import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
 import {PublicCreator} from "../../_models/PublicCreator";
 import {Artwork} from "../../_models/Artwork";
+import {PaymentService} from "../_services/payment.service";
+import {Order} from "../../_models/Order";
+import {TokenStorageService} from "../_services/token-storage.service";
+
 
 @Component({
   selector: "app-artwork",
@@ -15,79 +18,97 @@ import {Artwork} from "../../_models/Artwork";
 })
 export class ArtworkComponent implements OnInit {
 
-  isLoggedIn!: boolean;
+
+  isLoggedIn: boolean = false;
   artworkId: string | null;
   artwork!: Artwork;
   listUsersID!: string[];
   listUsers!: PublicUser[];
   countLikes!: number;
   listComments!: any[];
-
+  errorMessage: string = "";
 
   constructor(
-    private loginComponent: LoginComponent,
     private eventBusService: EventBusService,
     private publicationService: PublicationService,
+    private paymentService: PaymentService,
+    private tokenStorageService: TokenStorageService,
     public route: ActivatedRoute
   ) {
     this.artworkId = this.route.snapshot.paramMap.get("id");
-    this.isLoggedIn = loginComponent.isLoggedIn;
+    this.isLoggedIn = (Object.keys(this.tokenStorageService.getUser()).length != 0)
   }
 
   ngOnInit(): void {
     if (this.artworkId != null) {
-      this.publicationService.getPublication(this.artworkId).subscribe(
-        (artwork) => {
+      this.publicationService.getArtwork(this.artworkId).subscribe({
+        next: (artwork) => {
           this.artwork = new Artwork(artwork);
-          this.listUsersID = utility.buildUsersIDfromArtwork(this.artwork.creations);
-
+          this.listUsersID = utility.buildUsersIDfromSpecificType(this.artwork.creations);
           //chiamo il servizio utenti per avere le informazioni sui creator
-          this.publicationService.getListofUser(this.listUsersID).subscribe(
-            (usersList: PublicUser[]) => {
-              //ho la lista di tutti gli utenti della pubblicazione
+          this.publicationService.getListofUser(this.listUsersID).subscribe({
+            next: (usersList: PublicUser[]) => {
+              //ho la lista di tutti gli utenti dell'artwork
               this.listUsers = new Array<PublicUser>();
-              usersList.forEach((element) => {
+              usersList.forEach((element: PublicUser) => {
                 this.listUsers.push(new PublicUser(element));
               });
               this.callServiceInteractions();
             },
-            (error) => { utility.onError(error, this.eventBusService);}
-          );
+            error: (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
+          });
         },
-        (error) => { utility.onError(error, this.eventBusService);}
-      );
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
     }
   }
 
-  //il metodo richiede il PublicUser e la lista di PublicUser in cui cercare
+  //il metodo richiede il PublicUser e restituisce l'utente cercato all'interno della lista
   getUser(userParam: PublicUser): PublicUser {
     return utility.getUser(userParam, this.listUsers);
   }
 
   //restituisce un oggetto PublicUser con le informazioni di un utente
-
-  //il metodo richiede il PublicUser e la lista di utenti in cui cercare
+  //il metodo richiede il PublicUser
   getCreator(userParam: PublicUser): PublicCreator {
     return utility.getCreator(userParam, this.listUsers);
   }
 
-  //restituisce un oggetto PublicCreator con le informazioni dell'utente creator
 
   private callServiceInteractions() {
     if (this.artworkId != null) {
-      this.publicationService.getLikes(this.artworkId).subscribe(
-        (likesCount) => {
+      this.publicationService.getLikes(this.artworkId).subscribe({
+        next: (likesCount) => {
           this.countLikes = likesCount;
         },
-        (error) => { utility.onError(error, this.eventBusService); }
-      );
-      this.publicationService.getComments(this.artworkId).subscribe(
-        (listComments) => {
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
+      this.publicationService.getComments(this.artworkId).subscribe({
+        next: (listComments) => {
           this.listComments = listComments;
         },
-        (error) => { utility.onError(error, this.eventBusService); }
-      );
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
     }
+  }
 
+  public buyArtwork(destinationAddress: string): void {
+    this.paymentService.buyArtwork(new Order(this.artwork, this.tokenStorageService.getUser().id, destinationAddress)).subscribe({
+      next: (urlPaypal: string) => {
+        let url: string = urlPaypal.substring(9, urlPaypal.length);
+        window.location.href = encodeURI(url);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
   }
 }

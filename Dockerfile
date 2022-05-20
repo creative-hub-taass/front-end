@@ -1,20 +1,13 @@
-# choose base image to build off of
-FROM node:latest
-
-# set the current working directory for all commands
+### STAGE 1: Build ###
+FROM node:alpine AS build
 WORKDIR /usr/src/app
-
-# copy these over first and run 'npm install' so the node_modules will be cached
-# until the package.json / lock changes
-COPY package.json .
-COPY package-lock.json .
+COPY package.json package-lock.json ./
 RUN npm install
-
-# copy over all code files
 COPY . .
+RUN npm run build
 
-# expose internal docker container port to external environment
-EXPOSE 4200
-
-# specify default command to run when we run the image
-CMD /usr/src/app/node_modules/.bin/ng serve --host 0.0.0.0 --disable-host-check
+### STAGE 2: Run ###
+FROM nginx:alpine
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /usr/src/app/dist/creative-hub-client /usr/share/nginx/html
+EXPOSE 80

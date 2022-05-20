@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  apiGatewayUrl: "https://api-gateway-taass-acontenti.cloud.okteto.net/"
+  apiGatewayUrl: process.env.NG_APP_GATEWAY_URL + "/",
+  accessToken: 'pk.eyJ1IjoiemF0aHNsIiwiYSI6ImNsMzIwZXRjajBoYzgzaW1wd215bWM3dnUifQ.KHLJFgTIULZw1UV-JW_uuw'
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

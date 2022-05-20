@@ -1,0 +1,304 @@
+<div class="container">
+  <div class="publication-box">
+
+    <h2>Publication</h2>
+    <button (click)="resetForm()">Reset</button>
+
+    <form
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && addInformations()"
+      name="formPublication"
+      novalidate
+    >
+
+      <div class="artwork-box">
+        <label>Copies: {{this.artworkResult?.copies}}</label>
+      </div>
+      <div class="artwork-box">
+        <input #copies="ngModel"
+               [(ngModel)]="formArtwork.copies"
+               class="form-control"
+               name="copies"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="copies.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Copies is required!
+        </div>
+      </div>
+
+      <div class="artwork-box">
+        <label>Description: {{this.artworkResult?.description}}</label>
+      </div>
+      <div class="artwork-box">
+        <input #description="ngModel"
+               [(ngModel)]="formArtwork.description"
+               class="form-control"
+               name="description"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="description.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Description is required!
+        </div>
+      </div>
+
+      <div class="artwork-box">
+        <label>Name: {{this.artworkResult?.name}}</label>
+      </div>
+      <div class="artwork-box">
+        <input #name="ngModel"
+               [(ngModel)]="formArtwork.name"
+               class="form-control"
+               name="name"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="name.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Name is required!
+        </div>
+      </div>
+
+      <div class="artwork-box">
+        <label>Type: {{this.artworkResult?.type}}</label>
+      </div>
+      <div class="artwork-box">
+        <input #type="ngModel"
+               [(ngModel)]="formArtwork.type"
+               class="form-control"
+               name="type"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="type.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Type is required!
+        </div>
+      </div>
+
+      <div class="artwork-box">
+        <label>on Sale: {{this.artworkResult?.onSale}}</label>
+      </div>
+      <div class="artwork-box" *ngFor="let x of ['true','false']">
+        <label><input
+          (change)="onCheckChange(x)"
+          [value]="x"
+          class="form-control"
+          name="onSale"
+          required
+          type="radio"
+        />{{x}}</label>
+      </div>
+
+      <div class="artwork-box" *ngIf="this.onSale">
+        <label>Currency: {{this.artworkResult?.currency}}</label>
+      </div>
+      <div class="artwork-box" *ngIf="this.onSale">
+        <select #currency="ngModel"
+                [(ngModel)]="formArtwork.currency"
+                class="form-control"
+                name="currency"
+        >
+          <option *ngFor="let curr of getCurrency()" [ngValue]="curr">{{curr}}</option>
+        </select>
+      </div>
+
+      <div class="artwork-box" *ngIf="this.onSale">
+        <label>Available Copies: {{this.artworkResult?.availableCopies}}</label>
+      </div>
+      <div class="artwork-box" *ngIf="this.onSale">
+        <input #availableCopies="ngModel"
+               [(ngModel)]="this.formArtwork.availableCopies"
+               class="form-control"
+               name="availableCopies"
+               required
+               type="text"
+        />
+        <div *ngIf="availableCopies.errors && f.submitted"
+             class="alert alert-danger"
+             role="alert"
+        >
+          Available Copies is required!
+        </div>
+      </div>
+
+      <div class="artwork-box" *ngIf="this.onSale">
+        <label>Price: {{this.artworkResult?.price}}</label>
+      </div>
+      <div class="artwork-box" *ngIf="this.onSale">
+        <input #price="ngModel"
+               [(ngModel)]="formArtwork.price"
+               class="form-control"
+               name="price"
+               type="text"
+        />
+      </div>
+
+      <div class="artwork-box" *ngIf="this.onSale">
+        <label>Payment E-mail: {{this.artworkResult?.paymentEmail}}</label>
+      </div>
+      <div class="artwork-box" *ngIf="this.onSale">
+        <input #paymentEmail="ngModel"
+               [(ngModel)]="formArtwork.paymentEmail"
+               class="form-control"
+               name="paymentEmail"
+               type="text"
+        />
+      </div>
+
+      <button class="full-button">Update informations</button>
+
+      <div class="form-group">
+        <div
+          *ngIf="f.submitted && (errorMessage!=undefined)"
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{ errorMessage }}
+        </div>
+      </div>
+
+    </form>
+
+    <h3>Attributes</h3>
+
+    <form
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && addAttributes()"
+      name="formAttributes"
+      novalidate
+    >
+      <div class="artwork-box" *ngFor="let key of this.listKey">
+        <label>{{key}}: {{this.artworkResult.attributes[key]}}</label>
+        <button (click)="deleteAttribute(key)">delete</button>
+      </div>
+      <div class="artwork-box">
+        <input #attributes="ngModel"
+               [(ngModel)]="formAttributes.key"
+               class="form-control"
+               name="attributesKey"
+               type="text"
+        >
+        <input #attributes="ngModel"
+               [(ngModel)]="formAttributes.value"
+               class="form-control"
+               name="attributesValue"
+               required
+               type="text"
+        />
+        <div
+          *ngIf="attributes.errors && f.submitted"
+          class="alert alert-danger"
+          role="alert"
+        >
+          Value is required!
+        </div>
+      </div>
+
+      <button class="full-button">Update attributes</button>
+
+      <div class="form-group">
+        <div
+          *ngIf="f.submitted && (errorMessage!=undefined)"
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{ errorMessage }}
+        </div>
+      </div>
+    </form>
+
+    <h3>Images</h3>
+    <form
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && addImages()"
+      name="formImages"
+      novalidate
+    >
+      <div class="artwork-box" *ngFor="let image of this.artworkResult?.images; index as i;">
+        <label>Image {{i}}: {{image}}</label>
+        <button (click)="deleteImage(image)">delete</button>
+      </div>
+      <div class="artwork-box">
+        <input #type="ngModel"
+               [(ngModel)]="formImages.images"
+               class="form-control"
+               name="image"
+               type="text"
+        />
+      </div>
+
+      <button class="full-button">Update images</button>
+
+      <div class="form-group">
+        <div
+          *ngIf="f.submitted && (errorMessage!=undefined)"
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{ errorMessage }}
+        </div>
+      </div>
+    </form>
+
+    <h3>Users</h3>
+    <form
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && addUsers()"
+      name="formUsers"
+      novalidate
+    >
+      <div class="artwork-box" *ngFor="let user of this.listCreationArtwork; index as i;">
+        <label>Creator {{i}} - nickname: {{user.nickname}}; creationType: {{user.creationType}}</label>
+        <button (click)="deleteUser(user.id)">delete</button>
+      </div>
+      <div class="artwork-box">
+        <select #creationType="ngModel"
+                [(ngModel)]="formCreations.creationType"
+                class="form-control"
+                name="creationType"
+        >
+          <option *ngFor="let creation of getCreation()" [ngValue]="creation">{{creation}}</option>
+        </select>
+        <select #user="ngModel"
+                [(ngModel)]="formCreations.user"
+                class="form-control"
+                name="creationUser"
+        >
+          <option *ngFor="let user of this.listFollowers" [ngValue]="user">{{user.nickname}}</option>
+        </select>
+      </div>
+
+      <button class="full-button">Update creator</button>
+
+      <div class="form-group">
+        <div
+          *ngIf="f.submitted && (errorMessage!=undefined)"
+          class="alert alert-danger"
+          role="alert"
+        >
+          {{ errorMessage }}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="artwork-box">
+  <button (click)="onSubmit()">Save Artwork</button>
+  <label *ngIf="this.sent">Artwork saved successfully!</label>
+</div>

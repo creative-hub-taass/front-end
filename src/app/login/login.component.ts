@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.saveRefresh(data.headers.get("X-REFRESH-TOKEN"));
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        window.location.reload();
+        window.location.replace("/");
       },
       error: (error) => {
         this.isLoginFailed = true;

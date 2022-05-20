@@ -1,3 +1,7 @@
+body, html {
+  background: #FAFAFA;
+}
+
 .grid {
   display: flex;
   align-items: center;
@@ -6,6 +10,7 @@
   position: absolute;
   margin-top: 80px;
   width: 100%;
+  left: 0px;
 }
 
 .post {
@@ -145,7 +150,6 @@
 .reaction-wrapper {
   display: flex;
   align-items: center;
-  height: 30px;
 }
 
 .count .icon {
@@ -157,10 +161,8 @@
   margin-left: auto;
 }
 
-
 .count {
   display: flex;
-  align-items: center;
   min-width: 90px;
 }
 
@@ -169,7 +171,6 @@
 }
 
 /* Loader */
-
 .loader {
   width: 5rem;
   height: 5rem;
@@ -181,10 +182,8 @@
 }
 
 /* Spinner Animation */
-
 @keyframes loader {
   to {
     transform: rotate(360deg);
   }
-
 }

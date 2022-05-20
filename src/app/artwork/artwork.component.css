@@ -42,6 +42,7 @@
   position: absolute;
   margin-top: 80px;
   width: 100%;
+  left: 0px;
 }
 
 .post {
@@ -154,17 +155,18 @@
 .count {
   display: flex;
   align-items: center;
-  min-width: 90px;
+  margin-left: 5px;
+  margin-right: 5px;
+  min-width: 70px;
 }
 
 .count-label {
+  margin: 0 auto;
   color: #636363;
 }
 
 .interactions .reaction-wrapper {
   display: flex;
-  align-items: center;
-  height: 25px;
 }
 
 .reaction-wrapper .icon {

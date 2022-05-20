@@ -178,7 +178,7 @@ body, html {
 .loader {
   width: 4rem;
   height: 4rem;
-  border: 0.4rem solid #999;
+  border: 0.35rem solid #636363;
   border-bottom-color: transparent;
   border-radius: 50%;
   animation: loader 500ms linear infinite;

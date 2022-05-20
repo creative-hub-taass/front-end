@@ -17,9 +17,9 @@
     </div>
   </div>
   <div class="secondary-pages">
-    <div class="page">
+    <div class="page" (click)="logout()" *ngIf="isLoggedIn">
       <img class="page-icon" src="https://img.icons8.com/ios-glyphs/30/000000/exit.png" />
-      <a href="#">Logout</a>
+      <a>Logout</a>
     </div>
   </div>
 </div>
@@ -33,10 +33,8 @@
     </div>
   </div>
   <div class="voices">
-    <a *ngIf="isLoggedIn" [routerLink]="['/users']" href="javascript:void(0)"><i class="fa fa-fw fa-home"></i> Users</a>
     <a *ngIf="!isLoggedIn" [routerLink]="['/login']" href="javascript:void(0)">Login</a>
     <a *ngIf="!isLoggedIn" [routerLink]="['/registration']" href="javascript:void(0)">Registration</a>
-    <a (click)="logout()" *ngIf="isLoggedIn" href="javascript:void(0)"><i class="fa fa-fw fa-user"></i> Logout</a>
   </div>
 </div>
 <div class="container">

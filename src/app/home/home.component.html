@@ -4,7 +4,7 @@
       <div class="left-col">
       <div *ngFor="let element of listFeed" class="post">
         <div *ngFor="let user of element.getUsers()" class="info">
-          <div class="user">
+          <div class="user" [routerLink]="'/portfolio/' + this.getUser(user).id">
             <div class="profile-pic">
               <img alt="" src="{{this.getCreator(user).getAvatar()}}" class="profile-pic">
             </div>

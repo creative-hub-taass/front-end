@@ -49,7 +49,7 @@
       </div>
 
       <button class="full-button">Login</button>
-      <div *ngIf="!isLoggedIn">
+      <div *ngIf="!isLoggedIn" class="login-buttons">
         <p>or login using</p>
         <div class="social-logins-button">
           <button (click)="loginWithGoogle()" class="empty-button">

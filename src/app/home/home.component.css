@@ -114,9 +114,9 @@ body, html {
 
 .comment-wrapper {
   width: 100%;
-  height: 50px;
   border-radius: 1px;
-  border: 25px solid #dfdfdf;
+  padding: 25px;
+  border-top: 1px solid #e6e6e6;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -131,7 +131,7 @@ body, html {
   height: 100%;
   border: none;
   outline: none;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .comment-btn,
@@ -139,22 +139,17 @@ body, html {
   width: 70px;
   height: 100%;
   background: none;
-  border: none;
   outline: none;
   text-transform: capitalize;
   font-size: 16px;
-  color: rgb(0, 162, 255);
-  opacity: 0.5;
+  color: #FFF;
+  background: #00A3FF;
+  border: 2px solid #00A3FF;
+  border-radius: 1000px;
 }
 
 .reaction-wrapper {
   display: flex;
-  align-items: center;
-}
-
-.count .icon {
-  height: 20px;
-  margin-right: 10px;
 }
 
 .reaction-wrapper .icon.save {
@@ -163,22 +158,33 @@ body, html {
 
 .count {
   display: flex;
-  min-width: 90px;
+  align-items: center;
+  margin-right: 5px;
+  min-width: 70px;
 }
 
 .count-label {
+  margin: 0 auto;
   color: #636363;
+  min-width: 70px;
+}
+
+.count .icon {
+  height: 20px;
+  margin-right: 10px;
 }
 
 /* Loader */
 .loader {
-  width: 5rem;
-  height: 5rem;
-  border: 0.6rem solid #999;
+  width: 4rem;
+  height: 4rem;
+  border: 0.4rem solid #999;
   border-bottom-color: transparent;
   border-radius: 50%;
-  margin: 0 auto;
   animation: loader 500ms linear infinite;
+  top: 40vh;
+  position: absolute;
+  margin: 0 auto;
 }
 
 /* Spinner Animation */

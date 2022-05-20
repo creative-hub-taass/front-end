@@ -1,6 +1,6 @@
 <section class="main">
   <div class="grid">
-  <div class="wrapper">
+    <div class="wrapper">
       <div class="left-col">
       <div *ngFor="let element of listFeed" class="post">
         <div *ngFor="let user of element.getUsers()" class="info">
@@ -52,13 +52,12 @@
           </div>
         </div>
           <div *ngIf="this.isLoggedIn" class="comment-wrapper">
-            <img alt="" class="icon" src="../../assets/img/smile.PNG">
             <input class="comment-box" placeholder="Add a comment" type="text">
             <button class="comment-btn">post</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="loader" *ngIf="listFeed==null"></div>
+      <div class="loader" *ngIf="listFeed==null"></div>
   </div>
 </section>

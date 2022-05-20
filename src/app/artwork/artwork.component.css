@@ -1,80 +1,4 @@
-.post {
-  width: 100%;
-  height: auto;
-  background: #fff;
-  border: 1px solid #dfdfdf;
-  margin-top: 40px;
-}
-
-.info {
-  width: 100%;
-  height: 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-}
-
-.info .username {
-  width: auto;
-  font-weight: bold;
-  color: #000;
-  font-size: 14px;
-  margin-left: 10px;
-}
-
-.info .options {
-  height: 10px;
-  cursor: pointer;
-}
-
-.info .user {
-  display: flex;
-  align-items: center;
-}
-
-.info .profile-pic {
-  height: 40px;
-  width: 40px;
-  padding: 0;
-  background: none;
-}
-
-.info .profile-pic img {
-  border: none;
-}
-
-.post-image {
-  width: 100%;
-  height: 500px;
-  object-fit: cover;
-}
-
-.post-content {
-  width: 100%;
-  padding: 20px;
-}
-
-.likes {
-  font-weight: bold;
-}
-
-.description {
-  margin: 10px 0;
-  font-size: 14px;
-  line-height: 20px;
-}
-
-.description span {
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.post-time {
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 12px;
-}
-
+/*
 .comment-wrapper {
   width: 100%;
   height: 50px;
@@ -109,21 +33,169 @@
   color: rgb(0, 162, 255);
   opacity: 0.5;
 }
-
-.reaction-wrapper {
-  width: 100%;
-  height: 50px;
+*/
+.grid {
   display: flex;
-  margin-top: -20px;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  position: absolute;
+  margin-top: 80px;
+  width: 100%;
+}
+
+.post {
+  margin: 30px 20px;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  font-family: "Jost";
+  padding: 30px;
+  box-shadow: 0px 0px 5.4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+
+.post .artwork-pic {
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-height: 400px;
+}
+
+.post .artwork-pic img {
+  object-fit: cover;
+  width: 100%;
+}
+
+.post .artwork-info {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.artwork-info .title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.artwork-info .type {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+  color: #636363;
+}
+
+.artwork-info .date {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 23px;
+  color: #636363;
+  display: flex;
   align-items: center;
 }
 
-.reaction-wrapper .icon {
-  height: 25px;
-  margin: 0;
-  margin-right: 20px;
+.artwork-info .description {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+  text-align: justify;
 }
 
-.reaction-wrapper .icon.save {
-  margin-left: auto;
+.artwork-info .artists {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+  color: #636363;
 }
+
+.artwork-info .price {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 32px;
+}
+
+.artwork-info .qty {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 23px;
+  text-align: right;
+  color: #636363;
+  margin-left: 30px;
+}
+
+.artwork-info .date img {
+  height: 16px;
+  margin-right: 10px;
+}
+
+.interactions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  min-width: 90px;
+}
+
+.count-label {
+  color: #636363;
+}
+
+.interactions .reaction-wrapper {
+  display: flex;
+  align-items: center;
+  height: 25px;
+}
+
+.reaction-wrapper .icon {
+  height: 15px;
+  margin-right: 10px;
+}
+
+.sales-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buy-button {
+  font-family: "Jost";
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 40px;
+  background: #00A3FF;
+  color: #ffffff;
+  border: 2px solid #00A3FF;
+  border-radius: 1000px;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.buy-button img {
+  height: 20px;
+  margin-right: 15px;
+}
+

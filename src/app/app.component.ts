@@ -10,6 +10,8 @@ import {EventBusService} from "../_shared/event-bus.service";
 })
 
 export class AppComponent implements OnInit, OnDestroy {
+  showSideMenu = false;
+
   isLoggedIn = false;
   nickname?: string;
   title: string | undefined;
@@ -43,5 +45,9 @@ export class AppComponent implements OnInit, OnDestroy {
   logout(): void {
     this.tokenStorageService.logout();
     this.isLoggedIn = false;
+  }
+
+  toggleMenu(){
+    this.showSideMenu = !this.showSideMenu;
   }
 }

@@ -1,13 +1,26 @@
-.post {
+.grid {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  position: absolute;
+  margin-top: 80px;
   width: 100%;
+}
+
+.post {
   height: auto;
   background: #fff;
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.1));
   border: 1px solid #dfdfdf;
-  margin-top: 40px;
+  margin: 30px 20px;
+  border-radius: 5px;
+  font-family: "Jost";
+  max-width: 600px;
+  min-width: 300px;
 }
 
 .info {
-  width: 100%;
   height: 60px;
   display: flex;
   justify-content: space-between;
@@ -17,10 +30,25 @@
 
 .info .username {
   width: auto;
-  font-weight: bold;
-  color: #000;
+  font-style: normal;
+  font-weight: 300;
+  color: #636363;
   font-size: 14px;
-  margin-left: 10px;
+  margin: 0;
+  letter-spacing: 0.05em;
+
+}
+
+.info .nickname {
+  font-weight: 500;
+  margin: 0;
+  font-size: 16px;
+}
+
+
+.info .names {
+  display: flex;
+  flex-direction: column;
 }
 
 .info .options {
@@ -34,14 +62,20 @@
 }
 
 .info .profile-pic {
-  height: 40px;
-  width: 40px;
-  padding: 0;
-  background: none;
+  margin-right: 10px;
+  height: 30px;
+  width: 30px;
 }
 
 .info .profile-pic img {
+  border-radius: 100%;
+
   border: none;
+}
+
+.post-name {
+  font-weight: 700;
+  margin: 0;
 }
 
 .post-image {
@@ -51,28 +85,26 @@
 }
 
 .post-content {
-  width: 100%;
   padding: 20px;
 }
 
-.likes {
-  font-weight: bold;
-}
-
 .description {
-  margin: 10px 0;
   font-size: 14px;
   line-height: 20px;
+  font-weight: 100;
+  color: #636363;
+  text-align: justify;
+  display: none;
 }
 
 .description span {
-  font-weight: bold;
+  font-weight: 100;
   margin-right: 10px;
 }
 
 .post-time {
   color: rgba(0, 0, 0, 0.5);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .comment-wrapper {
@@ -111,21 +143,29 @@
 }
 
 .reaction-wrapper {
-  width: 100%;
-  height: 50px;
   display: flex;
-  margin-top: -20px;
   align-items: center;
+  height: 30px;
 }
 
-.reaction-wrapper .icon {
-  height: 25px;
-  margin: 0;
-  margin-right: 20px;
+.count .icon {
+  height: 20px;
+  margin-right: 10px;
 }
 
 .reaction-wrapper .icon.save {
   margin-left: auto;
+}
+
+
+.count {
+  display: flex;
+  align-items: center;
+  min-width: 90px;
+}
+
+.count-label {
+  color: #636363;
 }
 
 /* Loader */
@@ -146,4 +186,5 @@
   to {
     transform: rotate(360deg);
   }
+
 }

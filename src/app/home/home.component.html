@@ -16,13 +16,25 @@
           <img alt="" class="options" src="../../assets/img/option.PNG">
         </div>
          <div *ngIf="element.publication.publicationType == 'artwork'">
-        <img *ngFor="let images of element.getInfoPost().images" alt="" class="post-image" src="{{images}}">
+        <img *ngFor="let images of element.publication.images" alt="" class="post-image" src="{{images}}">
         </div>
         <div class="post-content">
-          <p [routerLink]="['/artwork/'+element.getInfoPost().id]" class="post-name" href="javascript:void(0)">
-            {{element.getInfoPost().name}} </p>
-          <p class="description"><span>{{element.getInfoPost().description}}</span></p>
-          <p class="post-time">{{element.getInfoPost().lastUpdate | date:"dd MMM yyyy, HH:mm"}}</p>
+          <div *ngIf="element.publication.publicationType == 'artwork'">
+            <p [routerLink]="['/artwork/'+element.publication.id]" class="post-name" href="javascript:void(0)">
+            {{element.publication.name}} </p>
+          </div>
+          <div *ngIf="element.publication.publicationType == 'event'">
+            <p [routerLink]="['/event/'+element.publication.id]" class="post-name" href="javascript:void(0)">
+              {{element.publication.name}} </p>
+          </div>
+          <div *ngIf="element.publication.publicationType == 'post'">
+            <p [routerLink]="['/post/'+element.publication.id]" class="post-name" href="javascript:void(0)">
+              {{element.publication.title}} </p>
+          </div>
+          <div *ngIf="element.publication.publicationType == 'artwork' || element.publication.publicationType == 'event'">
+            <p class="description"><span>{{element.publication.description}}</span></p>
+          </div>
+          <p class="post-time">{{element.publication.lastUpdate | date:"dd MMM yyyy, HH:mm"}}</p>
           <div class="reaction-wrapper">
             <div class="count">
               <img alt="" class="icon" src="../../assets/heart-outline.png">
@@ -30,7 +42,7 @@
             </div>
             <div class="count">
               <img alt="" class="icon" src="../../assets/bubble-outline.png">
-              <p class="count-label">{{element.getLikes()}} comments</p>
+              <p class="count-label">{{element.getComments().length}} comments</p>
             </div>
           </div>
         </div>

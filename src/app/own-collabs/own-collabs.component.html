@@ -25,7 +25,7 @@
 
     <div class="row" *ngFor="let request of listSent">
       <div class="cell" data-title="Receiver">
-        NOMEEE
+        {{getUser(request.receiverId)}}
       </div>
       <div class="cell" data-title="Title">
         {{request.title}}
@@ -71,7 +71,7 @@
 
     <div class="row" *ngFor="let request of listReceived">
       <div class="cell" data-title="Sender">
-        NOMEE
+        {{getUser(request.senderId)}}
       </div>
       <div class="cell" data-title="Title">
         {{request.title}}
@@ -117,7 +117,7 @@
 
     <div class="row" *ngFor="let request of listBroadcast">
       <div class="cell" data-title="Sender">
-        NOMEEEE
+        {{getUser(request.senderId)}}
       </div>
       <div class="cell" data-title="Title">
         {{request.title}}

@@ -38,7 +38,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
   artworkResult!: Artwork;
   listUsersID!: string[];
   listUsers!: PublicUser[];
-  errorMessage: string | undefined;
+  errorMessage: string = "";
   listKey!: string[];
   listFollowers!: PublicUser[];
 

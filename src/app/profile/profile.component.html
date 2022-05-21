@@ -71,8 +71,8 @@
   <a href="javascript:void(0)" (click)="setView('popup')">Change password</a>
   <a href="javascript:void(0)" (click)="setView('order')">Orders</a>
   <a href="javascript:void(0)" (click)="setView('donation')">Donations</a>
-  <a href="javascript:void(0)" (click)="setView('upgrade')" *ngIf="this.creator != null">Upgrade Requests</a>
-  <a href="javascript:void(0)" [routerLink]="'/collaborations-requests'" *ngIf="this.creator == null">Collaborations</a>
+  <a href="javascript:void(0)" (click)="setView('upgrade')" *ngIf="this.creator == null">Upgrade Requests</a>
+  <a href="javascript:void(0)" [routerLink]="'/collaborations-requests'" *ngIf="this.creator != null">Collaborations</a>
 </div>
 </div>
 <div class="container" *ngIf="modifyView">

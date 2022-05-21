@@ -1,13 +1,12 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {PublicUser} from "../../_models/PublicUser";
 import {Artwork} from "../../_models/Artwork";
 import {Event} from "../../_models/Event"
 import {Creation} from "../../_models/Publication";
 import {Post} from "../../_models/Post";
-
 
 const API_GATEWAY_PUBLICATIONS = environment.apiGatewayUrl + "api/v1/publications/";
 const API_GATEWAY_INTERACTIONS = environment.apiGatewayUrl + "api/v1/interactions/";
@@ -103,5 +102,10 @@ export class PublicationService {
 
   public deletePostCreation(idCreation: string): void {
    this.http.delete(API_GATEWAY_PUBLICATIONS + "/posts/creations/" + idCreation);
+  }
+
+  /* Comments */
+  public addComment(userId: string, publicationId: string, message: string): Subscription {
+    return this.http.post<any>(API_GATEWAY_INTERACTIONS + "comment", {"userId": userId, "publicationId": publicationId, "message": message}).subscribe((res)=> {console.log(res);});
   }
 }

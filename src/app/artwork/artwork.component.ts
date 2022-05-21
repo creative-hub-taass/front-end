@@ -9,6 +9,7 @@ import {Artwork} from "../../_models/Artwork";
 import {PaymentService} from "../_services/payment.service";
 import {Order} from "../../_models/Order";
 import {TokenStorageService} from "../_services/token-storage.service";
+import {UserService} from "../_services/user.service";
 
 
 @Component({
@@ -17,8 +18,7 @@ import {TokenStorageService} from "../_services/token-storage.service";
   styleUrls: ["./artwork.component.css"]
 })
 export class ArtworkComponent implements OnInit {
-
-
+  message: string = "";
   isLoggedIn: boolean = false;
   artworkId: string | null;
   artwork!: Artwork;
@@ -29,6 +29,7 @@ export class ArtworkComponent implements OnInit {
   errorMessage: string = "";
 
   constructor(
+    private userService: UserService,
     private eventBusService: EventBusService,
     private publicationService: PublicationService,
     private paymentService: PaymentService,
@@ -71,9 +72,9 @@ export class ArtworkComponent implements OnInit {
   getUser(userParam: PublicUser): PublicUser {
     return utility.getUser(userParam, this.listUsers);
   }
-
   //restituisce un oggetto PublicUser con le informazioni di un utente
   //il metodo richiede il PublicUser
+
   getCreator(userParam: PublicUser): PublicCreator {
     return utility.getCreator(userParam, this.listUsers);
   }
@@ -99,7 +100,6 @@ export class ArtworkComponent implements OnInit {
       });
     }
   }
-
   public buyArtwork(destinationAddress: string): void {
     this.paymentService.buyArtwork(new Order(this.artwork, this.tokenStorageService.getUser().id, destinationAddress)).subscribe({
       next: (urlPaypal: string) => {
@@ -110,5 +110,16 @@ export class ArtworkComponent implements OnInit {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
+  }
+
+  public addComment() {
+    if (!this.message) return;
+    if (!this.artworkId) return;
+    console.log("userId: " + this.tokenStorageService.getUser().id);
+    console.log("artworkId: " + this.artworkId);
+    console.log("message: " + this.message);
+    this.publicationService.addComment(this.tokenStorageService.getUser().id, this.artworkId, this.message);
+    this.message = "";
+    window.location.reload();
   }
 }

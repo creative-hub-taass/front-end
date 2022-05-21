@@ -48,7 +48,7 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
   eventResult!: Event;
   listUsersID!: string[];
   listUsers!: PublicUser[];
-  errorMessage: string | undefined;
+  errorMessage: string = "";
   listFollowers!: PublicUser[];
   listCreationEvent!: CreationEvent[];
   map: any;

@@ -41,7 +41,8 @@ const routes: Routes = [
   {path: "collaborations/:id", component: CollabsComponent},
   {path: "collaborations-requests", component: OwnCollabsComponent},
   {path: "upgrade-request", component: RequestUpgradeComponent},
-  {path: "collaboration-request", component: RequestCollabComponent}
+  {path: "collaboration-request", component: RequestCollabComponent},
+  {path: "profile", component: ProfileComponent}
 ];
 
 @NgModule({

@@ -201,5 +201,6 @@
 </div>
 <div class="event-box">
   <button (click)="onSubmit()">Save Event</button>
-  <label *ngIf="this.sent">Event saved successfully!</label>
+  <h4 *ngIf="this.sent" style="color: limegreen">Event saved successfully!</h4>
+  <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
 </div>

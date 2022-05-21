@@ -37,7 +37,7 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
   postResult!: Post;
   listUsersID!: string[];
   listUsers!: PublicUser[];
-  errorMessage: string | undefined;
+  errorMessage: string = "";
   listFollowers!: PublicUser[];
   listCreationPost!: CreationPost[];
 

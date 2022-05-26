@@ -10,6 +10,9 @@ import {PaymentService} from "../_services/payment.service";
 import {Order} from "../../_models/Order";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {UserService} from "../_services/user.service";
+import {getUser} from "../../_shared/functions";
+import {User} from "../../_models/User";
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -27,6 +30,7 @@ export class ArtworkComponent implements OnInit {
   countLikes!: number;
   listComments!: any[];
   errorMessage: string = "";
+  userId: string = "";
 
   constructor(
     private userService: UserService,
@@ -38,6 +42,7 @@ export class ArtworkComponent implements OnInit {
   ) {
     this.artworkId = this.route.snapshot.paramMap.get("id");
     this.isLoggedIn = (Object.keys(this.tokenStorageService.getUser()).length != 0)
+    this.userId = this.tokenStorageService.getUser().id;
   }
 
   ngOnInit(): void {
@@ -120,6 +125,27 @@ export class ArtworkComponent implements OnInit {
     console.log("message: " + this.message);
     this.publicationService.addComment(this.tokenStorageService.getUser().id, this.artworkId, this.message);
     this.message = "";
-    window.location.reload();
+    this.callServiceInteractions();
+  }
+
+  public deleteComment(commentId: string) {
+    this.publicationService.deleteComment(commentId);
+    /*setTimeout(function(){
+      window.location.reload();
+    }, 1000);*/
+    this.callServiceInteractions();
+  }
+
+  public getUserInfo(userId: string): any {
+    let user: User;
+    return this.userService.getInfoUser(userId).subscribe({
+      next: (userInfo: User) => {
+        user = userInfo;
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });;
+    return user;
   }
 }

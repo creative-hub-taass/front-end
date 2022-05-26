@@ -108,4 +108,8 @@ export class PublicationService {
   public addComment(userId: string, publicationId: string, message: string): Subscription {
     return this.http.post<any>(API_GATEWAY_INTERACTIONS + "comment", {"userId": userId, "publicationId": publicationId, "message": message}).subscribe((res)=> {console.log(res);});
   }
+
+  public deleteComment(commentId: string): void {
+    this.http.delete(API_GATEWAY_INTERACTIONS + "comment/" + commentId).subscribe((res)=> {console.log(res);});
+  }
 }

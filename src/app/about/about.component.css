@@ -28,11 +28,10 @@
   color: #ffffff;
 }
 
-.contacts {
-  padding: 10px 10px;
-  display: inline-block;
-  position: relative;
-  left: 65%;
+.contacts-links {
+  padding-right: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 
@@ -69,7 +68,7 @@
 body {
   font-family: "Open Sans", Arial, sans-serif;
   min-height: 100vh;
-  background-color: #fafafa;
+  background-color: #FAFAFA;
   color: #262626;
   padding-bottom: 3rem;
 }
@@ -79,9 +78,11 @@ img {
 }
 
 .container {
-  max-width: 95rem;
-  margin: 0 auto;
+  max-width: 100%;
+  margin-top: 100px;
   padding: 0 0;
+  position: absolute;
+  left: 0px;
 }
 
 .btn {
@@ -109,8 +110,20 @@ img {
 /* Profile Section */
 
 .profile {
-  padding: 5rem 0;
-
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  gap: 20px;
+  align-items: center;
+  max-width: 700px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  font-family: "Jost";
+  width: 90%;
+  filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.1));
 }
 
 .profile::after {
@@ -121,18 +134,18 @@ img {
 
 .profile-image {
   float: left;
-  width: calc(33.333% - 1rem);
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 3rem;
+  height: 100px;
+  width: 100px;
 }
 
 .profile-image img {
   border-radius: 70%;
-  width: 70%;
-  height: 70%;
-  max-height: 250px;
+  height: 100px;
+  width: 100px;
 }
 
 .profile-user-settings,
@@ -143,16 +156,15 @@ img {
 }
 
 .profile-user-settings {
-  margin-top: 1.1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .profile-user-name {
-  display: inline-block;
-  font-size: 3.2rem;
-  position: relative;
-  top: 15px;
-  font-weight: 300;
+  font-size: 22px;
+  font-weight: 500;
 }
+
 
 .profile-edit-btn {
   font-size: 1.4rem;
@@ -179,38 +191,22 @@ img {
 }
 
 .profile-stats {
-  margin-top: 2.3rem;
-  position: relative;
-  right: 30px;
-}
-
-.profile-stats li {
-  display: inline-block;
-  font-size: 1.6rem;
-  line-height: 1.5;
-  margin-right: 4rem;
-  cursor: pointer;
-}
-
-.profile-stats li:last-of-type {
-  margin-right: 0;
-}
-
-.profile-name {
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 1.5;
-  margin-top: 2.3rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: 18px;
 }
 
 .profile-name h3 {
   font-family: "Sofia", serif;
 }
 
-.profile-real-name,
-.profile-stat-count,
-.profile-edit-btn {
+.profile-stat-count {
   font-weight: 600;
+}
+
+.stat {
+  font-weight: 100;
 }
 
 
@@ -219,8 +215,8 @@ img {
 @media screen and (max-width: 40rem) {
   .profile {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    padding: 4rem 0;
   }
 
   .profile::after {
@@ -233,11 +229,11 @@ img {
   .profile-stats {
     float: none;
     width: auto;
+    text-align: center;
+    margin: 0 auto;
+
   }
 
-  .profile-image img {
-    width: 7.7rem;
-  }
 
   .profile-user-settings {
     flex-basis: calc(100% - 10.7rem);
@@ -262,8 +258,13 @@ img {
   }
 
   .profile-bio {
-    font-size: 1.4rem;
-    margin-top: 1.5rem;
+
+  }
+
+  .list-post {
+    margin-top: 20px;
+    text-align: center;
+    margin-left: 0px;
   }
 
   .profile-edit-btn,
@@ -274,25 +275,17 @@ img {
 
   .profile-stats {
     order: 1;
-    margin-top: 1.5rem;
-  }
-
-  .profile-stats ul {
     display: flex;
     text-align: center;
-    padding: 1.2rem 0;
-    border-top: 0.1rem solid #dadada;
-    border-bottom: 0.1rem solid #dadada;
   }
 
-  .profile-stats li {
-    font-size: 1.4rem;
-    flex: 1;
-    margin: 0;
-  }
 
   .profile-stat-count {
-    display: block;
+    font-weight: 700;
+  }
+
+  .nav {
+    justify-content: center;
   }
 }
 
@@ -306,89 +299,134 @@ img {
 
 
 .nav {
-  background-color: #06dbee;
   overflow: hidden;
-  border-radius: 40px;
-  width: 37.47rem;
-  height: 30%;
+  width: 35rem;
+  max-width: 80%;
   margin: auto;
+  margin-top: 46px;
 }
 
 /* Style the links inside the navigation bar */
 .nav a {
   float: right;
-  color: #f2f2f2;
+  color: #000000;
+  font-family: "Jost";
   text-align: center;
-  padding: 14px 28px;
+  padding: 6px 26px;
   text-decoration: none;
   font-size: 17px;
   position: relative;
+  border-radius: 500px;
 }
 
 /* Change the color of links on hover */
 .nav a:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: #e3f6ff;
+}
+
+.about-container {
+  font-family: "Jost";
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 46px;
+  margin-bottom: 46px;
 }
 
 /* Add a color to the active/current link */
 .nav a.active {
-  background-color: #0077ff;
-  color: white;
+  background-color: #00A3FF;
+  color: #FFFFFF;
 }
 
 .btn-follow {
-  background-color: #06dbee;
-  border-radius: 20px;
-  border-width: 0;
-  color: white;
-  padding: 5px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 13px;
-  position: relative;
-  left: 20px;
+  padding: 2px 20px;
+  background: #00A3FF;
+  color: #FFFFFF;
+  border: 2px solid #00A3FF;
+  border-radius: 1000px;
+}
+
+.btn-follow:hover, .btn-unfollow {
+  padding: 2px 20px;
+  background: transparent;
+  border: 2px solid #00A3FF;
+  color: #00A3FF;
+  border-radius: 1000px;
 }
 
 .post {
-  position: relative;
-  top: 20px;
-  border-width: 20px;
-  border-color: #06dbee;
+  display: flex;
+  justify-content: space-between;
   margin: auto;
-  background-color: #f5f1f1;
-  border-radius: 20px;
-  padding-left: 5px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 20px;
+  align-items: center;
+  max-height: 85px;
+  text-align: left;
+  margin-top:25px;
 }
 
-.post h4 {
-  left: 70%;
-  font-family: Arial, cursive;
-  font-size: 30px;
+.post-icon {
+  height: 30px;
+  width: 35.1px;
+}
+
+.post-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.list-post h3 {
+  color: #636363;
+}
+
+.post-title {
+  font-family: "Jost";
+  font-weight: bold;
+  font-size: 18px;
   margin: auto;
+}
+
+.post-title-date {
+  margin-left: 20px;
 }
 
 .list-post {
-  width: 55%;
-  position: absolute;
-  left: 45%;
-  margin-top: 2.3rem;
-  padding-top: 30px;
-  padding-right: 15%;
-  padding-left: 5px;
-  border-width: 20px;
+  max-width: 700px;
+  width: 100%;
+  padding: 0px 40px;
+}
+
+.post-date {
+  margin: 0px;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.tip-button {
+  width: 100%;
+  padding: 6px 30px;
+  background: #00A3FF;
+  border: 2px solid #00A3FF;
+  border-radius: 1000px;
+  color: #FFFFFF;
+  margin-top: 20px;
 }
 
 .profile-bio {
   font-weight: 500;
-  line-height: 1.5;
-  margin-top: 2.3rem;
-  margin-right: 9rem;
-  width: 40%;
-  position: relative;
-  padding-top: 30px;
-  padding-right: 5px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  max-width: 360px;
+}
+
+.profile-bio .bio {
+  text-align: justify;
 }
 
 #lastUpdate {
@@ -415,6 +453,27 @@ btn-reload:hover{
 .contacts a {
   position: relative;
   margin: 5px;
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.count-label {
+  margin: 0 auto;
+  color: #636363;
+}
+
+.reaction-wrapper {
+  display: flex;
+}
+
+.reaction-wrapper .icon {
+  height: 15px;
+  margin-right: 10px;
 }
 
 /* Loader */
@@ -480,7 +539,7 @@ btn-reload:hover{
 
 .overlay {
   position: fixed;
-  top: 0;
+  top: 75px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -496,9 +555,11 @@ btn-reload:hover{
   padding: 20px;
   background: #fff;
   border-radius: 5px;
-  transition: all 5s ease-in-out;
+  #transition: all 5s ease-in-out;
   width: 500px;
-  height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .popup h2 {
@@ -507,7 +568,6 @@ btn-reload:hover{
   font-family: Tahoma, Arial, sans-serif;
 }
 .popup .close {
-  position: absolute;
   top: 20px;
   right: 30px;
   transition: all 200ms;
@@ -521,9 +581,29 @@ btn-reload:hover{
   cursor: pointer;
 }
 .popup .content {
-  max-height: 30%;
-  overflow: auto;
 }
+
+.close-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 30px;
+  border: 2px solid #A7A7A7;
+  color: #A7A7A7;
+  border-radius: 1000px;
+  width: 100%;
+  background: transparent;
+  font-family: "Jost";
+}
+.close-button:hover {
+
+  background: #A7A7A7;
+  border: 2px solid #A7A7A7;
+  border-radius: 1000px;
+  color: #FFFFFF;
+}
+
 
 @media screen and (max-width: 700px){
 
@@ -546,13 +626,11 @@ btn-reload:hover{
   border: none;
   font-size: 16px;
   color: #000;
-  width: 275px;
+  width: 100%;
 }
 
 .content button {
-  position: relative;
-  margin-top: 40px;
-  margin-left: 60px;
+ margin-top: 20px;
 }
 
 .donation-box select {
@@ -562,32 +640,24 @@ btn-reload:hover{
   border: none;
   font-size: 16px;
   color: #000;
-  width: 275px;
 }
 .full-button {
-  position: relative;
   font-family: "Jost", serif;
   background: #00A3FF;
   color: #ffffff;
-  height: 42px;
-  width: 150px;
+  width: 100%;
   border: 2px solid #00A3FF;
   border-radius: 1000px;
   font-weight: 500;
   font-size: 15px;
+  padding: 10px;
 }
 
 .popup .content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-  padding: 40px 30px 50px 100px;
+  padding: 30px;
 }
 
 .popup .button {
-  position: relative;
-  margin-left: 80%;
   background: #00A3FF;
   padding: 10px 30px;
   color: #ffffff;
@@ -606,10 +676,10 @@ btn-reload:hover{
 .alert {
   color: #636363;
   font-size: 14px;
-  width: 300px;
 }
 .full-button:hover {
   color: #00A3FF;
   background: transparent;
   border: 2px solid #00A3FF;
 }
+

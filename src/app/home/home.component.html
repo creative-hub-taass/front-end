@@ -1,5 +1,15 @@
 <section class="main">
   <div class="grid">
+    <div *ngIf="!isLoggedIn" class="landing">
+      <div class="motto">
+        <h1 class="motto-first">creative</h1>
+        <h1 class="motto-last">Hub</h1>
+      </div>
+      <p>Creating a lil giant world around art in every of its shades.</p>
+      <button [routerLink]="['/registration']">Sign up today</button>
+    </div>
+    <h3 *ngIf="!isLoggedIn" class="heading">Populars on creativeHub</h3>
+    <span class="loading" *ngIf="listFeed==null">Magic is loading...</span>
     <div class="wrapper">
       <div class="left-col">
       <div *ngFor="let element of listFeed" class="post">
@@ -53,6 +63,6 @@
         </div>
       </div>
     </div>
-      <div class="loader" *ngIf="listFeed==null"></div>
+      <div class="loader" *ngIf="listFeed==null && isLoggedIn"></div>
   </div>
 </section>

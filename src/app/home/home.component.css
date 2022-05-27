@@ -2,15 +2,77 @@ body, html {
   background: #FAFAFA;
 }
 
+.landing {
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), center url('https://cdn.dribbble.com/users/11653188/screenshots/18235765/media/6a97ba7bb47a86aa293d4ac8261b1d51.png');
+  width: 100%;
+  height: 94vh;
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+  justify-content: center;
+  color: #FFFFFF;
+  font-family: "Jost";
+}
+
+.motto {
+  display: flex;
+}
+
+.motto-first {
+  font-weight: 100;
+}
+
+.motto-last {
+  font-weight: 700;
+}
+
+.landing h1 {
+  font-size: 60px;
+}
+
+.landing p {
+  font-size: 19px;
+  font-weight: 100;
+}
+
+.landing button {
+  margin-top: 5px;
+  align-items: center;
+  padding: 10px 30px;
+  background: #FFFFFF;
+  color: #000000;
+  border: 2px solid #FFFFFF;
+  border-radius: 1000px;
+  width: 300px;
+}
+
+.landing button:hover {
+  color: #FFFFFF;
+  background: transparent;
+}
+
 .grid {
   display: flex;
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
   position: absolute;
-  margin-top: 80px;
   width: 100%;
   left: 0px;
+  margin-top: 74px;
+}
+
+.grid .heading {
+  margin-top: 40px;
+  font-family: "Jost";
+  font-size: 35px;
+}
+
+.grid .loading {
+  font-family: "Jost";
+  color: #636363;
+  padding-top: 20px;
+  padding-bottom: 40px;
 }
 
 .post {

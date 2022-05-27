@@ -13,6 +13,7 @@ import {Artwork} from "../../_models/Artwork";
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
   styleUrls: ['./portfolio.component.css']
+  /* "../about/about.component.css" */
 })
 export class PortfolioComponent implements OnInit {
 

@@ -9,7 +9,7 @@
       <button [routerLink]="['/registration']">Sign up today</button>
     </div>
     <h3 *ngIf="!isLoggedIn" class="heading">Populars on creativeHub</h3>
-    <span class="loading" *ngIf="listFeed==null">Magic is loading...</span>
+    <span class="loading" *ngIf="listFeed==null && !isLoggedIn">Magic is loading...</span>
     <div class="wrapper">
       <div class="left-col">
       <div *ngFor="let element of listFeed" class="post">

@@ -255,3 +255,10 @@ body, html {
     transform: rotate(360deg);
   }
 }
+
+@media screen and (max-width: 40rem) {
+  .landing {
+    text-align: center;
+    align-items: center;
+  }
+}

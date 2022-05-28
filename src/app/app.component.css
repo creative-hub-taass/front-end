@@ -54,7 +54,7 @@ animateleft{
 }
 
 .side-menu .primary-pages .page-icon, .side-menu .secondary-pages .page-icon {
-  height: 20px;
+  max-width: 20px;
   margin-right: 25px;
 }
 

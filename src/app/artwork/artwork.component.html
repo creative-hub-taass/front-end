@@ -4,17 +4,20 @@
       <div class="grid">
         <div class="post">
           <div class="artwork-pic">
-            <img src="{{this.artwork.images[0]}}">
+            <img *ngFor="let img of this.artwork?.images" src="{{img}}">
           </div>
           <div class="artwork-info">
-            <p class="title">{{this.artwork.name}}</p>
-            <p class="type">{{this.artwork.type}}</p>
-            <p class="date"><img src="../assets/calendar.png">{{this.artwork.creationDateTime | date:"dd MMM yyyy"}}</p>
-            <p class="description">{{this.artwork.description}}</p>
-            <p class="artists">{{this.listUsers[0].getNickname()}}</p>
+            <p class="title">{{this.artwork?.name}}</p>
+            <p class="type">{{this.artwork?.type}}</p>
+            <p class="date"><img src="../assets/calendar.png">{{this.artwork?.creationDateTime | date:"dd MMM yyyy"}}</p>
+            <p class="description">{{this.artwork?.description}}</p>
+            <div class="artists">
+              Artists: &nbsp;
+              <p *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()" class="artist">{{artist.getNickname()}}</p>
+            </div>
             <div class="sales-info">
-              <p class="price">{{this.artwork.price}} €</p>
-              <p class="qty">{{this.artwork.availableCopies}} pieces left</p>
+              <p class="price">{{this.artwork?.price}} €</p>
+              <p class="qty">{{this.artwork?.availableCopies}} pieces left</p>
             </div>
             <div class="interactions">
               <button class="buy-button">
@@ -23,12 +26,14 @@
               </button>
               <div class="reaction-wrapper">
                 <div class="count">
-                  <img alt="" class="icon" src="../../assets/heart-outline.png">
+                  <img *ngIf="!liked" (click)="addLike()" alt="" class="icon" src="../../assets/heart-outline.png">
+                  <img *ngIf="liked" (click)="deleteLike()" alt="" class="icon" src="../../assets/heart-fill.png">
                   <p class="count-label">{{this.countLikes}} likes</p>
                 </div>
                 <div class="count">
-                  <img alt="" class="icon" src="../../assets/bubble-outline.png">
-                  <p class="count-label">{{this.listComments.length}} comments</p>
+                  <img *ngIf="!commented" alt="" class="icon" src="../../assets/bubble-outline.png">
+                  <img *ngIf="commented" alt="" class="icon" src="../../assets/bubble-fill.png">
+                  <p class="count-label">{{this.listComments?.length}} comments</p>
                 </div>
               </div>
             </div>
@@ -37,9 +42,9 @@
               <button class="comment-btn" *ngIf="this.artworkId" (click)="this.addComment()">post</button>
             </div>
             <div class="list-comment">
-              <div *ngFor="let c of listComments.reverse()" class="comment">
+              <div *ngFor="let c of listComments?.reverse()" class="comment">
                 <div class="comment-info">
-                  <p class="comment-user">@ </p>
+                  <p class="comment-user">{{getUserUsername(c.userId)}}:</p>
                   <p class="comment-message">{{c.message}}</p>
                 </div>
                 <img *ngIf="c.userId == userId" (click)="this.deleteComment(c.id)" class="delete-icon" src="../assets/x1.png">

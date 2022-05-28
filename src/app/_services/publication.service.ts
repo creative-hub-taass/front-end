@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable, Subscription} from "rxjs";
 import {PublicUser} from "../../_models/PublicUser";
@@ -50,7 +50,6 @@ export class PublicationService {
   public getListofUser(userIDs: string[]): Observable<any> {
     return this.http.post<any[]>(API_GATEWAY_USERS + "-/public", userIDs);
   }
-
 
   public getListFollower(userID: string): Observable<any> {
     return this.http.get<PublicUser[]>(API_GATEWAY_USERS + userID + "/followers");
@@ -111,5 +110,32 @@ export class PublicationService {
 
   public deleteComment(commentId: string): void {
     this.http.delete(API_GATEWAY_INTERACTIONS + "comment/" + commentId).subscribe((res)=> {console.log(res);});
+  }
+
+  public userCommentedPublication(userId: string, publicationId: string): Observable<boolean> {
+    return this.http.get<boolean>(API_GATEWAY_INTERACTIONS + "usercommented/" + userId + "/" + publicationId);
+  }
+
+  /* Likes */
+  public addLike(userId: string, publicationId: string): void {
+    this.http.post(API_GATEWAY_INTERACTIONS + "like", {"userId": userId, "publicationId": publicationId}).subscribe((res)=> {console.log(res);});
+  }
+
+  public deleteLike(userId: string, publicationId: string): void {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      body: {
+        "userId": userId,
+        "publicationId": publicationId
+      }
+    }
+
+    this.http.delete(API_GATEWAY_INTERACTIONS + "like", options).subscribe(s => {console.log(s);});
+  }
+
+  public userLikedPublication(userId: string, publicationId: string): Observable<boolean> {
+    return this.http.get<boolean>(API_GATEWAY_INTERACTIONS + "userliked/" + userId + "/"+ publicationId);
   }
 }

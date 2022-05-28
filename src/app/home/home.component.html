@@ -8,13 +8,13 @@
       <p>Creating a lil giant world around art in every of its shades.</p>
       <button [routerLink]="['/registration']">Sign up today</button>
     </div>
-    <h3 *ngIf="!isLoggedIn" class="heading">Populars on creativeHub</h3>
+    <h3 *ngIf="!isLoggedIn" class="heading">Trending on creativeHub</h3>
     <span class="loading" *ngIf="listFeed==null && !isLoggedIn">Magic is loading...</span>
     <div class="wrapper">
       <div class="left-col">
       <div *ngFor="let element of listFeed" class="post">
         <div *ngFor="let user of element.getUsers()" class="info">
-          <div class="user" [routerLink]="'/portfolio/' + this.getUser(user).id">
+          <div class="user" [routerLink]="'/about/' + this.getUser(user).id">
             <div class="profile-pic">
               <img alt="" src="{{this.getCreator(user).getAvatar()}}" class="profile-pic">
             </div>
@@ -56,10 +56,6 @@
             </div>
           </div>
         </div>
-          <div *ngIf="this.isLoggedIn" class="comment-wrapper">
-            <input class="comment-box" placeholder="Add a comment" type="text">
-            <button class="comment-btn">post</button>
-          </div>
         </div>
       </div>
     </div>

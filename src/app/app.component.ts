@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {TokenStorageService} from "./_services/token-storage.service";
 import {Subscription} from "rxjs";
 import {EventBusService} from "../_shared/event-bus.service";
+import {PublicUser} from "../_models/PublicUser";
 
 @Component({
   selector: "app-root",
@@ -49,5 +50,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   toggleMenu(){
     this.showSideMenu = !this.showSideMenu;
+  }
+
+  getUserInfo(): PublicUser{
+    return this.tokenStorageService.getUser();
   }
 }

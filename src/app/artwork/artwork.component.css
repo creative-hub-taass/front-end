@@ -39,6 +39,7 @@
 .comment-user {
   margin-right: 5px;
   color: #636363;
+  text-transform: capitalize;
 }
 
 .comment .delete-icon {
@@ -141,7 +142,7 @@
   text-align: justify;
 }
 
-.artwork-info .artists {
+.artwork-info .artist {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -149,6 +150,18 @@
   display: flex;
   align-items: center;
   color: #636363;
+  margin-right: 5px;
+  margin-top: 0px;
+}
+
+.artist:hover {
+  text-decoration: underline;
+  color: #636363;
+}
+
+.artwork-info .artists {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .artwork-info .price {

@@ -4,23 +4,33 @@
   <img class="close-icon" src="https://img.icons8.com/ios-filled/50/000000/delete-sign--v1.png" (click)="toggleMenu()"/>
   <div class="primary-pages">
     <div class="page"  [routerLink]="['/home']">
-      <img class="page-icon" src="https://img.icons8.com/ios-glyphs/30/000000/home-page--v1.png" />
+      <img class="page-icon" src="../assets/home.png" />
       <a href="#">Home</a>
     </div>
-    <div [routerLink]="['/']" class="page">
-      <img class="page-icon" src="https://img.icons8.com/ios-glyphs/30/000000/user--v1.png" />
+    <div *ngIf="getUserInfo().creator" [routerLink]="['/']" class="page">
+      <img class="page-icon" src="../assets/person.png" />
       <a href="#">My page</a>
     </div>
+    <div *ngIf="getUserInfo().creator" class="page"  [routerLink]="['/own-collabs/']">
+      <img class="page-icon" src="../assets/ppl.png" />
+      <a href="#">My collabs</a>
+    </div>
     <div class="page">
-      <img class="page-icon" src="https://img.icons8.com/ios-filled/50/000000/shopping-bag.png" />
+      <img class="page-icon" src="../assets/shopbag.png" />
       <a href="#">Orders</a>
+    </div>
+    <div *ngIf="!getUserInfo().creator"class="page"  [routerLink]="['/home']">
+      <img class="page-icon" src="../assets/upgrade.png" />
+      <a href="#">Upgrade to Creator</a>
+    </div>
+    <div class="page"></div>
+    <div class="page" (click)="logout()" *ngIf="isLoggedIn">
+      <img class="page-icon" src="../assets/logout.png" />
+      <a>Logout</a>
     </div>
   </div>
   <div class="secondary-pages">
-    <div class="page" (click)="logout()" *ngIf="isLoggedIn">
-      <img class="page-icon" src="https://img.icons8.com/ios-glyphs/30/000000/exit.png" />
-      <a>Logout</a>
-    </div>
+
   </div>
 </div>
 <div *ngIf="this.showSideMenu" class="dark-background" (click)="toggleMenu()"></div>
@@ -35,9 +45,12 @@
   <div class="voices">
     <a *ngIf="!isLoggedIn" [routerLink]="['/login']" href="javascript:void(0)">Login</a>
     <a *ngIf="!isLoggedIn" [routerLink]="['/registration']" href="javascript:void(0)">Registration</a>
+    <a *ngIf="isLoggedIn" [routerLink]="['/profile']" href="javascript:void(0)">Hi, {{getUserInfo().nickname}}</a>
   </div>
 </div>
 <div class="container">
   <router-outlet></router-outlet>
 </div>
 </body>
+<footer>
+</footer>

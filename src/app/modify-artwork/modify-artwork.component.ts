@@ -195,11 +195,11 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
 
 
   private buildCreations() {
+    this.listCreationArtwork = new Array<CreationArtwork>();
     this.listUsers.forEach((user) => {
       let index: number = this.artworkResult.creations.findIndex((elementCreation) => {
         return elementCreation.user == user.id;
       });
-      this.listCreationArtwork = new Array<CreationArtwork>();
       this.listCreationArtwork.push(new CreationArtwork(this.artworkResult.creations[index].id, this.artworkResult.id, user.id, user.nickname, this.artworkResult.creations[index].creationType));
     });
   }

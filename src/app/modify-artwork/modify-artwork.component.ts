@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -31,7 +31,7 @@ export class CreationArtwork implements Creation {
   styleUrls: ['./modify-artwork.component.css']
 })
 
-export class ModifyArtworkComponent implements OnInit, OnDestroy {
+export class ModifyArtworkComponent implements OnDestroy {
 
   sent: boolean = false;
   artworkId: string | null;
@@ -151,9 +151,6 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {
-  }
-
   ngOnDestroy(): void {
     window.sessionStorage.removeItem("artworkOrigin");
   }
@@ -195,11 +192,11 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
 
 
   private buildCreations() {
+    this.listCreationArtwork = new Array<CreationArtwork>();
     this.listUsers.forEach((user) => {
       let index: number = this.artworkResult.creations.findIndex((elementCreation) => {
         return elementCreation.user == user.id;
       });
-      this.listCreationArtwork = new Array<CreationArtwork>();
       this.listCreationArtwork.push(new CreationArtwork(this.artworkResult.creations[index].id, this.artworkResult.id, user.id, user.nickname, this.artworkResult.creations[index].creationType));
     });
   }
@@ -366,7 +363,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
 
   onCheckChange(x: string) {
     this.formArtwork.onSale = x;
-    this.artworkResult.onSale = false;
+    this.artworkResult.onSale = (x=='true');
     this.onSale = (x == "true");
   }
 

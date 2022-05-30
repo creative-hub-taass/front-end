@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {Creation} from "../../_models/Publication";
 import {Post} from "../../_models/Post";
 import {PublicUser} from "../../_models/PublicUser";
@@ -30,7 +30,7 @@ export class CreationPost implements Creation {
   templateUrl: './modify-post.component.html',
   styleUrls: ['./modify-post.component.css']
 })
-export class ModifyPostComponent implements OnInit, OnDestroy {
+export class ModifyPostComponent implements OnDestroy {
 
   sent: boolean = false;
   postId: string | null;
@@ -109,9 +109,6 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {
-  }
-
   ngOnDestroy(): void {
     window.sessionStorage.removeItem("postOrigin");
   }
@@ -122,11 +119,11 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
   }
 
   private buildCreations() {
+    this.listCreationPost = new Array<CreationPost>();
     this.listUsers.forEach((user) => {
       let index: number = this.postResult.creations.findIndex((elementCreation) => {
         return elementCreation.user == user.id;
       });
-      this.listCreationPost = new Array<CreationPost>();
       this.listCreationPost.push(new CreationPost(this.postResult.creations[index].id, this.postResult.id, user.id, user.nickname, this.postResult.creations[index].creationType));
     });
   }
@@ -237,7 +234,7 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
       }
     }
     let index = this.listCreationPost.findIndex((elementCreationPost) => {
-      return elementCreationPost.id == tmpCreation.id;
+      return elementCreationPost.user == tmpCreation.user;
     });
     if (index != -1) return;
     let indexUser = this.listFollowers.findIndex((elementFollower) => {

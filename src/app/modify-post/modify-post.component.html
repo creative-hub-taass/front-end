@@ -50,22 +50,13 @@
         </div>
       </div>
       <button class="full-button">Update informations</button>
-      <div class="form-group">
-        <div
-          *ngIf="f.submitted && (errorMessage!=undefined)"
-          class="alert alert-danger"
-          role="alert"
-        >
-          {{errorMessage}}
-        </div>
-      </div>
     </form>
 
     <h3>Users</h3>
 
     <form
-      #f="ngForm"
-      (ngSubmit)="f.form.valid && addUsers()"
+      #f2="ngForm"
+      (ngSubmit)="f2.form.valid && addUsers()"
       name="formUsers"
       novalidate
     >
@@ -91,15 +82,6 @@
       </div>
       <button class="full-button">Update creator</button>
 
-      <div class="form-group">
-        <div
-          *ngIf="f.submitted && (errorMessage!=undefined)"
-          class="alert alert-danger"
-          role="alert"
-        >
-          {{ errorMessage }}
-        </div>
-      </div>
     </form>
   </div>
 </div>

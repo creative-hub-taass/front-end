@@ -94,15 +94,16 @@
       <div class="artwork-box">
         <label>on Sale: {{this.artworkResult?.onSale}}</label>
       </div>
-      <div class="artwork-box" *ngFor="let x of ['true','false']">
-        <label><input
+      <div class="container-check" *ngFor="let x of ['true','false']">
+        <label>{{x}}<input
           (change)="onCheckChange(x)"
           [value]="x"
           class="form-control"
           name="onSale"
           required
           type="radio"
-        />{{x}}</label>
+          [defaultChecked]="x == 'false'"
+        /><span class="checkmark"></span></label>
       </div>
 
       <div class="artwork-box" *ngIf="this.onSale">
@@ -163,23 +164,13 @@
 
       <button class="full-button">Update informations</button>
 
-      <div class="form-group">
-        <div
-          *ngIf="f.submitted && (errorMessage!=undefined)"
-          class="alert alert-danger"
-          role="alert"
-        >
-          {{ errorMessage }}
-        </div>
-      </div>
-
     </form>
 
     <h3>Attributes</h3>
 
     <form
-      #f="ngForm"
-      (ngSubmit)="f.form.valid && addAttributes()"
+      #f2="ngForm"
+      (ngSubmit)="f2.form.valid && addAttributes()"
       name="formAttributes"
       novalidate
     >
@@ -202,7 +193,7 @@
                type="text"
         />
         <div
-          *ngIf="attributes.errors && f.submitted"
+          *ngIf="attributes.errors && f2.submitted"
           class="alert alert-danger"
           role="alert"
         >
@@ -212,21 +203,12 @@
 
       <button class="full-button">Update attributes</button>
 
-      <div class="form-group">
-        <div
-          *ngIf="f.submitted && (errorMessage!=undefined)"
-          class="alert alert-danger"
-          role="alert"
-        >
-          {{ errorMessage }}
-        </div>
-      </div>
     </form>
 
     <h3>Images</h3>
     <form
-      #f="ngForm"
-      (ngSubmit)="f.form.valid && addImages()"
+      #f3="ngForm"
+      (ngSubmit)="f3.form.valid && addImages()"
       name="formImages"
       novalidate
     >
@@ -245,21 +227,12 @@
 
       <button class="full-button">Update images</button>
 
-      <div class="form-group">
-        <div
-          *ngIf="f.submitted && (errorMessage!=undefined)"
-          class="alert alert-danger"
-          role="alert"
-        >
-          {{ errorMessage }}
-        </div>
-      </div>
     </form>
 
     <h3>Users</h3>
     <form
-      #f="ngForm"
-      (ngSubmit)="f.form.valid && addUsers()"
+      #f4="ngForm"
+      (ngSubmit)="f4.form.valid && addUsers()"
       name="formUsers"
       novalidate
     >
@@ -286,15 +259,6 @@
 
       <button class="full-button">Update creator</button>
 
-      <div class="form-group">
-        <div
-          *ngIf="f.submitted && (errorMessage!=undefined)"
-          class="alert alert-danger"
-          role="alert"
-        >
-          {{ errorMessage }}
-        </div>
-      </div>
     </form>
   </div>
 </div>

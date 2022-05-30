@@ -47,7 +47,7 @@
                   <p class="comment-user">{{getUserUsername(c.userId)}}:</p>
                   <p class="comment-message">{{c.message}}</p>
                 </div>
-                <img *ngIf="c.userId == userId" (click)="this.deleteComment(c.id)" class="delete-icon" src="../assets/x1.png">
+                <img *ngIf="c.userId == userId" (click)="this.deleteComment(c.id)" class="delete-icon" src="../../assets/x1.png">
               </div>
             </div>
           </div>

@@ -1,4 +1,10 @@
-.post {
+
+.title {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/*.post {
   width: 100%;
   height: auto;
   background: #fff;
@@ -89,13 +95,6 @@
   height: 30px;
 }
 
-.comment-box {
-  width: 80%;
-  height: 100%;
-  border: none;
-  outline: none;
-  font-size: 14px;
-}
 
 .comment-btn,
 .action-btn {
@@ -126,4 +125,4 @@
 
 .reaction-wrapper .icon.save {
   margin-left: auto;
-}
+}*/

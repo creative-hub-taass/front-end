@@ -1,35 +1,44 @@
 <section class="main">
   <div class="wrapper">
     <div class="left-col">
-      // status wrappers
-      <div class="post">
-        <div class="info">
-          <div class="user">
-            <div class="profile-pic"><img alt="" src="{{this.getCreator(this.listUsers[0]).avatar}}"></div>
-            <p class="namePost">{{this.post.title}}</p>
+      <div class="grid">
+        <div class="post">
+          <div class="artwork-info">
+            <p class="title">{{this.post?.title}}</p>
+            <p class="date">{{this.post?.timestamp | date:"dd MMM yyyy"}}</p>
+            <p class="description"><span>{{this.post?.body}}</span></p>
+            <div class="artists">
+              Authors: &nbsp;
+              <p *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()" class="artist">{{artist.getNickname()}}</p>
+            </div>
+            <div class="interactions">
+              <div class="reaction-wrapper">
+                <div class="count">
+                  <img *ngIf="!liked" (click)="addLike()" alt="" class="icon" src="../../assets/heart-outline.png">
+                  <img *ngIf="liked" (click)="deleteLike()" alt="" class="icon" src="../../assets/heart-fill.png">
+                  <p class="count-label">{{this.countLikes}} likes</p>
+                </div>
+                <div class="count">
+                  <img *ngIf="!commented" alt="" class="icon" src="../../assets/bubble-outline.png">
+                  <img *ngIf="commented" alt="" class="icon" src="../../assets/bubble-fill.png">
+                  <p class="count-label">{{this.listComments?.length}} comments</p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="this.isLoggedIn" class="comment-wrapper">
+              <input class="comment-box" placeholder="Add a comment" type="text" name="message" value="" [(ngModel)]="message">
+              <button class="comment-btn" *ngIf="this.postId" (click)="this.addComment()">post</button>
+            </div>
+            <div class="list-comment">
+              <div *ngFor="let c of listComments?.reverse()" class="comment">
+                <div class="comment-info">
+                  <p class="comment-user">{{getUserUsername(c.userId)}}:</p>
+                  <p class="comment-message">{{c.message}}</p>
+                </div>
+                <img *ngIf="c.userId == userId" (click)="this.deleteComment(c.id)" class="delete-icon" src="../../assets/x1.png">
+              </div>
+            </div>
           </div>
-          <img alt="" class="options" src="../../assets/img/option.PNG">
-        </div>
-        <div class="post-content">
-          <div class="reaction-wrapper">
-            <img alt="" class="icon" src="../../assets/img/like.PNG">
-            <img alt="" class="icon" src="../../assets/img/comment.PNG">
-            <img alt="" class="icon" src="../../assets/img/send.PNG">
-            <img alt="" class="save icon" src="../../assets/img/save.PNG">
-          </div>
-          <p class="likes">{{this.countLikes}} likes</p>
-          <p class="description"><span>{{this.post.body}}</span></p>
-          <p class="post-time"></p>
-        </div>
-        <div class="list-comment">
-          <div class="comment">
-            <p></p>
-          </div>
-        </div>
-        <div *ngIf="this.isLoggedIn" class="comment-wrapper">
-          <img alt="" class="icon" src="../../assets/img/smile.PNG">
-          <input class="comment-box" placeholder="Add a comment" type="text">
-          <button class="comment-btn">post</button>
         </div>
       </div>
     </div>

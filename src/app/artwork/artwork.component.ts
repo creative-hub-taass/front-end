@@ -87,7 +87,6 @@ export class ArtworkComponent implements OnInit {
     return utility.getCreator(userParam, this.listUsers);
   }
 
-
   private callServiceInteractions() {
     if (this.artworkId != null) {
       this.publicationService.getLikes(this.artworkId).subscribe({

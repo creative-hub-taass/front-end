@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
               this.tokenStorage.saveRefresh(userCreative.headers.get("X-REFRESH-TOKEN"));
               this.isLoginFailed = false;
               this.isLoggedIn = true;
+              window.location.replace("/");
             },
             error: (error) => {
               this.isLoginFailed = true;
@@ -77,11 +78,11 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithGoogle() {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).finally(() => {window.location.replace("/")});
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
   loginWithFacebook() {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).finally(() => {window.location.replace("/")});
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
 }

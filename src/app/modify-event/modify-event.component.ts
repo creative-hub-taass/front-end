@@ -207,11 +207,11 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
 
   //inserisce i valori delle creations nel form
   private buildCreations() {
+    this.listCreationEvent = new Array<CreationEvent>();
     this.listUsers.forEach((user) => {
       let index: number = this.eventResult.creations.findIndex((elementCreation) => {
         return elementCreation.user == user.id;
       });
-      this.listCreationEvent = new Array<CreationEvent>();
       this.listCreationEvent.push(new CreationEvent(this.eventResult.creations[index].id, this.eventResult.id, user.id, user.nickname, this.eventResult.creations[index].creationType));
     });
   }

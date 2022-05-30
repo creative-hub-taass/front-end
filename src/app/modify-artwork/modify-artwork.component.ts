@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -31,7 +31,7 @@ export class CreationArtwork implements Creation {
   styleUrls: ['./modify-artwork.component.css']
 })
 
-export class ModifyArtworkComponent implements OnInit, OnDestroy {
+export class ModifyArtworkComponent implements OnDestroy {
 
   sent: boolean = false;
   artworkId: string | null;
@@ -149,9 +149,6 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
-  }
-
-  ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
@@ -366,7 +363,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
 
   onCheckChange(x: string) {
     this.formArtwork.onSale = x;
-    this.artworkResult.onSale = false;
+    this.artworkResult.onSale = (x=='true');
     this.onSale = (x == "true");
   }
 

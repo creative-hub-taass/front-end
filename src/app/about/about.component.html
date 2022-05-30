@@ -12,6 +12,7 @@
       <div class="profile-user-settings">
         <h1 class="profile-user-name">{{this.user?.nickname}}</h1>
         <span class="profile-real-name">@{{this.user?.username}}</span>
+        <!--<div class="artist-type">{{this.creator?.creatorType?.replace('_', ' ')}}</div>-->
         <!--<button class="btn-reload" (click)="reload()">Refresh<i class='fas fa-redo'></i></button>-->
       </div>
       <div class="profile-stats">
@@ -27,6 +28,7 @@
       <div class="profile-name">
         <button class="btn-follow" *ngIf="!this.sameId && !this.followed" (click)="this.follow()">Follow</button>
         <button class="btn-unfollow" *ngIf="!this.sameId && this.followed" (click)="this.unfollow()">Unfollow</button>
+        <button class="btn-edit" *ngIf="sameId" [routerLink]="'/profile'">Edit</button>
         <!--<h3>{{this.creator?.creatorType}}</h3>-->
 
       </div>
@@ -55,7 +57,6 @@
             <a href="javascript:void(0)" title="Instagram" class="fa fa-instagram"></a>
           </div>
         </div>
-        <button class="btn profile-edit-btn" *ngIf="sameId" [routerLink]="'/profile'">Edit Profile</button>
         <button class="tip-button" (click)="popup = true">Send a tip</button>
       </div>
       <div class="list-post">

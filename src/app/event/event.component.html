@@ -19,9 +19,9 @@
               <div id="map"></div>
             </div>
             <div class="interactions">
-              <button class="buy-button">
+              <a class="buy-button" href="{{this.event?.bookingURL}}">
                 Buy ticket
-              </button>
+              </a>
               <div class="reaction-wrapper">
                 <div class="count">
                   <img *ngIf="!liked" (click)="addLike()" alt="" class="icon" src="../../assets/heart-outline.png">

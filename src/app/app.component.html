@@ -7,21 +7,21 @@
       <img class="page-icon" src="../assets/home.png" />
       <a href="#">Home</a>
     </div>
-    <div *ngIf="getUserInfo().creator" [routerLink]="['/']" class="page">
+    <div *ngIf="getUserInfo().creator" [routerLink]="['/about/'+getUserInfo().id]" class="page">
       <img class="page-icon" src="../assets/person.png" />
-      <a href="#">My page</a>
+      <a>My page</a>
     </div>
     <div *ngIf="getUserInfo().creator" class="page"  [routerLink]="['/own-collabs/']">
       <img class="page-icon" src="../assets/ppl.png" />
       <a href="#">My collabs</a>
     </div>
-    <div class="page">
+    <div *ngIf="isLoggedIn" class="page">
       <img class="page-icon" src="../assets/shopbag.png" />
       <a href="#">Orders</a>
     </div>
-    <div *ngIf="!getUserInfo().creator"class="page"  [routerLink]="['/home']">
+    <div *ngIf="!getUserInfo().creator && isLoggedIn"class="page"  [routerLink]="['/upgrade-request/']">
       <img class="page-icon" src="../assets/upgrade.png" />
-      <a href="#">Upgrade to Creator</a>
+      <a>Upgrade to Creator</a>
     </div>
     <div class="page"></div>
     <div class="page" (click)="logout()" *ngIf="isLoggedIn">

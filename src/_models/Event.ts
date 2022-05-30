@@ -18,7 +18,7 @@ export class Event implements Publication {
   coordinates: Coordinates;
   startDateTime: string;
   endDateTime: string;
-  bookingURL?: string;
+  bookingURL?: string | null;
 
   constructor(dto: any) {
     this.id = dto.id;

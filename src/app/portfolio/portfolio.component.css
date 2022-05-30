@@ -1,100 +1,22 @@
-/* Add a hover effect if you want */
-.fa:hover {
-  opacity: 0.7;
-}
-
-/* Set a specific color for each brand */
-
-/* Facebook */
-.fa-facebook {
-  background: #3B5998;
-  color: white;
-}
-
-/* Twitter */
-.fa-twitter {
-  background: #55ACEE;
-  color: white;
-}
-
-/* Instagram */
-.fa-instagram {
-  background: #f30b96;
-  color: white;
-}
-
-.fa-spotify {
-  background: #249a10;
-  color: #ffffff;
-}
-
-.contacts {
-  padding: 10px 10px;
-  display: inline-block;
-  position: relative;
-  left:65%;
-}
-
-
-/* Style all font awesome icons */
-.fa {
+.add-pub {
+  text-align: center;
+  font-family: "Jost";
+  display: flex;
+  justify-content: center;
   padding: 10px;
-  font-size: 30px;
-  width: 50px;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 60%;
+  color: #00A3FF;
+  border: 3px dashed #00A3FF;
+  border-radius: 10px;
+  font-weight: 400;
+  font-size: 20px;
+  align-items: center;
 }
 
-.fa-profile {
-  font-size: 70px;
-  width: 200px;
-  height: 200px;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 50%;
-}
-
-:root {
-  font-size: 10px;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Open Sans", Arial, sans-serif;
-  min-height: 100vh;
-  background-color: #fafafa;
-  color: #262626;
-  padding-bottom: 3rem;
-}
-
-img {
-  display: block;
-}
-
-.container {
-  max-width: 95rem;
-  margin: 0 auto;
-  padding: 0 0;
-}
-
-.btn {
-  display: inline-block;
-  font: inherit;
-  background: none;
-  border: none;
-  color: inherit;
-  padding: 0;
-  cursor: pointer;
-}
-
-.btn:focus {
-  outline: 0.5rem auto #4d90fe;
+.add-pub:hover {
+  color: #FFFFFF;
+  background: #00A3FF;
+  border: 3px solid #00A3FF;
+  border-radius: 10px;
 }
 
 .visually-hidden {
@@ -105,100 +27,19 @@ img {
   clip: rect(1px, 1px, 1px, 1px);
 }
 
-/* Profile Section */
-
-.profile {
-  padding: 5rem 0;
-}
-
-.profile::after {
-  content: "";
-  display: block;
-  clear: both;
-}
-
-.profile-image {
-  float: left;
-  width: calc(33.333% - 1rem);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 3rem;
-}
-
-.profile-image img {
-  border-radius: 70%;
-  width: 70%;
-  height: 70%;
-  max-height: 250px;
-}
-
-.profile-user-settings,
-.profile-stats,
-.profile-bio {
-  float: left;
-  width: calc(66.666% - 2rem);
-}
-
-.profile-user-settings {
-  margin-top: 1.1rem;
-}
-
-.profile-user-name {
-  display: inline-block;
-  font-size: 3.2rem;
-  font-weight: 300;
-}
-
-.profile-edit-btn {
-  font-size: 1.4rem;
-  line-height: 1.8;
-  border: 0.1rem solid #dbdbdb;
-  border-radius: 0.3rem;
-  padding: 0 2.4rem;
-  margin-left: 2rem;
-}
-
-.profile-settings-btn {
-  font-size: 2rem;
-  margin-left: 1rem;
-}
-
-.profile-stats {
-  margin-top: 2.3rem;
-  position: relative;
-  right:30px;
-}
-
-.profile-stats li {
-  display: inline-block;
-  font-size: 1.6rem;
-  line-height: 1.5;
-  margin-right: 4rem;
-  cursor: pointer;
-}
-
-.profile-stats li:last-of-type {
-  margin-right: 0;
-}
-
-.profile-name {
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 1.5;
-  margin-top: 2.3rem;
-}
-.profile-name h3{
-  font-family: "Sofia", serif;
-}
-
-.profile-real-name,
-.profile-stat-count,
-.profile-edit-btn {
-  font-weight: 600;
-}
-
 /* Gallery Section */
+
+ul {
+  margin: 0px;
+  padding: 0px;
+}
+.gallery-container {
+  position: relative;
+  left: 0;
+  width: 90%;
+  margin: 0 auto;
+  padding: 0 0;
+}
 
 .gallery {
   display: flex;
@@ -215,7 +56,6 @@ img {
   color: #fff;
   cursor: pointer;
 }
-
   .gallery-item:hover .gallery-item-info,
   .gallery-item:focus .gallery-item-info {
     display: flex;
@@ -232,14 +72,15 @@ img {
   display: none;
 }
 
+.gallery-item-info i {
+  padding: 10px;
+}
+
 .gallery-item-info li {
   display: inline-block;
   font-size: 1.7rem;
   font-weight: 600;
-}
-
-.gallery-item-likes {
-  margin-right: 2.2rem;
+  padding: 10px;
 }
 
 .gallery-item-type {
@@ -264,16 +105,14 @@ img {
 /* Loader */
 
 .loader {
-  width: 5rem;
-  height: 5rem;
-  border: 0.6rem solid #999;
+  width: 4rem;
+  height: 4rem;
+  border: 0.3rem solid #00A3FF;
   border-bottom-color: transparent;
   border-radius: 50%;
   margin: 0 auto;
   animation: loader 500ms linear infinite;
 }
-
-
 
 @supports (display: grid) {
   .profile {
@@ -313,52 +152,7 @@ img {
   }
 }
 
-  /* Add a black background color to the top navigation */
-  .nav {
-    background-color: #06dbee;
-    overflow: hidden;
-    border-radius: 40px;
-    width: 37.47rem;
-    height: 30%;
-    margin: auto;
-  }
 
-  /* Style the links inside the navigation bar */
-  .nav a {
-    float: right;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 28px;
-    text-decoration: none;
-    font-size: 17px;
-    position: relative;
-  }
-
-  /* Change the color of links on hover */
-  .nav a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-
-  /* Add a color to the active/current link */
-  .nav a.active {
-    background-color: #0077ff;
-    color: white;
-  }
-
-  .btn-follow {
-    background-color: #06dbee;
-    border-radius: 20px;
-    border-width: 0;
-    color: white;
-    padding: 5px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 13px;
-    position: relative;
-    left: 20px;
-  }
 
   .profile-bio {
     font-weight: 500;

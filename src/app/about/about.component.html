@@ -59,7 +59,7 @@
         </div>
         <button class="tip-button" (click)="popup = true">Send a tip</button>
       </div>
-      <div class="list-post">
+      <div *ngIf="this.listPosts.length>0" class="list-post">
         <h3>Latest posts</h3>
         <div class="post" *ngFor="let publication of listPosts" [routerLink]="'/post/' + publication.id">
           <div class="post-info">

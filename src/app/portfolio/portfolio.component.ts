@@ -12,8 +12,7 @@ import {Artwork} from "../../_models/Artwork";
 @Component({
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
-  styleUrls: ['./portfolio.component.css']
-  /* "../about/about.component.css" */
+  styleUrls: ['./portfolio.component.css', '../about/about.component.css']
 })
 export class PortfolioComponent implements OnInit {
 
@@ -130,7 +129,7 @@ export class PortfolioComponent implements OnInit {
     let index: number = this.listPublicationInfo.findIndex((elementPublication: PublicationInfo) => {
       return elementPublication.publication.id == artworkId;
     });
-    if (index != -1) return this.listPublicationInfo[index].getLikes();
+    if (index != -1) return this.listPublicationInfo[index].getComments().length;
     return 0;
   }
 }

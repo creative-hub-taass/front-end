@@ -489,18 +489,6 @@ btn-reload:hover{
   margin-right: 10px;
 }
 
-/* Loader */
-
-.loader {
-  width: 5rem;
-  height: 5rem;
-  border: 0.6rem solid #999;
-  border-bottom-color: transparent;
-  border-radius: 50%;
-  margin: 0 auto;
-  animation: loader 500ms linear infinite;
-}
-
 /* Spinner Animation */
 
 @keyframes loader {
@@ -519,10 +507,6 @@ btn-reload:hover{
 .gallery-item-info li + li {
   margin-left: 10px;
   padding-bottom: 20px;
-}
-
-.gallery-item-likes {
-  margin-left: 300px;
 }
 
 .box {

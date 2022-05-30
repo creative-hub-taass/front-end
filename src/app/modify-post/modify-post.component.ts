@@ -101,6 +101,7 @@ export class ModifyPostComponent implements OnInit, OnDestroy {
         listFollower.forEach((follower) => {
           this.listFollowers.push(new PublicUser(follower));
         });
+        this.listFollowers.push(this.tokenStorageService.getUser())
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

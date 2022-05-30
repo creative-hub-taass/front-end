@@ -143,6 +143,7 @@ export class ModifyArtworkComponent implements OnInit, OnDestroy {
         listFollower.forEach((follower: PublicUser) => {
           this.listFollowers.push(new PublicUser(follower));
         });
+        this.listFollowers.push(this.tokenStorageService.getUser())
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

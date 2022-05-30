@@ -138,6 +138,7 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
         listFollower.forEach((follower) => {
           this.listFollowers.push(new PublicUser(follower));
         });
+        this.listFollowers.push(this.tokenStorageService.getUser())
       }, (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }

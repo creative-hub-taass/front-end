@@ -19,11 +19,10 @@ const icon = L.icon({
 
 const AUTH_TOKEN = environment.accessToken;
 
-
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
-  styleUrls: ['./event.component.css']
+  styleUrls: ['./event.component.css', '../artwork/artwork.component.css', ]
 })
 export class EventComponent implements OnInit, AfterViewInit {
 
@@ -37,7 +36,11 @@ export class EventComponent implements OnInit, AfterViewInit {
   errorMessage: string = "";
   map: any;
   marker: any;
-
+  message!: string;
+  liked: boolean = false;
+  commented: boolean= false;
+  listOfUserNamesComments!: PublicUser[];
+  userId: string = "";
 
   constructor(
     private tokenStorageService: TokenStorageService,
@@ -47,6 +50,7 @@ export class EventComponent implements OnInit, AfterViewInit {
   ) {
     this.eventId = this.route.snapshot.paramMap.get("id");
     this.isLoggedIn = (Object.keys(this.tokenStorageService.getUser()).length != 0)
+    this.userId = this.tokenStorageService.getUser().id;
   }
 
   ngOnInit(): void {
@@ -77,7 +81,6 @@ export class EventComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   private callServiceInteractions() {
     if (this.eventId != null) {
       this.publicationService.getLikes(this.eventId).subscribe({
@@ -88,9 +91,44 @@ export class EventComponent implements OnInit, AfterViewInit {
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
       });
+      this.publicationService.userCommentedPublication(this.tokenStorageService.getUser().id, this.eventId).subscribe({
+        next: (userCommented) => {
+          this.commented = userCommented;
+        },
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
+
+      this.publicationService.userLikedPublication(this.tokenStorageService.getUser().id, this.eventId).subscribe( {
+        next: (userLiked) => {
+          this.liked = userLiked;
+        },
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      })
+
       this.publicationService.getComments(this.eventId).subscribe({
-        next: (listComments) => {
-          this.listComments = listComments;
+        next: (listComments: any[]) => {
+          let listOfUsersComments = new Array();
+          this.listOfUserNamesComments = new Array();
+          this.listComments = new Array();
+          listComments.forEach((comment)=> {
+            let index = listOfUsersComments.findIndex((uid) => {
+              return uid == comment.userId;
+            });
+            if (index == -1) listOfUsersComments.push(comment.userId);
+            this.listComments.push(comment);
+          })
+          this.publicationService.getListofUser(listOfUsersComments).subscribe({
+            next: (listUser: PublicUser[]) => {
+              this.listOfUserNamesComments = listUser;
+            },
+            error: (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
+          });
         },
         error: (error) => {
           this.errorMessage = utility.onError(error, this.eventBusService);
@@ -118,7 +156,7 @@ export class EventComponent implements OnInit, AfterViewInit {
   private loadMap(): void {
     this.map = L.map('map').setView([0, 0], 2);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + AUTH_TOKEN, {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      //attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
       id: 'mapbox/streets-v11',
       tileSize: 512,
@@ -143,5 +181,47 @@ export class EventComponent implements OnInit, AfterViewInit {
       });
       observer.complete();
     });
+  }
+
+  public addComment() {
+    if (!this.message) return;
+    if (!this.eventId) return;
+    console.log("userId: " + this.tokenStorageService.getUser().id);
+    console.log("artworkId: " + this.eventId);
+    console.log("message: " + this.message);
+    this.publicationService.addComment(this.tokenStorageService.getUser().id, this.eventId, this.message);
+    this.message = "";
+    this.callServiceInteractions();
+  }
+
+  public deleteComment(commentId: string) {
+    this.publicationService.deleteComment(commentId);
+    let index = this.listComments.findIndex((cid)=>{
+      return cid == commentId;
+    });
+    this.listComments.splice(index, 1);
+  }
+
+  public getUserUsername(userId: string): string {
+    let index = this.listOfUserNamesComments.findIndex((uid) => {
+      return uid.id == userId;
+    })
+    return this.listOfUserNamesComments[index].nickname;
+  }
+
+  public addLike() {
+    if (!this.isLoggedIn) return;
+    if(!this.eventId) return;
+    this.publicationService.addLike(this.tokenStorageService.getUser().id, this.eventId);
+    this.liked= true;
+    this.countLikes++;
+  }
+
+  public deleteLike() {
+    if (!this.isLoggedIn) return;
+    if(!this.eventId) return;
+    this.publicationService.deleteLike(this.tokenStorageService.getUser().id, this.eventId);
+    this.liked = false;
+    this.countLikes--;
   }
 }

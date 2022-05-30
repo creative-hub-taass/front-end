@@ -1,4 +1,4 @@
-.post {
+/*.post {
   width: 100%;
   height: auto;
   background: #fff;
@@ -127,9 +127,11 @@
 .reaction-wrapper .icon.save {
   margin-left: auto;
 }
+*/
+
 
 #map {
   height: 200px;
   width: 100%;
-  max-width: 300px;
+  margin-bottom: 20px;
 }

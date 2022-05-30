@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnDestroy, AfterViewInit} from '@angular/core';
 import {Creation} from "../../_models/Publication";
 import * as utility from "../../_shared/functions";
 import {Event} from "../../_models/Event"
@@ -41,7 +41,7 @@ const AUTH_TOKEN = environment.accessToken;
   templateUrl: './modify-event.component.html',
   styleUrls: ['./modify-event.component.css']
 })
-export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ModifyEventComponent implements OnDestroy, AfterViewInit {
 
   sent: boolean = false;
   eventId: string | null;
@@ -61,7 +61,7 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
     locationName: string,
     startDateTime: string,
     endDateTime: string,
-    bookingURL: string | undefined
+    bookingURL: string | null | undefined
   } = {
     name: "",
     description: "",
@@ -96,6 +96,7 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
           window.sessionStorage.setItem("eventOrigin", JSON.stringify(event));
           //salvo l'evento come risultato finale
           this.eventResult = new Event(event);
+          this.loadMap();
           //creo la lista di ID degli utenti organizzatori dell'evento
           this.listUsersID = new Array<string>();
           this.eventResult.creations.forEach((creation) => {
@@ -143,15 +144,11 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
     )
   }
 
-  ngOnInit(): void {
-  }
-
-  ngAfterViewInit() {
-    this.loadMap();
-  }
+  ngAfterViewInit(): void {
+    if (this.eventId == null)this.loadMap();
+    }
 
   private loadMap(): void {
-    console.log(AUTH_TOKEN)
     this.map = L.map('map').setView([0, 0], 2);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + AUTH_TOKEN, {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -173,6 +170,7 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.getCurrentPosition()
       .subscribe((position: any) => {
+
         this.map.flyTo([position.latitude, position.longitude], 10);
 
         this.marker = L.marker([position.latitude, position.longitude], {icon}).bindPopup('The event is located here');
@@ -182,6 +180,7 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private getCurrentPosition(): any {
     return new Observable((observer: Subscriber<any>) => {
+
       observer.next({
         latitude: this.eventResult.coordinates.latitude,
         longitude: this.eventResult.coordinates.longitude
@@ -228,8 +227,8 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
       image: "",
       locationName: "",
       coordinates: {
-        longitude: 0,
-        latitude: 0,
+        longitude: 4.886169433593751,
+        latitude: 52.399067302933304,
       },
       startDateTime: new Date().toISOString(),
       endDateTime: new Date().toISOString(),
@@ -244,7 +243,7 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
     this.eventResult.locationName = this.formEvent.locationName;
     this.eventResult.startDateTime = new Date(this.formEvent.startDateTime).toISOString();
     this.eventResult.endDateTime = new Date(this.formEvent.endDateTime).toISOString();
-    this.eventResult.bookingURL = (this.eventResult.bookingURL != undefined) ? this.eventResult.bookingURL : undefined;
+    this.eventResult.bookingURL = (this.formEvent.bookingURL != null) ? this.formEvent.bookingURL : null;
   }
 
   resetForm() {
@@ -255,6 +254,11 @@ export class ModifyEventComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSubmit() {
+    let URL_REGEXP = /^[A-Za-z][A-Za-z\d.+-]*:\/*(?:\w+(?::\w+)?@)?[^\s/]+(?::\d+)?(?:\/[\w#!:.?+=&%@\-/]*)?$/;
+    if(this.eventResult.bookingURL != undefined && !URL_REGEXP.test(this.eventResult.bookingURL)){
+      this.errorMessage = "Booking URL need to be a valid URL.";
+      return;
+    }
     const event = window.sessionStorage.getItem("eventOrigin");
     //aggiorno il lastUpdate
     this.eventResult.lastUpdate = new Date().toISOString();

@@ -38,13 +38,11 @@ export class LoginComponent implements OnInit {
           this.socialUser = userSocial;
           this.authService.loginSocial(this.socialUser.firstName + " " + this.socialUser.lastName, this.socialUser.email, this.socialUser.authToken).subscribe({
             next: (userCreative) => {
-              console.log(userCreative.headers);
               this.tokenStorage.saveUser(userCreative.body);
               this.tokenStorage.saveToken(userCreative.headers.get("X-ACCESS-TOKEN"));
               this.tokenStorage.saveRefresh(userCreative.headers.get("X-REFRESH-TOKEN"));
               this.isLoginFailed = false;
               this.isLoggedIn = true;
-              window.location.reload();
             },
             error: (error) => {
               this.isLoginFailed = true;
@@ -79,10 +77,11 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithGoogle() {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).finally(() => {window.location.replace("/")});
   }
 
   loginWithFacebook() {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).finally(() => {window.location.replace("/")});
   }
+
 }

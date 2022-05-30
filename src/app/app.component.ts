@@ -46,6 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
   logout(): void {
     this.tokenStorageService.logout();
     this.isLoggedIn = false;
+    window.location.replace("/")
   }
 
   toggleMenu(){

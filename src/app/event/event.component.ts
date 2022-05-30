@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Event} from "../../_models/Event"
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
@@ -24,7 +24,8 @@ const AUTH_TOKEN = environment.accessToken;
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.css', '../artwork/artwork.component.css', ]
 })
-export class EventComponent implements OnInit, AfterViewInit {
+export class EventComponent implements OnInit{
+
 
   isLoggedIn: boolean = false;
   eventId: string | null;
@@ -73,6 +74,7 @@ export class EventComponent implements OnInit, AfterViewInit {
               this.errorMessage = utility.onError(error, this.eventBusService);
             }
           });
+          this.loadMap();
         },
         error: (error) => {
           this.errorMessage = utility.onError(error, this.eventBusService);
@@ -149,10 +151,6 @@ export class EventComponent implements OnInit, AfterViewInit {
     return utility.getCreator(userParam, this.listUsers);
   }
 
-  ngAfterViewInit(): void {
-    this.loadMap();
-  }
-
   private loadMap(): void {
     this.map = L.map('map').setView([0, 0], 2);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + AUTH_TOKEN, {
@@ -224,4 +222,8 @@ export class EventComponent implements OnInit, AfterViewInit {
     this.liked = false;
     this.countLikes--;
   }
+
+/*  ngAfterViewInit(): void {
+    if(this.event != null)this.loadMap();
+  }*/
 }

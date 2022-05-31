@@ -195,10 +195,14 @@ export class CollabsComponent implements OnInit {
   }
 
   SendCollaboration() {
-    if(this.tokenStorageService.getUser().creator == null){
+    if(this.tokenStorageService.getUser().id == null) {
       window.location.replace("/login");
       return;
     }
-    window.location.replace("/modify-event/")
+    if(this.tokenStorageService.getUser().creator == null){
+      window.location.replace("/upgrade-request");
+      return;
+    }
+    window.location.replace("/modify-event/");
   }
 }

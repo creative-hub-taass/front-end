@@ -71,12 +71,13 @@ export function followCreator(tokenStorageService: TokenStorageService,
                               thisUser: PublicUser,
                               errorMessage: string): void{
   if(tokenStorageService.getUser().id == undefined){
-    window.location.replace("/login")
+    window.location.replace("/login");
+    return;
   }
   creatorService.setFollower(tokenStorageService.getUser().id, thisUser.id).subscribe({
     next: (publicUser: PublicUser) => {
       tokenStorageService.saveUser(publicUser);
-      thisUser.fanIds.push(thisUser.id);
+      thisUser.fanIds.push(tokenStorageService.getUser().id);
       window.sessionStorage.setItem(thisUser.id, JSON.stringify(thisUser));
       window.location.reload();
     },
@@ -89,20 +90,23 @@ export function followCreator(tokenStorageService: TokenStorageService,
 export function unfollowCreator(tokenStorageService: TokenStorageService,
                                 creatorService: CreatorService,
                                 eventBusService: EventBusService,
-                                user: PublicUser,
+                                userCreator: PublicUser,
                                 errorMessage: string): void{
-  if(tokenStorageService.getUser().id == undefined)return;
-  creatorService.deleteFollower(tokenStorageService.getUser().id, user.id).subscribe({
+  if(tokenStorageService.getUser().id == undefined){
+    window.location.replace("/login");
+    return;
+  }
+  creatorService.deleteFollower(tokenStorageService.getUser().id, userCreator.id).subscribe({
   next: (publicUser: PublicUser) => {
-    let tmp: PublicUser = tokenStorageService.getUser();
-    let index: number = tmp.inspirerIds.findIndex((inspirer) => {
-      return inspirer == publicUser.id;
-    });
-    tmp.inspirerIds.splice(index,1);
-    tokenStorageService.saveUser(tmp);
-    user = new PublicUser(publicUser);
-    user.creator = new PublicCreator(publicUser.creator);
-    window.sessionStorage.setItem(user.id, JSON.stringify(user));
+    let myUser: PublicUser = publicUser;
+    tokenStorageService.saveUser(myUser);
+
+    let index: number = userCreator.fanIds.findIndex((fan) => {
+      return fan == myUser.id;
+    })
+    if (index == -1)return;
+    userCreator.fanIds.splice(index,1);
+    window.sessionStorage.setItem(userCreator.id, JSON.stringify(userCreator));
     window.location.reload();
   },
     error: (error) => {

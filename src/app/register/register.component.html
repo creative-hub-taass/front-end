@@ -75,6 +75,22 @@
           Signup failed!<br />{{ errorMessage }}
         </div>
       </form>
+      <div *ngIf="!isLoggedIn" class="login-buttons">
+        <p>or login using</p>
+        <div class="social-logins-button">
+          <button (click)="loginWithGoogle()" class="empty-button">
+            <img src="https://img.icons8.com/ios-glyphs/30/000000/google-logo--v1.png" alt="Log in with Google">
+            Google
+          </button>
+          <button (click)="loginWithFacebook()" class="empty-button">
+            <img src="https://img.icons8.com/ios-filled/50/000000/facebook--v1.png" alt="Log in with Facebook">
+            Facebook
+          </button>
+        </div>
+      </div>
+      <div *ngIf="isLoggedIn" class="alert alert-success">
+        Logged in successfully.
+      </div>
       <div *ngIf="isSuccessful" class="alert alert-success">
         Your registration is successful! Check your e-mail.
       </div>

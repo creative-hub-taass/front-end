@@ -10,10 +10,6 @@ import {PaymentService} from "../_services/payment.service";
 import {Order} from "../../_models/Order";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {UserService} from "../_services/user.service";
-import {getUser} from "../../_shared/functions";
-import {User} from "../../_models/User";
-import {Observable} from "rxjs";
-
 
 @Component({
   selector: "app-artwork",
@@ -22,7 +18,6 @@ import {Observable} from "rxjs";
 })
 export class ArtworkComponent implements OnInit {
   message: string = "";
-  isLoggedIn: boolean = false;
   artworkId: string | null;
   artwork!: Artwork;
   listUsersID!: string[];
@@ -44,7 +39,6 @@ export class ArtworkComponent implements OnInit {
     public route: ActivatedRoute
   ) {
     this.artworkId = this.route.snapshot.paramMap.get("id");
-    this.isLoggedIn = (Object.keys(this.tokenStorageService.getUser()).length != 0)
     this.userId = this.tokenStorageService.getUser().id;
   }
 
@@ -98,7 +92,7 @@ export class ArtworkComponent implements OnInit {
         }
       });
 
-      this.publicationService.userCommentedPublication(this.tokenStorageService.getUser().id, this.artworkId).subscribe({
+      this.publicationService.userCommentedPublication(this.userId, this.artworkId).subscribe({
         next: (userCommented) => {
           this.commented = userCommented;
         },
@@ -107,7 +101,7 @@ export class ArtworkComponent implements OnInit {
         }
       });
 
-      this.publicationService.userLikedPublication(this.tokenStorageService.getUser().id, this.artworkId).subscribe( {
+      this.publicationService.userLikedPublication(this.userId, this.artworkId).subscribe( {
         next: (userLiked) => {
           this.liked = userLiked;
         },
@@ -118,9 +112,9 @@ export class ArtworkComponent implements OnInit {
 
       this.publicationService.getComments(this.artworkId).subscribe({
         next: (listComments: any[]) => {
-          let listOfUsersComments = new Array();
-          this.listOfUserNamesComments = new Array();
-          this.listComments = new Array();
+          let listOfUsersComments: string[] = [];
+          this.listOfUserNamesComments = [];
+          this.listComments = [];
           listComments.forEach((comment)=> {
             let index = listOfUsersComments.findIndex((uid) => {
               return uid == comment.userId;
@@ -144,7 +138,8 @@ export class ArtworkComponent implements OnInit {
     }
   }
   public buyArtwork(destinationAddress: string): void {
-    this.paymentService.buyArtwork(new Order(this.artwork, this.tokenStorageService.getUser().id, destinationAddress)).subscribe({
+    if(this.userId == undefined) window.location.replace("/login")
+    this.paymentService.buyArtwork(new Order(this.artwork, this.userId, destinationAddress)).subscribe({
       next: (urlPaypal: string) => {
         let url: string = urlPaypal.substring(9, urlPaypal.length);
         window.location.href = encodeURI(url);
@@ -156,21 +151,28 @@ export class ArtworkComponent implements OnInit {
   }
 
   public addComment() {
-    if (!this.message) return;
-    if (!this.artworkId) return;
-    console.log("userId: " + this.tokenStorageService.getUser().id);
+    if(this.userId == null || !this.message || !this.artworkId) {
+      window.location.replace("/login");
+      return;
+    }
+    console.log("userId: " + this.userId);
     console.log("artworkId: " + this.artworkId);
     console.log("message: " + this.message);
-    this.publicationService.addComment(this.tokenStorageService.getUser().id, this.artworkId, this.message);
+    this.publicationService.addComment(this.userId, this.artworkId, this.message);
     this.message = "";
     this.callServiceInteractions();
   }
 
   public deleteComment(commentId: string) {
+    if(this.userId == null) {
+      window.location.replace("/login");
+      return;
+    }
     this.publicationService.deleteComment(commentId);
     let index = this.listComments.findIndex((cid)=>{
       return cid == commentId;
     });
+    if (index == -1)return;
     this.listComments.splice(index, 1);
   }
 
@@ -178,22 +180,28 @@ export class ArtworkComponent implements OnInit {
     let index = this.listOfUserNamesComments.findIndex((uid) => {
       return uid.id == userId;
     })
+    if (index == -1)return "";
     return this.listOfUserNamesComments[index].nickname;
   }
 
   public addLike() {
-    if (!this.isLoggedIn) return;
-    if(!this.artworkId) return;
-    this.publicationService.addLike(this.tokenStorageService.getUser().id, this.artworkId);
+    if(this.userId == null || !this.artworkId) {
+      window.location.replace("/login");
+      return;
+    }
+    this.publicationService.addLike(this.userId, this.artworkId);
     this.liked= true;
     this.countLikes++;
   }
 
   public deleteLike() {
-    if (!this.isLoggedIn) return;
-    if(!this.artworkId) return;
-    this.publicationService.deleteLike(this.tokenStorageService.getUser().id, this.artworkId);
+    if(this.userId == null || !this.artworkId) {
+      window.location.replace("/login");
+      return;
+    }
+    this.publicationService.deleteLike(this.userId, this.artworkId);
     this.liked = false;
     this.countLikes--;
   }
+
 }

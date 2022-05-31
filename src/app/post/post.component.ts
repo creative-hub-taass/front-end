@@ -15,7 +15,6 @@ import {TokenStorageService} from "../_services/token-storage.service";
 })
 export class PostComponent implements OnInit {
 
-  isLoggedIn: boolean = false;
   postId: string | null;
   post!: Post;
   listUsersID!: string[];
@@ -36,7 +35,6 @@ export class PostComponent implements OnInit {
     public route: ActivatedRoute
   ) {
     this.postId = this.route.snapshot.paramMap.get("id");
-    if (this.tokenStorageService.getUser() != null) this.isLoggedIn = true;
     this.userId = this.tokenStorageService.getUser().id;
   }
 
@@ -90,7 +88,7 @@ export class PostComponent implements OnInit {
         }
       });
 
-      this.publicationService.userCommentedPublication(this.tokenStorageService.getUser().id, this.postId).subscribe({
+      this.publicationService.userCommentedPublication(this.userId, this.postId).subscribe({
         next: (userCommented) => {
           this.commented = userCommented;
         },
@@ -99,7 +97,7 @@ export class PostComponent implements OnInit {
         }
       });
 
-      this.publicationService.userLikedPublication(this.tokenStorageService.getUser().id, this.postId).subscribe( {
+      this.publicationService.userLikedPublication(this.userId, this.postId).subscribe( {
         next: (userLiked) => {
           this.liked = userLiked;
         },
@@ -110,9 +108,9 @@ export class PostComponent implements OnInit {
 
       this.publicationService.getComments(this.postId).subscribe({
         next: (listComments: any[]) => {
-          let listOfUsersComments = new Array();
-          this.listOfUserNamesComments = new Array();
-          this.listComments = new Array();
+          let listOfUsersComments: string[] = [];
+          this.listOfUserNamesComments = [];
+          this.listComments = [];
           listComments.forEach((comment)=> {
             let index = listOfUsersComments.findIndex((uid) => {
               return uid == comment.userId;
@@ -137,21 +135,28 @@ export class PostComponent implements OnInit {
   }
 
   public addComment() {
-    if (!this.message) return;
-    if (!this.postId) return;
-    console.log("userId: " + this.tokenStorageService.getUser().id);
+    if(this.userId == null || !this.message || !this.postId) {
+      window.location.replace("/login");
+      return;
+    }
+    console.log("userId: " + this.userId);
     console.log("artworkId: " + this.postId);
     console.log("message: " + this.message);
-    this.publicationService.addComment(this.tokenStorageService.getUser().id, this.postId, this.message);
+    this.publicationService.addComment(this.userId, this.postId, this.message);
     this.message = "";
     this.callServiceInteractions();
   }
 
   public deleteComment(commentId: string) {
+    if(this.userId == null){
+      window.location.replace("/login");
+      return;
+    }
     this.publicationService.deleteComment(commentId);
     let index = this.listComments.findIndex((cid)=>{
       return cid == commentId;
     });
+    if (index == -1) return;
     this.listComments.splice(index, 1);
   }
 
@@ -159,24 +164,31 @@ export class PostComponent implements OnInit {
     let index = this.listOfUserNamesComments.findIndex((uid) => {
       return uid.id == userId;
     })
+    if (index == -1)return "";
     return this.listOfUserNamesComments[index].nickname;
   }
 
   public addLike() {
-    if (!this.isLoggedIn) return;
-    if(!this.postId) return;
-    this.publicationService.addLike(this.tokenStorageService.getUser().id, this.postId);
-    this.liked= true;
-    this.countLikes++;
+    if(this.userId == null || !this.postId){
+      window.location.replace("/login");
+      return;
+    }
+      this.publicationService.addLike(this.userId, this.postId);
+      this.liked= true;
+      this.countLikes++;
+
   }
 
   public deleteLike() {
-    if (!this.isLoggedIn) return;
-    if(!this.postId) return;
-    this.publicationService.deleteLike(this.tokenStorageService.getUser().id, this.postId);
+    if(this.userId == null || !this.postId) {
+      window.location.replace("/login");
+      return;
+    }
+    this.publicationService.deleteLike(this.userId, this.postId);
     this.liked = false;
     this.countLikes--;
   }
+
 }
 
 

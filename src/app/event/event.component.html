@@ -35,7 +35,7 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="this.isLoggedIn" class="comment-wrapper">
+            <div *ngIf="this.userId != null" class="comment-wrapper">
               <input class="comment-box" placeholder="Add a comment" type="text" name="message" value="" [(ngModel)]="message">
               <button class="comment-btn" *ngIf="this.eventId" (click)="this.addComment()">post</button>
             </div>
@@ -45,7 +45,7 @@
                   <p class="comment-user">{{getUserUsername(c.userId)}}:</p>
                   <p class="comment-message">{{c.message}}</p>
                 </div>
-                <img *ngIf="c.userId == userId" (click)="this.deleteComment(c.id)" class="delete-icon" src="../../assets/x1.png">
+                <img *ngIf="c.userId == userId" (click)="this.deleteComment(c.id)" class="delete-icon" src="../../assets/x1.png" alt="">
               </div>
             </div>
           </div>

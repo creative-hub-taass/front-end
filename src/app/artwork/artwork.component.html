@@ -4,12 +4,12 @@
       <div class="grid">
         <div class="post">
           <div class="artwork-pic">
-            <img *ngFor="let img of this.artwork?.images" src="{{img}}">
+            <img *ngFor="let img of this.artwork?.images" src="{{img}}" alt="">
           </div>
           <div class="artwork-info">
             <p class="title">{{this.artwork?.name}}</p>
             <p class="type">{{this.artwork?.type}}</p>
-            <p class="date"><img src="../assets/calendar.png">{{this.artwork?.creationDateTime | date:"dd MMM yyyy"}}</p>
+            <p class="date"><img src="../../assets/calendar.png" alt="">{{this.artwork?.creationDateTime | date:"dd MMM yyyy"}}</p>
             <p class="description">{{this.artwork?.description}}</p>
             <div class="artists">
               Artists: &nbsp;
@@ -21,7 +21,7 @@
             </div>
             <div class="interactions">
               <button class="buy-button">
-                <img src="../assets/coins-w.png">
+                <img src="../../assets/coins-w.png" alt="">
                 Purchase
               </button>
               <div class="reaction-wrapper">
@@ -37,7 +37,7 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="this.isLoggedIn" class="comment-wrapper">
+            <div *ngIf="this.userId != null" class="comment-wrapper">
               <input class="comment-box" placeholder="Add a comment" type="text" name="message" value="" [(ngModel)]="message">
               <button class="comment-btn" *ngIf="this.artworkId" (click)="this.addComment()">post</button>
             </div>
@@ -47,7 +47,7 @@
                   <p class="comment-user">{{getUserUsername(c.userId)}}:</p>
                   <p class="comment-message">{{c.message}}</p>
                 </div>
-                <img *ngIf="c.userId == userId" (click)="this.deleteComment(c.id)" class="delete-icon" src="../../assets/x1.png">
+                <img *ngIf="c.userId == userId" (click)="this.deleteComment(c.id)" class="delete-icon" src="../../assets/x1.png" alt="">
               </div>
             </div>
           </div>

@@ -91,7 +91,7 @@
                class="form-control"
                name="username"
                required
-               type="text"
+               type="readonly"
         />
         <div
           *ngIf="username.errors && f.submitted"
@@ -110,13 +110,6 @@
                required
                type="text"
         >
-        <div
-          *ngIf="nickname.errors && f.submitted"
-          class="alert alert-danger"
-          role="alert"
-          >
-          Nickname is required!
-        </div>
       </div>
       <div class="info-box">
         <label>E-mail</label>
@@ -125,15 +118,8 @@
                class="form-control"
                name="email"
                required
-               type="text"
+               readonly="text"
         >
-        <div
-          *ngIf="email.errors && f.submitted"
-          class="alert alert-danger"
-          role="alert"
-          >
-          E-mail is required!
-        </div>
       </div>
       </div>
       <div class="infoCreator" *ngIf="creator != null">
@@ -178,14 +164,8 @@
                  class="form-control"
                  name="birthDate"
                  required
-                 type="date"
+                 readonly="date"
           >
-          <div
-            *ngIf="birthDate.errors && f.submitted"
-            class="alert alert-danger"
-            role="alert">
-            Birth date is required!
-          </div>
         </div>
         <div class="info-box">
           <label>Biography</label>

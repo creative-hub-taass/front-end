@@ -57,13 +57,13 @@
             <a href="javascript:void(0)" title="Instagram" class="fa fa-instagram"></a>
           </div>
         </div>
-        <button class="tip-button" (click)="popup = true">Send a tip</button>
+        <button class="tip-button" (click)="(popup = true)">Send a tip</button>
       </div>
-      <div *ngIf="this.listPosts.length>0" class="list-post">
+      <div *ngIf="(this.listPosts != undefined && this.listPosts.length > 0)" class="list-post">
         <h3>Latest posts</h3>
         <div class="post" *ngFor="let publication of listPosts" [routerLink]="'/post/' + publication.id">
           <div class="post-info">
-            <img class="post-icon" src="../assets/post-icon.png">
+            <img class="post-icon" src="../../assets/post-icon.png" alt="">
             <div class="post-title-date">
               <h4 class="post-title">{{publication.title}}</h4>
               <p class="post-date" id="lastUpdate">{{publication.lastUpdate | date:'medium'}}</p>

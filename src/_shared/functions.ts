@@ -7,7 +7,6 @@ import {CreatorService} from "../app/_services/creator.service";
 import {TokenStorageService} from "../app/_services/token-storage.service";
 
 
-
 //restituisce un errore in console;
 //nel caso sia errore http 403, manda evento di logout
 export function onError(error: any, eventBusService: EventBusService): string {
@@ -71,7 +70,9 @@ export function followCreator(tokenStorageService: TokenStorageService,
                               eventBusService: EventBusService,
                               thisUser: PublicUser,
                               errorMessage: string): void{
-  if(tokenStorageService.getUser().id == undefined)return;
+  if(tokenStorageService.getUser().id == undefined){
+    window.location.replace("/login")
+  }
   creatorService.setFollower(tokenStorageService.getUser().id, thisUser.id).subscribe({
     next: (publicUser: PublicUser) => {
       tokenStorageService.saveUser(publicUser);

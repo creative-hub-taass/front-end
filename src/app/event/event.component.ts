@@ -26,8 +26,6 @@ const AUTH_TOKEN = environment.accessToken;
 })
 export class EventComponent implements OnInit{
 
-
-  isLoggedIn: boolean = false;
   eventId: string | null;
   event!: Event;
   listUsersID!: string[];
@@ -50,7 +48,6 @@ export class EventComponent implements OnInit{
     public route: ActivatedRoute
   ) {
     this.eventId = this.route.snapshot.paramMap.get("id");
-    this.isLoggedIn = (Object.keys(this.tokenStorageService.getUser()).length != 0)
     this.userId = this.tokenStorageService.getUser().id;
   }
 
@@ -93,7 +90,7 @@ export class EventComponent implements OnInit{
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
       });
-      this.publicationService.userCommentedPublication(this.tokenStorageService.getUser().id, this.eventId).subscribe({
+      this.publicationService.userCommentedPublication(this.userId, this.eventId).subscribe({
         next: (userCommented) => {
           this.commented = userCommented;
         },
@@ -102,7 +99,7 @@ export class EventComponent implements OnInit{
         }
       });
 
-      this.publicationService.userLikedPublication(this.tokenStorageService.getUser().id, this.eventId).subscribe( {
+      this.publicationService.userLikedPublication(this.userId, this.eventId).subscribe( {
         next: (userLiked) => {
           this.liked = userLiked;
         },
@@ -113,9 +110,9 @@ export class EventComponent implements OnInit{
 
       this.publicationService.getComments(this.eventId).subscribe({
         next: (listComments: any[]) => {
-          let listOfUsersComments = new Array();
-          this.listOfUserNamesComments = new Array();
-          this.listComments = new Array();
+          let listOfUsersComments: string[] = [];
+          this.listOfUserNamesComments = [];
+          this.listComments = [];
           listComments.forEach((comment)=> {
             let index = listOfUsersComments.findIndex((uid) => {
               return uid == comment.userId;
@@ -182,21 +179,28 @@ export class EventComponent implements OnInit{
   }
 
   public addComment() {
-    if (!this.message) return;
-    if (!this.eventId) return;
-    console.log("userId: " + this.tokenStorageService.getUser().id);
+    if(this.userId == null || !this.message || !this.eventId) {
+      window.location.replace("/login");
+      return;
+    }
+    console.log("userId: " + this.userId);
     console.log("artworkId: " + this.eventId);
     console.log("message: " + this.message);
-    this.publicationService.addComment(this.tokenStorageService.getUser().id, this.eventId, this.message);
+    this.publicationService.addComment(this.userId, this.eventId, this.message);
     this.message = "";
     this.callServiceInteractions();
   }
 
   public deleteComment(commentId: string) {
+    if(this.userId == null){
+      window.location.replace("/login");
+      return;
+    }
     this.publicationService.deleteComment(commentId);
     let index = this.listComments.findIndex((cid)=>{
       return cid == commentId;
     });
+    if(index == -1) return;
     this.listComments.splice(index, 1);
   }
 
@@ -204,26 +208,34 @@ export class EventComponent implements OnInit{
     let index = this.listOfUserNamesComments.findIndex((uid) => {
       return uid.id == userId;
     })
+    if (index==-1)return "";
     return this.listOfUserNamesComments[index].nickname;
   }
 
   public addLike() {
-    if (!this.isLoggedIn) return;
-    if(!this.eventId) return;
-    this.publicationService.addLike(this.tokenStorageService.getUser().id, this.eventId);
+    if(this.userId == null || !this.eventId) {
+      window.location.replace("/login");
+      return;
+    }
+    this.publicationService.addLike(this.userId, this.eventId);
     this.liked= true;
     this.countLikes++;
   }
 
   public deleteLike() {
-    if (!this.isLoggedIn) return;
-    if(!this.eventId) return;
-    this.publicationService.deleteLike(this.tokenStorageService.getUser().id, this.eventId);
+    if(this.userId == null || !this.eventId){
+      window.location.replace("/login");
+      return;
+    }
+    this.publicationService.deleteLike(this.userId, this.eventId);
     this.liked = false;
     this.countLikes--;
   }
 
+
+
 /*  ngAfterViewInit(): void {
     if(this.event != null)this.loadMap();
   }*/
+
 }

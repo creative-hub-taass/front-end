@@ -132,4 +132,8 @@ export class PortfolioComponent implements OnInit {
     if (index != -1) return this.listPublicationInfo[index].getComments().length;
     return 0;
   }
+
+  public getUserInfo() {
+    return this.tokenStorageService.getUser();
+  }
 }

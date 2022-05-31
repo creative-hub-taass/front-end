@@ -65,17 +65,15 @@
     </div>
   </div>
 </div>
-<div class="container-nav" *ngIf="!popupView">
-<div class="nav">
-  <a href="javascript:void(0)" (click)="setView('modify')">Edit profile</a>
-  <a href="javascript:void(0)" (click)="setView('popup')">Change password</a>
-  <a href="javascript:void(0)" (click)="setView('order')">Orders</a>
-  <a href="javascript:void(0)" (click)="setView('donation')">Donations</a>
-  <a href="javascript:void(0)" (click)="setView('upgrade')" *ngIf="this.creator == null">Upgrade Requests</a>
-  <a href="javascript:void(0)" [routerLink]="'/collaborations-requests'" *ngIf="this.creator != null">Collaborations</a>
-</div>
-</div>
 <div class="container" *ngIf="modifyView">
+  <div class="nav" *ngIf="!popupView">
+    <a class="active" href="javascript:void(0)" (click)="setView('modify')">Edit profile</a>
+    <a href="javascript:void(0)" (click)="setView('popup')">Change password</a>
+    <a href="javascript:void(0)" (click)="setView('order')">Orders</a>
+    <a href="javascript:void(0)" (click)="setView('donation')">Donations</a>
+    <a href="javascript:void(0)" (click)="setView('upgrade')" *ngIf="this.creator == null">Upgrade Requests</a>
+    <a href="javascript:void(0)" [routerLink]="'/collaborations-requests'" *ngIf="this.creator != null">Collaborations</a>
+  </div>
   <div class="profile-box">
     <h2>Modify your profile</h2>
     <button class="button" (click)="resetForm()">Reset</button>

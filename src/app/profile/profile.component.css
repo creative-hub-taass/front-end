@@ -23,18 +23,19 @@
 }
 
 .container {
-  text-align: center;
   display: flex;
   align-items: center;
-  height: 80vh;
-  padding-top: 40%;
+  flex-direction: column;
+  flex-wrap: wrap;
+  position: absolute;
+  margin-top: 75px;
+  width: 100%;
+  padding: 30px;
 }
 
 .profile-box {
   vertical-align: middle;
-  margin-left: 26%;
   font-family: "Jost", serif;
-  width: 600px;
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0 1px 4px rgb(0 0 0 / 5%);
   border-radius: 5px;
@@ -44,11 +45,10 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding-bottom: 30px;
+  padding: 30px;
 }
 
 .profile-box h2 {
-  padding-top: 100px;
   font-weight: 500;
   color: #000;
 }
@@ -197,10 +197,6 @@
   vertical-align: middle;
   margin: auto;
   font-family: "Jost", serif;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  border-radius: 5px;
-  backdrop-filter: blur(4px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -292,34 +288,33 @@
 }
 
 .nav {
-  position: relative;
-  background-color: #06dbee;
   overflow: hidden;
-  border-radius: 40px;
-  margin-top: 10%;
+  margin: auto;
+  margin-bottom: 40px;
 }
 
 /* Style the links inside the navigation bar */
 .nav a {
   float: right;
-  color: #f2f2f2;
+  color: #000000;
+  font-family: "Jost";
   text-align: center;
-  padding: 14px 28px;
+  padding: 6px 26px;
   text-decoration: none;
   font-size: 17px;
   position: relative;
+  border-radius: 500px;
 }
 
 /* Change the color of links on hover */
 .nav a:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: #e3f6ff;
 }
 
 /* Add a color to the active/current link */
 .nav a.active {
-  background-color: #0077ff;
-  color: white;
+  background-color: #00A3FF;
+  color: #FFFFFF;
 }
 
 #button-password {
@@ -411,5 +406,15 @@
   .cell {
     padding: 2px 16px;
     display: block;
+  }
+
+  .nav {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 40rem) {
+  .nav {
+    justify-content: center;
   }
 }

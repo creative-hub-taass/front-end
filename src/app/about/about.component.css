@@ -230,9 +230,7 @@ img {
     width: auto;
     text-align: center;
     margin: 0 auto;
-
   }
-
 
   .profile-user-settings {
     flex-basis: calc(100% - 10.7rem);
@@ -323,6 +321,12 @@ img {
   background-color: #e3f6ff;
 }
 
+/* Add a color to the active/current link */
+.nav a.active {
+  background-color: #00A3FF;
+  color: #FFFFFF;
+}
+
 .about-container {
   font-family: "Jost";
   display: flex;
@@ -330,12 +334,6 @@ img {
   flex-wrap: wrap;
   margin-top: 46px;
   margin-bottom: 46px;
-}
-
-/* Add a color to the active/current link */
-.nav a.active {
-  background-color: #00A3FF;
-  color: #FFFFFF;
 }
 
 .btn-follow {

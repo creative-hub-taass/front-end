@@ -1,60 +1,36 @@
 <header>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+</header>
+<main>
   <div class="container">
-
     <div class="profile">
-
       <div class="profile-image">
-
         <img src="{{this.creator?.avatar}}" alt="Avatar">
-
       </div>
-
       <div class="profile-user-settings">
-
         <h1 class="profile-user-name">{{this.user?.nickname}}</h1>
-
-        <button class="btn profile-edit-btn" *ngIf="sameId">Edit Profile</button>
-        <button class="btn-reload" (click)="reload()">Refresh<i class='fas fa-redo'></i></button>
+        <span class="profile-real-name">@{{this.user?.username}}</span>
+        <!--<div class="artist-type">{{this.creator?.creatorType?.replace('_', ' ')}}</div>-->
+        <!--<button class="btn-reload" (click)="reload()">Refresh<i class='fas fa-redo'></i></button>-->
       </div>
-
       <div class="profile-stats">
-
-        <ul>
-          <li><span class="profile-stat-count">{{this.user?.fanIds?.length}}</span> followers</li>
-          <li><span class="profile-stat-count">{{this.user?.inspirerIds?.length}}</span> following</li>
-        </ul>
-
-      </div>
-
-      <div class="profile-name">
-        <p><span class="profile-real-name">@{{this.user?.username}}</span>
-          <button class="btn-follow" *ngIf="!this.sameId && !this.followed" (click)="this.follow()">Follow</button>
-          <button class="btn-follow" *ngIf="!this.sameId && this.followed" (click)="this.unfollow()">Unfollow</button>
-        </p>
-        <h3>{{this.creator?.creatorType}}</h3>
-        <div class="contacts">
-          <link rel="stylesheet"
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-          <a href="javascript:void(0)" title="Spotify" class="fa fa-spotify"></a>
-          <a href="javascript:void(0)" title="Facebook" class="fa fa-facebook"></a>
-          <a href="javascript:void(0)" title="Twitter" class="fa fa-twitter"></a>
-          <a href="javascript:void(0)" title="Instagram" class="fa fa-instagram"></a>
+        <div class="stat">
+          <span class="profile-stat-count">{{this.user?.fanIds?.length}}</span>
+          fans
+        </div>
+        <div class="stat">
+          <span class="profile-stat-count">{{this.user?.inspirerIds?.length}}</span>
+          inspirers
         </div>
       </div>
-
+      <div class="profile-name">
+        <button class="btn-follow" *ngIf="!this.sameId && !this.followed" (click)="this.follow()">Follow</button>
+        <button class="btn-unfollow" *ngIf="!this.sameId && this.followed" (click)="this.unfollow()">Unfollow</button>
+        <button class="btn-edit" *ngIf="sameId" [routerLink]="'/profile'">Edit</button>
+        <!--<h3>{{this.creator?.creatorType}}</h3>-->
+      </div>
     </div>
-    <!-- End of profile section -->
-
-  </div>
-  <!-- End of container -->
-
-</header>
-
-<main>
-
-  <div class="container">
     <div class="nav">
       <a href="javascript:void(0)" [routerLink]="'/about/' + this.userId">About</a>
       <a href="javascript:void(0)" [routerLink]="'/portfolio/' + this.userId">Portfolio</a>
@@ -62,80 +38,74 @@
       <a href="javascript:void(0)" [routerLink]="'/events/' + this.userId">Events</a>
       <a href="javascript:void(0)" [routerLink]="'/shop/' + this.userId">Shop</a>
     </div>
+    <div class="loader" *ngIf="user==null"></div>
 
-  </div>
-
-  <div class="container">
-
-    <div class="gallery">
-
-      <h2 *ngIf="listArtworks.length > 0">Artworks</h2>
-      <div class="gallery-item" tabindex="0" *ngFor="let publication of listArtworks"
-           [routerLink]="'/artwork/' + publication.id">
+    <div class="gallery-container">
+      <div class="add-pub" [routerLink]="'/modify-event/'">Send collaboration</div>
+      <div *ngIf="listArtworks.length > 0" class="gallery-c">
+        <h2>Artworks</h2>
+        <div class="gallery-item" tabindex="0" *ngFor="let publication of listArtworks"
+             [routerLink]="'/artwork/' + publication.id">
 
 
-        <img src="{{publication.images[0]}}" class="gallery-image" alt="">
-        <div class="gallery-item-info">
+          <img src="{{publication.images[0]}}" class="gallery-image" alt="">
+          <div class="gallery-item-info">
 
-          <ul>
-            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
-                                                                                         aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
-            </li>
-            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
-                                                                                               aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}
-            </li>
-          </ul>
+            <ul>
+              <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
+                                                                                           aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
+              </li>
+              <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
+                                                                                                 aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}
+              </li>
+            </ul>
 
-        </div>
-
-      </div>
-
-      <h2 *ngIf="listEvents.length > 0">Events</h2>
-      <div class="gallery-item" tabindex="0" *ngFor="let publication of listEvents"
-           [routerLink]="'/event/' + publication.id">
-
-
-        <img src="{{publication.image}}" class="gallery-image" alt="">
-        <div class="gallery-item-info">
-
-          <ul>
-            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
-                                                                                         aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
-            </li>
-            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
-                                                                                               aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}
-            </li>
-          </ul>
+          </div>
 
         </div>
-
       </div>
+      <div *ngIf="listEvents.length > 0" class="gallery-c">
+            <h2>Events</h2>
+            <div class="gallery-item" tabindex="0" *ngFor="let publication of listEvents"
+             [routerLink]="'/event/' + publication.id">
 
+
+          <img src="{{publication.image}}" class="gallery-image" alt="">
+          <div class="gallery-item-info">
+
+            <ul>
+              <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
+                                                                                           aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
+              </li>
+              <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
+                                                                                                 aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}
+              </li>
+            </ul>
+
+          </div>
+
+        </div>
+          </div>
+      <div *ngIf="listPost.length > 0" class="gallery-c">
+          <h2>Posts</h2>
+          <div class="gallery-post" *ngFor="let publication of listPost" [routerLink]="'/post/' + publication.id">
+            <h3>{{publication.title}}<p id="lastUpdate">Last update: {{publication.lastUpdate | date:'medium'}}</p></h3>
+            <p>{{publication.body}}</p>
+            <div class="post-item-info">
+
+              <ul>
+                <li class="post-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
+                                                                                          aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
+                </li>
+                <li class="post-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
+                                                                                                aria-hidden="true"></i>{{this.getCommentsCount(publication.id)}}
+                </li>
+              </ul>
+
+          </div>
+        </div>
+        </div>
+      <div class="loader" *ngIf="listPublicationInfo == undefined"></div>
     </div>
-    <!-- End of gallery -->
-    <h2 id="postId" *ngIf="listPost.length > 0">Posts</h2>
-    <div class="list-post">
-      <div class="post" *ngFor="let publication of listPost" [routerLink]="'/post/' + publication.id">
-        <h3>{{publication.title}}<p id="lastUpdate">Last update: {{publication.lastUpdate | date:'medium'}}</p></h3>
-        <p>{{publication.body}}</p>
-        <div class="post-item-info">
-
-          <ul>
-            <li class="post-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
-                                                                                      aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
-            </li>
-            <li class="post-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
-                                                                                            aria-hidden="true"></i>{{this.getCommentsCount(publication.id)}}
-            </li>
-          </ul>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="loader" *ngIf="listPublicationInfo == undefined"></div>
-
   </div>
-  <!-- End of container -->
-
 </main>

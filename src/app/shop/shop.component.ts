@@ -12,7 +12,7 @@ import {CreatorService} from "../_services/creator.service";
 @Component({
   selector: 'app-shop',
   templateUrl: './shop.component.html',
-  styleUrls: ['./shop.component.css']
+  styleUrls: ['./shop.component.css', '../about/about.component.css', '../portfolio/portfolio.component.css']
 })
 export class ShopComponent implements OnInit {
 
@@ -133,6 +133,10 @@ export class ShopComponent implements OnInit {
     });
     if (index != -1) return this.listPublicationInfo[index].getLikes();
     return 0;
+  }
+
+  public getUserInfo() {
+    return this.tokenStorageService.getUser();
   }
 
 }

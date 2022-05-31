@@ -14,7 +14,7 @@ import * as utility from "../../_shared/functions";
 @Component({
   selector: 'app-collabs',
   templateUrl: './collabs.component.html',
-  styleUrls: ['./collabs.component.css']
+  styleUrls: ['./collabs.component.css', '../about/about.component.css', '../portfolio/portfolio.component.css']
 })
 export class CollabsComponent implements OnInit {
 
@@ -190,7 +190,7 @@ export class CollabsComponent implements OnInit {
     let index: number = this.listPublicationInfo.findIndex((elementPublication: PublicationInfo) => {
       return elementPublication.publication.id == artworkId;
     });
-    if (index != -1) return this.listPublicationInfo[index].getLikes();
+    if (index != -1) return this.listPublicationInfo[index].getComments().length;
     return 0;
   }
 

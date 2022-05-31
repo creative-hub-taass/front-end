@@ -12,7 +12,7 @@ import * as utility from "../../_shared/functions";
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
-  styleUrls: ['./events.component.css']
+  styleUrls: ['./events.component.css', '../about/about.component.css', '../portfolio/portfolio.component.css']
 })
 export class EventsComponent implements OnInit {
 
@@ -127,5 +127,9 @@ export class EventsComponent implements OnInit {
       return elementPublication.publication.id == eventId;
     });
     return this.listPublicationInfo[index].getComments().length;
+  }
+
+  public getUserInfo() {
+    return this.tokenStorageService.getUser();
   }
 }

@@ -81,7 +81,7 @@ export class EventComponent implements OnInit{
   }
 
   private callServiceInteractions() {
-    if (this.eventId != null) {
+    if (this.eventId == null)return;
       this.publicationService.getLikes(this.eventId).subscribe({
         next: (likesCount) => {
           this.countLikes = likesCount;
@@ -90,23 +90,6 @@ export class EventComponent implements OnInit{
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
       });
-      this.publicationService.userCommentedPublication(this.userId, this.eventId).subscribe({
-        next: (userCommented) => {
-          this.commented = userCommented;
-        },
-        error: (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      });
-
-      this.publicationService.userLikedPublication(this.userId, this.eventId).subscribe( {
-        next: (userLiked) => {
-          this.liked = userLiked;
-        },
-        error: (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      })
 
       this.publicationService.getComments(this.eventId).subscribe({
         next: (listComments: any[]) => {
@@ -133,7 +116,26 @@ export class EventComponent implements OnInit{
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
       });
-    }
+
+      if(this.userId == null)return;
+
+      this.publicationService.userCommentedPublication(this.userId, this.eventId).subscribe({
+        next: (userCommented) => {
+          this.commented = userCommented;
+        },
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
+
+      this.publicationService.userLikedPublication(this.userId, this.eventId).subscribe( {
+        next: (userLiked) => {
+          this.liked = userLiked;
+        },
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
   }
 
   //il metodo richiede il PublicUser e la lista di PublicUser in cui cercare

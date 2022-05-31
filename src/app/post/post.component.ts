@@ -78,7 +78,7 @@ export class PostComponent implements OnInit {
   }
 
   private callServiceInteractions() {
-    if (this.postId != null) {
+    if (this.postId == null)return;
       this.publicationService.getLikes(this.postId).subscribe({
         next: (likesCount) => {
           this.countLikes = likesCount;
@@ -87,24 +87,6 @@ export class PostComponent implements OnInit {
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
       });
-
-      this.publicationService.userCommentedPublication(this.userId, this.postId).subscribe({
-        next: (userCommented) => {
-          this.commented = userCommented;
-        },
-        error: (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      });
-
-      this.publicationService.userLikedPublication(this.userId, this.postId).subscribe( {
-        next: (userLiked) => {
-          this.liked = userLiked;
-        },
-        error: (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      })
 
       this.publicationService.getComments(this.postId).subscribe({
         next: (listComments: any[]) => {
@@ -131,7 +113,26 @@ export class PostComponent implements OnInit {
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
       });
-    }
+
+      if(this.userId == null)return;
+
+    this.publicationService.userCommentedPublication(this.userId, this.postId).subscribe({
+      next: (userCommented) => {
+        this.commented = userCommented;
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+
+    this.publicationService.userLikedPublication(this.userId, this.postId).subscribe( {
+      next: (userLiked) => {
+        this.liked = userLiked;
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
   }
 
   public addComment() {

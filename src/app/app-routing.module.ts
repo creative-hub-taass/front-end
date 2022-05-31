@@ -22,6 +22,7 @@ import {RequestCollabComponent} from "./request-collab/request-collab.component"
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
+  {path: "home", component: HomeComponent},
   {path: "registration", component: RegisterComponent},
   {path: "login", component: LoginComponent},
   {path: "users", component: ProfileComponent},

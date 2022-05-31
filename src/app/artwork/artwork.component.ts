@@ -82,7 +82,7 @@ export class ArtworkComponent implements OnInit {
   }
 
   private callServiceInteractions() {
-    if (this.artworkId != null) {
+    if (this.artworkId == null) return;
       this.publicationService.getLikes(this.artworkId).subscribe({
         next: (likesCount) => {
           this.countLikes = likesCount;
@@ -91,24 +91,6 @@ export class ArtworkComponent implements OnInit {
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
       });
-
-      this.publicationService.userCommentedPublication(this.userId, this.artworkId).subscribe({
-        next: (userCommented) => {
-          this.commented = userCommented;
-        },
-        error: (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      });
-
-      this.publicationService.userLikedPublication(this.userId, this.artworkId).subscribe( {
-        next: (userLiked) => {
-          this.liked = userLiked;
-        },
-        error: (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      })
 
       this.publicationService.getComments(this.artworkId).subscribe({
         next: (listComments: any[]) => {
@@ -135,7 +117,27 @@ export class ArtworkComponent implements OnInit {
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
       });
-    }
+
+      if(this.userId == null)return;
+
+      this.publicationService.userCommentedPublication(this.userId, this.artworkId).subscribe({
+        next: (userCommented) => {
+          this.commented = userCommented;
+        },
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
+
+      this.publicationService.userLikedPublication(this.userId, this.artworkId).subscribe( {
+        next: (userLiked) => {
+          this.liked = userLiked;
+        },
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
+
   }
   public buyArtwork(destinationAddress: string): void {
     if(this.userId == undefined) window.location.replace("/login")

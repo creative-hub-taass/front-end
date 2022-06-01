@@ -43,8 +43,12 @@ export class RequestCollabComponent implements OnInit {
     public route: ActivatedRoute
   ) {
     this.creatorId = this.tokenStorageService.getUser().id;
-    if(this.creatorId == null){
-      this.errorMessage = "Error, you aren't a creator";
+    if(this.creatorId == null) {
+      window.location.replace("/login");
+      return;
+    }
+    if(this.tokenStorageService.getUser().creator == null){
+      window.location.replace("/upgrade-request");
       return;
     }
   }

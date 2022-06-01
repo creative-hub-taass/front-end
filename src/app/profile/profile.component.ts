@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit {
               private userService: UserService) {
     this.userId = this.tokenStorageService.getUser().id;
     if(this.userId == null){
-      this.errorMessage = "Error, you aren't logged";
+      window.location.replace("/login");
       return;
     }
     this.userService.getInfoUser(this.userId).subscribe({

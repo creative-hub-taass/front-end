@@ -64,6 +64,14 @@ export class ModifyPostComponent implements OnDestroy {
     public route: ActivatedRoute
   ) {
     this.postId = this.route.snapshot.paramMap.get('id');
+    if(this.tokenStorageService.getUser().id == null) {
+      window.location.replace("/login");
+      return;
+    }
+    if(this.tokenStorageService.getUser().creator == null){
+      window.location.replace("/upgrade-request");
+      return;
+    }
     if (this.postId != null) {
       this.publicationService.getPost(this.postId).subscribe({
         next: (post: Post) => {

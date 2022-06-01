@@ -100,6 +100,14 @@ export class ModifyArtworkComponent implements OnDestroy {
     public route: ActivatedRoute
   ) {
     this.artworkId = this.route.snapshot.paramMap.get("id");
+    if(this.tokenStorageService.getUser().id == null) {
+      window.location.replace("/login");
+      return;
+    }
+    if(this.tokenStorageService.getUser().creator == null){
+      window.location.replace("/upgrade-request");
+      return;
+    }
     if (this.artworkId != null) {
       this.publicationService.getArtwork(this.artworkId).subscribe({
         next: (artwork: Artwork) => {

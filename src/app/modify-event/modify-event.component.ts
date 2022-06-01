@@ -88,6 +88,14 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
   ) {
     //prendo l'id dell'evento, se lo sto modificando, altrimenti lo sto creando nuovo
     this.eventId = this.route.snapshot.paramMap.get("id");
+    if(this.tokenStorageService.getUser().id == null) {
+      window.location.replace("/login");
+      return;
+    }
+    if(this.tokenStorageService.getUser().creator == null){
+      window.location.replace("/upgrade-request");
+      return;
+    }
     //modifico l'evento
     if (this.eventId != null) {
       this.publicationService.getEvent(this.eventId).subscribe({

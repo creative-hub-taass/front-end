@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import {UpgradeRequest} from "../../_models/UpgradeRequest";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {TokenStorageService} from "../_services/token-storage.service";
@@ -13,7 +13,7 @@ import {getListCreatorType} from "../../_models/Enum";
   templateUrl: './request-upgrade.component.html',
   styleUrls: ['./request-upgrade.component.css']
 })
-export class RequestUpgradeComponent implements OnInit {
+export class RequestUpgradeComponent {
 
   userId: string | null;
   upgradeRequestResult!: UpgradeRequest;
@@ -54,12 +54,13 @@ export class RequestUpgradeComponent implements OnInit {
   ) {
     this.userId = this.tokenStorageService.getUser().id;
     if(this.userId == null){
-      this.errorMessage = "Error, you aren't logged";
+      window.location.replace("/login");
       return;
     }
-  }
-
-  ngOnInit(): void {
+    if(this.tokenStorageService.getUser().creator != null){
+      window.location.replace("/profile");
+      return;
+    }
   }
 
   onSubmit() {

@@ -75,7 +75,7 @@
           Signup failed!<br />{{ errorMessage }}
         </div>
       </form>
-      <div *ngIf="!isLoggedIn || !isSuccessful" class="login-buttons">
+      <div *ngIf="!isSuccessful" class="login-buttons">
         <p>or login using</p>
         <div class="social-logins-button">
           <button (click)="loginWithGoogle()" class="empty-button">

@@ -12,7 +12,7 @@
     <span class="loading" *ngIf="listFeed==null && !isLoggedIn">Magic is loading...</span>
     <div class="wrapper">
       <div class="left-col">
-      <div *ngFor="let element of listFeed" class="post">
+      <div *ngFor="let element of listFeed" [ngClass]="{'artwork': element.publication.publicationType == 'artwork', 'event': element.publication.publicationType == 'event', 'post': element.publication.publicationType == 'post'}">
         <div *ngFor="let user of element.getUsers()" class="info">
           <div class="user" [routerLink]="'/about/' + this.getUser(user).id">
             <div class="profile-pic">
@@ -26,25 +26,36 @@
           <img alt="" class="options" src="../../assets/img/option.PNG">
         </div>
          <div *ngIf="element.publication.publicationType == 'artwork'">
-        <img *ngFor="let images of element.publication.images" alt="" class="post-image" src="{{images}}">
+          <img *ngFor="let images of element.publication.images" alt="" class="image" src="{{images}}">
         </div>
-        <div class="post-content">
+        <div *ngIf="element.publication.publicationType == 'event'">
+          <img class="image" src="{{element.publication.image}}">
+        </div>
+        <div class="content">
           <div *ngIf="element.publication.publicationType == 'artwork'">
-            <p [routerLink]="['/artwork/'+element.publication.id]" class="post-name" href="javascript:void(0)">
+            <p [routerLink]="['/artwork/'+element.publication.id]" class="name" href="javascript:void(0)">
             {{element.publication.name}} </p>
           </div>
           <div *ngIf="element.publication.publicationType == 'event'">
-            <p [routerLink]="['/event/'+element.publication.id]" class="post-name" href="javascript:void(0)">
-              {{element.publication.name}} </p>
+            <p [routerLink]="['/event/'+element.publication.id]" class="name" href="javascript:void(0)">{{element.publication.name}} </p>
+            <p class="date">
+              <img src="../assets/calendar-grey.png">
+              {{element.publication.startDateTime | date:"dd MMM yyyy, HH:mm"}} - {{element.publication.endDateTime | date:"dd MMM yyyy, HH:mm"}}
+            </p>
+            <p class="location">
+              <img src="../assets/mappin.png">
+              {{element.publication.locationName}}
+            </p>
           </div>
           <div *ngIf="element.publication.publicationType == 'post'">
-            <p [routerLink]="['/post/'+element.publication.id]" class="post-name" href="javascript:void(0)">
+            <p [routerLink]="['/post/'+element.publication.id]" class="name" href="javascript:void(0)">
               {{element.publication.title}} </p>
+            <p class="description">{{element.publication.body}}</p>
           </div>
           <div *ngIf="element.publication.publicationType == 'artwork' || element.publication.publicationType == 'event'">
             <p class="description"><span>{{element.publication.description}}</span></p>
           </div>
-          <p class="post-time">{{element.publication.lastUpdate | date:"dd MMM yyyy, HH:mm"}}</p>
+          <p class="time">{{element.publication.lastUpdate | date:"dd MMM yyyy, HH:mm"}}</p>
           <div class="reaction-wrapper">
             <div class="count">
               <img alt="" class="icon" src="../../assets/heart-outline.png">

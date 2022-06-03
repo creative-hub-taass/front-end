@@ -268,7 +268,7 @@ export class ModifyPostComponent implements OnDestroy {
     this.listCreationPost.splice(index, 1);
   }
 
-  getCreation(): string[] {
+  getCreation(): CreationType[] {
     return getListCreationTypeAP();
   }
 
@@ -278,72 +278,79 @@ export class ModifyPostComponent implements OnDestroy {
     this.postResult.lastUpdate = new Date().toISOString();
     //sto modificando il post
     if (post) {
-      this.publicationService.updatePost(this.postResult).subscribe({
-        next: () => {
-          console.log("Ho aggiornato il post correttamente");
-          this.listCreationPost.forEach((elementCreationNew) => {
-            let index = this.postResult.creations.findIndex((elementCreationOrigin) => {
-              return elementCreationNew.user == elementCreationOrigin.user;
-            });
-            //se un creation non è già all'interno del post originale
-            if (index == -1) {
-              this.publicationService.savePostCreation(elementCreationNew).subscribe({
-                next: (result) => {
-                  console.log("ho salvato il creation");
-                  console.log(result);
-                },
-                error: (error) => {
-                  this.errorMessage = utility.onError(error, this.eventBusService);
-                }
-              });
-            }
-          });
-          //devo eliminare tutte le creations che sono su origin e non sono sulla nuova lista
-          this.postResult.creations.forEach((elementCreationOrigin) => {
-            let index = this.listCreationPost.findIndex((elementCreationNew) => {
-              return elementCreationNew.user == elementCreationOrigin.user;
-            });
-            //se non l'ho trovato lo cancello
-            if (index == -1) {
-              this.publicationService.deletePostCreation(elementCreationOrigin.id).subscribe({
-                next: () => {
-                  console.log("Creation eliminata con successo");
-                },
-                error: (error) => {
-                  this.errorMessage = utility.onError(error, this.eventBusService);
-                }
-              });
-            }
-          });
-        },
-        error: (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      });
-      //controllo nella nuova lista di creations quali non sono già presenti nella vecchia
-
-      this.sent = true;
+      this.updatePost();
     }else {
-      this.publicationService.savePost(this.postResult).subscribe({
-        next: (responsePost) => {
-          this.listCreationPost.forEach((elementCreation) => {
-            elementCreation.postId = responsePost.id;
-            this.publicationService.savePostCreation(elementCreation).subscribe({
+      //so creando il post
+      this.savePost();
+    }
+  }
+
+  private updatePost() {
+    this.publicationService.updatePost(this.postResult).subscribe({
+      next: () => {
+        console.log("Ho aggiornato il post correttamente");
+        this.listCreationPost.forEach((elementCreationNew) => {
+          let index = this.postResult.creations.findIndex((elementCreationOrigin) => {
+            return elementCreationNew.user == elementCreationOrigin.user;
+          });
+          //se un creation non è già all'interno del post originale
+          if (index == -1) {
+            this.publicationService.savePostCreation(elementCreationNew).subscribe({
               next: () => {
-                console.log("Ho salvato correttamente il creation");
+                console.log("ho salvato il creation");
               },
               error: (error) => {
                 this.errorMessage = utility.onError(error, this.eventBusService);
               }
             });
+          }
+        });
+        //devo eliminare tutte le creations che sono su origin e non sono sulla nuova lista
+        this.postResult.creations.forEach((elementCreationOrigin) => {
+          let index = this.listCreationPost.findIndex((elementCreationNew) => {
+            return elementCreationNew.user == elementCreationOrigin.user;
           });
-          this.router.navigate(['modify-post/' + responsePost.id]);
-        },
-        error: (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      });
-    }
+          //se non l'ho trovato lo cancello
+          if (index == -1) {
+            this.publicationService.deletePostCreation(elementCreationOrigin.id).subscribe({
+              next: () => {
+                console.log("Creation eliminata con successo");
+              },
+              error: (error) => {
+                this.errorMessage = utility.onError(error, this.eventBusService);
+              }
+            });
+          }
+        });
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+    //controllo nella nuova lista di creations quali non sono già presenti nella vecchia
+
+    this.sent = true;
   }
 
+  private savePost() {
+    this.publicationService.savePost(this.postResult).subscribe({
+      next: (responsePost) => {
+        this.listCreationPost.forEach((elementCreation) => {
+          elementCreation.postId = responsePost.id;
+          this.publicationService.savePostCreation(elementCreation).subscribe({
+            next: () => {
+              console.log("Ho salvato correttamente il creation");
+            },
+            error: (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
+          });
+        });
+        this.router.navigate(['modify-post/' + responsePost.id]);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+  }
 }

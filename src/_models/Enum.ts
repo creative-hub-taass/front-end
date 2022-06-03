@@ -1,7 +1,14 @@
 export enum Currency {
   USD = "USD",
   EUR = "EUR",
-  GBP = "GBP"
+  GBP = "GBP",
+  JPY = "JPY",
+  AUD = "AUD",
+  CAD = "CAD",
+  CHF = "CHF",
+  CNH = "CNH",
+  SEK = "SEK",
+  NZD = "NZD"
 }
 
 export enum CreationType {
@@ -15,45 +22,48 @@ export enum CreationType {
 }
 
 export enum CollaborationRequestStatus {
-  OPEN, CLOSED
+  OPEN ="OPEN", CLOSED ="CLOSED"
 }
 export enum CollaborationRequestCategory{
-  MUSICAL
+  MUSICAL="MUSICAL"
 }
 
 export enum CreatorType {
-  ARTIST, PAINTER, ILLUSTRATOR, DESIGNER,
-  GRAPHIC_DESIGNER, PHOTOGRAPHER, VIDEO_MAKER,
-  POET, WRITER,
-  MUSICIAN, DANCER
+  ARTIST ="ARTIST",
+  PAINTER = "PAINTER",
+  ILLUSTRATOR = "ILLUSTRATOR",
+  DESIGNER = "DESIGNER",
+  GRAPHIC_DESIGNER = "GRAPHIC_DESIGNER",
+  PHOTOGRAPHER = "PHOTOGRAPHER",
+  VIDEO_MAKER = "VIDEO_MAKER",
+  POET = "POET",
+  WRITER = "WRITER",
+  MUSICIAN = "MUSICIAN",
+  DANCER = "DANCER"
 }
 export enum UpgradeRequestStatus {
-  OPEN, ACCEPTED, REJECTED
+  OPEN = "OPEN", ACCEPTED = "ACCEPTED", REJECTED = "REJECTED"
 }
 
-export function getListCurrency(): string[] {
-  return ["USD","EUR","GBP"];
+export function getListCurrency(): Currency[] {
+  return [Currency.USD,Currency.EUR,Currency.GBP, Currency.AUD, Currency.CAD, Currency.CHF, Currency.CNH, Currency.JPY, Currency.NZD, Currency.SEK];
 }
 export  function  getListCreationTypeAP(): CreationType[] {
   return [CreationType.AUTHOR,CreationType.COAUTHOR,CreationType.FEATURING,CreationType.COLLAB,CreationType.OTHER];
 }
 
-export function getListCreationTypeE(): string[] {
-  return ["ORGANIZER","PARTICIPANT"];
+export function getListCreationTypeE(): CreationType[] {
+  return [CreationType.ORGANIZER, CreationType.PARTICIPANT];
 }
 
-export function getListCollaborationStatus(): string[] {
-  return ["OPEN","CLOSED"];
+export function getListCollaborationStatus(): CollaborationRequestStatus[] {
+  return [CollaborationRequestStatus.OPEN,CollaborationRequestStatus.CLOSED];
 }
 
-export function getListCategory(): string[] {
-  return ["MUSICAL"];
+export function getListUpgradeStatus(): UpgradeRequestStatus[] {
+  return [UpgradeRequestStatus.OPEN,UpgradeRequestStatus.ACCEPTED, UpgradeRequestStatus.REJECTED];
 }
 
-export function getListUpgradeStatus(): string[] {
-  return ["OPEN", "ACCEPTED", "REJECTED"];
-}
-
-export function getListCreatorType(): string[] {
-  return ["ARTIST","PAINTER","ILLUSTRATOR","DESIGNER","GRAPHIC_DESIGNER","PHOTOGRAPHER","VIDEO_MAKER","POET","WRITER","MUSICIAN","DANCER"];
+export function getListCreatorType(): CreatorType[] {
+  return [CreatorType.ARTIST, CreatorType.PAINTER, CreatorType.ILLUSTRATOR, CreatorType.DESIGNER, CreatorType.GRAPHIC_DESIGNER, CreatorType.PHOTOGRAPHER, CreatorType.VIDEO_MAKER, CreatorType.POET, CreatorType.MUSICIAN, CreatorType.DANCER];
 }

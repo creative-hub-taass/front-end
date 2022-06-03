@@ -10,7 +10,7 @@ import {Post} from "../../_models/Post";
 import {PublicationInfo} from "../../_models/PublicationInfo";
 import {PaymentService} from "../_services/payment.service";
 import {Donation} from "../../_models/Donation";
-import {getListCurrency} from "../../_models/Enum";
+import {Currency, getListCurrency} from "../../_models/Enum";
 
 @Component({
   selector: 'app-about',
@@ -30,9 +30,9 @@ export class AboutComponent implements OnInit {
 
 
   popup: boolean = false;
-  form: { imp: string; currency: string; message: string} = {
+  form: { imp: string; currency: Currency; message: string} = {
     imp: "",
-    currency: "",
+    currency: Currency.EUR,
     message: ""
   };
 
@@ -168,7 +168,7 @@ export class AboutComponent implements OnInit {
     });
   }
 
-  getCurrency(): string[] {
+  getCurrency(): Currency[] {
     return getListCurrency();
   }
 

@@ -34,8 +34,8 @@ export enum UpgradeRequestStatus {
 export function getListCurrency(): string[] {
   return ["USD","EUR","GBP"];
 }
-export  function  getListCreationTypeAP(): string[] {
-  return ["AUTHOR","COAUTHOR","FEATURING","COLLAB","OTHER"];
+export  function  getListCreationTypeAP(): CreationType[] {
+  return [CreationType.AUTHOR,CreationType.COAUTHOR,CreationType.FEATURING,CreationType.COLLAB,CreationType.OTHER];
 }
 
 export function getListCreationTypeE(): string[] {

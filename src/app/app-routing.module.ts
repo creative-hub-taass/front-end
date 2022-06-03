@@ -19,6 +19,9 @@ import {CollabsComponent} from "./collabs/collabs.component";
 import {OwnCollabsComponent} from "./own-collabs/own-collabs.component";
 import {RequestUpgradeComponent} from "./request-upgrade/request-upgrade.component";
 import {RequestCollabComponent} from "./request-collab/request-collab.component";
+import {OwnUpgradesComponent} from "./own-upgrades/own-upgrades.component";
+import {OwnOrdersComponent} from "./own-orders/own-orders.component";
+import {OwnDonationsComponent} from "./own-donations/own-donations.component";
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -41,8 +44,11 @@ const routes: Routes = [
   {path: "shop/:id", component: ShopComponent},
   {path: "collaborations/:id", component: CollabsComponent},
   {path: "collaborations-requests", component: OwnCollabsComponent},
+  {path: "upgrade-requests", component: OwnUpgradesComponent},
   {path: "upgrade-request", component: RequestUpgradeComponent},
   {path: "collaboration-request", component: RequestCollabComponent},
+  {path: "orders", component: OwnOrdersComponent},
+  {path: "donations", component: OwnDonationsComponent},
   {path: "profile", component: ProfileComponent},
   {path: "**", redirectTo: "/home"}
 ];

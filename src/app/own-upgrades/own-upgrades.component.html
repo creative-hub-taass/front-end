@@ -1,0 +1,49 @@
+<div class="wrapper">
+
+  <div class="table">
+    <h2>Upgrade Request Sent</h2>
+    <button class="btn-request" [routerLink]="'/upgrade-request'">New request</button>
+    <div class="row header" >
+      <div class="cell">
+        Request number
+      </div>
+      <div class="cell">
+        Name
+      </div>
+      <div class="cell">
+        Surname
+      </div>
+      <div class="cell">
+        artName
+      </div>
+      <div class="cell">
+        Creator Type
+      </div>
+      <div class="cell">
+        Status
+      </div>
+    </div>
+
+    <div class="row" *ngFor="let request of listRequest">
+      <div class="cell" data-title="IdRequest">
+        {{request.id}}
+      </div>
+      <div class="cell" data-title="Name">
+        {{request.name}}
+      </div>
+      <div class="cell" data-title="Surname">
+        {{request.surname}}
+      </div>
+      <div class="cell" data-title="ArtName">
+        {{request.artName}}
+      </div>
+      <div class="cell" data-title="CreatorType">
+        {{request.creatorType}}
+      </div>
+      <div class="cell" data-title="Status">
+        {{request.status}}
+      </div>
+    </div>
+
+  </div>
+</div>

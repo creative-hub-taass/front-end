@@ -1,6 +1,6 @@
 <div id="popup1" class="overlay" *ngIf="popupView">
   <div class="popup" >
-    <button class="button" (click)="setView('modify')">&times;</button>
+    <button class="button" (click)="popupView = false">&times;</button>
     <div class="content">
       <form
         #f="ngForm"
@@ -65,13 +65,13 @@
     </div>
   </div>
 </div>
-<div class="container" *ngIf="modifyView">
+<div class="container" *ngIf="!popupView">
   <div class="nav" *ngIf="!popupView">
-    <a class="active" href="javascript:void(0)" (click)="setView('modify')">Edit profile</a>
-    <a href="javascript:void(0)" (click)="setView('popup')">Change password</a>
-    <a href="javascript:void(0)" (click)="setView('order')">Orders</a>
-    <a href="javascript:void(0)" (click)="setView('donation')">Donations</a>
-    <a href="javascript:void(0)" (click)="setView('upgrade')" *ngIf="this.creator == null">Upgrade Requests</a>
+    <a class="active" href="javascript:void(0)" [routerLink]="'/profile'">Edit profile</a>
+    <a href="javascript:void(0)" (click)="popupView = true">Change password</a>
+    <a href="javascript:void(0)" [routerLink]="'/orders'">Orders</a>
+    <a href="javascript:void(0)" [routerLink]="'/donations'">Donations</a>
+    <a href="javascript:void(0)" [routerLink]="'/upgrade-requests'" *ngIf="this.creator == null">Upgrade Requests</a>
     <a href="javascript:void(0)" [routerLink]="'/collaborations-requests'" *ngIf="this.creator != null">Collaborations</a>
   </div>
   <div class="profile-box">
@@ -241,161 +241,4 @@
     <h4 *ngIf="this.submitted" style="color: limegreen">Request submitted!</h4>
     <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
   </div>
-</div>
-
-<div class="wrapper" *ngIf="orderView">
-  <h2>History of orders</h2>
-  <div class="table">
-    <div class="row header" >
-      <div class="cell">
-        Order ID
-      </div>
-      <div class="cell">
-        Name of artwork
-      </div>
-      <div class="cell">
-        Import
-      </div>
-      <div class="cell">
-        Destination Address
-      </div>
-      <div class="cell">
-        Date
-      </div>
-    </div>
-    <div class="row" *ngFor="let order of listOrders">
-      <div class="cell" data-title="Id">
-        {{order.id}}
-      </div>
-      <div class="cell" data-title="NameArtwork">
-        {{getArtworkByOrder(order.idArtwork)}}
-      </div>
-      <div class="cell" data-title="Import">
-        {{order.importo}}
-      </div>
-      <div class="cell" data-title="DestinationAddress">
-        {{order.destinationAddress}}
-      </div>
-      <div class="cell" data-title="Date">
-        {{order.timeStamp | date: 'medium'}}
-      </div>
-    </div>
-
-
-  </div>
-
-</div>
-
-<div class="wrapper" *ngIf="donationView">
-
-  <h2>History of donations</h2>
-  <div class="table">
-    <div class="row header" >
-      <div class="cell">
-        Donation ID
-      </div>
-      <div class="cell">
-        Name of creator
-      </div>
-      <div class="cell">
-        Import
-      </div>
-      <div class="cell">
-        Currency
-      </div>
-      <div class="cell">
-        Message
-      </div>
-      <div class="cell">
-        Date
-      </div>
-    </div>
-    <div class="row" *ngFor="let donation of listDonations">
-      <div class="cell" data-title="Id">
-        {{donation.id}}
-      </div>
-      <div class="cell" data-title="nicknameCreator">
-        {{getCreatorByDonation(donation.idCreator)}}
-      </div>
-      <div class="cell" data-title="Import">
-        {{donation.importo}}
-      </div>
-      <div class="cell" data-title="Currency">
-        {{donation.currency}}
-      </div>
-      <div class="cell" data-title="Message">
-        {{donation.message}}
-      </div>
-      <div class="cell" data-title="Date">
-        {{donation.timestamp | date: 'medium'}}
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="wrapper" *ngIf="upgradeView">
-  <h2>History of upgrade requests</h2>
-  <div class="table">
-    <div class="row header" >
-      <div class="cell">
-        Id request
-      </div>
-      <div class="cell">
-        Name
-      </div>
-      <div class="cell">
-        Username
-      </div>
-      <div class="cell">
-        Birth Date
-      </div>
-      <div class="cell">
-        Art name
-      </div>
-      <div class="cell">
-        Avatar
-      </div>
-      <div class="cell">
-        Creator type
-      </div>
-      <div class="cell">
-        Payment e-mail
-      </div>
-      <div class="cell">
-        Status
-      </div>
-    </div>
-    <div class="row" *ngFor="let request of listUpgrade">
-      <div class="cell" data-title="Id">
-        {{request.id}}
-      </div>
-      <div class="cell" data-title="Name">
-        {{request.name}}
-      </div>
-      <div class="cell" data-title="NameArtwork">
-        {{request.username}}
-      </div>
-      <div class="cell" data-title="Import">
-        {{request.birthDate}}
-      </div>
-      <div class="cell" data-title="DestinationAddress">
-        {{request.artName}}
-      </div>
-      <div class="cell" data-title="Date">
-        {{request.avatar}}
-      </div>
-      <div class="cell" data-title="Date">
-        {{request.creatorType}}
-      </div>
-      <div class="cell" data-title="Date">
-        {{request.paymentEmail}}
-      </div>
-      <div class="cell" data-title="Date">
-        {{request.status}}
-      </div>
-    </div>
-
-
-  </div>
-
 </div>

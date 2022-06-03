@@ -1,0 +1,40 @@
+
+<div class="wrapper">
+  <h2>History of orders</h2>
+  <div class="table">
+    <div class="row header" >
+      <div class="cell">
+        Order ID
+      </div>
+      <div class="cell">
+        Name of artwork
+      </div>
+      <div class="cell">
+        Import
+      </div>
+      <div class="cell">
+        Destination Address
+      </div>
+      <div class="cell">
+        Date
+      </div>
+    </div>
+    <div class="row" *ngFor="let order of listOrders">
+      <div class="cell" data-title="Id">
+        {{order.id}}
+      </div>
+      <div class="cell" data-title="NameArtwork">
+        {{getArtworkByOrder(order.idArtwork)}}
+      </div>
+      <div class="cell" data-title="Import">
+        {{order.importo}}
+      </div>
+      <div class="cell" data-title="DestinationAddress">
+        {{order.destinationAddress}}
+      </div>
+      <div class="cell" data-title="Date">
+        {{order.timeStamp | date: 'medium'}}
+      </div>
+    </div>
+  </div>
+</div>

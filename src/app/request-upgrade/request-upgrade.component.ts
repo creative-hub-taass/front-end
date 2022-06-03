@@ -6,7 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../_services/user.service";
 import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
-import {getListCreatorType} from "../../_models/Enum";
+import {CreatorType, getListCreatorType} from "../../_models/Enum";
 
 @Component({
   selector: 'app-request-upgrade',
@@ -31,7 +31,7 @@ export class RequestUpgradeComponent {
     username: string,
     avatar: string,
     paymentEmail: string,
-    creatorType: string
+    creatorType: CreatorType
   } = {
     name: "",
     surname: "",
@@ -43,7 +43,7 @@ export class RequestUpgradeComponent {
     username: "",
     avatar: "",
     paymentEmail: "",
-    creatorType: ""
+    creatorType: CreatorType.ARTIST
   };
 
   constructor(
@@ -88,7 +88,7 @@ export class RequestUpgradeComponent {
     this.form.username = "";
     this.form.avatar = "";
     this.form.paymentEmail = "";
-    this.form.creatorType = "";
+    this.form.creatorType = CreatorType.ARTIST;
   }
 
   buildRequest(){
@@ -111,7 +111,7 @@ export class RequestUpgradeComponent {
     this.upgradeRequestResult = new UpgradeRequest(tmp);
   }
 
-  getCreatorType(): string[] {
+  getCreatorType(): CreatorType[] {
     return getListCreatorType();
   }
 }

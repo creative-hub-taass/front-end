@@ -144,7 +144,7 @@ export class ProfileComponent{
     this.buildForm();
   }
 
-  getCreatorType() {
+  getCreatorType(): CreatorType[] {
     return getListCreatorType();
   }
 

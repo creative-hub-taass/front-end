@@ -6,7 +6,6 @@ import {CreatorService} from "../_services/creator.service";
 import {ActivatedRoute} from "@angular/router";
 import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
-import {getListCategory} from "../../_models/Enum";
 
 @Component({
   selector: 'app-request-collab',
@@ -113,7 +112,4 @@ export class RequestCollabComponent implements OnInit {
     return this.listFollowers[index].id;
   }
 
-  getCategory(): string[] {
-    return getListCategory();
-  }
 }

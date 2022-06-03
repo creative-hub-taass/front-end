@@ -7,7 +7,7 @@ import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {Creation} from "../../_models/Publication";
-import {getListCreationTypeAP, getListCurrency} from "../../_models/Enum";
+import {CreationType, Currency, getListCreationTypeAP, getListCurrency} from "../../_models/Enum";
 
 export class CreationArtwork implements Creation {
   id: string;
@@ -49,7 +49,7 @@ export class ModifyArtworkComponent implements OnDestroy {
     attributes: Attributes;
     availableCopies: number | undefined;
     copies: number;
-    currency: string | undefined;
+    currency: Currency | undefined;
     description: string;
     name: string;
     onSale: string;
@@ -85,9 +85,9 @@ export class ModifyArtworkComponent implements OnDestroy {
 
   formCreations: {
     user?: PublicUser;
-    creationType: string;
+    creationType: CreationType;
   } = {
-    creationType: ""
+    creationType: CreationType.OTHER
   };
 
   onSale: boolean = false;
@@ -100,11 +100,11 @@ export class ModifyArtworkComponent implements OnDestroy {
     public route: ActivatedRoute
   ) {
     this.artworkId = this.route.snapshot.paramMap.get("id");
-    if(this.tokenStorageService.getUser().id == null) {
+    if (this.tokenStorageService.getUser().id == null) {
       window.location.replace("/login");
       return;
     }
-    if(this.tokenStorageService.getUser().creator == null){
+    if (this.tokenStorageService.getUser().creator == null) {
       window.location.replace("/upgrade-request");
       return;
     }
@@ -188,7 +188,7 @@ export class ModifyArtworkComponent implements OnDestroy {
       publicationType: "artwork",
       availableCopies: 0,
       copies: 0,
-      currency: "",
+      currency: undefined,
       description: "",
       name: "",
       onSale: false,
@@ -294,6 +294,20 @@ export class ModifyArtworkComponent implements OnDestroy {
     this.onSale = this.artworkResult.onSale;
   }
 
+  getCreation(): CreationType[] {
+    return getListCreationTypeAP();
+  }
+
+  getCurrency(): Currency[] {
+    return getListCurrency();
+  }
+
+  onCheckChange(x: string) {
+    this.formArtwork.onSale = x;
+    this.artworkResult.onSale = (x == 'true');
+    this.onSale = (x == "true");
+  }
+
   onSubmit() {
 
     if (!this.onSale) {
@@ -307,49 +321,57 @@ export class ModifyArtworkComponent implements OnDestroy {
     this.artworkResult.lastUpdate = new Date().toISOString();
     //devo eseguire una PUT al server per aggiornare l'artwork
     if (artwork) {
-      //mando nella richiesta solo le creation non presenti nell'artwork di origine
-      this.listCreationArtwork.forEach((elementCreationNew) => {
-        let index = this.artworkResult.creations.findIndex((elementCreationOrigin) => {
-          return elementCreationOrigin.user == elementCreationNew.user;
-        });
-        if (index == -1) {
-          this.publicationService.saveArtworkCreation(elementCreationNew).subscribe({
-            next: () => {
-              console.log("Ho salvato il creation")
-            },
-            error: (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
-          });
-        }
-      });
-      //mando richieste di eliminazione delle creation presenti nell'artwork originale
-      this.artworkResult.creations.forEach((elementCreationOrigin) => {
-        let index = this.listCreationArtwork.findIndex((elementCreationNew) => {
-          return elementCreationNew.user == elementCreationOrigin.user;
-        });
-        if (index == -1) {
-          this.publicationService.deleteArtworkCreation(elementCreationOrigin.id).subscribe({
-            next: () => {
-              console.log("Creation eliminata con successo");
-            },
-            error: (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
-          });
-        }
-      });
-      this.publicationService.updateArtwork(this.artworkResult).subscribe({
-        next: () => {
-          console.log("Ho aggiornato il post correttamente");
-        },
-        error: (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      });
-      this.sent = true;
-      return;
+      this.updateArtwork();
+    } else {
+      this.saveArtwork();
     }
+  }
+
+  private updateArtwork() {
+    this.publicationService.updateArtwork(this.artworkResult).subscribe({
+      next: () => {
+        console.log("Ho aggiornato il post correttamente");
+        //mando nella richiesta solo le creation non presenti nell'artwork di origine
+        this.listCreationArtwork.forEach((elementCreationNew) => {
+          let index = this.artworkResult.creations.findIndex((elementCreationOrigin) => {
+            return elementCreationOrigin.user == elementCreationNew.user;
+          });
+          if (index == -1) {
+            this.publicationService.saveArtworkCreation(elementCreationNew).subscribe({
+              next: () => {
+                console.log("Ho salvato il creation")
+              },
+              error: (error) => {
+                this.errorMessage = utility.onError(error, this.eventBusService);
+              }
+            });
+          }
+        });
+        //mando richieste di eliminazione delle creation presenti nell'artwork originale
+        this.artworkResult.creations.forEach((elementCreationOrigin) => {
+          let index = this.listCreationArtwork.findIndex((elementCreationNew) => {
+            return elementCreationNew.user == elementCreationOrigin.user;
+          });
+          if (index == -1) {
+            this.publicationService.deleteArtworkCreation(elementCreationOrigin.id).subscribe({
+              next: () => {
+                console.log("Creation eliminata con successo");
+              },
+              error: (error) => {
+                this.errorMessage = utility.onError(error, this.eventBusService);
+              }
+            });
+          }
+        });
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+    this.sent = true;
+  }
+
+  private saveArtwork() {
     //altrimenti devo eseguire una POST per creare l'artwork
     this.publicationService.saveArtwork(this.artworkResult).subscribe({
       next: (responseArtwork) => {
@@ -370,20 +392,6 @@ export class ModifyArtworkComponent implements OnDestroy {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
-  }
-
-  getCreation(): string[] {
-    return getListCreationTypeAP();
-  }
-
-  getCurrency(): string[] {
-    return getListCurrency();
-  }
-
-  onCheckChange(x: string) {
-    this.formArtwork.onSale = x;
-    this.artworkResult.onSale = (x=='true');
-    this.onSale = (x == "true");
   }
 
 }

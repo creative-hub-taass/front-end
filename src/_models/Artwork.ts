@@ -1,4 +1,5 @@
 import {Creation, Publication} from "./Publication";
+import {Currency} from "./Enum";
 
 export type Attributes = {
   [key: string]: string | undefined;
@@ -15,7 +16,7 @@ export class Artwork implements Publication {
   availableCopies: number;
   copies: number;
   creationDateTime: string;
-  currency?: string;
+  currency?: Currency;
   description: string;
   images: string[];
   name: string;

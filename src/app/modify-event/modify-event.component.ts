@@ -1,4 +1,4 @@
-import {Component, OnDestroy, AfterViewInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy} from '@angular/core';
 import {Creation} from "../../_models/Publication";
 import * as utility from "../../_shared/functions";
 import {Event} from "../../_models/Event"
@@ -10,7 +10,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import * as L from 'leaflet';
 import {environment} from "../../environments/environment";
 import {Observable, Subscriber} from "rxjs";
-import {getListCreationTypeE} from "../../_models/Enum";
+import {CreationType, getListCreationTypeE} from "../../_models/Enum";
 
 export class CreationEvent implements Creation {
   id: string;
@@ -74,9 +74,9 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
 
   formCreations: {
     user?: PublicUser;
-    creationType: string;
+    creationType: CreationType;
   } = {
-    creationType: ""
+    creationType: CreationType.OTHER
   };
 
   constructor(
@@ -262,82 +262,6 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
     this.buildFormEventOrigin();
   }
 
-  onSubmit() {
-    let URL_REGEXP = /^[A-Za-z][A-Za-z\d.+-]*:\/*(?:\w+(?::\w+)?@)?[^\s/]+(?::\d+)?(?:\/[\w#!:.?+=&%@\-/]*)?$/;
-    if(this.eventResult.bookingURL != undefined && !URL_REGEXP.test(this.eventResult.bookingURL)){
-      this.errorMessage = "Booking URL need to be a valid URL.";
-      return;
-    }
-    const event = window.sessionStorage.getItem("eventOrigin");
-    //aggiorno il lastUpdate
-    this.eventResult.lastUpdate = new Date().toISOString();
-    if (event) {
-      //mando nella richiesta solo le creation non presenti nell'event di origine
-      this.listCreationEvent.forEach((elementCreationNew) => {
-        let index = this.eventResult.creations.findIndex((elementCreationOrigin) => {
-          return elementCreationNew.user == elementCreationOrigin.user;
-        });
-        if(index == -1) {
-          this.publicationService.saveEventCreation(elementCreationNew).subscribe({
-            next: (result) => {
-              console.log("Ho salvato il creation correttamente");
-              console.log(result);
-            },
-            error: (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
-          });
-        }
-      });
-      //mando richieste di eliminazione delle creation presenti nell'event originale
-      this.eventResult.creations.forEach((elementCreationOrigin) => {
-        let index = this.listCreationEvent.findIndex((elementCreationNew) => {
-          return elementCreationNew.user == elementCreationOrigin.user;
-        });
-        if (index == -1) {
-          this.publicationService.deleteEventCreation(elementCreationOrigin.id).subscribe({
-            next: () => {
-              console.log("Creation eliminata con successo");
-            },
-            error: (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
-          })
-        }
-      });
-      this.publicationService.updateEvent(this.eventResult).subscribe({
-        next: () => {
-          console.log("Ho aggiornato il post correttamente");
-        },
-        error: (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      });
-      this.sent = true;
-      return;
-    }
-    //altrimenti devo eseguire una POST per creare l'artwork
-    this.publicationService.saveEvent(this.eventResult).subscribe({
-      next: (responseEvent) => {
-        this.listCreationEvent.forEach((elementCreation) => {
-          elementCreation.eventId = responseEvent.id;
-          this.publicationService.saveEventCreation(elementCreation).subscribe({
-            next: () => {
-              console.log("Ho salvato correttamente il creation");
-            },
-            error: (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
-          });
-        });
-        this.router.navigate(['modify-event/' + responseEvent.id]);
-      },
-      error: (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    });
-  }
-
   addUsers() {
     if (this.formCreations.user == undefined) return;
     let tmpCreation: any = {};
@@ -375,7 +299,90 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
     this.listCreationEvent.splice(index, 1);
   }
 
-  getCreation(): string[] {
+  getCreation(): CreationType[] {
     return getListCreationTypeE();
+  }
+
+  onSubmit() {
+    let URL_REGEXP = /^[A-Za-z][A-Za-z\d.+-]*:\/*(?:\w+(?::\w+)?@)?[^\s/]+(?::\d+)?(?:\/[\w#!:.?+=&%@\-/]*)?$/;
+    if(this.eventResult.bookingURL != undefined && !URL_REGEXP.test(this.eventResult.bookingURL)){
+      this.errorMessage = "Booking URL need to be a valid URL.";
+      return;
+    }
+    const event = window.sessionStorage.getItem("eventOrigin");
+    //aggiorno il lastUpdate
+    this.eventResult.lastUpdate = new Date().toISOString();
+    if (event) {
+      this.updateEvent();
+    } else {
+      this.saveEvent();
+    }
+  }
+
+  private updateEvent() {
+    this.publicationService.updateEvent(this.eventResult).subscribe({
+      next: () => {
+        console.log("Ho aggiornato il post correttamente");
+        //mando nella richiesta solo le creation non presenti nell'event di origine
+        this.listCreationEvent.forEach((elementCreationNew) => {
+          let index = this.eventResult.creations.findIndex((elementCreationOrigin) => {
+            return elementCreationNew.user == elementCreationOrigin.user;
+          });
+          if(index == -1) {
+            this.publicationService.saveEventCreation(elementCreationNew).subscribe({
+              next: () => {
+                console.log("Ho salvato il creation correttamente");
+              },
+              error: (error) => {
+                this.errorMessage = utility.onError(error, this.eventBusService);
+              }
+            });
+          }
+        });
+        //mando richieste di eliminazione delle creation presenti nell'event originale
+        this.eventResult.creations.forEach((elementCreationOrigin) => {
+          let index = this.listCreationEvent.findIndex((elementCreationNew) => {
+            return elementCreationNew.user == elementCreationOrigin.user;
+          });
+          if (index == -1) {
+            this.publicationService.deleteEventCreation(elementCreationOrigin.id).subscribe({
+              next: () => {
+                console.log("Creation eliminata con successo");
+              },
+              error: (error) => {
+                this.errorMessage = utility.onError(error, this.eventBusService);
+              }
+            })
+          }
+        });
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+    this.sent = true;
+  }
+
+  private saveEvent() {
+    //altrimenti devo eseguire una POST per creare l'artwork
+    this.publicationService.saveEvent(this.eventResult).subscribe({
+      next: (responseEvent) => {
+        this.listCreationEvent.forEach((elementCreation) => {
+          elementCreation.eventId = responseEvent.id;
+          this.publicationService.saveEventCreation(elementCreation).subscribe({
+            next: () => {
+              console.log("Ho salvato correttamente il creation");
+            },
+            error: (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
+          });
+        });
+        this.router.navigate(['modify-event/' + responseEvent.id]);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
   }
 }

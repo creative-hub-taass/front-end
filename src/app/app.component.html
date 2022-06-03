@@ -3,34 +3,30 @@
 <div *ngIf="this.showSideMenu" class="side-menu w3-animate-left" >
   <img class="close-icon" src="https://img.icons8.com/ios-filled/50/000000/delete-sign--v1.png" (click)="toggleMenu()" alt=""/>
   <div class="primary-pages">
-    <div class="page"  [routerLink]="['/home']">
+
+    <div class="page">
       <img class="page-icon" src="../assets/home.png" alt=""/>
-      <a href="#">Home</a>
+      <a href="javascript:void(0)" [routerLink]="['/home']">Home</a>
     </div>
-    <div *ngIf="getUserInfo().creator" [routerLink]="['/about/'+getUserInfo().id]" class="page">
+    <div *ngIf="getUserInfo().creator" class="page">
       <img class="page-icon" src="../assets/person.png" alt=""/>
-      <a>My page</a>
+      <a href="javascript:void(0)" [routerLink]="['/about/'+getUserInfo().id]">My page</a>
     </div>
-    <div *ngIf="getUserInfo().creator" class="page"  [routerLink]="['/own-collabs/']">
+    <div *ngIf="getUserInfo().creator" class="page">
       <img class="page-icon" src="../assets/ppl.png" alt=""/>
-      <a href="#">My collabs</a>
+      <a href="javascript:void(0)" [routerLink]="['/own-collabs']" >My collabs</a>
     </div>
     <div *ngIf="isLoggedIn" class="page">
       <img class="page-icon" src="../assets/shopbag.png" alt=""/>
-      <a href="#">Orders</a>
+      <a href="javascript:void(0)" [routerLink]="'/orders'" >Orders</a>
     </div>
-    <div *ngIf="!getUserInfo().creator && isLoggedIn" class="page"  [routerLink]="['/upgrade-request/']">
+    <div *ngIf="!getUserInfo().creator && isLoggedIn" class="page">
       <img class="page-icon" src="../assets/upgrade.png" alt=""/>
-      <a>Upgrade to Creator</a>
-    </div>
-    <div *ngIf="!getUserInfo().creator && isLoggedIn" class="page"  [routerLink]="['/upgrade-requests/']">
-      <img class="page-icon" src="../assets/upgrade.png" alt=""/>
-      <a>Your upgrade requests</a>
-    </div>
+      <a href="javascript:void(0)" [routerLink]="['/upgrade-requests']">Your upgrade requests</a>
     <div class="page"></div>
     <div class="page" (click)="logout()" *ngIf="isLoggedIn">
       <img class="page-icon" src="../assets/logout.png" alt=""/>
-      <a>Logout</a>
+      <a href="javascript:void(0)">Logout</a>
     </div>
   </div>
   <div class="secondary-pages">

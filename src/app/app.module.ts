@@ -33,6 +33,8 @@ import { OwnCollabsComponent } from './own-collabs/own-collabs.component';
 import { RequestUpgradeComponent } from './request-upgrade/request-upgrade.component';
 import { RequestCollabComponent } from './request-collab/request-collab.component';
 import { OwnUpgradesComponent } from './own-upgrades/own-upgrades.component';
+import { OwnOrdersComponent } from './own-orders/own-orders.component';
+import { OwnDonationsComponent } from './own-donations/own-donations.component';
 
 
 @NgModule({
@@ -56,7 +58,9 @@ import { OwnUpgradesComponent } from './own-upgrades/own-upgrades.component';
     OwnCollabsComponent,
     RequestUpgradeComponent,
     RequestCollabComponent,
-    OwnUpgradesComponent
+    OwnUpgradesComponent,
+    OwnOrdersComponent,
+    OwnDonationsComponent
 
   ],
   imports: [

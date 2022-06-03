@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {UserService} from "../_services/user.service";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {TokenStorageService} from "../_services/token-storage.service";
@@ -6,18 +6,13 @@ import * as utility from "../../_shared/functions";
 import {CreatorType, getListCreatorType} from "../../_models/Enum";
 import {User} from "../../_models/User";
 import {Creator} from "../../_models/Creator";
-import {Order} from "../../_models/Order";
-import {Donation} from "../../_models/Donation";
-import {UpgradeRequest} from "../../_models/UpgradeRequest";
-import {Artwork} from "../../_models/Artwork";
-import {PublicUser} from "../../_models/PublicUser";
 
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
   styleUrls: ["./profile.component.css"]
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent{
 
   userId: string | null;
   errorMessage: string = "";
@@ -27,18 +22,6 @@ export class ProfileComponent implements OnInit {
   errorPassword: string = "";
   submittedPassword: boolean = false;
   popupView: boolean = false;
-  modifyView: boolean = true;
-
-  orderView: boolean = false;
-  listOrders!: Order[];
-  listArtwork!: Artwork[];
-
-  donationView: boolean = false;
-  listDonations!: Donation[];
-  listCreator!: PublicUser[];
-
-  upgradeView: boolean = false;
-  listUpgrade!: UpgradeRequest[];
 
   form: {
     username: string,
@@ -92,9 +75,6 @@ export class ProfileComponent implements OnInit {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
-  }
-
-  ngOnInit(): void {
   }
 
   buildForm() {
@@ -182,128 +162,5 @@ export class ProfileComponent implements OnInit {
         this.errorPassword = utility.onError(error, this.eventBusService);
       }
     });
-  }
-
-  getOrders() {
-    if(this.userId == null)return;
-    this.userService.getOrders(this.userId).subscribe({
-      next: (listOrders: Order[]) => {
-        this.listOrders = new Array<Order>();
-        listOrders.forEach((elementOrder: Order) => {
-          this.listOrders.push(elementOrder);
-          this.userService.getArtwork(elementOrder.idArtwork).subscribe({
-            next: (artwork: Artwork) => {
-              this.listArtwork = new Array<Artwork>();
-              this.listArtwork.push(artwork);
-            },
-            error: (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
-          });
-        });
-      },
-      error: (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    });
-  }
-
-  getArtworkByOrder(idArtwork: string): string {
-    let index = this.listArtwork.findIndex((elementArtwork) => {
-      return elementArtwork.id == idArtwork;
-    });
-    return this.listArtwork[index].name;
-  }
-
-  getDonations() {
-    if(this.userId == null)return;
-    this.userService.getDonations(this.userId).subscribe({
-      next: (listDonations: Donation[]) => {
-        this.listDonations = new Array<Donation>();
-        this.listCreator = new Array<PublicUser>();
-        listDonations.forEach((elementDonation: Donation) => {
-          this.listDonations.push(elementDonation);
-          this.userService.getCreator(elementDonation.idCreator).subscribe({
-            next: (creator: PublicUser) => {
-              this.listCreator.push(creator);
-            },
-            error: (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
-          });
-        });
-      },
-      error: (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    });
-  }
-
-  getCreatorByDonation(idCreator: string): string {
-    let index = this.listCreator.findIndex((elementCreator) => {
-      return elementCreator.id == idCreator;
-    });
-    return this.listCreator[index].nickname;
-  }
-
-  getUpgradeRequest() {
-    if(this.userId == null)return;
-    this.userService.getRequestOfUser(this.userId).subscribe({
-      next: (listRequests: UpgradeRequest[]) => {
-        this.listUpgrade = new Array<UpgradeRequest>();
-        listRequests.forEach((elementRequest: UpgradeRequest) => {
-          this.listUpgrade.push(elementRequest);
-        });
-      },
-      error: (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    });
-  }
-
-  setView(option: string) {
-    switch (option) {
-      case 'order': {
-        this.orderView = true;
-        this.donationView = false;
-        this.upgradeView = false;
-        this.modifyView = false;
-        this.popupView = false;
-        break;
-      }
-      case 'donation': {
-      this.donationView = true;
-      this.orderView = false;
-      this.upgradeView = false;
-      this.modifyView = false;
-      this.popupView = false;
-      break;
-      }
-      case 'upgrade': {
-        if(this.creator != null)return;
-        this.upgradeView = true;
-        this.orderView = false;
-        this.donationView = false;
-        this.modifyView = false;
-        this.popupView = false;
-        break;
-      }
-      case 'modify': {
-        this.modifyView = true;
-        this.orderView = false;
-        this.donationView = false;
-        this.upgradeView = false;
-        this.popupView = false;
-        break;
-      }
-      case 'popup': {
-        this.popupView = true;
-        this.orderView = false;
-        this.donationView = false;
-        this.upgradeView = false;
-        this.modifyView = false;
-        break;
-      }
-    }
   }
 }

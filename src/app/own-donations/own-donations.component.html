@@ -1,0 +1,47 @@
+
+<div class="wrapper">
+
+  <h2>History of donations</h2>
+  <div class="table">
+    <div class="row header" >
+      <div class="cell">
+        Donation ID
+      </div>
+      <div class="cell">
+        Name of creator
+      </div>
+      <div class="cell">
+        Import
+      </div>
+      <div class="cell">
+        Currency
+      </div>
+      <div class="cell">
+        Message
+      </div>
+      <div class="cell">
+        Date
+      </div>
+    </div>
+    <div class="row" *ngFor="let donation of listDonations">
+      <div class="cell" data-title="Id">
+        {{donation.id}}
+      </div>
+      <div class="cell" data-title="nicknameCreator">
+        {{getCreatorByDonation(donation.idCreator)}}
+      </div>
+      <div class="cell" data-title="Import">
+        {{donation.importo}}
+      </div>
+      <div class="cell" data-title="Currency">
+        {{donation.currency}}
+      </div>
+      <div class="cell" data-title="Message">
+        {{donation.message}}
+      </div>
+      <div class="cell" data-title="Date">
+        {{donation.timestamp | date: 'medium'}}
+      </div>
+    </div>
+  </div>
+</div>

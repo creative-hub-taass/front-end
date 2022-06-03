@@ -32,6 +32,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OwnCollabsComponent } from './own-collabs/own-collabs.component';
 import { RequestUpgradeComponent } from './request-upgrade/request-upgrade.component';
 import { RequestCollabComponent } from './request-collab/request-collab.component';
+import { OwnUpgradesComponent } from './own-upgrades/own-upgrades.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { RequestCollabComponent } from './request-collab/request-collab.componen
     CollabsComponent,
     OwnCollabsComponent,
     RequestUpgradeComponent,
-    RequestCollabComponent
+    RequestCollabComponent,
+    OwnUpgradesComponent
 
   ],
   imports: [

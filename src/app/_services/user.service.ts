@@ -33,6 +33,10 @@ export class UserService {
     return this.http.post<UpgradeRequest>(API_GATEWAY_USERS + "upgrade/request", upgradeRequest);
   }
 
+  getListUpgradeRequest(userId: string): Observable<any> {
+    return this.http.get<UpgradeRequest[]>(API_GATEWAY_USERS + "upgrade/request/user/" + userId);
+  }
+
   updateUser(user: User): Observable<any> {
     return this.http.put<User>(API_GATEWAY_USERS + user.id, user);
   }

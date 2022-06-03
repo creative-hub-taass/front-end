@@ -1,7 +1,8 @@
 <body>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<div *ngIf="this.showSideMenu" class="side-menu w3-animate-left" >
-  <img class="close-icon" src="https://img.icons8.com/ios-filled/50/000000/delete-sign--v1.png" (click)="toggleMenu()" alt=""/>
+<div *ngIf="this.showSideMenu" class="side-menu w3-animate-left">
+  <img class="close-icon" src="https://img.icons8.com/ios-filled/50/000000/delete-sign--v1.png" (click)="toggleMenu()"
+       alt=""/>
   <div class="primary-pages">
 
     <div class="page">
@@ -14,19 +15,20 @@
     </div>
     <div *ngIf="getUserInfo().creator" class="page">
       <img class="page-icon" src="../assets/ppl.png" alt=""/>
-      <a href="javascript:void(0)" [routerLink]="['/own-collabs']" >My collabs</a>
+      <a href="javascript:void(0)" [routerLink]="['/own-collabs']">My collabs</a>
     </div>
     <div *ngIf="isLoggedIn" class="page">
       <img class="page-icon" src="../assets/shopbag.png" alt=""/>
-      <a href="javascript:void(0)" [routerLink]="'/orders'" >Orders</a>
+      <a href="javascript:void(0)" [routerLink]="'/orders'">Orders</a>
     </div>
     <div *ngIf="!getUserInfo().creator && isLoggedIn" class="page">
       <img class="page-icon" src="../assets/upgrade.png" alt=""/>
       <a href="javascript:void(0)" [routerLink]="['/upgrade-requests']">Your upgrade requests</a>
-    <div class="page"></div>
-    <div class="page" (click)="logout()" *ngIf="isLoggedIn">
-      <img class="page-icon" src="../assets/logout.png" alt=""/>
-      <a href="javascript:void(0)">Logout</a>
+      <div class="page"></div>
+      <div class="page" (click)="logout()" *ngIf="isLoggedIn">
+        <img class="page-icon" src="../assets/logout.png" alt=""/>
+        <a href="javascript:void(0)">Logout</a>
+      </div>
     </div>
   </div>
   <div class="secondary-pages">

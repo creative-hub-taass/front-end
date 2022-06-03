@@ -130,12 +130,6 @@
                required
                type="text"
         />
-        <div *ngIf="availableCopies.errors && f.submitted"
-             class="alert alert-danger"
-             role="alert"
-        >
-          Available Copies is required!
-        </div>
       </div>
 
       <div class="artwork-box" *ngIf="this.onSale">
@@ -262,8 +256,8 @@
     </form>
   </div>
 </div>
-<div class="artwork-box">
-  <button (click)="onSubmit()">Save Artwork</button>
+<div class="submit-box">
+  <button class="btn-submit" (click)="onSubmit()">Save Artwork</button>
   <h4 *ngIf="this.sent" style="color: limegreen">Artwork saved successfully!</h4>
   <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
 

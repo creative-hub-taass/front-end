@@ -308,15 +308,14 @@ export class ModifyArtworkComponent implements OnDestroy {
     //devo eseguire una PUT al server per aggiornare l'artwork
     if (artwork) {
       //mando nella richiesta solo le creation non presenti nell'artwork di origine
-      let artworkObj: Artwork = JSON.parse(artwork);
-      this.artworkResult.creations.forEach((elementCreation) => {
-        let index = artworkObj.creations.findIndex((elementOriginCreation) => {
-          return elementOriginCreation.user == elementCreation.user;
+      this.listCreationArtwork.forEach((elementCreationNew) => {
+        let index = this.artworkResult.creations.findIndex((elementCreationOrigin) => {
+          return elementCreationOrigin.user == elementCreationNew.user;
         });
         if (index == -1) {
-          this.publicationService.saveArtworkCreation(elementCreation).subscribe({
-            next: (result) => {
-              console.log(result);
+          this.publicationService.saveArtworkCreation(elementCreationNew).subscribe({
+            next: () => {
+              console.log("Ho salvato il creation")
             },
             error: (error) => {
               this.errorMessage = utility.onError(error, this.eventBusService);
@@ -325,17 +324,29 @@ export class ModifyArtworkComponent implements OnDestroy {
         }
       });
       //mando richieste di eliminazione delle creation presenti nell'artwork originale
-      artworkObj.creations.forEach((elementOriginCreation) => {
-        let index = this.artworkResult.creations.findIndex((elementCreation) => {
-          return elementCreation.id == elementOriginCreation.id;
+      this.artworkResult.creations.forEach((elementCreationOrigin) => {
+        let index = this.listCreationArtwork.findIndex((elementCreationNew) => {
+          return elementCreationNew.user == elementCreationOrigin.user;
         });
         if (index == -1) {
-          this.publicationService.deleteArtworkCreation(elementOriginCreation.id)
+          this.publicationService.deleteArtworkCreation(elementCreationOrigin.id).subscribe({
+            next: () => {
+              console.log("Creation eliminata con successo");
+            },
+            error: (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
+          });
         }
       });
-      let tmpResult = Object.assign<{}, Artwork>({}, this.artworkResult);
-      tmpResult.creations = [];
-      this.publicationService.updateArtwork(tmpResult);
+      this.publicationService.updateArtwork(this.artworkResult).subscribe({
+        next: () => {
+          console.log("Ho aggiornato il post correttamente");
+        },
+        error: (error) => {
+          this.errorMessage = utility.onError(error, this.eventBusService);
+        }
+      });
       this.sent = true;
       return;
     }

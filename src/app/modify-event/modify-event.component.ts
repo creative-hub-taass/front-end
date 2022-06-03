@@ -273,14 +273,14 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
     this.eventResult.lastUpdate = new Date().toISOString();
     if (event) {
       //mando nella richiesta solo le creation non presenti nell'event di origine
-      let eventObj: Event = JSON.parse(event);
-      this.eventResult.creations.forEach((elementCreation) => {
-        let index = eventObj.creations.findIndex((elementOriginCreation) => {
-          return elementOriginCreation.user == elementCreation.user;
+      this.listCreationEvent.forEach((elementCreationNew) => {
+        let index = this.eventResult.creations.findIndex((elementCreationOrigin) => {
+          return elementCreationNew.user == elementCreationOrigin.user;
         });
-        if (index == -1) {
-          this.publicationService.saveEventCreation(elementCreation).subscribe({
+        if(index == -1) {
+          this.publicationService.saveEventCreation(elementCreationNew).subscribe({
             next: (result) => {
+              console.log("Ho salvato il creation correttamente");
               console.log(result);
             },
             error: (error) => {
@@ -290,20 +290,24 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
         }
       });
       //mando richieste di eliminazione delle creation presenti nell'event originale
-      eventObj.creations.forEach((elementOriginCreation) => {
-        let index = this.eventResult.creations.findIndex((elementCreation) => {
-          return elementCreation.id == elementOriginCreation.id;
+      this.eventResult.creations.forEach((elementCreationOrigin) => {
+        let index = this.listCreationEvent.findIndex((elementCreationNew) => {
+          return elementCreationNew.user == elementCreationOrigin.user;
         });
         if (index == -1) {
-          this.publicationService.deleteEventCreation(elementOriginCreation.id);
+          this.publicationService.deleteEventCreation(elementCreationOrigin.id).subscribe({
+            next: () => {
+              console.log("Creation eliminata con successo");
+            },
+            error: (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
+          })
         }
       });
-      let tmpResult = Object.assign<{}, Event>({}, this.eventResult);
-      tmpResult.creations = [];
-      console.log(tmpResult);
-      this.publicationService.updateEvent(tmpResult).subscribe({
-        next: (resultEvent) => {
-          console.log(resultEvent);
+      this.publicationService.updateEvent(this.eventResult).subscribe({
+        next: () => {
+          console.log("Ho aggiornato il post correttamente");
         },
         error: (error) => {
           this.errorMessage = utility.onError(error, this.eventBusService);
@@ -318,8 +322,8 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
         this.listCreationEvent.forEach((elementCreation) => {
           elementCreation.eventId = responseEvent.id;
           this.publicationService.saveEventCreation(elementCreation).subscribe({
-            next: (responseCreation) => {
-              console.log(responseCreation);
+            next: () => {
+              console.log("Ho salvato correttamente il creation");
             },
             error: (error) => {
               this.errorMessage = utility.onError(error, this.eventBusService);

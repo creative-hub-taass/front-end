@@ -163,15 +163,18 @@ export class ModifyPostComponent implements OnDestroy {
   onSubmit() {
     const post = window.sessionStorage.getItem("postOrigin");
     this.postResult.lastUpdate = new Date().toISOString();
+    //sto modificando il post
     if (post) {
-      let postObj: Post = JSON.parse(post);
-      this.postResult.creations.forEach((elementCreation) => {
-        let index = postObj.creations.findIndex((elementOriginCreation) => {
-          return elementOriginCreation.user == elementCreation.user;
+      //controllo nella nuova lista di creations quali non sono già presenti nella vecchia
+      this.listCreationPost.forEach((elementCreationNew) => {
+        let index = this.postResult.creations.findIndex((elementCreationOrigin) => {
+          return elementCreationNew.user == elementCreationOrigin.user;
         });
+        //se un creation non è già all'interno del post originale
         if (index == -1) {
-          this.publicationService.savePostCreation(elementCreation).subscribe({
+          this.publicationService.savePostCreation(elementCreationNew).subscribe({
             next: (result) => {
+              console.log("ho salvato il creation");
               console.log(result);
             },
             error: (error) => {
@@ -180,20 +183,26 @@ export class ModifyPostComponent implements OnDestroy {
           });
         }
       });
-      postObj.creations.forEach((elementOriginCreation) => {
-        let index = this.postResult.creations.findIndex((elementCreation) => {
-          return elementCreation.id == elementOriginCreation.id;
+      //devo eliminare tutte le creations che sono su origin e non sono sulla nuova lista
+      this.postResult.creations.forEach((elementCreationOrigin) => {
+        let index = this.listCreationPost.findIndex((elementCreationNew) => {
+          return elementCreationNew.user == elementCreationOrigin.user;
         });
+        //se non l'ho trovato lo cancello
         if (index == -1) {
-          this.publicationService.deletePostCreation(elementOriginCreation.id);
+          this.publicationService.deletePostCreation(elementCreationOrigin.id).subscribe({
+            next: () => {
+              console.log("Creation eliminata con successo");
+            },
+            error: (error) => {
+              this.errorMessage = utility.onError(error, this.eventBusService);
+            }
+          })
         }
       });
-      let tmpResult = Object.assign<{}, Post>({}, this.postResult);
-      tmpResult.creations = [];
-      console.log(tmpResult);
-      this.publicationService.updatePost(tmpResult).subscribe({
-        next: (resultPost) => {
-          console.log(resultPost);
+      this.publicationService.updatePost(this.postResult).subscribe({
+        next: () => {
+          console.log("Ho aggiornato il post correttamente");
         },
         error: (error) => {
           this.errorMessage = utility.onError(error, this.eventBusService);
@@ -207,8 +216,8 @@ export class ModifyPostComponent implements OnDestroy {
         this.listCreationPost.forEach((elementCreation) => {
           elementCreation.postId = responsePost.id;
           this.publicationService.savePostCreation(elementCreation).subscribe({
-            next: (responseCreation) => {
-              console.log(responseCreation);
+            next: () => {
+              console.log("Ho salvato correttamente il creation");
             },
             error: (error) => {
               this.errorMessage = utility.onError(error, this.eventBusService);
@@ -255,6 +264,7 @@ export class ModifyPostComponent implements OnDestroy {
     const index = this.listCreationPost.findIndex((elementCreationPost) => {
       return elementCreationPost.id == id;
     });
+    if(index == -1)return;
     this.listCreationPost.splice(index, 1);
   }
 

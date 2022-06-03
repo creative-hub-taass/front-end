@@ -170,7 +170,14 @@ export class ArtworkComponent implements OnInit {
       window.location.replace("/login");
       return;
     }
-    this.publicationService.deleteComment(commentId);
+    this.publicationService.deleteComment(commentId).subscribe({
+      next: () => {
+        console.log("Ho eliminato correttamente il commento");
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
     let index = this.listComments.findIndex((cid)=>{
       return cid == commentId;
     });

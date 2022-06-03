@@ -55,8 +55,8 @@ export class PublicationService {
     return this.http.get<PublicUser[]>(API_GATEWAY_USERS + userID + "/followers");
   }
 
-  public updateArtwork(artwork: Artwork): void {
-    this.http.put(API_GATEWAY_PUBLICATIONS + "artworks/" + artwork.id, artwork);
+  public updateArtwork(artwork: Artwork): Observable<any> {
+    return this.http.put(API_GATEWAY_PUBLICATIONS + "artworks/" + artwork.id, artwork);
   }
 
   public saveArtwork(artwork: Artwork): Observable<any> {
@@ -67,8 +67,8 @@ export class PublicationService {
     return this.http.post<any>(API_GATEWAY_PUBLICATIONS + "artworks/creations/", artworkCreation);
   }
 
-  public deleteArtworkCreation(idCreation: string): void {
-    this.http.delete(API_GATEWAY_PUBLICATIONS + "artworks/creations/" + idCreation);
+  public deleteArtworkCreation(idCreation: string): Observable<any> {
+    return this.http.delete(API_GATEWAY_PUBLICATIONS + "artworks/creations/" + idCreation);
   }
 
   public updateEvent(event: Event): Observable<any> {
@@ -83,8 +83,8 @@ export class PublicationService {
     return this.http.post<any>(API_GATEWAY_PUBLICATIONS + "events/creations/", eventCreation);
   }
 
-  public deleteEventCreation(idCreation: string): void {
-    this.http.delete(API_GATEWAY_PUBLICATIONS + "events/creations/" + idCreation);
+  public deleteEventCreation(idCreation: string): Observable<any> {
+    return this.http.delete(API_GATEWAY_PUBLICATIONS + "events/creations/" + idCreation);
   }
 
   public savePost(post: Post): Observable<any> {
@@ -99,8 +99,8 @@ export class PublicationService {
     return this.http.post<any>(API_GATEWAY_PUBLICATIONS + "posts/creations/", postCreation);
   }
 
-  public deletePostCreation(idCreation: string): void {
-   this.http.delete(API_GATEWAY_PUBLICATIONS + "/posts/creations/" + idCreation);
+  public deletePostCreation(idCreation: string): Observable<any> {
+   return this.http.delete(API_GATEWAY_PUBLICATIONS + "posts/creations/" + idCreation)
   }
 
   /* Comments */
@@ -108,8 +108,8 @@ export class PublicationService {
     return this.http.post<any>(API_GATEWAY_INTERACTIONS + "comment", {"userId": userId, "publicationId": publicationId, "message": message}).subscribe((res)=> {console.log(res);});
   }
 
-  public deleteComment(commentId: string): void {
-    this.http.delete(API_GATEWAY_INTERACTIONS + "comment/" + commentId).subscribe((res)=> {console.log(res);});
+  public deleteComment(commentId: string): Observable<any> {
+    return this.http.delete(API_GATEWAY_INTERACTIONS + "comment/" + commentId);
   }
 
   public userCommentedPublication(userId: string, publicationId: string): Observable<boolean> {

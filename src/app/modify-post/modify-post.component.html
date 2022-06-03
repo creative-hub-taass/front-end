@@ -1,7 +1,7 @@
 <div class="container">
   <div class="publication-box">
     <h2>Publication</h2>
-    <button (click)="resetForm()">Reset</button>
+    <button class="reset-btn" (click)="resetForm()">Reset</button>
 
     <form
       #f="ngForm"
@@ -81,12 +81,12 @@
         </select>
       </div>
       <button class="full-button">Update creator</button>
-
     </form>
+    <div class="post-box">
+      <button class="full-button" (click)="onSubmit()">Save Post</button>
+      <h4 *ngIf="this.sent" style="color: limegreen">Post saved successfully!</h4>
+      <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
+    </div>
   </div>
 </div>
-<div class="post-box">
-  <button (click)="onSubmit()">Save Post</button>
-  <h4 *ngIf="this.sent" style="color: limegreen">Post saved successfully!</h4>
-  <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
-</div>
+

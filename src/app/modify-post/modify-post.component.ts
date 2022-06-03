@@ -28,7 +28,7 @@ export class CreationPost implements Creation {
 @Component({
   selector: 'app-modify-post',
   templateUrl: './modify-post.component.html',
-  styleUrls: ['./modify-post.component.css']
+  styleUrls: ['./modify-post.component.css', '../modify-artwork/modify-artwork.component.css']
 })
 export class ModifyPostComponent implements OnDestroy {
 

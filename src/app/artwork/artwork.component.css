@@ -1,3 +1,14 @@
+.title-edit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-edit .edit-btn {
+  color: #00A3FF;
+  text-decoration: underline;
+}
+
 .comment-wrapper {
   margin-top: 20px;
   width: 100%;

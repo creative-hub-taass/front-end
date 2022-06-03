@@ -39,7 +39,7 @@ const AUTH_TOKEN = environment.accessToken;
 @Component({
   selector: 'app-modify-event',
   templateUrl: './modify-event.component.html',
-  styleUrls: ['./modify-event.component.css']
+  styleUrls: ['./modify-event.component.css', '../modify-artwork/modify-artwork.component.css']
 })
 export class ModifyEventComponent implements OnDestroy, AfterViewInit {
 

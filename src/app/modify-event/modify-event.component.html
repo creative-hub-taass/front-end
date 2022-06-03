@@ -1,7 +1,7 @@
 <div class="container">
   <div class="publication-box">
     <h2>Publication</h2>
-    <button (click)="resetForm()">Reset</button>
+    <button class="reset-btn" (click)="resetForm()">Reset</button>
 
     <form
       #f="ngForm"
@@ -11,7 +11,7 @@
     >
 
       <div class="event-box">
-        <label>name: {{this.eventResult?.name}}</label>
+        <label>Name: {{this.eventResult?.name}}</label>
       </div>
       <div class="event-box">
         <input #name="ngModel"
@@ -88,6 +88,10 @@
         >
           Location name is required!
         </div>
+      </div>
+
+      <div class="map-container" #map>
+        <div id="map"></div>
       </div>
 
       <div class="event-box">
@@ -177,9 +181,6 @@
 
     </form>
   </div>
-</div>
-<div class="map-container" #map>
-  <div id="map"></div>
 </div>
 <div class="event-box">
   <button (click)="onSubmit()">Save Event</button>

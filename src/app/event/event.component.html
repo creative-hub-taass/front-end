@@ -7,7 +7,10 @@
             <img alt="" src="{{this.event?.image}}">
           </div>
           <div class="artwork-info">
-            <p class="title">{{this.event?.name}}</p>
+            <div class="title-edit">
+              <p class="title">{{this.event?.name}}</p>
+              <p class="edit-btn" [routerLink]="'/modify-event/' + eventId">Edit</p>
+            </div>
             <p class="date">{{this.event?.startDateTime| date:"dd MMM yyyy, HH:mm"}} - {{this.event?.endDateTime| date:"dd MMM yyyy, HH:mm"}}</p>
             <p class="description"><span>{{this.event?.description}}</span></p>
             <div class="artists">

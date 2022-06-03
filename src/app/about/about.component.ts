@@ -142,7 +142,7 @@ export class AboutComponent implements OnInit {
     let index: number = this.listPublicationInfo.findIndex((elementPublication: PublicationInfo) => {
       return elementPublication.publication.id == postId;
     });
-    if (index != -1) return this.listPublicationInfo[index].getLikes();
+    if (index != -1) return this.listPublicationInfo[index].getComments().length;
     return 0;
   }
 

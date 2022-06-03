@@ -1,3 +1,28 @@
+.no-posts {
+  color: #636363;
+}
+
+.add-post {
+  text-align: center;
+  font-family: "Jost";
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  color: #00A3FF;
+  border: 3px dashed #00A3FF;
+  border-radius: 10px;
+  font-weight: 400;
+  font-size: 20px;
+  align-items: center;
+}
+
+.add-post:hover {
+  color: #FFFFFF;
+  background: #00A3FF;
+  border: 3px solid #00A3FF;
+  border-radius: 10px;
+}
+
 .artist-type {
   background: #636363;
   color: #FFFFFF;

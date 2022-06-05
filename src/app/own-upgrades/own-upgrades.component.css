@@ -1,15 +1,14 @@
-
-
 .wrapper {
-  margin: 0 auto;
-  max-width: 800px;
-  padding-top: 10%;
+  position:absolute;
+  top: 75px;
+  margin-top: 30px;
+  width: 80%;
+  font-family: "Jost";
 }
 
 .table {
   margin: 0 0 40px 0;
   width: 100%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   display: table;
 }
 @media screen and (max-width: 580px) {
@@ -76,19 +75,22 @@
 }
 
 .btn-request{
-  position: relative;
-  left: 170%;
-  padding: 2px 20px;
+  padding: 8px 30px;
   background: #00A3FF;
   color: #FFFFFF;
   border: 2px solid #00A3FF;
   border-radius: 1000px;
+  margin: auto;
 }
 
 .btn-request:hover{
-  padding: 2px 20px;
   background: transparent;
   border: 2px solid #00A3FF;
   color: #00A3FF;
   border-radius: 1000px;
+}
+
+.new-req {
+  display: flex;
+  align-items: center;
 }

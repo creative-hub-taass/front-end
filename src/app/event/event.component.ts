@@ -40,6 +40,7 @@ export class EventComponent implements OnInit{
   commented: boolean= false;
   listOfUserNamesComments!: PublicUser[];
   userId: string = "";
+  popup: boolean = false;
 
   constructor(
     private tokenStorageService: TokenStorageService,
@@ -246,5 +247,25 @@ export class EventComponent implements OnInit{
 /*  ngAfterViewInit(): void {
     if(this.event != null)this.loadMap();
   }*/
+
+  public canEdit(): boolean{
+    let index = this.listUsers.findIndex((uid) => {
+      return uid.id == this.userId;
+    });
+    if (index==-1) return false;
+    return true;
+  }
+
+  public togglePopup() {
+    this.popup = !this.popup;
+  }
+
+  public delete() {
+    this.event.creations.forEach((creation) => {
+      this.publicationService.deleteArtworkCreation(creation.id).subscribe(s => {console.log(s);});
+    });
+    if(this.eventId!=null) this.publicationService.deleteEvent(this.eventId).subscribe(s => {console.log(s);});;
+    this.popup = false;
+  }
 
 }

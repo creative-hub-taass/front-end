@@ -1,12 +1,96 @@
+.dark-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 2;
+  left: 0;
+}
+
+.confirmation-popup {
+  position: fixed;
+  background: #FFFFFF;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Jost";
+  text-align: center;
+  width: 400px;
+  height: 200px;
+  padding: 30px;
+  box-shadow: 0px 0px 5.4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.confirmation-popup .buttons {
+  margin-top: 20px;
+}
+
+.confirmation-popup .buttons button {
+  background: #00A3FF;
+  color: #ffffff;
+  border: 2px solid #FFFFFF;
+  border-radius: 1000px;
+  padding: 10px 40px;
+  margin: 5px;
+}
+
+.confirmation-popup .buttons .delete-btn {
+  background: #F94144;
+}
+
+.confirmation-popup .buttons .delete-btn:hover {
+  color: #F94144;
+  border: 2px solid #F94144;
+  background: transparent;
+}
+
+.confirmation-popup .buttons .cancel-btn {
+  background: #636363;
+}
+
+.confirmation-popup .buttons .cancel-btn:hover {
+  color: #636363;
+  border: 2px solid #636363;
+  background: transparent;
+}
+
+
+.edit-container {
+  display: flex;
+  align-items: center;
+}
+
 .title-edit {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.title-edit .edit-btn {
-  color: #00A3FF;
+.title-edit .edit-btn, .title-edit .delete-btn {
   text-decoration: underline;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.edit-btn {
+  color: #00A3FF;
+}
+
+.delete-btn {
+  color: #F94144;
+  margin-left: 10px;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+  opacity: 1;
 }
 
 .comment-wrapper {
@@ -46,6 +130,7 @@
 
 .comment-info {
   display: flex;
+  flex-direction: column;
 }
 
 .comment-message {
@@ -53,13 +138,14 @@
 }
 
 .comment-user {
-  margin-right: 5px;
   color: #636363;
   text-transform: capitalize;
+  margin-bottom: 0px;
 }
 
 .comment .delete-icon {
   height: 9px;
+  cursor: pointer;
 }
 
 .comment-btn,

@@ -1,4 +1,12 @@
 <section class="main">
+  <div *ngIf="popup" class="dark-background" (click)="togglePopup()"></div>
+  <div *ngIf="popup" class="confirmation-popup">
+    <h2>Are you sure?</h2>
+    <div class="buttons">
+      <button class="delete-btn" (click)="delete()">Delete</button>
+      <button class="cancel-btn" (click)="togglePopup()">Cancel</button>
+    </div>
+  </div>
   <div class="wrapper">
     <div class="left-col">
       <div class="grid">
@@ -9,7 +17,10 @@
           <div class="artwork-info">
             <div class="title-edit">
               <p class="title">{{this.artwork?.name}}</p>
-              <p class="edit-btn" [routerLink]="'/modify-artwork/' + artworkId">Edit</p>
+              <div class="edit-container">
+                <p *ngIf="canEdit()" class="edit-btn" [routerLink]="'/modify-artwork/' + artworkId">Edit</p>
+                <p *ngIf="canEdit()" (click)="togglePopup()" class="delete-btn">Delete</p>
+              </div>
             </div>
             <p class="type">{{this.artwork?.type}}</p>
             <p class="date"><img src="../../assets/calendar.png" alt="">{{this.artwork?.creationDateTime | date:"dd MMM yyyy"}}</p>
@@ -18,12 +29,12 @@
               Artists: &nbsp;
               <p *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()" class="artist">{{artist.getNickname()}}</p>
             </div>
-            <div class="sales-info">
+            <div *ngIf="artwork?.onSale" class="sales-info">
               <p class="price">{{this.artwork?.price}} €</p>
               <p class="qty">{{this.artwork?.availableCopies}} pieces left</p>
             </div>
             <div class="interactions">
-              <button class="buy-button">
+              <button *ngIf="artwork?.onSale" class="buy-button">
                 <img src="../../assets/coins-w.png" alt="">
                 Purchase
               </button>
@@ -45,9 +56,9 @@
               <button class="comment-btn" *ngIf="this.artworkId" (click)="this.addComment()">post</button>
             </div>
             <div class="list-comment">
-              <div *ngFor="let c of listComments?.reverse()" class="comment">
+              <div *ngFor="let c of listComments" class="comment">
                 <div class="comment-info">
-                  <p class="comment-user">{{getUserUsername(c.userId)}}:</p>
+                  <p class="comment-user">{{getUserUsername(c.userId)}}</p>
                   <p class="comment-message">{{c.message}}</p>
                 </div>
                 <img *ngIf="c.userId == userId" (click)="this.deleteComment(c.id)" class="delete-icon" src="../../assets/x1.png" alt="">

@@ -106,6 +106,28 @@ export class EventComponent implements OnInit{
           })
           this.publicationService.getListofUser(listOfUsersComments).subscribe({
             next: (listUser: PublicUser[]) => {
+              let flag = false;
+              listOfUsersComments.forEach((userFromInteractions) => {
+                listUser.forEach((userFromUsers) => {
+                  if (userFromInteractions == userFromUsers.id) flag = true;
+                });
+                if (!flag){
+                  listUser.push(new PublicUser({
+                    id: userFromInteractions,
+                    username: "",
+                    nickname: "User deleted",
+                    creator: new PublicCreator({
+                      id: "",
+                      bio: "",
+                      creatorType: "",
+                      avatar: ""
+                    }),
+                    inspirerIds: [],
+                    fanIds: [],
+                  }));
+                }
+                flag = false;
+              });
               this.listOfUserNamesComments = listUser;
             },
             error: (error) => {
@@ -252,8 +274,8 @@ export class EventComponent implements OnInit{
     let index = this.listUsers.findIndex((uid) => {
       return uid.id == this.userId;
     });
-    if (index==-1) return false;
-    return true;
+    return index != -1;
+
   }
 
   public togglePopup() {
@@ -264,7 +286,7 @@ export class EventComponent implements OnInit{
     this.event.creations.forEach((creation) => {
       this.publicationService.deleteArtworkCreation(creation.id).subscribe(s => {console.log(s);});
     });
-    if(this.eventId!=null) this.publicationService.deleteEvent(this.eventId).subscribe(s => {console.log(s);});;
+    if(this.eventId!=null) this.publicationService.deleteEvent(this.eventId).subscribe(s => {console.log(s);});
     this.popup = false;
   }
 

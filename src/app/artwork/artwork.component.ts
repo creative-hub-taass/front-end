@@ -10,7 +10,6 @@ import {PaymentService} from "../_services/payment.service";
 import {Order} from "../../_models/Order";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {UserService} from "../_services/user.service";
-import {Creation} from "../../_models/Publication";
 
 @Component({
   selector: "app-artwork",
@@ -76,9 +75,9 @@ export class ArtworkComponent implements OnInit {
   getUser(userParam: PublicUser): PublicUser {
     return utility.getUser(userParam, this.listUsers);
   }
+
   //restituisce un oggetto PublicUser con le informazioni di un utente
   //il metodo richiede il PublicUser
-
   getCreator(userParam: PublicUser): PublicCreator {
     return utility.getCreator(userParam, this.listUsers);
   }
@@ -105,9 +104,31 @@ export class ArtworkComponent implements OnInit {
             });
             if (index == -1) listOfUsersComments.push(comment.userId);
             this.listComments.push(comment);
-          })
+          });
           this.publicationService.getListofUser(listOfUsersComments).subscribe({
             next: (listUser: PublicUser[]) => {
+              let flag = false;
+              listOfUsersComments.forEach((userFromInteractions) => {
+                listUser.forEach((userFromUsers) => {
+                  if (userFromInteractions == userFromUsers.id) flag = true;
+                });
+                if (!flag){
+                  listUser.push(new PublicUser({
+                    id: userFromInteractions,
+                    username: "",
+                    nickname: "User deleted",
+                    creator: new PublicCreator({
+                      id: "",
+                      bio: "",
+                      creatorType: "",
+                      avatar: ""
+                    }),
+                    inspirerIds: [],
+                    fanIds: [],
+                  }));
+                }
+                flag = false;
+                  });
               this.listOfUserNamesComments = listUser;
             },
             error: (error) => {
@@ -220,8 +241,8 @@ export class ArtworkComponent implements OnInit {
     let index = this.listUsers?.findIndex((uid) => {
       return uid.id == this.userId;
     });
-    if (index==-1) return false;
-    return true;
+    return index != -1;
+
   }
 
   public togglePopup() {
@@ -232,7 +253,7 @@ export class ArtworkComponent implements OnInit {
     this.artwork.creations.forEach((creation) => {
       this.publicationService.deleteArtworkCreation(creation.id).subscribe(s => {console.log(s);});
     });
-    if(this.artworkId!=null) this.publicationService.deleteArtwork(this.artworkId).subscribe(s => {console.log(s);});;
+    if(this.artworkId!=null) this.publicationService.deleteArtwork(this.artworkId).subscribe(s => {console.log(s);});
     this.popup = false;
   }
 

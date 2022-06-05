@@ -11,7 +11,7 @@ import {CreatorType, getListCreatorType} from "../../_models/Enum";
 @Component({
   selector: 'app-request-upgrade',
   templateUrl: './request-upgrade.component.html',
-  styleUrls: ['./request-upgrade.component.css']
+  styleUrls: ['./request-upgrade.component.css', '../modify-artwork/modify-artwork.component.css']
 })
 export class RequestUpgradeComponent {
 

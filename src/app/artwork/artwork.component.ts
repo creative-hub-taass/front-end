@@ -10,6 +10,7 @@ import {PaymentService} from "../_services/payment.service";
 import {Order} from "../../_models/Order";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {UserService} from "../_services/user.service";
+import {Creation} from "../../_models/Publication";
 
 @Component({
   selector: "app-artwork",
@@ -29,6 +30,7 @@ export class ArtworkComponent implements OnInit {
   userId: string = "";
   liked: boolean = false;
   commented: boolean = false;
+  popup: boolean = false;
 
   constructor(
     private userService: UserService,
@@ -139,6 +141,7 @@ export class ArtworkComponent implements OnInit {
       });
 
   }
+
   public buyArtwork(destinationAddress: string): void {
     if(this.userId == undefined) window.location.replace("/login")
     this.paymentService.buyArtwork(new Order(this.artwork, this.userId, destinationAddress)).subscribe({
@@ -211,6 +214,26 @@ export class ArtworkComponent implements OnInit {
     this.publicationService.deleteLike(this.userId, this.artworkId);
     this.liked = false;
     this.countLikes--;
+  }
+
+  public canEdit(): boolean{
+    let index = this.listUsers?.findIndex((uid) => {
+      return uid.id == this.userId;
+    });
+    if (index==-1) return false;
+    return true;
+  }
+
+  public togglePopup() {
+    this.popup = !this.popup;
+  }
+
+  public delete() {
+    this.artwork.creations.forEach((creation) => {
+      this.publicationService.deleteArtworkCreation(creation.id).subscribe(s => {console.log(s);});
+    });
+    if(this.artworkId!=null) this.publicationService.deleteArtwork(this.artworkId).subscribe(s => {console.log(s);});;
+    this.popup = false;
   }
 
 }

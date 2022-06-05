@@ -1,4 +1,12 @@
 <section class="main">
+  <div *ngIf="popup" class="dark-background" (click)="togglePopup()"></div>
+  <div *ngIf="popup" class="confirmation-popup">
+    <h2>Are you sure?</h2>
+    <div class="buttons">
+      <button class="delete-btn" (click)="delete()">Delete</button>
+      <button class="cancel-btn" (click)="togglePopup()">Cancel</button>
+    </div>
+  </div>
   <div class="wrapper">
     <div class="left-col">
       <div class="grid">
@@ -6,7 +14,10 @@
           <div class="artwork-info">
             <div class="title-edit">
               <p class="title">{{this.post?.title}}</p>
-              <p class="edit-btn" [routerLink]="'/modify-post/' + postId">Edit</p>
+              <div class="edit-container">
+                <p *ngIf="canEdit()" class="edit-btn" [routerLink]="'/modify-post/' + postId">Edit</p>
+                <p *ngIf="canEdit()" (click)="togglePopup()" class="delete-btn">Delete</p>
+              </div>
             </div>
             <p class="date">{{this.post?.timestamp | date:"dd MMM yyyy"}}</p>
             <p class="description"><span>{{this.post?.body}}</span></p>

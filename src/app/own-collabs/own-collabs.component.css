@@ -1,17 +1,18 @@
-
-
 .wrapper {
   margin: 0 auto;
-  max-width: 800px;
-  padding-top: 10%;
+  width: 80%;
   position: absolute;
   top: 75px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Jost";
+  padding-top: 30px;
 }
 
 .table {
   margin: 0 0 40px 0;
   width: 100%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   display: table;
 }
 @media screen and (max-width: 580px) {
@@ -28,12 +29,11 @@
   background: #e9e9e9;
 }
 .row.header {
-  font-weight: 900;
   color: #ffffff;
   background: #ea6153;
 }
 .row.green {
-  background: #27ae60;
+  background: #90BE6D;
 }
 .row.blue {
   background: #2980b9;

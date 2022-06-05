@@ -131,11 +131,24 @@ export class PublicationService {
         "publicationId": publicationId
       }
     }
-
     this.http.delete(API_GATEWAY_INTERACTIONS + "like", options).subscribe(s => {console.log(s);});
   }
 
   public userLikedPublication(userId: string, publicationId: string): Observable<boolean> {
     return this.http.get<boolean>(API_GATEWAY_INTERACTIONS + "userliked/" + userId + "/"+ publicationId);
   }
+
+  public deleteArtwork(artworkId: string): Observable<any> {
+    return this.http.delete(API_GATEWAY_PUBLICATIONS + "artworks/" + artworkId);
+  }
+
+  public deletePost(postId: string): Observable<any> {
+    return this.http.delete(API_GATEWAY_PUBLICATIONS + "posts/" + postId);
+  }
+
+  public deleteEvent(eventId: string): Observable<any> {
+    return this.http.delete(API_GATEWAY_PUBLICATIONS + "events/" + eventId);
+  }
+
+
 }

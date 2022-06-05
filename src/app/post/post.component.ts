@@ -27,6 +27,7 @@ export class PostComponent implements OnInit {
   commented: boolean= false;
   listOfUserNamesComments!: PublicUser[];
   userId: string = "";
+  popup: boolean = false;
 
   constructor(
     private eventBusService: EventBusService,
@@ -184,7 +185,6 @@ export class PostComponent implements OnInit {
       this.publicationService.addLike(this.userId, this.postId);
       this.liked= true;
       this.countLikes++;
-
   }
 
   public deleteLike() {
@@ -195,6 +195,26 @@ export class PostComponent implements OnInit {
     this.publicationService.deleteLike(this.userId, this.postId);
     this.liked = false;
     this.countLikes--;
+  }
+
+  public canEdit(): boolean{
+    let index = this.listUsers.findIndex((uid) => {
+      return uid.id == this.userId;
+    });
+    if (index==-1) return false;
+    return true;
+  }
+
+  public togglePopup() {
+    this.popup = !this.popup;
+  }
+
+  public delete() {
+    this.post.creations.forEach((creation) => {
+      this.publicationService.deleteArtworkCreation(creation.id).subscribe(s => {console.log(s);});
+    });
+    if(this.postId!=null) this.publicationService.deletePost(this.postId).subscribe(s => {console.log(s);});;
+    this.popup = false;
   }
 
 }

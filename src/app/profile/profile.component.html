@@ -241,4 +241,16 @@
     <h4 *ngIf="this.submitted" style="color: limegreen">Request submitted!</h4>
     <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
   </div>
+  <button id="delete-button" (click)="popupDelete = true">Delete account</button>
+  <div id="popup2" class="overlay" *ngIf="popupDelete">
+    <div class="popup2">
+      <button class="button" (click)="popupDelete = false">&times;</button>
+      <div class="content2">
+        <label>Do you want delete your account definitely?</label>
+        <button (click)="deleteUser()">Yes</button>
+        <h4 *ngIf="this.deleted" style="color: limegreen">Account deleted!</h4>
+        <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
+      </div>
+    </div>
+  </div>
 </div>

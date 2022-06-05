@@ -61,7 +61,7 @@
       </div>
       <div class="list-post">
         <h3>Latest posts</h3>
-        <p class="no-posts" *ngIf="listPosts.length<=0">Nothing to see here... yet</p>
+        <p class="no-posts" *ngIf="(listPosts != undefined && listPosts.length<=0)">Nothing to see here... yet</p>
         <!--*ngIf="(this.listPosts != undefined && this.listPosts.length > 0)"-->
         <div *ngIf="sameId" class="add-post" [routerLink]="'/modify-post/'">+ Add post</div>
         <div class="post" *ngFor="let publication of listPosts" [routerLink]="'/post/' + publication.id">

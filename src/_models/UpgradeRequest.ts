@@ -1,4 +1,5 @@
 import {PublicUser} from "./PublicUser";
+import {UpgradeRequestStatus} from "./Enum";
 
 export class UpgradeRequest {
   id: string;
@@ -13,7 +14,7 @@ export class UpgradeRequest {
   username: string;
   avatar: string;
   paymentEmail: string;
-  status: string;
+  status: UpgradeRequestStatus;
   creatorType: string;
 
   constructor(dto: any) {

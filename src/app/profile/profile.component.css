@@ -181,7 +181,7 @@
   cursor: pointer;
 }
 .popup .content {
-  max-height: 30%;
+  max-height: 100px;
   overflow: auto;
 }
 
@@ -191,7 +191,85 @@
     width: 70%;
   }
 
+  .popup2{
+    width: 70%;
+  }
 }
+
+.popup2 {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  transition: all 5s ease-in-out;
+  width: 450px;
+  height: 130px;
+}
+
+.popup2 .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+.popup2 label {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+.popup2 .close:hover {
+  color: #06dbee;
+  cursor: pointer;
+}
+.popup2 .content2 {
+  max-height: 100px;
+  overflow: auto;
+}
+
+.content2 button {
+  font-family: "Jost", serif;
+  background: #00A3FF;
+  padding: 5px 5px;
+  color: #ffffff;
+  width: 50px;
+  height: 32px;
+  border: 0 solid #00A3FF;
+  border-radius: 1000px;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.content2 button:hover{
+  color: #00A3FF;
+  background: transparent;
+  border: 2px solid #00A3FF;
+}
+.popup2 .button {
+  position: relative;
+  margin-left: 90%;
+  background: #00A3FF;
+  padding-bottom: 5px;
+  color: #ffffff;
+  border: 2px solid #00A3FF;
+  border-radius: 10px;
+  font-weight: 300;
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.popup2 .button:hover {
+  color: #00A3FF;
+  background: transparent;
+  border: 2px solid #00A3FF;
+}
+
 
 .infoUser-box {
   vertical-align: middle;
@@ -297,7 +375,7 @@
 .nav a {
   float: right;
   color: #000000;
-  font-family: "Jost";
+  font-family: "Jost", serif;
   text-align: center;
   padding: 6px 26px;
   text-decoration: none;

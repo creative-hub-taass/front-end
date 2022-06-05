@@ -29,6 +29,21 @@ export function buildUsersIDfromSpecificType(list: any[]): any[] {
 //restituisce un oggetto PublicUser con le informazioni di un utente
 //il metodo richiede il PublicUser e la lista di PublicUser in cui cercare
 export function getUser(userParam: PublicUser, listUsers: PublicUser[]): PublicUser {
+  if(userParam == undefined){
+    return new PublicUser({
+      id: "",
+      username: "",
+      nickname: "",
+      creator: new PublicCreator({
+        id: "",
+        bio: "",
+        creatorType: "",
+        avatar: ""
+      }),
+      inspirerIds: [],
+      fanIds: [],
+    });
+  }
   let tmp = new PublicUser(userParam);
   let index = listUsers.findIndex((Object) => {
     return Object.id == tmp.id;
@@ -39,6 +54,14 @@ export function getUser(userParam: PublicUser, listUsers: PublicUser[]): PublicU
 //restituisce un oggetto PublicCreator con le informazioni dell'utente creator
 //il metodo richiede il PublicUser e la lista di utenti in cui cercare
 export function getCreator(userParam: PublicUser, listUsers: PublicUser[]): PublicCreator {
+  if(userParam == undefined){
+    return new PublicCreator({
+        id: "",
+        bio: "",
+        creatorType: "",
+        avatar: ""
+      });
+  }
   let tmp = new PublicUser(userParam);
   let index = listUsers.findIndex((Object) => {
     return Object.getId() == tmp.getId();

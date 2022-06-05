@@ -60,4 +60,8 @@ export class UserService {
   getArtwork(idArtwork: string): Observable<any> {
     return this.http.get<Artwork>(API_GATEWAY_PUBLICATIONS + "-/artworks/" + idArtwork);
   }
+
+  deleteUser(idUser: string): Observable<any> {
+    return this.http.delete(API_GATEWAY_USERS + idUser);
+  }
 }

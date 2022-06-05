@@ -1,3 +1,5 @@
+import {CollaborationRequestStatus} from "./Enum";
+
 export class CollaborationRequest {
   id: string;
   senderId: string;
@@ -7,7 +9,7 @@ export class CollaborationRequest {
   timestamp: string;
   contact: string;
   category: string;
-  status: string;
+  status: CollaborationRequestStatus;
 
   constructor(dto: any) {
     this.id = dto.id;

@@ -24,9 +24,6 @@ export enum CreationType {
 export enum CollaborationRequestStatus {
   OPEN ="OPEN", CLOSED ="CLOSED"
 }
-export enum CollaborationRequestCategory{
-  MUSICAL="MUSICAL"
-}
 
 export enum CreatorType {
   ARTIST ="ARTIST",

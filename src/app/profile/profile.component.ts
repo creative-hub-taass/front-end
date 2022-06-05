@@ -22,6 +22,8 @@ export class ProfileComponent{
   errorPassword: string = "";
   submittedPassword: boolean = false;
   popupView: boolean = false;
+  popupDelete: boolean = false;
+  deleted: boolean = false;
 
   form: {
     username: string,
@@ -160,6 +162,21 @@ export class ProfileComponent{
       },
       error: (error) => {
         this.errorPassword = utility.onError(error, this.eventBusService);
+      }
+    });
+  }
+
+  deleteUser() {
+    if(this.userId == null)return;
+    this.userService.deleteUser(this.userId).subscribe({
+      next: () => {
+        console.log("Account eliminato con successo");
+        this.deleted = true;
+        this.tokenStorageService.logout();
+        window.location.replace("/home");
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
   }

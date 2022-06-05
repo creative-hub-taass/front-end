@@ -1,7 +1,9 @@
+import {CreatorType} from "./Enum";
+
 export class PublicCreator {
   id!: string;
   bio!: string;
-  creatorType!: string;
+  creatorType!: CreatorType;
   avatar!: string;
 
   constructor(publicCreatorDto: any) {
@@ -19,7 +21,7 @@ export class PublicCreator {
     this.bio = bio;
   }
 
-  public setCreatortype(creatorType: string): void {
+  public setCreatortype(creatorType: CreatorType): void {
     this.creatorType = creatorType;
   }
 
@@ -35,7 +37,7 @@ export class PublicCreator {
     return this.bio;
   }
 
-  public getCreatorType(): string {
+  public getCreatorType(): CreatorType {
     return this.creatorType;
   }
 

@@ -62,7 +62,7 @@
     >
       <div class="post-box" *ngFor="let user of this.listCreationPost; index as i;">
         <label>Creator {{i}} - nickname: {{user.nickname}}; creationType: {{user.creationType}}</label>
-        <button (click)="deleteUser(user.id)">delete</button>
+        <button class="delete-btn" (click)="deleteUser(user.id)">Remove</button>
       </div>
       <div class="post-box">
         <select #creationType="ngModel"
@@ -83,9 +83,9 @@
       <button class="full-button">Update creator</button>
     </form>
     <div class="post-box">
-      <button class="full-button" (click)="onSubmit()">Save Post</button>
-      <h4 *ngIf="this.sent" style="color: limegreen">Post saved successfully!</h4>
-      <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
+      <button class="save-btn" (click)="onSubmit()">Save Post</button>
+      <h4 class="message-box success" *ngIf="this.sent" >Post saved successfully!</h4>
+      <h4 class="message-box fail" *ngIf="this.errorMessage!=''">{{this.errorMessage}}</h4>
     </div>
   </div>
 </div>

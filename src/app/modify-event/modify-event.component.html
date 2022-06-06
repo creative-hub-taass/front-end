@@ -158,7 +158,7 @@
     >
       <div class="event-box" *ngFor="let user of this.listCreationEvent; index as i;">
         <label>Creator {{i}} - nickname: {{user.nickname}}; creationType: {{user.creationType}}</label>
-        <button (click)="deleteUser(user.id)">delete</button>
+        <button class="delete-btn" (click)="deleteUser(user.id)">Remove</button>
       </div>
       <div class="event-box">
         <select #creationType="ngModel"
@@ -180,10 +180,11 @@
       <button class="full-button">Update creator</button>
 
     </form>
+    <div class="event-box">
+      <button class="save-btn" (click)="onSubmit()">Save Event</button>
+      <h4 class="message-box success" *ngIf="this.sent">Event saved successfully!</h4>
+      <h4 class="message-box fail" *ngIf="this.errorMessage!=''">{{this.errorMessage}}</h4>
+    </div>
   </div>
 </div>
-<div class="event-box">
-  <button (click)="onSubmit()">Save Event</button>
-  <h4 *ngIf="this.sent" style="color: limegreen">Event saved successfully!</h4>
-  <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
-</div>
+

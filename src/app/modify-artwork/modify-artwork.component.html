@@ -170,7 +170,7 @@
     >
       <div class="artwork-box" *ngFor="let key of this.listKey">
         <label>{{key}}: {{this.artworkResult.attributes[key]}}</label>
-        <button (click)="deleteAttribute(key)">delete</button>
+        <button class="delete-btn" (click)="deleteAttribute(key)">Remove</button>
       </div>
       <div class="artwork-box">
         <input #attributes="ngModel"
@@ -208,7 +208,7 @@
     >
       <div class="artwork-box" *ngFor="let image of this.artworkResult?.images; index as i;">
         <label>Image {{i}}: {{image}}</label>
-        <button (click)="deleteImage(image)">delete</button>
+        <button class="delete-btn" (click)="deleteImage(image)">Remove</button>
       </div>
       <div class="artwork-box">
         <input #type="ngModel"
@@ -232,7 +232,7 @@
     >
       <div class="artwork-box" *ngFor="let user of this.listCreationArtwork; index as i;">
         <label>Creator {{i}} - nickname: {{user.nickname}}; creationType: {{user.creationType}}</label>
-        <button (click)="deleteUser(user.id)">delete</button>
+        <button class="delete-btn" (click)="deleteUser(user.id)">Remove</button>
       </div>
       <div class="artwork-box">
         <select #creationType="ngModel"
@@ -254,11 +254,11 @@
       <button class="full-button">Update creator</button>
 
     </form>
+    <div class="submit-box">
+      <button class="save-btn" (click)="onSubmit()">Save Artwork</button>
+      <h4 class="message-box success" *ngIf="this.sent">Artwork saved successfully!</h4>
+      <h4 class="message-box fail" *ngIf="this.errorMessage!=''">{{this.errorMessage}}</h4>
+    </div>
   </div>
 </div>
-<div class="submit-box">
-  <button class="btn-submit" (click)="onSubmit()">Save Artwork</button>
-  <h4 *ngIf="this.sent" style="color: limegreen">Artwork saved successfully!</h4>
-  <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
 
-</div>

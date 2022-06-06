@@ -28,13 +28,39 @@ body, html {
   background: transparent;
 }
 
+.save-btn {
+  background: #90BE6D;
+  color: #FFFFFF;
+  font-family: "Jost", serif;
+  padding: 10px 30px;
+  border: 2px solid #90BE6D;
+  border-radius: 1000px;
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+.delete-btn {
+  color: #DB4437;
+  background: transparent;
+  font-family: "Jost", serif;
+  padding: 10px 30px;
+  border: 2px solid #DB4437;
+  border-radius: 1000px;
+  font-size: 15px;
+}
+
+.delete-btn:hover {
+  background:#DB4437;
+  color: #FFFFFF;
+}
+
 .publication-box {
   vertical-align: middle;
   margin: auto;
   font-family: "Jost", serif;
   width: 400px;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 1);
+  #box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   border-radius: 5px;
   backdrop-filter: blur(4px);
   display: flex;
@@ -67,6 +93,12 @@ body, html {
   width: 275px;
 }
 
+.publication-box label {
+  overflow: hidden;
+  flex-wrap: wrap;
+  width: 275px;
+}
+
 .empty-button {
   font-family: "Jost", serif;
   background: transparent;
@@ -92,21 +124,20 @@ body, html {
 
 .full-button {
   font-family: "Jost", serif;
-  background: #00A3FF;
   padding: 10px 30px;
-  color: #ffffff;
   width: 90%;
   height: 42px;
   border: 2px solid #00A3FF;
   border-radius: 1000px;
   font-weight: 500;
   font-size: 15px;
+  color: #00A3FF;
+  background: transparent;
 }
 
 .full-button:hover {
-  color: #00A3FF;
-  background: transparent;
-  border: 2px solid #00A3FF;
+  background: #00A3FF;
+  color: #FFFFFF;
 }
 
 .alert {
@@ -183,8 +214,18 @@ body, html {
   background: white;
 }
 
-.submit-box{
-  position: relative;
-  top:1000px;
+.submit-box {
 
+}
+
+.message-box {
+  margin: 20px;
+}
+
+.success {
+  color: #90BE6D;
+}
+
+.fail {
+  color: #DB4437;
 }

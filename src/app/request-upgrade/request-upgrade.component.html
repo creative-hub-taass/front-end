@@ -197,8 +197,8 @@
       </div>
       <div class="submit-box">
         <button class="full-button">Submit</button>
-        <h4 *ngIf="this.submitted" style="color: limegreen">Request submitted!</h4>
-        <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
+        <h4 class="message-box success" *ngIf="this.submitted">Request submitted!</h4>
+        <h4 class="message-box cancel" *ngIf="this.errorMessage!=''">{{this.errorMessage}}</h4>
       </div>
     </form>
   </div>

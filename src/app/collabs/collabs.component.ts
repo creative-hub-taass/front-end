@@ -203,6 +203,6 @@ export class CollabsComponent implements OnInit {
       window.location.replace("/upgrade-request");
       return;
     }
-    window.location.replace("/modify-event/");
+    window.location.replace("/collaboration-request/");
   }
 }

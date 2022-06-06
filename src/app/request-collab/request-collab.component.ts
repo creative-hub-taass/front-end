@@ -10,7 +10,7 @@ import * as utility from "../../_shared/functions";
 @Component({
   selector: 'app-request-collab',
   templateUrl: './request-collab.component.html',
-  styleUrls: ['./request-collab.component.css']
+  styleUrls: ['./request-collab.component.css', '../modify-artwork/modify-artwork.component.css']
 })
 export class RequestCollabComponent implements OnInit {
 

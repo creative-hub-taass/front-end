@@ -149,6 +149,11 @@ export class AboutComponent implements OnInit {
   submitTip() {
     if(this.tokenStorageService.getUser().id == null){
       window.location.replace("/login");
+      return;
+    }
+    if(this.userId == this.tokenStorageService.getUser().id){
+      this.popup = false;
+      return;
     }
     let tmpDonation: any = {
       idSender: this.tokenStorageService.getUser().id,

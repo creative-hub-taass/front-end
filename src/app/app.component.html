@@ -15,11 +15,11 @@
     </div>
     <div *ngIf="getUserInfo().creator" class="page">
       <img class="page-icon" src="../assets/ppl.png" alt=""/>
-      <a href="javascript:void(0)" [routerLink]="['/own-collabs']">My collabs</a>
+      <a href="javascript:void(0)" [routerLink]="['/collaborations-requests']">My collabs</a>
     </div>
     <div *ngIf="isLoggedIn" class="page">
       <img class="page-icon" src="../assets/shopbag.png" alt=""/>
-      <a href="javascript:void(0)" [routerLink]="'/orders'">Orders</a>
+      <a href="javascript:void(0)" [routerLink]="['/orders']">Orders</a>
     </div>
     <div *ngIf="!getUserInfo().creator && isLoggedIn" class="page">
       <img class="page-icon" src="../assets/upgrade.png" alt=""/>

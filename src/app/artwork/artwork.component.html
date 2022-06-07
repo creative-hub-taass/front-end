@@ -1,10 +1,18 @@
 <section class="main">
-  <div *ngIf="popup" class="dark-background" (click)="togglePopup()"></div>
+  <div *ngIf="popup || buypoup" class="dark-background" (click)="togglePopup()"></div>
   <div *ngIf="popup" class="confirmation-popup">
     <h2>Are you sure?</h2>
     <div class="buttons">
       <button class="delete-btn" (click)="delete()">Delete</button>
       <button class="cancel-btn" (click)="togglePopup()">Cancel</button>
+    </div>
+  </div>
+  <div *ngIf="buypoup" class="buy-artwork-popup">
+    <h5>Type your address</h5>
+    <input type="text" name="address" placeholder="Address" #address>
+    <div class="buttons">
+      <button (click)="buyArtwork(address.value)">Purchase</button>
+      <button class="cancel-btn" (click)="toggleBuyPopup()">Cancel</button>
     </div>
   </div>
   <div class="wrapper">
@@ -34,7 +42,7 @@
               <p class="qty">{{this.artwork?.availableCopies}} pieces left</p>
             </div>
             <div class="interactions">
-              <button *ngIf="artwork?.onSale" class="buy-button">
+              <button *ngIf="artwork?.onSale" class="buy-button" (click)="toggleBuyPopup()">
                 <img src="../../assets/coins-w.png" alt="">
                 Purchase
               </button>

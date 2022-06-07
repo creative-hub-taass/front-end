@@ -30,6 +30,7 @@ export class ArtworkComponent implements OnInit {
   liked: boolean = false;
   commented: boolean = false;
   popup: boolean = false;
+  buypoup: boolean = false;
 
   constructor(
     private userService: UserService,
@@ -174,6 +175,7 @@ export class ArtworkComponent implements OnInit {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
+    this.buypoup = true;
   }
 
   public addComment() {
@@ -247,6 +249,10 @@ export class ArtworkComponent implements OnInit {
 
   public togglePopup() {
     this.popup = !this.popup;
+  }
+
+  public toggleBuyPopup() {
+    this.buypoup = !this.buypoup;
   }
 
   public delete() {

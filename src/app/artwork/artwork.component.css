@@ -7,7 +7,7 @@
   left: 0;
 }
 
-.confirmation-popup {
+.confirmation-popup, .buy-artwork-popup {
   position: fixed;
   background: #FFFFFF;
   top: 0;
@@ -29,11 +29,11 @@
   border-radius: 10px;
 }
 
-.confirmation-popup .buttons {
+.confirmation-popup .buttons, .buy-artwork-popup .buttons {
   margin-top: 20px;
 }
 
-.confirmation-popup .buttons button {
+.confirmation-popup .buttons button, .buy-artwork-popup .buttons button {
   background: #00A3FF;
   color: #ffffff;
   border: 2px solid #FFFFFF;
@@ -42,26 +42,36 @@
   margin: 5px;
 }
 
-.confirmation-popup .buttons .delete-btn {
+.confirmation-popup .buttons .delete-btn, .buy-artwork-popup .buttons .delete-btn {
   background: #F94144;
 }
 
-.confirmation-popup .buttons .delete-btn:hover {
+.confirmation-popup .buttons .delete-btn:hover, .buy-artwork-popup .buttons .delete-btn:hover {
   color: #F94144;
   border: 2px solid #F94144;
   background: transparent;
 }
 
-.confirmation-popup .buttons .cancel-btn {
+.confirmation-popup .buttons .cancel-btn, .buy-artwork-popup .buttons .cancel-btn {
   background: #636363;
 }
 
-.confirmation-popup .buttons .cancel-btn:hover {
+.confirmation-popup .buttons .cancel-btn:hover, .buy-artwork-popup .buttons .cancel-btn:hover {
   color: #636363;
   border: 2px solid #636363;
   background: transparent;
 }
 
+.buy-artwork-popup input {
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(240, 240, 240, 0.8);
+  border-radius: 50px;
+  border: none;
+  font-size: 16px;
+  color: #000;
+  width: 90%;
+}
 
 .edit-container {
   display: flex;

@@ -6,13 +6,13 @@ export class Order {
   readonly idUser!: string;
   readonly importo!: number | undefined;
   readonly destinationAddress!: string;
-  readonly timeStamp!: number;
+  readonly timeStamp!: string;
 
   constructor(artwork: Artwork, userID: any, destinationAddress: string) {
     this.idArtwork = artwork.id;
     this.idUser = userID;
     this.importo = artwork.price;
     this.destinationAddress = destinationAddress;
-    this.timeStamp = new Date().getTime();
+    this.timeStamp = new Date().toISOString();
   }
 }

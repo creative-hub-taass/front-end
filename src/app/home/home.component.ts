@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
     private feedService: FeedService,
     private creatorService: CreatorService
   ) {
-    this.isLoggedIn = (Object.keys(this.tokenStorageService.getUser()).length != 0)
+    this.isLoggedIn = (Object.keys(this.tokenStorageService.getUser()).length != 0);
   }
 
   ngOnInit(): void {
@@ -78,17 +78,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  //costruisce la lista di ID pubblicazioni da mandare al servizio interazioni
-  private buildPublicationsID(list: any[]): any[] {
-    if (list == undefined) return [];
-
-    let tmp: any[] = [];
-    list.forEach((element) => {
-      tmp.push(element.id);
-    });
-    return tmp;
-  }
-
   callServiceUsers(listPublicationDto: PublicationInfo[], callServiceInteractions: any): void {
     //creo la lista degli ID pubblicazioni
     this.listPublicationsID = this.buildPublicationsID(listPublicationDto);
@@ -100,7 +89,9 @@ export class HomeComponent implements OnInit {
         //ho la lista di tutti gli utenti del feed
         this.listUsers = new Array<PublicUser>();
         userList.forEach((elementUser: PublicUser) => {
-          this.listUsers.push(new PublicUser(elementUser));
+          if (!!elementUser) {
+            this.listUsers.push(new PublicUser(elementUser));
+          }
         });
         //per ogni pubblicazione prendo la lista degli utenti
         this.listFeed = new Array<PublicationInfo>();
@@ -131,7 +122,18 @@ export class HomeComponent implements OnInit {
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
-    })
+    });
+  }
+
+  //costruisce la lista di ID pubblicazioni da mandare al servizio interazioni
+  private buildPublicationsID(list: any[]): any[] {
+    if (list == undefined) return [];
+
+    let tmp: any[] = [];
+    list.forEach((element) => {
+      tmp.push(element.id);
+    });
+    return tmp;
   }
 
   //costruisce la lista di id utente da mandare al servizio utenti (campo creation di PublicUserDto)

@@ -14,7 +14,7 @@
       <div class="left-col">
       <div *ngFor="let element of listFeed" [ngClass]="{'artwork': element.publication.publicationType == 'artwork', 'event': element.publication.publicationType == 'event', 'post': element.publication.publicationType == 'post'}">
         <div *ngFor="let user of element.getUsers()" class="info">
-          <div class="user" [routerLink]="'/about/' + this.getUser(user).id">
+          <div *ngIf="!!user" [routerLink]="'/about/' + this.getUser(user).id" class="user">
             <div class="profile-pic">
               <img alt="" src="{{this.getCreator(user).getAvatar()}}" class="profile-pic">
             </div>

@@ -357,3 +357,30 @@
   margin-right: 15px;
 }
 
+/* Loader */
+.loader {
+  width: 4rem;
+  height: 4rem;
+  border: 0.35rem solid #636363;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: loader 500ms linear infinite;
+  top: 8vh;
+  left:22vh;
+  position: absolute;
+  margin: 0 auto;
+}
+
+/* Spinner Animation */
+@keyframes loader {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 40rem) {
+  .landing {
+    text-align: center;
+    align-items: center;
+  }
+}

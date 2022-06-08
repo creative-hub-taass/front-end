@@ -33,6 +33,7 @@ export class ArtworkComponent implements OnInit {
   commented: boolean = false;
   popup: boolean = false;
   buypoup: boolean = false;
+  wait: boolean = false;
 
   constructor(
     private userService: UserService,
@@ -183,8 +184,9 @@ export class ArtworkComponent implements OnInit {
       next: (urlPaypal: string) => {
         if(urlPaypal.includes("redirect",0)){
           (async () => {
-            console.log("inizia il delay");
-            await delay(1000);
+            this.wait = true;
+            await delay(8000);
+            this.wait = false;
             window.location.href = encodeURI(urlPaypal.substring(9, urlPaypal.length));
           })();
           return;

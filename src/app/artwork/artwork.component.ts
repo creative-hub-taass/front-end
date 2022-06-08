@@ -11,6 +11,7 @@ import {Order} from "../../_models/Order";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {UserService} from "../_services/user.service";
 import {PaymentResultComponent} from "../payment-result/payment-result.component";
+import {delay} from "../../_shared/functions";
 
 @Component({
   selector: "app-artwork",
@@ -181,9 +182,14 @@ export class ArtworkComponent implements OnInit {
     this.paymentService.buyArtwork(new Order(this.artwork, this.userId, destinationAddress)).subscribe({
       next: (urlPaypal: string) => {
         if(urlPaypal.includes("redirect",0)){
-          window.location.href = encodeURI(urlPaypal.substring(9, urlPaypal.length));
+          (async () => {
+            console.log("inizia il delay");
+            await delay(1000);
+            window.location.href = encodeURI(urlPaypal.substring(9, urlPaypal.length));
+          })();
           return;
         }
+
 
         this.router.navigate(['/payment-failed', urlPaypal]);
       },

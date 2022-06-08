@@ -76,6 +76,7 @@ import { OwnDonationsComponent } from './own-donations/own-donations.component';
     NgbModule
   ],
   providers: [authInterceptorProviders,
+    PaymentResultComponent,
     {
       provide: "SocialAuthServiceConfig",
       useValue: {

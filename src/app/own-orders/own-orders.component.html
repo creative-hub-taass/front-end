@@ -12,6 +12,9 @@
         Import
       </div>
       <div class="cell">
+        Currency
+      </div>
+      <div class="cell">
         Destination Address
       </div>
       <div class="cell">
@@ -28,11 +31,14 @@
       <div class="cell" data-title="Import">
         {{order.importo}}
       </div>
+      <div class="cell" data-title="Currency">
+        {{order.currency}}
+      </div>
       <div class="cell" data-title="DestinationAddress">
         {{order.destinationAddress}}
       </div>
       <div class="cell" data-title="Date">
-        {{order.timeStamp | date: 'medium'}} {{order.currency}}
+        {{order.timeStamp | date: 'medium'}}
       </div>
     </div>
   </div>

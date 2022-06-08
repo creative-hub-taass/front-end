@@ -107,28 +107,30 @@ export class EventComponent implements OnInit{
           this.publicationService.getListofUser(listOfUsersComments).subscribe({
             next: (listUser: PublicUser[]) => {
               let flag = false;
-              listOfUsersComments.forEach((userFromInteractions) => {
-                listUser.forEach((userFromUsers) => {
-                  if (userFromInteractions == userFromUsers.id) flag = true;
+                listOfUsersComments.forEach((userFromInteractions) => {
+                  listUser.forEach((userFromUsers) => {
+                    if (userFromUsers != null && userFromInteractions == userFromUsers.id) flag = true;
+                  });
+                  if (!flag) {
+                    listUser.push(new PublicUser({
+                      id: userFromInteractions,
+                      username: "",
+                      nickname: "User deleted",
+                      creator: new PublicCreator({
+                        id: "",
+                        bio: "",
+                        creatorType: "",
+                        avatar: ""
+                      }),
+                      inspirerIds: [],
+                      fanIds: [],
+                    }));
+                  }
+                  flag = false;
                 });
-                if (!flag){
-                  listUser.push(new PublicUser({
-                    id: userFromInteractions,
-                    username: "",
-                    nickname: "User deleted",
-                    creator: new PublicCreator({
-                      id: "",
-                      bio: "",
-                      creatorType: "",
-                      avatar: ""
-                    }),
-                    inspirerIds: [],
-                    fanIds: [],
-                  }));
-                }
-                flag = false;
-              });
-              this.listOfUserNamesComments = listUser;
+                listUser.forEach((user) => {
+                  if(user != null) this.listOfUserNamesComments.push(user);
+                });
             },
             error: (error) => {
               this.errorMessage = utility.onError(error, this.eventBusService);
@@ -208,12 +210,23 @@ export class EventComponent implements OnInit{
       window.location.replace("/login");
       return;
     }
-    console.log("userId: " + this.userId);
-    console.log("artworkId: " + this.eventId);
-    console.log("message: " + this.message);
-    this.publicationService.addComment(this.userId, this.eventId, this.message);
+    this.publicationService.addComment(this.userId, this.eventId, this.message).subscribe({
+      next: (comment) => {
+        this.listComments.push(comment);
+        this.publicationService.getUser(this.userId).subscribe({
+          next: (userofComment: PublicUser) => {
+            if(userofComment != null) this.listOfUserNamesComments.push(userofComment);
+          },
+          error: (error) => {
+            this.errorMessage = utility.onError(error, this.eventBusService);
+          }
+        });
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
     this.message = "";
-    this.callServiceInteractions();
   }
 
   public deleteComment(commentId: string) {
@@ -223,20 +236,19 @@ export class EventComponent implements OnInit{
     }
     this.publicationService.deleteComment(commentId).subscribe({
       next: () => {
-        console.log("Ho eliminato correttamente il commento");
+        let index = this.listComments.findIndex((elementComment) => {
+          return elementComment.id == commentId;
+        });
+        this.listComments.splice(index,1);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
-    let index = this.listComments.findIndex((cid)=>{
-      return cid == commentId;
-    });
-    if(index == -1) return;
-    this.listComments.splice(index, 1);
   }
 
   public getUserUsername(userId: string): string {
+    if(userId == null)return "";
     let index = this.listOfUserNamesComments.findIndex((uid) => {
       return uid.id == userId;
     })
@@ -271,7 +283,7 @@ export class EventComponent implements OnInit{
   }*/
 
   public canEdit(): boolean{
-    let index = this.listUsers.findIndex((uid) => {
+    let index = this.listUsers?.findIndex((uid) => {
       return uid.id == this.userId;
     });
     return index != -1;
@@ -288,6 +300,7 @@ export class EventComponent implements OnInit{
     });
     if(this.eventId!=null) this.publicationService.deleteEvent(this.eventId).subscribe(s => {console.log(s);});
     this.popup = false;
+    window.location.replace("/home");
   }
 
 }

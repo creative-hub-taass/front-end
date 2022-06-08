@@ -56,10 +56,10 @@
             <div class="list-comment">
               <div *ngFor="let c of listComments?.reverse()" class="comment">
                 <div class="comment-info">
-                  <p class="comment-user">{{getUserUsername(c.userId)}}:</p>
+                  <p class="comment-user">{{getUserUsername(c?.userId)}}:</p>
                   <p class="comment-message">{{c.message}}</p>
                 </div>
-                <img *ngIf="c.userId == userId" (click)="this.deleteComment(c.id)" class="delete-icon" src="../../assets/x1.png" alt="">
+                <img *ngIf="c.userId == userId" (click)="this.deleteComment(c?.id)" class="delete-icon" src="../../assets/x1.png" alt="">
               </div>
             </div>
           </div>

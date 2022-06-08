@@ -85,6 +85,7 @@ export class ProfileComponent{
     this.form.email = this.user.email;
     if(this.creator != null){
       this.form.name = this.creator.name;
+      this.form.surname = this.creator.surname;
       this.form.birthDate = this.creator.birthDate;
       this.form.bio = this.creator.bio;
       this.form.creatorType = this.creator.creatorType;

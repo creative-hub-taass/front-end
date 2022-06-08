@@ -28,7 +28,7 @@ export class CollabsComponent implements OnInit {
   listEvents!: Event[];
   listPost!: Post[];
   listPublicationInfo!: PublicationInfo[];
-
+  ownId: string;
 
   constructor(
     private eventBusService: EventBusService,
@@ -36,6 +36,7 @@ export class CollabsComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     public route: ActivatedRoute
   ) {
+    this.ownId = this.tokenStorageService.getUser().id;
     this.userId = this.route.snapshot.paramMap.get("id");
     if (this.userId != null) {
       let userStorage: string | null = window.sessionStorage.getItem(this.userId);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CollaborationRequest} from "../../_models/CollaborationRequest";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {TokenStorageService} from "../_services/token-storage.service";
@@ -6,6 +6,7 @@ import {CreatorService} from "../_services/creator.service";
 import {ActivatedRoute} from "@angular/router";
 import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
+import {CollaborationRequestStatus} from "../../_models/Enum";
 
 @Component({
   selector: 'app-request-collab',
@@ -60,7 +61,7 @@ export class RequestCollabComponent implements OnInit {
           this.listFollowers.push(elementFollowed);
           this.listNickname.push(elementFollowed.nickname);
         });
-        console.log(listFollowed);
+        this.listNickname.push("");
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -71,6 +72,9 @@ export class RequestCollabComponent implements OnInit {
   onSubmit() {
     if(this.creatorId == null)return;
     this.buildRequest();
+    if(this.collabRequestResult.receiverId == ""){
+      this.collabRequestResult.receiverId = this.creatorId;
+    }
     this.creatorService.addCollabRequest(this.collabRequestResult).subscribe({
       next: (collabRequest: CollaborationRequest) => {
         console.log(collabRequest);
@@ -91,17 +95,33 @@ export class RequestCollabComponent implements OnInit {
   }
 
   buildRequest() {
-    let tmp: any = {
-      id: "",
-      senderId: this.creatorId,
-      receiverId: this.getUserId(this.form.nickname),
-      title: this.form.title,
-      description: this.form.description,
-      timestamp: new Date().toISOString(),
-      contact: this.form.contact,
-      category: this.form.category,
-      status: "OPEN"
-    };
+    let tmp: CollaborationRequest;
+    if(this.creatorId == null)return;
+    if(this.form.nickname != ""){
+      tmp= {
+        id: "",
+        senderId: this.creatorId,
+        receiverId: this.getUserId(this.form.nickname),
+        title: this.form.title,
+        description: this.form.description,
+        timestamp: new Date().toISOString(),
+        contact: this.form.contact,
+        category: this.form.category,
+        status: CollaborationRequestStatus.OPEN
+      };
+    } else {
+      tmp = {
+        id: "",
+        senderId: this.creatorId,
+        receiverId: this.creatorId,
+        title: this.form.title,
+        description: this.form.description,
+        timestamp: new Date().toISOString(),
+        contact: this.form.contact,
+        category: this.form.category,
+        status: CollaborationRequestStatus.OPEN
+      };
+    }
     this.collabRequestResult = new CollaborationRequest(tmp);
   }
 

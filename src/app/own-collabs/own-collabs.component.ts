@@ -14,7 +14,10 @@ import {PublicUser} from "../../_models/PublicUser";
 })
 export class OwnCollabsComponent implements OnInit {
 
-  listUsers: PublicUser[] = [];
+  listUsersSent: PublicUser[] = [];
+  listUsersReceived: PublicUser[] = [];
+  listUsersBroadcast: PublicUser[] = [];
+  listUsersSentBroadcast: PublicUser[] = [];
   listSent: CollaborationRequest[] = [];
   listReceived: CollaborationRequest[] = [];
   listBroadcast: CollaborationRequest[] = [];
@@ -48,12 +51,12 @@ export class OwnCollabsComponent implements OnInit {
           index = this.listSent.findIndex((elementRequest) => {
             return elementRequest.id == elementCollaboration.id;
           });
-          if(index == -1){
-            this.listSent.push(elementCollaboration);
-            tmpListIds.push(elementCollaboration.id);
+          if(index == -1 && this.creatorId != elementCollaboration.receiverId){
+              this.listSent.push(elementCollaboration);
+              tmpListIds.push(elementCollaboration.receiverId);
           }
         });
-        this.callServiceUsers(tmpListIds);
+        this.callServiceUsers(tmpListIds, this.listUsersSent);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -66,12 +69,12 @@ export class OwnCollabsComponent implements OnInit {
           index = this.listSent.findIndex((elementRequest) => {
             return elementRequest.id == elementCollaboration.id;
           });
-          if(index == -1){
+          if(index == -1 && elementCollaboration.receiverId != this.creatorId){
             this.listSent.push(elementCollaboration);
-            tmpListIds.push(elementCollaboration.id);
+            tmpListIds.push(elementCollaboration.senderId);
           }
         });
-        this.callServiceUsers(tmpListIds);
+        this.callServiceUsers(tmpListIds, this.listUsersSentBroadcast);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -86,10 +89,10 @@ export class OwnCollabsComponent implements OnInit {
           });
           if(index == -1 && elementCollaboration.senderId != this.creatorId){
             this.listReceived.push(elementCollaboration);
-            tmpListIds.push(elementCollaboration.id);
+            tmpListIds.push(elementCollaboration.senderId);
           }
         });
-        this.callServiceUsers(tmpListIds);
+        this.callServiceUsers(tmpListIds, this.listUsersReceived);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -104,10 +107,10 @@ export class OwnCollabsComponent implements OnInit {
           });
           if(index == -1){
             this.listBroadcast.push(elementCollaboration);
-            tmpListIds.push(elementCollaboration.id);
+            tmpListIds.push(elementCollaboration.senderId);
           }
         });
-        this.callServiceUsers(tmpListIds);
+        this.callServiceUsers(tmpListIds, this.listUsersBroadcast);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -115,16 +118,15 @@ export class OwnCollabsComponent implements OnInit {
     });
   }
 
-  callServiceUsers(listIds: string[]): void {
+  callServiceUsers(listIds: string[], listOutput: PublicUser[]): void {
     this.creatorService.getListofUser(listIds).subscribe({
       next: (listUsers: PublicUser[]) => {
-        console.log(listUsers);
         let index;
         listUsers.forEach((elementUser: PublicUser) => {
-          index = this.listUsers.findIndex((element) => {
+          index = listOutput.findIndex((element) => {
             return element.id == elementUser.id;
           });
-          if(index == -1)this.listUsers.push(elementUser);
+          if(index == -1)listOutput.push(elementUser);
         });
       },
       error: (error) => {
@@ -134,9 +136,35 @@ export class OwnCollabsComponent implements OnInit {
   }
 
   getUser(id: string): string {
-    let index = this.listUsers.findIndex((elementUser) => {
+    if(id == null)return "";
+    let index = this.listUsersSent.findIndex((elementUser) => {
       return elementUser.id == id;
     });
-    return this.listUsers[index].nickname;
+    if(index != -1) {
+      return this.listUsersSent[index].nickname;
+    }
+
+    index = this.listUsersSentBroadcast.findIndex((elementUser) => {
+      return elementUser.id == id;
+    });
+    if(index != -1) {
+      return this.listUsersSentBroadcast[index].nickname;
+    }
+
+    index = this.listUsersBroadcast.findIndex((elementUser) => {
+      return elementUser.id == id;
+    });
+    if(index != -1) {
+      return this.listUsersBroadcast[index].nickname;
+    }
+
+    index = this.listUsersReceived.findIndex((elementUser) => {
+      return elementUser.id == id;
+    });
+    if(index != -1) {
+      return this.listUsersReceived[index].nickname;
+    }
+
+    return "";
   }
 }

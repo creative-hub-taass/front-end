@@ -24,7 +24,7 @@ export class PostComponent implements OnInit {
   errorMessage: string = "";
   message!: string;
   liked: boolean = false;
-  commented: boolean= false;
+  commented: boolean = false;
   listOfUserNamesComments!: PublicUser[];
   userId: string = "";
   popup: boolean = false;
@@ -79,65 +79,67 @@ export class PostComponent implements OnInit {
   }
 
   private callServiceInteractions() {
-    if (this.postId == null)return;
-      this.publicationService.getLikes(this.postId).subscribe({
-        next: (likesCount) => {
-          this.countLikes = likesCount;
-        },
-        error: (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      });
+    if (this.postId == null) return;
+    this.publicationService.getLikes(this.postId).subscribe({
+      next: (likesCount) => {
+        this.countLikes = likesCount;
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
 
-      this.publicationService.getComments(this.postId).subscribe({
-        next: (listComments: any[]) => {
-          let listOfUsersComments: string[] = [];
-          this.listOfUserNamesComments = [];
-          this.listComments = [];
-          listComments.forEach((comment)=> {
-            let index = listOfUsersComments.findIndex((uid) => {
-              return uid == comment.userId;
-            });
-            if (index == -1) listOfUsersComments.push(comment.userId);
-            this.listComments.push(comment);
-          })
-          this.publicationService.getListofUser(listOfUsersComments).subscribe({
-            next: (listUser: PublicUser[]) => {
-              let flag = false;
-              listOfUsersComments.forEach((userFromInteractions) => {
-                listUser.forEach((userFromUsers) => {
-                  if (userFromInteractions == userFromUsers.id) flag = true;
-                });
-                if (!flag){
-                  listUser.push(new PublicUser({
-                    id: userFromInteractions,
-                    username: "",
-                    nickname: "User deleted",
-                    creator: new PublicCreator({
-                      id: "",
-                      bio: "",
-                      creatorType: "",
-                      avatar: ""
-                    }),
-                    inspirerIds: [],
-                    fanIds: [],
-                  }));
-                }
-                flag = false;
-              });
-              this.listOfUserNamesComments = listUser;
-            },
-            error: (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
+    this.publicationService.getComments(this.postId).subscribe({
+      next: (listComments: any[]) => {
+        let listOfUsersComments: string[] = [];
+        this.listOfUserNamesComments = [];
+        this.listComments = [];
+        listComments.forEach((comment) => {
+          let index = listOfUsersComments.findIndex((uid) => {
+            return uid == comment.userId;
           });
-        },
-        error: (error) => {
-          this.errorMessage = utility.onError(error, this.eventBusService);
-        }
-      });
+          if (index == -1) listOfUsersComments.push(comment.userId);
+          this.listComments.push(comment);
+        })
+        this.publicationService.getListofUser(listOfUsersComments).subscribe({
+          next: (listUser: PublicUser[]) => {
+            let flag = false;
+            listOfUsersComments.forEach((userFromInteractions) => {
+              listUser.forEach((userFromUsers) => {
+                if (userFromInteractions == userFromUsers.id) flag = true;
+              });
+              if (!flag) {
+                listUser.push(new PublicUser({
+                  id: userFromInteractions,
+                  username: "",
+                  nickname: "User deleted",
+                  creator: new PublicCreator({
+                    id: "",
+                    bio: "",
+                    creatorType: "",
+                    avatar: ""
+                  }),
+                  inspirerIds: [],
+                  fanIds: [],
+                }));
+              }
+              flag = false;
+            });
+            listUser.forEach((user) => {
+              if (user != null) this.listOfUserNamesComments.push(user);
+            });
+          },
+          error: (error) => {
+            this.errorMessage = utility.onError(error, this.eventBusService);
+          }
+        });
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
 
-      if(this.userId == null)return;
+    if (this.userId == null) return;
 
     this.publicationService.userCommentedPublication(this.userId, this.postId).subscribe({
       next: (userCommented) => {
@@ -148,7 +150,7 @@ export class PostComponent implements OnInit {
       }
     });
 
-    this.publicationService.userLikedPublication(this.userId, this.postId).subscribe( {
+    this.publicationService.userLikedPublication(this.userId, this.postId).subscribe({
       next: (userLiked) => {
         this.liked = userLiked;
       },
@@ -159,58 +161,67 @@ export class PostComponent implements OnInit {
   }
 
   public addComment() {
-    if(this.userId == null || !this.message || !this.postId) {
+    if (this.userId == null || !this.message || !this.postId) {
       window.location.replace("/login");
       return;
     }
-    console.log("userId: " + this.userId);
-    console.log("artworkId: " + this.postId);
-    console.log("message: " + this.message);
-    this.publicationService.addComment(this.userId, this.postId, this.message);
-    this.message = "";
-    this.callServiceInteractions();
-  }
-
-  public deleteComment(commentId: string) {
-    if(this.userId == null){
-      window.location.replace("/login");
-      return;
-    }
-    this.publicationService.deleteComment(commentId).subscribe({
-      next: () => {
-        console.log("Ho eliminato correttamente il commento");
+    this.publicationService.addComment(this.userId, this.postId, this.message).subscribe({
+      next: (comment) => {
+        this.listComments.push(comment);
+        this.publicationService.getUser(this.userId).subscribe({
+          next: (userofComment: PublicUser) => {
+            if(userofComment != null) this.listOfUserNamesComments.push(userofComment);
+          },
+          error: (error) => {
+            this.errorMessage = utility.onError(error, this.eventBusService);
+          }
+        });
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
-    let index = this.listComments.findIndex((cid)=>{
-      return cid == commentId;
+    this.message = "";
+  }
+
+  public deleteComment(commentId: string) {
+    if (this.userId == null) {
+      window.location.replace("/login");
+      return;
+    }
+    this.publicationService.deleteComment(commentId).subscribe({
+      next: () => {
+        let index = this.listComments.findIndex((elementComment) => {
+          return elementComment.id == commentId;
+        });
+        this.listComments.splice(index, 1);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
     });
-    if (index == -1) return;
-    this.listComments.splice(index, 1);
   }
 
   public getUserUsername(userId: string): string {
     let index = this.listOfUserNamesComments.findIndex((uid) => {
       return uid.id == userId;
     })
-    if (index == -1)return "";
+    if (index == -1) return "";
     return this.listOfUserNamesComments[index].nickname;
   }
 
   public addLike() {
-    if(this.userId == null || !this.postId){
+    if (this.userId == null || !this.postId) {
       window.location.replace("/login");
       return;
     }
-      this.publicationService.addLike(this.userId, this.postId);
-      this.liked= true;
-      this.countLikes++;
+    this.publicationService.addLike(this.userId, this.postId);
+    this.liked = true;
+    this.countLikes++;
   }
 
   public deleteLike() {
-    if(this.userId == null || !this.postId) {
+    if (this.userId == null || !this.postId) {
       window.location.replace("/login");
       return;
     }
@@ -219,8 +230,8 @@ export class PostComponent implements OnInit {
     this.countLikes--;
   }
 
-  public canEdit(): boolean{
-    let index = this.listUsers.findIndex((uid) => {
+  public canEdit(): boolean {
+    let index = this.listUsers?.findIndex((uid) => {
       return uid.id == this.userId;
     });
     return index != -1;
@@ -233,10 +244,15 @@ export class PostComponent implements OnInit {
 
   public delete() {
     this.post.creations.forEach((creation) => {
-      this.publicationService.deleteArtworkCreation(creation.id).subscribe(s => {console.log(s);});
+      this.publicationService.deleteArtworkCreation(creation.id).subscribe(s => {
+        console.log(s);
+      });
     });
-    if(this.postId!=null) this.publicationService.deletePost(this.postId).subscribe(s => {console.log(s);});
+    if (this.postId != null) this.publicationService.deletePost(this.postId).subscribe(s => {
+      console.log(s);
+    });
     this.popup = false;
+    window.location.replace("/home");
   }
 
 }

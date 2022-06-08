@@ -47,17 +47,9 @@
                 [(ngModel)]="form.nickname"
                 class="form-control"
                 name="nickname"
-                required
         >
           <option *ngFor="let nickname of listNickname" [ngValue]="nickname">{{nickname}}</option>
         </select>
-      <div
-        *ngIf="nickname.errors && f.submitted"
-        class="alert alert-danger"
-        role="alert"
-        >
-        Creator receiver is required!
-      </div>
       </div>
       <div class="user-box">
         <label>Contact</label>

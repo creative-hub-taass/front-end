@@ -41,7 +41,7 @@
     <div class="loader" *ngIf="user==null"></div>
 
     <div class="gallery-container">
-      <div class="add-pub" (click)="SendCollaboration()">Send collaboration</div>
+      <div class="add-pub" *ngIf="(this.ownId != null) && (this.ownId == this.userId)" (click)="SendCollaboration()">Send collaboration</div>
       <div *ngIf="(this.listArtworks != undefined && this.listArtworks.length > 0)" class="gallery-c">
         <h2>Artworks</h2>
         <div class="gallery-item" tabindex="0" *ngFor="let publication of listArtworks"

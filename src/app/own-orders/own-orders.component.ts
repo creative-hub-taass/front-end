@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {EventBusService} from "../../_shared/event-bus.service";
 import {TokenStorageService} from "../_services/token-storage.service";
-import {Order} from "../../_models/Order";
 import {Artwork} from "../../_models/Artwork";
 import * as utility from "../../_shared/functions";
 import {PaymentService} from "../_services/payment.service";
@@ -14,7 +13,7 @@ import {PaymentService} from "../_services/payment.service";
 export class OwnOrdersComponent implements OnInit {
 
   userId: string | undefined;
-  listOrders: Order[] = [];
+  listOrders: any[] = [];
   errorMessage: string = "";
   listArtwork: Artwork[] = [];
 
@@ -33,9 +32,10 @@ export class OwnOrdersComponent implements OnInit {
   ngOnInit(): void {
     if(this.userId == undefined)return;
     this.paymentService.getOrders(this.userId).subscribe({
-      next: (listOrders: Order[]) => {
-        listOrders.forEach((order: Order) => {
+      next: (listOrders) => {
+        listOrders.forEach((order: any) => {
           this.listOrders.push(order);
+          console.log(order.timestamp);
           this.paymentService.getArtwork(order.idArtwork).subscribe({
             next: (artwork: Artwork) => {
               this.listArtwork.push(artwork);
@@ -44,7 +44,8 @@ export class OwnOrdersComponent implements OnInit {
               this.errorMessage = utility.onError(error, this.eventBusService);
             }
           });
-        })
+        });
+        console.log(this.listOrders);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -59,4 +60,5 @@ export class OwnOrdersComponent implements OnInit {
     if(index == -1) return "";
     return this.listArtwork[index].name;
   }
+
 }

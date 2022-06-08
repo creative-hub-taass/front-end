@@ -43,7 +43,7 @@
               <p class="qty">{{this.artwork?.availableCopies}} pieces left</p>
             </div>
             <div class="interactions">
-              <button *ngIf="artwork?.onSale" class="buy-button" (click)="toggleBuyPopup()">
+              <button *ngIf="artwork?.onSale && !this.ownArtwork" class="buy-button" (click)="toggleBuyPopup()">
                 <img src="../../assets/coins-w.png" alt="">
                 Purchase
               </button>

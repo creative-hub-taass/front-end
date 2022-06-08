@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Observable, Subscription} from "rxjs";
+import {Observable} from "rxjs";
 import {PublicUser} from "../../_models/PublicUser";
 import {Artwork} from "../../_models/Artwork";
 import {Event} from "../../_models/Event"
@@ -104,8 +104,8 @@ export class PublicationService {
   }
 
   /* Comments */
-  public addComment(userId: string, publicationId: string, message: string): Subscription {
-    return this.http.post<any>(API_GATEWAY_INTERACTIONS + "comment", {"userId": userId, "publicationId": publicationId, "message": message}).subscribe((res)=> {console.log(res);});
+  public addComment(userId: string, publicationId: string, message: string): Observable<any> {
+    return this.http.post<any>(API_GATEWAY_INTERACTIONS + "comment", {"userId": userId, "publicationId": publicationId, "message": message});
   }
 
   public deleteComment(commentId: string): Observable<any> {

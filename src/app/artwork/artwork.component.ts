@@ -179,7 +179,7 @@ export class ArtworkComponent implements OnInit {
         window.location.replace("/artwork/" + this.artworkId);
         return;
       }
-    })
+    });
     this.paymentService.buyArtwork(new Order(this.artwork, this.userId, destinationAddress)).subscribe({
       next: (urlPaypal: string) => {
         if(urlPaypal.includes("redirect",0)){

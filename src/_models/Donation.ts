@@ -1,3 +1,4 @@
+import {Currency} from "./Enum";
 
 export class Donation {
   readonly id: string;
@@ -5,7 +6,7 @@ export class Donation {
   readonly idCreator: string;
   readonly importo: number;
   readonly message: string;
-  readonly currency: string;
+  readonly currency: Currency;
   readonly timestamp: string;
 
   constructor(dto: any) {

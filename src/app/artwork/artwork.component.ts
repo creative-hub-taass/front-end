@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {EventBusService} from "../../_shared/event-bus.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PublicationService} from "../_services/publication.service";
 import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
@@ -10,6 +10,7 @@ import {PaymentService} from "../_services/payment.service";
 import {Order} from "../../_models/Order";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {UserService} from "../_services/user.service";
+import {PaymentResultComponent} from "../payment-result/payment-result.component";
 
 @Component({
   selector: "app-artwork",
@@ -38,6 +39,8 @@ export class ArtworkComponent implements OnInit {
     private publicationService: PublicationService,
     private paymentService: PaymentService,
     private tokenStorageService: TokenStorageService,
+    private paymentResult: PaymentResultComponent,
+    private router: Router,
     public route: ActivatedRoute
   ) {
     this.artworkId = this.route.snapshot.paramMap.get("id");
@@ -165,11 +168,24 @@ export class ArtworkComponent implements OnInit {
   }
 
   public buyArtwork(destinationAddress: string): void {
-    if(this.userId == undefined) window.location.replace("/login")
+    if(this.userId == undefined){
+      window.location.replace("/login");
+      return;
+    }
+    this.artwork.creations.forEach((creation) => {
+      if(creation.user == this.userId){
+        window.location.replace("/artwork/" + this.artworkId);
+        return;
+      }
+    })
     this.paymentService.buyArtwork(new Order(this.artwork, this.userId, destinationAddress)).subscribe({
       next: (urlPaypal: string) => {
-        let url: string = urlPaypal.substring(9, urlPaypal.length);
-        window.location.href = encodeURI(url);
+        if(urlPaypal.includes("redirect",0)){
+          window.location.href = encodeURI(urlPaypal.substring(9, urlPaypal.length));
+          return;
+        }
+
+        this.router.navigate(['/payment-failed', urlPaypal]);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

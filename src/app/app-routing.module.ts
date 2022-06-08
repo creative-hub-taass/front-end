@@ -22,6 +22,7 @@ import {RequestCollabComponent} from "./request-collab/request-collab.component"
 import {OwnUpgradesComponent} from "./own-upgrades/own-upgrades.component";
 import {OwnOrdersComponent} from "./own-orders/own-orders.component";
 import {OwnDonationsComponent} from "./own-donations/own-donations.component";
+import {PaymentResultComponent} from "./payment-result/payment-result.component";
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -50,7 +51,7 @@ const routes: Routes = [
   {path: "orders", component: OwnOrdersComponent},
   {path: "donations", component: OwnDonationsComponent},
   {path: "profile", component: ProfileComponent},
-  {path: "**", redirectTo: "/home"}
+  {path: "payment-failed/:motivation", component: PaymentResultComponent}
 ];
 
 @NgModule({

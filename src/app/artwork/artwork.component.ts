@@ -191,8 +191,6 @@ export class ArtworkComponent implements OnInit {
           })();
           return;
         }
-
-
         this.router.navigate(['/payment-failed', urlPaypal]);
       },
       error: (error) => {

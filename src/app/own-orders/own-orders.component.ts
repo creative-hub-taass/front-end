@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {EventBusService} from "../../_shared/event-bus.service";
 import {TokenStorageService} from "../_services/token-storage.service";
-import {UserService} from "../_services/user.service";
 import {Order} from "../../_models/Order";
 import {Artwork} from "../../_models/Artwork";
 import * as utility from "../../_shared/functions";
+import {PaymentService} from "../_services/payment.service";
 
 @Component({
   selector: 'app-own-orders',
@@ -21,7 +21,7 @@ export class OwnOrdersComponent implements OnInit {
   constructor(
     private eventBusService: EventBusService,
     private tokenStorageService: TokenStorageService,
-    private userService: UserService
+    private paymentService: PaymentService
   ) {
     this.userId = this.tokenStorageService.getUser().id;
     if(this.userId == undefined){
@@ -32,11 +32,11 @@ export class OwnOrdersComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.userId == undefined)return;
-    this.userService.getOrders(this.userId).subscribe({
+    this.paymentService.getOrders(this.userId).subscribe({
       next: (listOrders: Order[]) => {
         listOrders.forEach((order: Order) => {
           this.listOrders.push(order);
-          this.userService.getArtwork(order.idArtwork).subscribe({
+          this.paymentService.getArtwork(order.idArtwork).subscribe({
             next: (artwork: Artwork) => {
               this.listArtwork.push(artwork);
             },

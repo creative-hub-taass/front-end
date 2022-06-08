@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PublicUser} from "../../_models/PublicUser";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {CreatorService} from "../_services/creator.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import * as utility from "../../_shared/functions";
 import {PublicCreator} from "../../_models/PublicCreator";
 import {TokenStorageService} from "../_services/token-storage.service";
@@ -11,6 +11,7 @@ import {PublicationInfo} from "../../_models/PublicationInfo";
 import {PaymentService} from "../_services/payment.service";
 import {Donation} from "../../_models/Donation";
 import {Currency, getListCurrency} from "../../_models/Enum";
+import {delay} from "../../_shared/functions";
 
 @Component({
   selector: 'app-about',
@@ -27,7 +28,7 @@ export class AboutComponent implements OnInit {
   errorMessage: string = "";
   listPosts!: Post[];
   listPublicationInfo!: PublicationInfo[];
-
+  wait: boolean = false;
 
   popup: boolean = false;
   form: { imp: string; currency: Currency; message: string} = {
@@ -41,6 +42,7 @@ export class AboutComponent implements OnInit {
     private creatorService: CreatorService,
     private tokenStorageService: TokenStorageService,
     private paymentService: PaymentService,
+    private router: Router,
     public route: ActivatedRoute
   ) {
     this.userId = this.route.snapshot.paramMap.get("id");
@@ -164,8 +166,16 @@ export class AboutComponent implements OnInit {
     };
     this.paymentService.sendTip(new Donation(tmpDonation)).subscribe({
       next: (urlPaypal: string) => {
-        let url: string = urlPaypal.substring(9, urlPaypal.length);
-        window.location.href = encodeURI(url);
+        if(urlPaypal.includes("redirect",0)) {
+          (async () => {
+            this.wait = true;
+            await delay(8000);
+            this.wait = false;
+            window.location.href = encodeURI(urlPaypal.substring(9, urlPaypal.length));
+          })();
+          return;
+        }
+        this.router.navigate(['/payment-failed', urlPaypal]);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

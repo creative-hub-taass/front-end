@@ -3,8 +3,8 @@ import {Donation} from "../../_models/Donation";
 import {PublicUser} from "../../_models/PublicUser";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {EventBusService} from "../../_shared/event-bus.service";
-import {UserService} from "../_services/user.service";
 import * as utility from "../../_shared/functions";
+import {PaymentService} from "../_services/payment.service";
 @Component({
   selector: 'app-own-donations',
   templateUrl: './own-donations.component.html',
@@ -20,7 +20,7 @@ export class OwnDonationsComponent implements OnInit {
   constructor(
     private tokenStorageService: TokenStorageService,
     private eventBusService: EventBusService,
-    private userService: UserService){
+    private paymentService: PaymentService){
     this.userId = this.tokenStorageService.getUser().id;
     if(this.userId == undefined){
       window.location.replace("/login");
@@ -30,11 +30,11 @@ export class OwnDonationsComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.userId == undefined)return;
-    this.userService.getDonations(this.userId).subscribe({
+    this.paymentService.getDonations(this.userId).subscribe({
       next: (listDonations: Donation[]) => {
         listDonations.forEach((donation: Donation) => {
           this.listDonations.push(donation);
-          this.userService.getCreator(donation.idCreator).subscribe({
+          this.paymentService.getCreator(donation.idCreator).subscribe({
             next: (creator: PublicUser) => {
               this.listCreator.push(creator);
             },

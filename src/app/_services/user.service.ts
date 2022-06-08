@@ -5,8 +5,6 @@ import {environment} from "../../environments/environment";
 import {UpgradeRequest} from "../../_models/UpgradeRequest";
 import {PublicUser} from "../../_models/PublicUser";
 import {User} from "../../_models/User";
-import {Donation} from "../../_models/Donation";
-import {Order} from "../../_models/Order";
 import {Artwork} from "../../_models/Artwork";
 
 
@@ -47,14 +45,6 @@ export class UserService {
 
   getRequestOfUser(idUser: string): Observable<any> {
     return this.http.get<UpgradeRequest[]>(API_GATEWAY_USERS + "upgrade/request/user/" + idUser);
-  }
-
-  getDonations(idUser: string): Observable<any> {
-    return this.http.get<Donation[]>(API_GATEWAY_USERS + "donations/" + idUser);
-  }
-
-  getOrders(idUser: string): Observable<any> {
-    return this.http.get<Order[]>(API_GATEWAY_USERS + "orders/" + idUser);
   }
 
   getArtwork(idArtwork: string): Observable<any> {

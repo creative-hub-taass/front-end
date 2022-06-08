@@ -133,6 +133,7 @@
                 type="text"
               >
             </div>
+            <div class="loader" *ngIf="wait"></div>
             <button class="full-button">Send</button>
             <button class="close-button" (click)="popup = false">Cancel</button>
           </form>

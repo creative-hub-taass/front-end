@@ -3,10 +3,8 @@
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
-  position: absolute;
-  margin-top: 75px;
   width: 100%;
-  padding: 30px;
+  padding: 105px 30px 30px;
 }
 
 body, html {

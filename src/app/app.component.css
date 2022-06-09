@@ -11,13 +11,20 @@ body, html {
   z-index: 2;
 }
 
-.w3-animate-left{
-  position:relative;
-  animation:animateleft 0.4s
+.w3-animate-left {
+  position: relative;
+  animation: animateleft 0.4s
 }
-@keyframes
-animateleft{
-  from{left:-300px;opacity:0} to{left:0;opacity:1}
+
+@keyframes animateleft {
+  from {
+    left: -300px;
+    opacity: 0
+  }
+  to {
+    left: 0;
+    opacity: 1
+  }
 }
 
 .side-menu {
@@ -65,11 +72,13 @@ animateleft{
   right: 20px;
   top: 20px;
   padding: 25px;
+  cursor: pointer;
 }
 
 .menu {
   height: 22px;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 .left-nav {
@@ -95,7 +104,7 @@ animateleft{
 .navbar .logo {
   font-family: "Jost";
   display: flex;
-  font-size: 19px;
+  font-size: 25px;
 }
 
 .navbar .logo .primary {
@@ -114,6 +123,7 @@ animateleft{
 .navbar .voices {
   margin-right: 20px
 }
+
 /* Navbar links */
 .navbar .voices a {
   float: left;

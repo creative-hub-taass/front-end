@@ -27,16 +27,15 @@
     </div>
     <div *ngIf="!getUserInfo().creator && isLoggedIn" class="page">
       <img class="page-icon" src="../assets/upgrade.png" alt=""/>
-      <a href="javascript:void(0)" [routerLink]="['/upgrade-requests']">Your upgrade requests</a>
-      <div class="page"></div>
+      <a href="javascript:void(0)" [routerLink]="['/upgrade-requests']">Upgrade requests</a>
     </div>
-  </div>
-  <div class="secondary-pages">
+    <div class="page"></div>
     <div class="page" (click)="logout()" *ngIf="isLoggedIn">
       <img class="page-icon" src="../assets/logout.png" alt=""/>
       <a href="javascript:void(0)">Logout</a>
     </div>
   </div>
+  <div class="secondary-pages"></div>
 </div>
 <div *ngIf="this.showSideMenu" class="dark-background" (click)="toggleMenu()"></div>
 <div class="navbar">

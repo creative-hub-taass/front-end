@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {PublicUser} from "../../_models/PublicUser";
 import {PublicCreator} from "../../_models/PublicCreator";
-import {Event} from "../../_models/Event"
+import {Event} from "../../_models/Event";
 import {PublicationInfo} from "../../_models/PublicationInfo";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {CreatorService} from "../_services/creator.service";
@@ -101,7 +101,7 @@ export class EventsComponent implements OnInit {
         listEvents.forEach((elementEvent: Event) => {
           this.listEvents.push(elementEvent);
           listPublicationsID.push(elementEvent.id);
-          this.listPublicationInfo.push(new PublicationInfo(elementEvent, elementEvent.creations));
+          this.listPublicationInfo.push(new PublicationInfo(elementEvent, []));
         });
         callServiceInteractions(listPublicationsID,
           this.creatorService,

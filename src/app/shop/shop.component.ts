@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {ActivatedRoute} from "@angular/router";
 import {PublicUser} from "../../_models/PublicUser";
@@ -102,7 +102,7 @@ export class ShopComponent implements OnInit {
           if (elementArtwork.onSale) {
             this.listSellArtwork.push(elementArtwork);
             listPublicationsID.push(elementArtwork.id);
-            this.listPublicationInfo.push(new PublicationInfo(elementArtwork, elementArtwork.creations));
+            this.listPublicationInfo.push(new PublicationInfo(elementArtwork, []));
           }
         });
         callServiceInteractions(listPublicationsID,

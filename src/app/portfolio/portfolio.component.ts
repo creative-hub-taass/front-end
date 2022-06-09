@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {PublicUser} from "../../_models/PublicUser";
 import {PublicCreator} from "../../_models/PublicCreator";
 import {EventBusService} from "../../_shared/event-bus.service";
@@ -101,7 +101,7 @@ export class PortfolioComponent implements OnInit {
         listArtworks.forEach((elementArtwork: Artwork) => {
           this.listArtworks.push(elementArtwork);
           listPublicationsID.push(elementArtwork.id);
-          this.listPublicationInfo.push(new PublicationInfo(elementArtwork, elementArtwork.creations));
+          this.listPublicationInfo.push(new PublicationInfo(elementArtwork, []));
         });
         callServiceInteractions(listPublicationsID,
           this.creatorService,

@@ -11,28 +11,28 @@
     <h3 *ngIf="!isLoggedIn" class="heading">Trending on creativeHub</h3>
     <span class="loading" *ngIf="listFeed==null && !isLoggedIn">Magic is loading...</span>
     <div class="wrapper" style="width: 100%">
-      <ngx-masonry [options]="masonryOptions" class="left-col masonry-grid">
+      <ngx-masonry [options]="masonryOptions" [ordered]="true" class="left-col masonry-grid">
         <div *ngFor="let element of listFeed"
           [ngClass]="{'artwork': element.publication.publicationType == 'artwork', 'event': element.publication.publicationType == 'event', 'post': element.publication.publicationType == 'post'}"
           class="masonry-item"
           ngxMasonryItem>
-          <div *ngFor="let user of element.getUsers()" class="info">
-            <div *ngIf="!!user" [routerLink]="'/about/' + this.getUser(user).id" class="user">
+          <div *ngFor="let user of element.getCreators()" class="info">
+            <div [routerLink]="'/about/' + user?.id" class="user">
               <div class="profile-pic">
-                <img alt="" class="profile-pic" src="{{this.getCreator(user).getAvatar()}}">
+                <img alt="" class="profile-pic" src="{{user?.creator?.avatar}}">
               </div>
               <div class="names">
-                <p class="nickname"> {{this.getUser(user).getNickname()}}</p>
-                <p class="username">@{{this.getUser(user).getUsername()}}</p>
+                <p class="nickname"> {{user?.nickname}}</p>
+                <p class="username">@{{user?.username}}</p>
               </div>
             </div>
-            <img alt="" class="options" src="../../assets/img/option.PNG">
+            <img alt="options" class="options" src="../../assets/img/option.PNG">
           </div>
           <div *ngIf="element.publication.publicationType == 'artwork'">
             <img *ngFor="let images of element.publication.images" alt="" class="image" src="{{images}}">
           </div>
           <div *ngIf="element.publication.publicationType == 'event'">
-            <img class="image" src="{{element.publication.image}}">
+            <img alt="image" class="image" src="{{element.publication.image}}">
           </div>
           <div class="content">
             <div *ngIf="element.publication.publicationType == 'artwork'">
@@ -43,12 +43,12 @@
               <p [routerLink]="['/event/'+element.publication.id]" class="name"
                 href="javascript:void(0)">{{element.publication.name}} </p>
               <p class="date">
-                <img src="../assets/calendar-grey.png">
+                <img alt="date" src="../../assets/calendar-grey.png">
                 {{element.publication.startDateTime | date:"dd MMM yyyy, HH:mm"}}
                 - {{element.publication.endDateTime | date:"dd MMM yyyy, HH:mm"}}
               </p>
               <p class="location">
-                <img src="../assets/mappin.png">
+                <img alt="location" src="../../assets/mappin.png">
                 {{element.publication.locationName}}
               </p>
             </div>

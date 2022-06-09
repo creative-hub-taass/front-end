@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {Post} from "../../_models/Post";
 import {PublicUser} from "../../_models/PublicUser";
 import {EventBusService} from "../../_shared/event-bus.service";
@@ -65,17 +65,6 @@ export class PostComponent implements OnInit {
         }
       )
     }
-  }
-
-  //il metodo richiede il PublicUser e restituisce l'utente cercato all'interno della lista
-  getUser(userParam: PublicUser): PublicUser {
-    return utility.getUser(userParam, this.listUsers);
-  }
-
-  //restituisce un oggetto PublicUser con le informazioni di un utente
-  //il metodo richiede il PublicUser
-  getCreator(userParam: PublicUser): PublicCreator {
-    return utility.getCreator(userParam, this.listUsers);
   }
 
   private callServiceInteractions() {

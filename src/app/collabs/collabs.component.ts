@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {PublicUser} from "../../_models/PublicUser";
 import {PublicCreator} from "../../_models/PublicCreator";
 import {PublicationInfo} from "../../_models/PublicationInfo";
 import {Artwork} from "../../_models/Artwork";
-import {Event} from "../../_models/Event"
+import {Event} from "../../_models/Event";
 import {Post} from "../../_models/Post";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {CreatorService} from "../_services/creator.service";
@@ -109,7 +109,7 @@ export class CollabsComponent implements OnInit {
           if (elementArtwork.creations.length > 1) {
             this.listArtworks.push(elementArtwork);
             listPublicationsID.push(elementArtwork.id);
-            listPublicationsInfo.push(new PublicationInfo(elementArtwork, elementArtwork.creations));
+            listPublicationsInfo.push(new PublicationInfo(elementArtwork, []));
           }
         });
         callServiceInteractions(listPublicationsID,
@@ -134,7 +134,7 @@ export class CollabsComponent implements OnInit {
           if (elementEvent.creations.length > 1) {
             this.listEvents.push(elementEvent);
             listPublicationsID.push(elementEvent.id);
-            listPublicationsInfo.push(new PublicationInfo(elementEvent, elementEvent.creations));
+            listPublicationsInfo.push(new PublicationInfo(elementEvent, []));
           }
         });
         callServiceInteractions(listPublicationsID,
@@ -159,7 +159,7 @@ export class CollabsComponent implements OnInit {
           if (elementPost.creations.length > 1) {
             this.listPost.push(elementPost);
             listPublicationsID.push(elementPost.id);
-            listPublicationsInfo.push(new PublicationInfo(elementPost, elementPost.creations));
+            listPublicationsInfo.push(new PublicationInfo(elementPost, []));
           }
         });
         callServiceInteractions(listPublicationsID,

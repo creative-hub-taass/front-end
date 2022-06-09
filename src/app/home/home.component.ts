@@ -4,10 +4,6 @@ import {FeedService} from "../_services/feed.service";
 import {PublicationInfo} from "../../_models/PublicationInfo";
 import {PublicUser} from "../../_models/PublicUser";
 import * as utility from "../../_shared/functions";
-import {PublicCreator} from "../../_models/PublicCreator";
-import {Artwork} from "../../_models/Artwork";
-import {Event} from "../../_models/Event";
-import {Post} from "../../_models/Post";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {CreatorService} from "../_services/creator.service";
 
@@ -58,28 +54,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  //restituisce un oggetto PublicUser con le informazioni di un utente
-  getUser(userParam: PublicUser): PublicUser {
-    return utility.getUser(userParam, this.listUsers);
-  }
-
-  //restituisce un oggetto PublicCreator con le informazioni dell'utente creator
-  getCreator(userParam: PublicUser): PublicCreator {
-    return utility.getCreator(userParam, this.listUsers);
-  }
-
-  //restituisce un oggetto Artwork | Event | Post in base al currentType
-  getCurrentPublication(publicationInfo: PublicationInfo): Event | Post | Artwork {
-    switch (publicationInfo.publication.publicationType) {
-      case "artwork":
-        return publicationInfo.publication;
-      case "event":
-        return publicationInfo.publication;
-      case "post":
-        return publicationInfo.publication;
-    }
-  }
-
   callServiceUsers(listPublicationDto: PublicationInfo[], callServiceInteractions: any): void {
     //creo la lista degli ID pubblicazioni
     this.listPublicationsID = this.buildPublicationsID(listPublicationDto);
@@ -98,15 +72,10 @@ export class HomeComponent implements OnInit {
         //per ogni pubblicazione prendo la lista degli utenti
         this.listFeed = new Array<PublicationInfo>();
         listPublicationDto.forEach((publicationDto: any) => {
-          let usersofCreation: PublicUser[] = new Array<PublicUser>();
-          let creationArray: any[] = publicationDto.creations;
           //per ogni utente nella lista degli utenti inserisco le informazioni all'interno di una lista temporanea
           //della pubblicazione
-          creationArray.forEach((userCreation: any) => {
-            let index = this.listUsers.findIndex((user) => {
-              return user.id == userCreation.user;
-            });
-            usersofCreation.push(userList[index]);
+          const usersofCreation = publicationDto.creations.map((userCreation: any) => {
+            return this.listUsers.find(user => user.id == userCreation.user);
           });
           //creo il feed
           this.listFeed.push(new PublicationInfo(publicationDto, usersofCreation));

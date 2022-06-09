@@ -16,7 +16,7 @@ export class PublicationInfo {
   private likes: number = 0;
   private comments: Comment[] = [];
 
-  constructor(dto: any, users: any[]) {
+  constructor(dto: any, users: PublicUser[]) {
     this.publication = PublicationInfo.parseDto(dto);
     this.creators = users;
   }
@@ -47,7 +47,7 @@ export class PublicationInfo {
     return this.comments;
   }
 
-  public getUsers() {
+  public getCreators() {
     return this.creators;
   }
 

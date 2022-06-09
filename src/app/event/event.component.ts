@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Event} from "../../_models/Event"
+import {Component, OnInit} from "@angular/core";
+import {Event} from "../../_models/Event";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
 import * as utility from "../../_shared/functions";
@@ -7,7 +7,7 @@ import {ActivatedRoute} from "@angular/router";
 import {PublicUser} from "../../_models/PublicUser";
 import {PublicCreator} from "../../_models/PublicCreator";
 import {TokenStorageService} from "../_services/token-storage.service";
-import * as L from 'leaflet';
+import * as L from "leaflet";
 import {environment} from "../../environments/environment";
 import {Observable, Subscriber} from "rxjs";
 
@@ -161,18 +161,6 @@ export class EventComponent implements OnInit{
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
       });
-  }
-
-  //il metodo richiede il PublicUser e la lista di PublicUser in cui cercare
-  getUser(userParam: PublicUser): PublicUser {
-    return utility.getUser(userParam, this.listUsers);
-  }
-
-  //restituisce un oggetto PublicUser con le informazioni di un utente
-
-  //il metodo richiede il PublicUser e la lista di utenti in cui cercare
-  getCreator(userParam: PublicUser): PublicCreator {
-    return utility.getCreator(userParam, this.listUsers);
   }
 
   private loadMap(): void {

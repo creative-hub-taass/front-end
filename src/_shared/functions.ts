@@ -26,57 +26,14 @@ export function buildUsersIDfromSpecificType(list: any[]): any[] {
   return tmp;
 }
 
-//restituisce un oggetto PublicUser con le informazioni di un utente
-//il metodo richiede il PublicUser e la lista di PublicUser in cui cercare
-export function getUser(userParam: PublicUser, listUsers: PublicUser[]): PublicUser {
-  if(userParam == undefined){
-    return new PublicUser({
-      id: "",
-      username: "",
-      nickname: "",
-      creator: new PublicCreator({
-        id: "",
-        bio: "",
-        creatorType: "",
-        avatar: ""
-      }),
-      inspirerIds: [],
-      fanIds: [],
-    });
-  }
-  let tmp = new PublicUser(userParam);
-  let index = listUsers.findIndex((Object) => {
-    return Object.id == tmp.id;
-  });
-  return listUsers[index];
-}
-
-//restituisce un oggetto PublicCreator con le informazioni dell'utente creator
-//il metodo richiede il PublicUser e la lista di utenti in cui cercare
-export function getCreator(userParam: PublicUser, listUsers: PublicUser[]): PublicCreator {
-  if(userParam == undefined){
-    return new PublicCreator({
-        id: "",
-        bio: "",
-        creatorType: "",
-        avatar: ""
-      });
-  }
-  let tmp = new PublicUser(userParam);
-  let index = listUsers.findIndex((Object) => {
-    return Object.getId() == tmp.getId();
-  });
-  return new PublicCreator(listUsers[index].getCreator());
-}
-
 export function refreshDate(userId: string | null, thisUser: PublicUser,
                             tokenStorageService: TokenStorageService,
                             eventBusService: EventBusService,
                             creatorService: CreatorService,
                             errorMessage: string): void {
-  if(userId == null)return;
+  if (userId == null) return;
   creatorService.getCreator(userId).subscribe({
-    next: (user : PublicUser) => {
+    next: (user: PublicUser) => {
       thisUser = new PublicUser(user);
       thisUser.creator = new PublicCreator(user.creator);
       window.sessionStorage.setItem(userId, JSON.stringify(user));
@@ -85,15 +42,15 @@ export function refreshDate(userId: string | null, thisUser: PublicUser,
     error: (error) => {
       errorMessage = onError(error, eventBusService);
     }
-    });
+  });
 }
 
 export function followCreator(tokenStorageService: TokenStorageService,
                               creatorService: CreatorService,
                               eventBusService: EventBusService,
                               thisUser: PublicUser,
-                              errorMessage: string): void{
-  if(tokenStorageService.getUser().id == undefined){
+                              errorMessage: string): void {
+  if (tokenStorageService.getUser().id == undefined) {
     window.location.replace("/login");
     return;
   }
@@ -114,26 +71,26 @@ export function unfollowCreator(tokenStorageService: TokenStorageService,
                                 creatorService: CreatorService,
                                 eventBusService: EventBusService,
                                 userCreator: PublicUser,
-                                errorMessage: string): void{
-  if(tokenStorageService.getUser().id == undefined){
+                                errorMessage: string): void {
+  if (tokenStorageService.getUser().id == undefined) {
     window.location.replace("/login");
     return;
   }
   creatorService.deleteFollower(tokenStorageService.getUser().id, userCreator.id).subscribe({
-  next: (publicUser: PublicUser) => {
-    let myUser: PublicUser = publicUser;
-    tokenStorageService.saveUser(myUser);
+    next: (publicUser: PublicUser) => {
+      let myUser: PublicUser = publicUser;
+      tokenStorageService.saveUser(myUser);
 
-    let index: number = userCreator.fanIds.findIndex((fan) => {
-      return fan == myUser.id;
-    })
-    if (index == -1)return;
-    userCreator.fanIds.splice(index,1);
-    window.sessionStorage.setItem(userCreator.id, JSON.stringify(userCreator));
-    window.location.reload();
-  },
+      let index: number = userCreator.fanIds.findIndex((fan) => {
+        return fan == myUser.id;
+      });
+      if (index == -1) return;
+      userCreator.fanIds.splice(index, 1);
+      window.sessionStorage.setItem(userCreator.id, JSON.stringify(userCreator));
+      window.location.reload();
+    },
     error: (error) => {
-    errorMessage = onError(error, eventBusService);
+      errorMessage = onError(error, eventBusService);
     }
   });
 }
@@ -166,5 +123,5 @@ export function callServiceInteractions(listPublicationsID: string[],
 }
 
 export function delay(ms: number) {
-  return new Promise( resolve => setTimeout(resolve, ms) );
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

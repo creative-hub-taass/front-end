@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {PublicUser} from "../../_models/PublicUser";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {CreatorService} from "../_services/creator.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import * as utility from "../../_shared/functions";
+import {delay} from "../../_shared/functions";
 import {PublicCreator} from "../../_models/PublicCreator";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {Post} from "../../_models/Post";
@@ -11,7 +12,6 @@ import {PublicationInfo} from "../../_models/PublicationInfo";
 import {PaymentService} from "../_services/payment.service";
 import {Donation} from "../../_models/Donation";
 import {Currency, getListCurrency} from "../../_models/Enum";
-import {delay} from "../../_shared/functions";
 
 @Component({
   selector: 'app-about',
@@ -116,7 +116,7 @@ export class AboutComponent implements OnInit {
         listPosts.forEach((elementPost: Post) => {
           this.listPosts.push(elementPost);
           listPublicationsID.push(elementPost.id);
-          this.listPublicationInfo.push(new PublicationInfo(elementPost, elementPost.creations));
+          this.listPublicationInfo.push(new PublicationInfo(elementPost, []));
         });
         callServiceInteractions(listPublicationsID,
           this.creatorService,

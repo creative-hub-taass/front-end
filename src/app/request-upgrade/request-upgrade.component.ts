@@ -70,6 +70,7 @@ export class RequestUpgradeComponent {
       next: (upgradeRequest: UpgradeRequest) => {
         console.log(upgradeRequest);
         this.submitted = true;
+        window.location.replace("/upgrade-requests");
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

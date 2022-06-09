@@ -346,7 +346,7 @@ export class ModifyPostComponent implements OnDestroy {
             }
           });
         });
-        this.router.navigate(['modify-post/' + responsePost.id]);
+        this.router.navigate(['post/' + responsePost.id]);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

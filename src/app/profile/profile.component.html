@@ -107,6 +107,23 @@
       </div>
       <div class="infoCreator" *ngIf="creator != null">
         <div class="info-box">
+          <label>Username</label>
+          <input #username="ngModel"
+                 [(ngModel)]="form.username"
+                 class="form-control"
+                 name="username"
+                 required
+                 type="text"
+          >
+          <div
+            *ngIf="username.errors && f.submitted"
+            class="alert alert-danger"
+            role="alert"
+          >
+           Username is required!
+          </div>
+        </div>
+        <div class="info-box">
           <label>Name</label>
           <input #name="ngModel"
                  [(ngModel)]="form.name"

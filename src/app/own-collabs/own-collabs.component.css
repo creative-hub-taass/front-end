@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  font-family: "Jost";
+  font-family: "Jost", serif;
   padding-top: 30px;
 }
 
@@ -133,3 +133,12 @@
   display: flex;
   align-items: center;
 }
+
+.button-reject img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 50px;
+  cursor: pointer;
+}
+

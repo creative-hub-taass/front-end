@@ -181,4 +181,41 @@ export class OwnCollabsComponent implements OnInit {
 
     return "";
   }
+
+  rejectRequest(request: CollaborationRequest) {
+    if(request == null)return;
+    this.creatorService.rejectRequest(request.id).subscribe({
+      next: () => {
+        console.log("Request rejected");
+        let index = this.listReceived.findIndex((elementRequest) => {
+          return request.id == elementRequest.id;
+        });
+        if(index != -1)this.listReceived.splice(index, 1);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+  }
+
+  closeRequest(request: CollaborationRequest) {
+    if(request == null)return;
+    this.creatorService.rejectRequest(request.id).subscribe({
+      next: () => {
+        console.log("Request deleted");
+        let index = this.listSent.findIndex((elementRequest) => {
+          return request.id == elementRequest.id;
+        });
+        if(index != -1)this.listSent.splice(index, 1);
+
+        index = this.listBroadcast.findIndex((elementRequest) => {
+          return request.id == elementRequest.id;
+        });
+        if(index != -1)this.listBroadcast.splice(index, 1);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+  }
 }

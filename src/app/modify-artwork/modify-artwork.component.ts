@@ -253,7 +253,7 @@ export class ModifyArtworkComponent implements OnDestroy {
       }
     }
     let index = this.listCreationArtwork.findIndex((elementCreationArtwork) => {
-      return elementCreationArtwork.id == tmpCreation.id;
+      return elementCreationArtwork.user == tmpCreation.user;
     });
     if (index != -1) return;
     //indice dell'utente dalla lista dei follower con l'id selezionato nella view
@@ -386,7 +386,7 @@ export class ModifyArtworkComponent implements OnDestroy {
             }
           });
         });
-        this.router.navigate(['modify-artwork/' + responseArtwork.id]);
+        this.router.navigate(['artwork/' + responseArtwork.id]);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

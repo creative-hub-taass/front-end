@@ -17,13 +17,15 @@ import {CreatorService} from "../_services/creator.service";
   styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit {
-
   isLoggedIn: boolean = false;
   listPublicationsID!: any[];
   listUsersID!: any[];
   listFeed!: PublicationInfo[];
   listUsers!: PublicUser[];
   errorMessage: string = "";
+  masonryOptions = {
+    fitWidth: true
+  };
 
   constructor(
     private tokenStorageService: TokenStorageService,

@@ -10,66 +10,72 @@
     </div>
     <h3 *ngIf="!isLoggedIn" class="heading">Trending on creativeHub</h3>
     <span class="loading" *ngIf="listFeed==null && !isLoggedIn">Magic is loading...</span>
-    <div class="wrapper">
-      <div class="left-col">
-      <div *ngFor="let element of listFeed" [ngClass]="{'artwork': element.publication.publicationType == 'artwork', 'event': element.publication.publicationType == 'event', 'post': element.publication.publicationType == 'post'}">
-        <div *ngFor="let user of element.getUsers()" class="info">
-          <div *ngIf="!!user" [routerLink]="'/about/' + this.getUser(user).id" class="user">
-            <div class="profile-pic">
-              <img alt="" src="{{this.getCreator(user).getAvatar()}}" class="profile-pic">
+    <div class="wrapper" style="width: 100%">
+      <ngx-masonry [options]="masonryOptions" class="left-col masonry-grid">
+        <div *ngFor="let element of listFeed"
+          [ngClass]="{'artwork': element.publication.publicationType == 'artwork', 'event': element.publication.publicationType == 'event', 'post': element.publication.publicationType == 'post'}"
+          class="masonry-item"
+          ngxMasonryItem>
+          <div *ngFor="let user of element.getUsers()" class="info">
+            <div *ngIf="!!user" [routerLink]="'/about/' + this.getUser(user).id" class="user">
+              <div class="profile-pic">
+                <img alt="" class="profile-pic" src="{{this.getCreator(user).getAvatar()}}">
+              </div>
+              <div class="names">
+                <p class="nickname"> {{this.getUser(user).getNickname()}}</p>
+                <p class="username">@{{this.getUser(user).getUsername()}}</p>
+              </div>
             </div>
-            <div class="names">
-              <p class="nickname"> {{this.getUser(user).getNickname()}}</p>
-              <p class="username">@{{this.getUser(user).getUsername()}}</p>
-            </div>
+            <img alt="" class="options" src="../../assets/img/option.PNG">
           </div>
-          <img alt="" class="options" src="../../assets/img/option.PNG">
-        </div>
-         <div *ngIf="element.publication.publicationType == 'artwork'">
-          <img *ngFor="let images of element.publication.images" alt="" class="image" src="{{images}}">
-        </div>
-        <div *ngIf="element.publication.publicationType == 'event'">
-          <img class="image" src="{{element.publication.image}}">
-        </div>
-        <div class="content">
           <div *ngIf="element.publication.publicationType == 'artwork'">
-            <p [routerLink]="['/artwork/'+element.publication.id]" class="name" href="javascript:void(0)">
-            {{element.publication.name}} </p>
+            <img *ngFor="let images of element.publication.images" alt="" class="image" src="{{images}}">
           </div>
           <div *ngIf="element.publication.publicationType == 'event'">
-            <p [routerLink]="['/event/'+element.publication.id]" class="name" href="javascript:void(0)">{{element.publication.name}} </p>
-            <p class="date">
-              <img src="../assets/calendar-grey.png">
-              {{element.publication.startDateTime | date:"dd MMM yyyy, HH:mm"}} - {{element.publication.endDateTime | date:"dd MMM yyyy, HH:mm"}}
-            </p>
-            <p class="location">
-              <img src="../assets/mappin.png">
-              {{element.publication.locationName}}
-            </p>
+            <img class="image" src="{{element.publication.image}}">
           </div>
-          <div *ngIf="element.publication.publicationType == 'post'">
-            <p [routerLink]="['/post/'+element.publication.id]" class="name" href="javascript:void(0)">
-              {{element.publication.title}} </p>
-            <p class="description">{{element.publication.body}}</p>
-          </div>
-          <div *ngIf="element.publication.publicationType == 'artwork' || element.publication.publicationType == 'event'">
-            <p class="description"><span>{{element.publication.description}}</span></p>
-          </div>
-          <p class="time">{{element.publication.lastUpdate | date:"dd MMM yyyy, HH:mm"}}</p>
-          <div class="reaction-wrapper">
-            <div class="count">
-              <img alt="" class="icon" src="../../assets/heart-outline.png">
-              <p class="count-label">{{element.getLikes()}} likes</p>
+          <div class="content">
+            <div *ngIf="element.publication.publicationType == 'artwork'">
+              <p [routerLink]="['/artwork/'+element.publication.id]" class="name" href="javascript:void(0)">
+                {{element.publication.name}} </p>
             </div>
-            <div class="count">
-              <img alt="" class="icon" src="../../assets/bubble-outline.png">
-              <p class="count-label">{{element.getComments().length}} comments</p>
+            <div *ngIf="element.publication.publicationType == 'event'">
+              <p [routerLink]="['/event/'+element.publication.id]" class="name"
+                href="javascript:void(0)">{{element.publication.name}} </p>
+              <p class="date">
+                <img src="../assets/calendar-grey.png">
+                {{element.publication.startDateTime | date:"dd MMM yyyy, HH:mm"}}
+                - {{element.publication.endDateTime | date:"dd MMM yyyy, HH:mm"}}
+              </p>
+              <p class="location">
+                <img src="../assets/mappin.png">
+                {{element.publication.locationName}}
+              </p>
+            </div>
+            <div *ngIf="element.publication.publicationType == 'post'">
+              <p [routerLink]="['/post/'+element.publication.id]" class="name" href="javascript:void(0)">
+                {{element.publication.title}} </p>
+              <p class="description">{{element.publication.body}}</p>
+            </div>
+            <div
+              *ngIf="element.publication.publicationType == 'artwork' || element.publication.publicationType == 'event'">
+              <p class="description"><span>{{element.publication.description}}</span></p>
+            </div>
+            <p class="time">{{element.publication.lastUpdate | date:"dd MMM yyyy, HH:mm"}}</p>
+            <div class="reaction-wrapper">
+              <div class="count">
+                <img alt="" class="icon" src="../../assets/heart-outline.png">
+                <p class="count-label">{{element.getLikes()}} likes</p>
+              </div>
+              <div class="count">
+                <img alt="" class="icon" src="../../assets/bubble-outline.png">
+                <p class="count-label">{{element.getComments().length}} comments</p>
+              </div>
             </div>
           </div>
         </div>
-        </div>
-      </div>
+      </ngx-masonry>
     </div>
-      <div class="loader" *ngIf="listFeed==null && isLoggedIn"></div>
+    <div *ngIf="listFeed==null && isLoggedIn" class="loader"></div>
   </div>
 </section>

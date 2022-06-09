@@ -3,7 +3,7 @@ body, html {
 }
 
 .landing {
-  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), center url('https://cdn.dribbble.com/users/11653188/screenshots/18235765/media/6a97ba7bb47a86aa293d4ac8261b1d51.png');
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), center url('https://cdn.dribbble.com/users/11653188/screenshots/18235765/media/6a97ba7bb47a86aa293d4ac8261b1d51.png');
   width: 100%;
   height: 94vh;
   display: flex;
@@ -75,16 +75,23 @@ body, html {
   padding-bottom: 40px;
 }
 
+.masonry-grid {
+  margin: 0 auto;
+}
+
+.masonry-item {
+  width: 400px;
+}
+
 .artwork, .event, .post {
   height: auto;
   background: #fff;
   filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.1));
   border: 1px solid #dfdfdf;
-  margin: 30px 20px;
+  margin: 10px;
   border-radius: 5px;
   font-family: "Jost";
-  max-width: 600px;
-  min-width: 300px;
+  display: block;
 }
 
 .location {

@@ -18,24 +18,26 @@ import {ProfileComponent} from "./profile/profile.component";
 
 import {HomeComponent} from "./home/home.component";
 import {ArtworkComponent} from "./artwork/artwork.component";
-import {EventComponent} from './event/event.component';
-import {PostComponent} from './post/post.component';
-import {ModifyArtworkComponent} from './modify-artwork/modify-artwork.component';
-import {ModifyEventComponent} from './modify-event/modify-event.component';
-import {ModifyPostComponent} from './modify-post/modify-post.component';
-import {AboutComponent} from './about/about.component';
-import {PortfolioComponent} from './portfolio/portfolio.component';
-import {EventsComponent} from './events/events.component';
-import {ShopComponent} from './shop/shop.component';
-import {CollabsComponent} from './collabs/collabs.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { OwnCollabsComponent } from './own-collabs/own-collabs.component';
-import { RequestUpgradeComponent } from './request-upgrade/request-upgrade.component';
-import { RequestCollabComponent } from './request-collab/request-collab.component';
-import { PaymentResultComponent } from './payment-result/payment-result.component';
-import { OwnUpgradesComponent } from './own-upgrades/own-upgrades.component';
-import { OwnOrdersComponent } from './own-orders/own-orders.component';
-import { OwnDonationsComponent } from './own-donations/own-donations.component';
+import {EventComponent} from "./event/event.component";
+import {PostComponent} from "./post/post.component";
+import {ModifyArtworkComponent} from "./modify-artwork/modify-artwork.component";
+import {ModifyEventComponent} from "./modify-event/modify-event.component";
+import {ModifyPostComponent} from "./modify-post/modify-post.component";
+import {AboutComponent} from "./about/about.component";
+import {PortfolioComponent} from "./portfolio/portfolio.component";
+import {EventsComponent} from "./events/events.component";
+import {ShopComponent} from "./shop/shop.component";
+import {CollabsComponent} from "./collabs/collabs.component";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {OwnCollabsComponent} from "./own-collabs/own-collabs.component";
+import {RequestUpgradeComponent} from "./request-upgrade/request-upgrade.component";
+import {RequestCollabComponent} from "./request-collab/request-collab.component";
+import {PaymentResultComponent} from "./payment-result/payment-result.component";
+import {OwnUpgradesComponent} from "./own-upgrades/own-upgrades.component";
+import {OwnOrdersComponent} from "./own-orders/own-orders.component";
+import {OwnDonationsComponent} from "./own-donations/own-donations.component";
+import {NgxMasonryModule} from "ngx-masonry";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -73,7 +75,9 @@ import { OwnDonationsComponent } from './own-donations/own-donations.component';
     HttpClientModule,
     SocialLoginModule,
     CoolSocialLoginButtonsModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    NgxMasonryModule
   ],
   providers: [authInterceptorProviders,
     PaymentResultComponent,

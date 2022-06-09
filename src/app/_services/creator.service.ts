@@ -57,20 +57,36 @@ export class CreatorService {
     return this.http.post(API_GATEWAY_INTERACTIONS + "-/comments/ids", listPublications);
   }
 
-  getSentRequestCollaboration(idCreator: string): Observable<any> {
-    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/sender/" + idCreator);
+  getSentRequestCollaborationOpen(idCreator: string): Observable<any> {
+    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/sender/open/" + idCreator);
   }
 
-  getReceivedRequestCollaboration(idCreator: string): Observable<any> {
-    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/receiver/" + idCreator);
+  getSentRequestCollaborationClosed(idCreator: string): Observable<any> {
+    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/sender/closed/" + idCreator);
   }
 
-  getSentBroadcastRequest(idCreator: string): Observable<any> {
-    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/broadcast/" + idCreator);
+  getReceivedRequestCollaborationOpen(idCreator: string): Observable<any> {
+    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/receiver/open/" + idCreator);
   }
 
-  getBroadcastRequest(): Observable<any> {
-    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/broadcast");
+  getReceivedRequestCollaborationClosed(idCreator: string): Observable<any> {
+    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/receiver/closed/" + idCreator);
+  }
+
+  getSentBroadcastRequestOpen(idCreator: string): Observable<any> {
+    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/broadcast/open/" + idCreator);
+  }
+
+  getSentBroadcastRequestClosed(idCreator: string): Observable<any> {
+    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/broadcast/closed/" + idCreator);
+  }
+
+  getBroadcastRequestOpen(): Observable<any> {
+    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/broadcast/open");
+  }
+
+  getBroadcastRequestClosed(): Observable<any> {
+    return this.http.get<CollaborationRequest[]>(API_GATEWAY_INTERACTIONS + "collabs/requests/broadcast/closed");
   }
 
   getListofUser(userIDs: string[]): Observable<any> {
@@ -88,4 +104,6 @@ export class CreatorService {
   rejectRequest(idCollaboration: string): Observable<any> {
     return this.http.get(API_GATEWAY_INTERACTIONS + "collabs/request/close/" + idCollaboration);
   }
+
+
 }

@@ -160,6 +160,10 @@ export class ProfileComponent{
     this.userService.changePassword(this.userId, this.formPassword.oldPassword, this.formPassword.newPassword).subscribe({
       next: () => {
         this.submittedPassword = true;
+        this.formPassword.oldPassword = "";
+        this.formPassword.newPassword = "";
+        this.formPassword.newPassword2 = "";
+        this.errorMessage = "";
       },
       error: (error) => {
         this.errorPassword = utility.onError(error, this.eventBusService);

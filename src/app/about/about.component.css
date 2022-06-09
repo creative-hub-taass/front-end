@@ -150,7 +150,6 @@ img {
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-  gap: 20px;
   align-items: center;
   max-width: 700px;
   background: #FFFFFF;
@@ -712,7 +711,7 @@ btn-reload:hover{
   border-radius: 50%;
   animation: loader 500ms linear infinite;
   top: 10vh;
-  left:100vh;
+  left:50%;
   position: absolute;
   margin: 0 auto;
 }

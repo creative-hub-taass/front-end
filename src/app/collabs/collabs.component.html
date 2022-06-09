@@ -93,14 +93,18 @@
             <p>{{publication.body}}</p>
             <div class="post-item-info">
 
-              <ul>
-                <li class="post-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
-                                                                                          aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
-                </li>
-                <li class="post-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
-                                                                                                aria-hidden="true"></i>{{this.getCommentsCount(publication.id)}}
-                </li>
-              </ul>
+              <div class="reaction-wrapper">
+                <div class="count">
+                  <span class="visually-hidden">Likes:</span>
+                  <img src="assets/heart-outline.png" class="icon">
+                  {{this.getLikesCount(publication.id)}}
+                </div>
+                <div class="count">
+                  <span class="visually-hidden">Comments:</span>
+                  <img src="assets/bubble-outline.png" class="icon">
+                  {{this.getCommentsCount(publication.id)}}
+                </div>
+              </div>
 
           </div>
         </div>

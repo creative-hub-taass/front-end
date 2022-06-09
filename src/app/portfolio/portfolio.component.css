@@ -55,6 +55,7 @@ ul {
   margin: 1rem;
   color: #fff;
   cursor: pointer;
+  max-height: 500px;
 }
   .gallery-item:hover .gallery-item-info,
   .gallery-item:focus .gallery-item-info {
@@ -118,7 +119,7 @@ ul {
   .profile {
     grid-template-columns: 1fr 2fr;
     grid-template-rows: repeat(3, auto);
-    grid-column-gap: 3rem;
+
     align-items: center;
   }
 

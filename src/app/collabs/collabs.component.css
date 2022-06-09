@@ -69,11 +69,23 @@ img {
   margin: 1rem;
   color: #fff;
   cursor: pointer;
+  max-height: 500px;
 }
 
 .gallery-post {
   text-align: justify;
   font-family: "Jost";
+  margin: auto;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  font-family: "Jost";
+  padding: 30px;
+  box-shadow: 0px 0px 5.4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 0px;
 }
 
 .gallery-item:hover .gallery-item-info,
@@ -96,6 +108,17 @@ img {
   display: inline-block;
   font-size: 1.7rem;
   font-weight: 600;
+}
+
+.gallery-item-likes, .gallery-item-comments {
+  color: #636363;
+  font-family: "Jost";
+  font-weight: 100;
+  display: flex;
+}
+
+.gallery-item-likes img, .gallery-item-comments img{
+  height: 15px;
 }
 
 .gallery-item-likes {
@@ -138,7 +161,7 @@ img {
   .profile {
     grid-template-columns: 1fr 2fr;
     grid-template-rows: repeat(3, auto);
-    grid-column-gap: 3rem;
+
     align-items: center;
   }
 
@@ -224,6 +247,7 @@ img {
   margin-right: 5%;
   margin-top: 3%;
 
+
 }
 
 .post h4 {
@@ -278,4 +302,32 @@ img {
   padding: 10px 10px 10px 10px;
   margin-left: 10rem;
   margin-top: 10rem;
+}
+
+.reaction-wrapper {
+  display: flex;
+  padding-bottom: 20px;
+  color: #636363;
+}
+
+.reaction-wrapper .icon.save {
+  margin-left: auto;
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+  min-width: 10px;
+}
+
+.count-label {
+  margin: 0 auto;
+  color: #636363;
+  min-width: 70px;
+}
+
+.count .icon {
+  height: 20px;
+  margin-right: 10px;
 }

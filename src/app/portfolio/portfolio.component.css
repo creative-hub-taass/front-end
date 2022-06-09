@@ -55,7 +55,8 @@ ul {
   margin: 1rem;
   color: #fff;
   cursor: pointer;
-  max-height: 500px;
+  max-height: 30rem;
+  max-width: 30rem;
 }
   .gallery-item:hover .gallery-item-info,
   .gallery-item:focus .gallery-item-info {

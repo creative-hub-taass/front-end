@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CollaborationRequest} from "../../_models/CollaborationRequest";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {TokenStorageService} from "../_services/token-storage.service";
@@ -9,6 +9,7 @@ import {PublicUser} from "../../_models/PublicUser";
 import {UserService} from "../_services/user.service";
 import {User} from "../../_models/User";
 import {Creator} from "../../_models/Creator";
+import {CollaborationRequestStatus} from "../../_models/Enum";
 
 @Component({
   selector: 'app-own-collabs',
@@ -58,14 +59,14 @@ export class OwnCollabsComponent implements OnInit {
   ngOnInit(): void {
     if(this.creatorId == null)return;
     let index;
-    this.creatorService.getSentRequestCollaboration(this.creatorId).subscribe({
+    this.creatorService.getSentRequestCollaborationOpen(this.creatorId).subscribe({
       next: (listCollaborations: CollaborationRequest[]) => {
         let tmpListIds = new Array<string>();
         listCollaborations.forEach((elementCollaboration: CollaborationRequest) => {
           index = this.listSent.findIndex((elementRequest) => {
             return elementRequest.id == elementCollaboration.id;
           });
-          if(index == -1 && this.creatorId != elementCollaboration.receiverId){
+          if(index == -1){
               this.listSent.push(elementCollaboration);
               tmpListIds.push(elementCollaboration.receiverId);
           }
@@ -76,14 +77,34 @@ export class OwnCollabsComponent implements OnInit {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
-    this.creatorService.getSentBroadcastRequest(this.creatorId).subscribe({
+
+    this.creatorService.getSentRequestCollaborationClosed(this.creatorId).subscribe({
       next: (listCollaborations: CollaborationRequest[]) => {
         let tmpListIds = new Array<string>();
         listCollaborations.forEach((elementCollaboration: CollaborationRequest) => {
           index = this.listSent.findIndex((elementRequest) => {
             return elementRequest.id == elementCollaboration.id;
           });
-          if(index == -1 && elementCollaboration.receiverId != this.creatorId){
+          if(index == -1){
+            this.listSent.push(elementCollaboration);
+            tmpListIds.push(elementCollaboration.receiverId);
+          }
+        });
+        this.callServiceUsers(tmpListIds, this.listUsersSent);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+
+    this.creatorService.getSentBroadcastRequestOpen(this.creatorId).subscribe({
+      next: (listCollaborations: CollaborationRequest[]) => {
+        let tmpListIds = new Array<string>();
+        listCollaborations.forEach((elementCollaboration: CollaborationRequest) => {
+          index = this.listSent.findIndex((elementRequest) => {
+            return elementRequest.id == elementCollaboration.id;
+          });
+          if(index == -1){
             this.listSent.push(elementCollaboration);
             tmpListIds.push(elementCollaboration.senderId);
           }
@@ -94,7 +115,27 @@ export class OwnCollabsComponent implements OnInit {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
-    this.creatorService.getReceivedRequestCollaboration(this.creatorId).subscribe({
+
+    this.creatorService.getSentBroadcastRequestClosed(this.creatorId).subscribe({
+      next: (listCollaborations: CollaborationRequest[]) => {
+        let tmpListIds = new Array<string>();
+        listCollaborations.forEach((elementCollaboration: CollaborationRequest) => {
+          index = this.listSent.findIndex((elementRequest) => {
+            return elementRequest.id == elementCollaboration.id;
+          });
+          if(index == -1){
+            this.listSent.push(elementCollaboration);
+            tmpListIds.push(elementCollaboration.senderId);
+          }
+        });
+        this.callServiceUsers(tmpListIds, this.listUsersSentBroadcast);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+
+    this.creatorService.getReceivedRequestCollaborationOpen(this.creatorId).subscribe({
       next: (listCollaborations: CollaborationRequest[]) => {
         let tmpListIds = new Array<string>();
         listCollaborations.forEach((elementCollaboration: CollaborationRequest) => {
@@ -112,7 +153,46 @@ export class OwnCollabsComponent implements OnInit {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
-    this.creatorService.getBroadcastRequest().subscribe({
+
+    this.creatorService.getReceivedRequestCollaborationClosed(this.creatorId).subscribe({
+      next: (listCollaborations: CollaborationRequest[]) => {
+        let tmpListIds = new Array<string>();
+        listCollaborations.forEach((elementCollaboration: CollaborationRequest) => {
+          index = this.listReceived.findIndex((elementRequest) => {
+            return elementRequest.id == elementCollaboration.id;
+          });
+          if(index == -1 && elementCollaboration.senderId != this.creatorId){
+            this.listReceived.push(elementCollaboration);
+            tmpListIds.push(elementCollaboration.senderId);
+          }
+        });
+        this.callServiceUsers(tmpListIds, this.listUsersReceived);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+
+    this.creatorService.getBroadcastRequestOpen().subscribe({
+      next: (listCollaborations: CollaborationRequest[]) => {
+        let tmpListIds = new Array<string>();
+        listCollaborations.forEach((elementCollaboration: CollaborationRequest) => {
+          index = this.listBroadcast.findIndex((elementRequest) => {
+            return elementRequest.id == elementCollaboration.id;
+          });
+          if(index == -1){
+            this.listBroadcast.push(elementCollaboration);
+            tmpListIds.push(elementCollaboration.senderId);
+          }
+        });
+        this.callServiceUsers(tmpListIds, this.listUsersBroadcast);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+
+    this.creatorService.getBroadcastRequestClosed().subscribe({
       next: (listCollaborations: CollaborationRequest[]) => {
         let tmpListIds = new Array<string>();
         listCollaborations.forEach((elementCollaboration: CollaborationRequest) => {
@@ -133,6 +213,7 @@ export class OwnCollabsComponent implements OnInit {
   }
 
   callServiceUsers(listIds: string[], listOutput: PublicUser[]): void {
+    if(listIds.length == 0)return;
     this.creatorService.getListofUser(listIds).subscribe({
       next: (listUsers: PublicUser[]) => {
         let index;
@@ -190,7 +271,7 @@ export class OwnCollabsComponent implements OnInit {
         let index = this.listReceived.findIndex((elementRequest) => {
           return request.id == elementRequest.id;
         });
-        if(index != -1)this.listReceived.splice(index, 1);
+        if(index != -1)this.listReceived[index].status = CollaborationRequestStatus.CLOSED;
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -206,12 +287,12 @@ export class OwnCollabsComponent implements OnInit {
         let index = this.listSent.findIndex((elementRequest) => {
           return request.id == elementRequest.id;
         });
-        if(index != -1)this.listSent.splice(index, 1);
+        if(index != -1)this.listSent[index].status = CollaborationRequestStatus.CLOSED;
 
         index = this.listBroadcast.findIndex((elementRequest) => {
           return request.id == elementRequest.id;
         });
-        if(index != -1)this.listBroadcast.splice(index, 1);
+        if(index != -1)this.listBroadcast[index].status = CollaborationRequestStatus.CLOSED;
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

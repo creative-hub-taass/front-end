@@ -75,6 +75,7 @@ body, html {
 
 .masonry-grid {
   margin: 0 auto;
+  min-height: 100vh;
 }
 
 .masonry-item {

@@ -6,27 +6,27 @@
 
       <div class="page">
         <img alt="" class="page-icon" src="../assets/home.png" />
-        <a [routerLink]="['/home']" href="javascript:void(0)">Home</a>
+        <a (click)="toggleMenu()" [routerLink]="['/home']" href="javascript:void(0)">Home</a>
       </div>
       <div *ngIf="getUserInfo().creator" class="page">
         <img alt="" class="page-icon" src="../assets/person.png" />
-        <a [routerLink]="['/about/'+getUserInfo().id]" href="javascript:void(0)">My page</a>
+        <a (click)="toggleMenu()" [routerLink]="['/about/'+getUserInfo().id]" href="javascript:void(0)">My page</a>
       </div>
       <div *ngIf="getUserInfo().creator" class="page">
         <img alt="" class="page-icon" src="../assets/ppl.png" />
-        <a [routerLink]="['/collaborations-requests']" href="javascript:void(0)">My collabs</a>
+        <a (click)="toggleMenu()" [routerLink]="['/collaborations-requests']" href="javascript:void(0)">My collabs</a>
       </div>
       <div *ngIf="isLoggedIn" class="page">
         <img alt="" class="page-icon" src="../assets/credit-card.png" />
-        <a [routerLink]="['/donations']" href="javascript:void(0)">Donations</a>
+        <a (click)="toggleMenu()" [routerLink]="['/donations']" href="javascript:void(0)">Donations</a>
       </div>
       <div *ngIf="isLoggedIn" class="page">
         <img alt="" class="page-icon" src="../assets/shopbag.png" />
-        <a [routerLink]="['/orders']" href="javascript:void(0)">Orders</a>
+        <a (click)="toggleMenu()" [routerLink]="['/orders']" href="javascript:void(0)">Orders</a>
       </div>
       <div *ngIf="!getUserInfo().creator && isLoggedIn" class="page">
         <img alt="" class="page-icon" src="../assets/upgrade.png" />
-        <a [routerLink]="['/upgrade-requests']" href="javascript:void(0)">Upgrade requests</a>
+        <a (click)="toggleMenu()" [routerLink]="['/upgrade-requests']" href="javascript:void(0)">Upgrade requests</a>
       </div>
       <div class="page"></div>
       <div (click)="logout()" *ngIf="isLoggedIn" class="page">

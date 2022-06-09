@@ -68,7 +68,6 @@
 <div class="container" *ngIf="!popupView">
   <div class="nav" *ngIf="!popupView">
     <a class="active" href="javascript:void(0)" [routerLink]="'/profile'">Edit profile</a>
-    <a href="javascript:void(0)" (click)="popupView = true">Change password</a>
     <a href="javascript:void(0)" [routerLink]="'/orders'">Orders</a>
     <a href="javascript:void(0)" [routerLink]="'/donations'">Donations</a>
     <a href="javascript:void(0)" [routerLink]="'/upgrade-requests'" *ngIf="this.creator == null">Upgrade Requests</a>
@@ -241,6 +240,7 @@
     </form>
     <h4 *ngIf="this.submitted" class="message-box success">Request submitted!</h4>
     <h4 *ngIf="this.errorMessage!=''" class="message-box fail">{{this.errorMessage}}</h4>
+    <button (click)="popupView = true" class="button">Change password</button>
   </div>
   <div class="account-deletion">
     <button class="delete-btn" id="delete-button" (click)="popupDelete = true">Delete account</button>
@@ -248,7 +248,7 @@
   <div id="popup2" class="overlay" *ngIf="popupDelete">
     <div class="confirmation-popup">
       <div class="content2">
-        <h2>Do you want delete your account definitely?</h2>
+        <h2>Do you want to permanently delete your account?</h2>
         <div class="buttons">
           <button class="delete-btn" (click)="deleteUser()">Delete</button>
           <button class="cancel-btn" (click)="popupDelete = false">Cancel</button>

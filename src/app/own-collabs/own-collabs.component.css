@@ -1,13 +1,9 @@
 .wrapper {
-  margin: 0 auto;
+  padding: 105px 0 30px;
   width: 85%;
-  position: absolute;
-  top: 75px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  font-family: "Jost", serif;
-  padding-top: 30px;
+  margin: 0 auto;
+  font-family: "Jost";
+  min-height: 100vh;
 }
 
 
@@ -91,9 +87,7 @@
 }
 
 .container-nav {
-  text-align: center;
   display: flex;
-  align-items: center;
 }
 
 .nav {

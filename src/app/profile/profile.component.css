@@ -28,7 +28,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   width: 100%;
-  padding: 105px 30px 30px;
+  padding: 105px 0 30px;
 }
 
 .profile-box {
@@ -43,7 +43,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 30px;
+  padding: 20px 30px;
 }
 
 .profile-box h2 {
@@ -83,12 +83,13 @@
   background: #00A3FF;
   padding: 10px 18px;
   color: #ffffff;
-  width: 70px;
   height: 42px;
   border: 0 solid #00A3FF;
   border-radius: 1000px;
   font-weight: 500;
   font-size: 15px;
+  display: block;
+  margin: 10px;
 }
 
 .profile-box button:hover {

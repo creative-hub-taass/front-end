@@ -10,10 +10,10 @@
     </div>
   </div>
   <div class="new-req">
-    <button class="btn-request" [routerLink]="'/collaboration-request'">New collaboration</button>
+    <button [routerLink]="'/collaboration-request'" class="btn-request">New collaboration request</button>
   </div>
+  <h2>Sent requests</h2>
   <div class="table">
-    <h2>Request sent</h2>
     <div class="row header">
       <div class="cell">
         Recipient
@@ -65,11 +65,10 @@
           src="./assets/bin.png">
       </div>
     </div>
-
   </div>
 
+  <h2>Received requests</h2>
   <div class="table">
-    <h2>Request received</h2>
     <div class="row header green">
       <div class="cell">
         Sender
@@ -118,11 +117,10 @@
           src="./assets/delete-circled.png">
       </div>
     </div>
-
   </div>
 
+  <h2>Broadcast requests</h2>
   <div class="table">
-    <h2>Request broadcast</h2>
     <div class="row header blue">
       <div class="cell">
         Sender

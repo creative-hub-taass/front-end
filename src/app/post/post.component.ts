@@ -106,7 +106,7 @@ export class PostComponent implements OnInit {
             let flag = false;
             listOfUsersComments.forEach((userFromInteractions) => {
               listUser.forEach((userFromUsers) => {
-                if (userFromInteractions == userFromUsers.id) flag = true;
+                if (userFromUsers != null && userFromInteractions == userFromUsers.id) flag = true;
               });
               if (!flag) {
                 listUser.push(new PublicUser({

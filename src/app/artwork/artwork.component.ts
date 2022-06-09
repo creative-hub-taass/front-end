@@ -116,9 +116,11 @@ export class ArtworkComponent implements OnInit {
         this.publicationService.getListofUser(listOfUsersComments).subscribe({
           next: (listUser: PublicUser[]) => {
             let flag = false;
+            console.log(listUser)
+            console.log(listOfUsersComments)
             listOfUsersComments.forEach((userFromInteractions) => {
               listUser.forEach((userFromUsers) => {
-                if (userFromInteractions == userFromUsers.id) flag = true;
+                if (userFromUsers != null && userFromInteractions == userFromUsers.id) flag = true;
               });
               if (!flag) {
                 listUser.push(new PublicUser({

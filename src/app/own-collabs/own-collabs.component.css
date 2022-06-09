@@ -138,6 +138,6 @@
 .button-reject img {
   border-radius: 4px;
   padding: 5px;
-  height: 30px;
+  width: 35px;
   cursor: pointer;
 }

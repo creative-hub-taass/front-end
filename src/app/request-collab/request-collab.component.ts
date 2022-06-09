@@ -57,11 +57,11 @@ export class RequestCollabComponent implements OnInit {
     if(this.creatorId == null)return;
     this.creatorService.getFollowed(this.creatorId).subscribe({
       next: (listFollowed: PublicUser[]) => {
+        this.listNickname.push("");
         listFollowed.forEach((elementFollowed: PublicUser) => {
           this.listFollowers.push(elementFollowed);
           this.listNickname.push(elementFollowed.nickname);
         });
-        this.listNickname.push("");
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -79,6 +79,7 @@ export class RequestCollabComponent implements OnInit {
       next: (collabRequest: CollaborationRequest) => {
         console.log(collabRequest);
         this.submitted = true;
+        window.location.replace("/collaborations-requests");
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

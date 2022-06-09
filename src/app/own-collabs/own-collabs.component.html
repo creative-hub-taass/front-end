@@ -32,11 +32,17 @@
       <div class="cell">
         Status
       </div>
+      <div class="cell">
+        Close
+      </div>
     </div>
 
     <div class="row" *ngFor="let request of listSent">
-      <div class="cell" data-title="Receiver">
+      <div class="cell" data-title="Receiver" *ngIf="(request.receiverId != this.creatorId)">
         {{getUser(request.receiverId)}}
+      </div>
+      <div class="cell" data-title="Receiver" *ngIf="(request.receiverId == this.creatorId)">
+        Broadcast
       </div>
       <div class="cell" data-title="Title">
         {{request.title}}
@@ -54,7 +60,7 @@
         {{request.status}}
       </div>
       <div class="button-reject">
-        <img src="./assets/delete-circled.png" alt="" (click)="closeRequest(request)">
+        <img src="./assets/bin.png" alt="Delete request" *ngIf="(request.status == 'OPEN')" (click)="closeRequest(request)">
       </div>
     </div>
 
@@ -81,6 +87,9 @@
       <div class="cell">
         Status
       </div>
+      <div class="cell">
+        Reject
+      </div>
     </div>
 
     <div class="row" *ngFor="let request of listReceived">
@@ -103,7 +112,7 @@
         {{request.status}}
       </div>
         <div class="button-reject">
-          <img src="./assets/delete-circled.png" alt="" (click)="rejectRequest(request)">
+          <img src="./assets/delete-circled.png" alt="Reject request" *ngIf="(request.status == 'OPEN')" (click)="rejectRequest(request)">
         </div>
     </div>
 

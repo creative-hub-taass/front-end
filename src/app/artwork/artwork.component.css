@@ -177,11 +177,8 @@
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
-  position: absolute;
-  margin-top: 75px;
   width: 100%;
-  left: 0px;
-  padding: 30px;
+  padding: 105px 30px 30px;
 }
 
 .post {
@@ -368,7 +365,7 @@
   border-radius: 50%;
   animation: loader 500ms linear infinite;
   top: 8vh;
-  left:22vh;
+  left: 22vh;
   position: absolute;
   margin: 0 auto;
 }

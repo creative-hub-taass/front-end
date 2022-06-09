@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import {Component} from "@angular/core";
 import {UpgradeRequest} from "../../_models/UpgradeRequest";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {TokenStorageService} from "../_services/token-storage.service";
@@ -9,9 +9,9 @@ import * as utility from "../../_shared/functions";
 import {CreatorType, getListCreatorType} from "../../_models/Enum";
 
 @Component({
-  selector: 'app-request-upgrade',
-  templateUrl: './request-upgrade.component.html',
-  styleUrls: ['./request-upgrade.component.css', '../modify-artwork/modify-artwork.component.css']
+  selector: "app-request-upgrade",
+  templateUrl: "./request-upgrade.component.html",
+  styleUrls: ["./request-upgrade.component.css", "../modify-artwork/modify-artwork.component.css"]
 })
 export class RequestUpgradeComponent {
 
@@ -53,18 +53,18 @@ export class RequestUpgradeComponent {
     public route: ActivatedRoute
   ) {
     this.userId = this.tokenStorageService.getUser().id;
-    if(this.userId == null){
+    if (this.userId == null) {
       window.location.replace("/login");
       return;
     }
-    if(this.tokenStorageService.getUser().creator != null){
+    if (this.tokenStorageService.getUser().creator != null) {
       window.location.replace("/profile");
       return;
     }
   }
 
   onSubmit() {
-    if(this.userId == null)return;
+    if (this.userId == null) return;
     this.buildRequest();
     this.userService.addUpgradeRequest(this.upgradeRequestResult).subscribe({
       next: (upgradeRequest: UpgradeRequest) => {
@@ -92,7 +92,7 @@ export class RequestUpgradeComponent {
     this.form.creatorType = CreatorType.ARTIST;
   }
 
-  buildRequest(){
+  buildRequest() {
     let tmp: any = {
       id: "",
       user: new PublicUser(this.tokenStorageService.getUser()),
@@ -108,7 +108,7 @@ export class RequestUpgradeComponent {
       paymentEmail: this.form.paymentEmail,
       status: "OPEN",
       creatorType: this.form.creatorType
-    }
+    };
     this.upgradeRequestResult = new UpgradeRequest(tmp);
   }
 

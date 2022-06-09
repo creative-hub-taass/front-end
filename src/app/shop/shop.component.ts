@@ -10,9 +10,9 @@ import {PublicationInfo} from "../../_models/PublicationInfo";
 import {CreatorService} from "../_services/creator.service";
 
 @Component({
-  selector: 'app-shop',
-  templateUrl: './shop.component.html',
-  styleUrls: ['./shop.component.css', '../about/about.component.css', '../portfolio/portfolio.component.css']
+  selector: "app-shop",
+  templateUrl: "./shop.component.html",
+  styleUrls: ["./shop.component.css", "../about/about.component.css", "../portfolio/portfolio.component.css"]
 })
 export class ShopComponent implements OnInit {
 
@@ -22,7 +22,7 @@ export class ShopComponent implements OnInit {
   user!: PublicUser;
   creator!: PublicCreator;
   errorMessage: string = "";
-  listSellArtwork!: Artwork[]
+  listSellArtwork!: Artwork[];
   listPublicationInfo!: PublicationInfo[];
 
   constructor(

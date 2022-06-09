@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
 
-import { OwnOrdersComponent } from './own-orders.component';
+import {OwnOrdersComponent} from "./own-orders.component";
 
-describe('OwnOrdersComponent', () => {
+describe("OwnOrdersComponent", () => {
   let component: OwnOrdersComponent;
   let fixture: ComponentFixture<OwnOrdersComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OwnOrdersComponent ]
+      declarations: [OwnOrdersComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('OwnOrdersComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

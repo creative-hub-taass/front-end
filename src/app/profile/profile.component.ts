@@ -12,7 +12,7 @@ import {Creator} from "../../_models/Creator";
   templateUrl: "./profile.component.html",
   styleUrls: ["./profile.component.css"]
 })
-export class ProfileComponent{
+export class ProfileComponent {
 
   userId: string | null;
   errorMessage: string = "";
@@ -63,14 +63,14 @@ export class ProfileComponent{
               private eventBusService: EventBusService,
               private userService: UserService) {
     this.userId = this.tokenStorageService.getUser().id;
-    if(this.userId == null){
+    if (this.userId == null) {
       window.location.replace("/login");
       return;
     }
     this.userService.getInfoUser(this.userId).subscribe({
       next: (userInfo: User) => {
         this.user = userInfo;
-        if(userInfo.creator != null) this.creator = userInfo.creator;
+        if (userInfo.creator != null) this.creator = userInfo.creator;
         this.buildForm();
       },
       error: (error) => {
@@ -83,7 +83,7 @@ export class ProfileComponent{
     this.form.username = this.user.username;
     this.form.nickname = this.user.nickname;
     this.form.email = this.user.email;
-    if(this.creator != null){
+    if (this.creator != null) {
       this.form.name = this.creator.name;
       this.form.surname = this.creator.surname;
       this.form.birthDate = this.creator.birthDate;
@@ -96,7 +96,7 @@ export class ProfileComponent{
 
   onSubmit() {
     let tmpUser: any;
-    if(this.creator != null) {
+    if (this.creator != null) {
       tmpUser = {
         id: this.userId,
         username: this.form.username,
@@ -117,7 +117,7 @@ export class ProfileComponent{
         fanIds: this.user.fanIds
       };
     } else {
-      tmpUser =  {
+      tmpUser = {
         id: this.userId,
         username: this.form.username,
         nickname: this.form.nickname,
@@ -152,11 +152,11 @@ export class ProfileComponent{
   }
 
   ChangePassword() {
-    if(this.formPassword.newPassword != this.formPassword.newPassword2){
+    if (this.formPassword.newPassword != this.formPassword.newPassword2) {
       this.errorPassword = "New passwords are not equals";
       return;
     }
-    if(this.userId == null)return;
+    if (this.userId == null) return;
     this.userService.changePassword(this.userId, this.formPassword.oldPassword, this.formPassword.newPassword).subscribe({
       next: () => {
         this.submittedPassword = true;
@@ -172,7 +172,7 @@ export class ProfileComponent{
   }
 
   deleteUser() {
-    if(this.userId == null)return;
+    if (this.userId == null) return;
     this.userService.deleteUser(this.userId).subscribe({
       next: () => {
         console.log("Account eliminato con successo");

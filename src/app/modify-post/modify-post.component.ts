@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy} from "@angular/core";
 import {Creation} from "../../_models/Publication";
 import {Post} from "../../_models/Post";
 import {PublicUser} from "../../_models/PublicUser";
@@ -26,9 +26,9 @@ export class CreationPost implements Creation {
 }
 
 @Component({
-  selector: 'app-modify-post',
-  templateUrl: './modify-post.component.html',
-  styleUrls: ['./modify-post.component.css', '../modify-artwork/modify-artwork.component.css']
+  selector: "app-modify-post",
+  templateUrl: "./modify-post.component.html",
+  styleUrls: ["./modify-post.component.css", "../modify-artwork/modify-artwork.component.css"]
 })
 export class ModifyPostComponent implements OnDestroy {
 
@@ -47,7 +47,7 @@ export class ModifyPostComponent implements OnDestroy {
   } = {
     title: "",
     body: ""
-  }
+  };
 
   formCreations: {
     user?: PublicUser;
@@ -63,12 +63,12 @@ export class ModifyPostComponent implements OnDestroy {
     private router: Router,
     public route: ActivatedRoute
   ) {
-    this.postId = this.route.snapshot.paramMap.get('id');
-    if(this.tokenStorageService.getUser().id == null) {
+    this.postId = this.route.snapshot.paramMap.get("id");
+    if (this.tokenStorageService.getUser().id == null) {
       window.location.replace("/login");
       return;
     }
-    if(this.tokenStorageService.getUser().creator == null){
+    if (this.tokenStorageService.getUser().creator == null) {
       window.location.replace("/upgrade-request");
       return;
     }
@@ -109,7 +109,7 @@ export class ModifyPostComponent implements OnDestroy {
         listFollower.forEach((follower) => {
           this.listFollowers.push(new PublicUser(follower));
         });
-        this.listFollowers.push(this.tokenStorageService.getUser())
+        this.listFollowers.push(this.tokenStorageService.getUser());
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -159,79 +159,80 @@ export class ModifyPostComponent implements OnDestroy {
     else this.postResult = Object.assign<Post, Post>(this.postResult, JSON.parse(postOrigin));
     this.buildFormPostOrigin();
   }
-/*
-  onSubmit() {
-    const post = window.sessionStorage.getItem("postOrigin");
-    this.postResult.lastUpdate = new Date().toISOString();
-    //sto modificando il post
-    if (post) {
-      //controllo nella nuova lista di creations quali non sono già presenti nella vecchia
-      this.listCreationPost.forEach((elementCreationNew) => {
-        let index = this.postResult.creations.findIndex((elementCreationOrigin) => {
-          return elementCreationNew.user == elementCreationOrigin.user;
-        });
-        //se un creation non è già all'interno del post originale
-        if (index == -1) {
-          this.publicationService.savePostCreation(elementCreationNew).subscribe({
-            next: (result) => {
-              console.log("ho salvato il creation");
-              console.log(result);
-            },
-            error: (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
+
+  /*
+    onSubmit() {
+      const post = window.sessionStorage.getItem("postOrigin");
+      this.postResult.lastUpdate = new Date().toISOString();
+      //sto modificando il post
+      if (post) {
+        //controllo nella nuova lista di creations quali non sono già presenti nella vecchia
+        this.listCreationPost.forEach((elementCreationNew) => {
+          let index = this.postResult.creations.findIndex((elementCreationOrigin) => {
+            return elementCreationNew.user == elementCreationOrigin.user;
           });
-        }
-      });
-      //devo eliminare tutte le creations che sono su origin e non sono sulla nuova lista
-      this.postResult.creations.forEach((elementCreationOrigin) => {
-        let index = this.listCreationPost.findIndex((elementCreationNew) => {
-          return elementCreationNew.user == elementCreationOrigin.user;
+          //se un creation non è già all'interno del post originale
+          if (index == -1) {
+            this.publicationService.savePostCreation(elementCreationNew).subscribe({
+              next: (result) => {
+                console.log("ho salvato il creation");
+                console.log(result);
+              },
+              error: (error) => {
+                this.errorMessage = utility.onError(error, this.eventBusService);
+              }
+            });
+          }
         });
-        //se non l'ho trovato lo cancello
-        if (index == -1) {
-          this.publicationService.deletePostCreation(elementCreationOrigin.id).subscribe({
-            next: () => {
-              console.log("Creation eliminata con successo");
-            },
-            error: (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
+        //devo eliminare tutte le creations che sono su origin e non sono sulla nuova lista
+        this.postResult.creations.forEach((elementCreationOrigin) => {
+          let index = this.listCreationPost.findIndex((elementCreationNew) => {
+            return elementCreationNew.user == elementCreationOrigin.user;
           });
-        }
-      });
-      this.publicationService.updatePost(this.postResult).subscribe({
-        next: () => {
-          console.log("Ho aggiornato il post correttamente");
+          //se non l'ho trovato lo cancello
+          if (index == -1) {
+            this.publicationService.deletePostCreation(elementCreationOrigin.id).subscribe({
+              next: () => {
+                console.log("Creation eliminata con successo");
+              },
+              error: (error) => {
+                this.errorMessage = utility.onError(error, this.eventBusService);
+              }
+            });
+          }
+        });
+        this.publicationService.updatePost(this.postResult).subscribe({
+          next: () => {
+            console.log("Ho aggiornato il post correttamente");
+          },
+          error: (error) => {
+            this.errorMessage = utility.onError(error, this.eventBusService);
+          }
+        });
+        this.sent = true;
+        return;
+      }
+      this.publicationService.savePost(this.postResult).subscribe({
+        next: (responsePost) => {
+          this.listCreationPost.forEach((elementCreation) => {
+            elementCreation.postId = responsePost.id;
+            this.publicationService.savePostCreation(elementCreation).subscribe({
+              next: () => {
+                console.log("Ho salvato correttamente il creation");
+              },
+              error: (error) => {
+                this.errorMessage = utility.onError(error, this.eventBusService);
+              }
+            });
+          });
+          this.router.navigate(['modify-post/' + responsePost.id]);
         },
         error: (error) => {
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
       });
-      this.sent = true;
-      return;
     }
-    this.publicationService.savePost(this.postResult).subscribe({
-      next: (responsePost) => {
-        this.listCreationPost.forEach((elementCreation) => {
-          elementCreation.postId = responsePost.id;
-          this.publicationService.savePostCreation(elementCreation).subscribe({
-            next: () => {
-              console.log("Ho salvato correttamente il creation");
-            },
-            error: (error) => {
-              this.errorMessage = utility.onError(error, this.eventBusService);
-            }
-          });
-        });
-        this.router.navigate(['modify-post/' + responsePost.id]);
-      },
-      error: (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    });
-  }
-*/
+  */
   addUsers() {
     if (this.formCreations.user == undefined) return;
     let tmpCreation: any = {};
@@ -241,14 +242,14 @@ export class ModifyPostComponent implements OnDestroy {
         user: this.formCreations.user.id,
         creationType: this.formCreations.creationType,
         postId: this.postId
-      }
+      };
     } else {
       tmpCreation = {
         id: "",
         user: this.formCreations.user.id,
         creationType: this.formCreations.creationType,
         postId: ""
-      }
+      };
     }
     let index = this.listCreationPost.findIndex((elementCreationPost) => {
       return elementCreationPost.user == tmpCreation.user;
@@ -264,7 +265,7 @@ export class ModifyPostComponent implements OnDestroy {
     const index = this.listCreationPost.findIndex((elementCreationPost) => {
       return elementCreationPost.id == id;
     });
-    if(index == -1)return;
+    if (index == -1) return;
     this.listCreationPost.splice(index, 1);
   }
 
@@ -279,7 +280,7 @@ export class ModifyPostComponent implements OnDestroy {
     //sto modificando il post
     if (post) {
       this.updatePost();
-    }else {
+    } else {
       //so creando il post
       this.savePost();
     }
@@ -346,7 +347,7 @@ export class ModifyPostComponent implements OnDestroy {
             }
           });
         });
-        this.router.navigate(['post/' + responsePost.id]);
+        this.router.navigate(["post/" + responsePost.id]);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

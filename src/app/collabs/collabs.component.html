@@ -41,11 +41,13 @@
     <div class="loader" *ngIf="user==null"></div>
 
     <div class="gallery-container">
-      <div class="add-pub" *ngIf="(this.ownId != null) && (this.ownId == this.userId)" (click)="SendCollaboration()">Send collaboration</div>
+      <div (click)="SendCollaboration()" *ngIf="(this.ownId != null) && (this.ownId == this.userId)" class="add-pub">
+        Send collaboration
+      </div>
       <div *ngIf="(this.listArtworks != undefined && this.listArtworks.length > 0)" class="gallery-c">
         <h2>Artworks</h2>
         <div class="gallery-item" tabindex="0" *ngFor="let publication of listArtworks"
-             [routerLink]="'/artwork/' + publication.id">
+          [routerLink]="'/artwork/' + publication.id">
 
 
           <img src="{{publication.images[0]}}" class="gallery-image" alt="">
@@ -53,10 +55,10 @@
 
             <ul>
               <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
-                                                                                           aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
+                aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
               </li>
               <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
-                                                                                                 aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}
+                aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}
               </li>
             </ul>
 
@@ -65,9 +67,9 @@
         </div>
       </div>
       <div *ngIf="(this.listEvents != undefined && this.listEvents.length > 0)" class="gallery-c">
-            <h2>Events</h2>
-            <div class="gallery-item" tabindex="0" *ngFor="let publication of listEvents"
-             [routerLink]="'/event/' + publication.id">
+        <h2>Events</h2>
+        <div *ngFor="let publication of listEvents" [routerLink]="'/event/' + publication.id" class="gallery-item"
+          tabindex="0">
 
 
           <img src="{{publication.image}}" class="gallery-image" alt="">
@@ -75,40 +77,40 @@
 
             <ul>
               <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
-                                                                                           aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
+                aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
               </li>
               <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
-                                                                                                 aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}
+                aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}
               </li>
             </ul>
 
           </div>
 
         </div>
-          </div>
+      </div>
       <div *ngIf="(this.listPost != undefined && this.listPost.length > 0)" class="gallery-c">
-          <h2>Posts</h2>
-          <div class="gallery-post" *ngFor="let publication of listPost" [routerLink]="'/post/' + publication.id">
-            <h3>{{publication.title}}<p id="lastUpdate">Last update: {{publication.lastUpdate | date:'medium'}}</p></h3>
-            <p>{{publication.body}}</p>
-            <div class="post-item-info">
+        <h2>Posts</h2>
+        <div *ngFor="let publication of listPost" [routerLink]="'/post/' + publication.id" class="gallery-post">
+          <h3>{{publication.title}}<p id="lastUpdate">Last update: {{publication.lastUpdate | date:'medium'}}</p></h3>
+          <p>{{publication.body}}</p>
+          <div class="post-item-info">
 
-              <div class="reaction-wrapper">
-                <div class="count">
-                  <span class="visually-hidden">Likes:</span>
-                  <img src="assets/heart-outline.png" class="icon">
-                  {{this.getLikesCount(publication.id)}}
-                </div>
-                <div class="count">
-                  <span class="visually-hidden">Comments:</span>
-                  <img src="assets/bubble-outline.png" class="icon">
-                  {{this.getCommentsCount(publication.id)}}
-                </div>
+            <div class="reaction-wrapper">
+              <div class="count">
+                <span class="visually-hidden">Likes:</span>
+                <img class="icon" src="assets/heart-outline.png">
+                {{this.getLikesCount(publication.id)}}
               </div>
+              <div class="count">
+                <span class="visually-hidden">Comments:</span>
+                <img class="icon" src="assets/bubble-outline.png">
+                {{this.getCommentsCount(publication.id)}}
+              </div>
+            </div>
 
           </div>
         </div>
-        </div>
+      </div>
       <div class="loader" *ngIf="listPublicationInfo == undefined"></div>
     </div>
   </div>

@@ -79,91 +79,6 @@ export class ArtworkComponent implements OnInit {
     }
   }
 
-  private callServiceInteractions() {
-    if (this.artworkId == null) return;
-    this.publicationService.getLikes(this.artworkId).subscribe({
-      next: (likesCount) => {
-        this.countLikes = likesCount;
-      },
-      error: (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    });
-
-    this.publicationService.getComments(this.artworkId).subscribe({
-      next: (listComments: any[]) => {
-        let listOfUsersComments: string[] = [];
-        this.listOfUserNamesComments = [];
-        this.listComments = [];
-        listComments.forEach((comment) => {
-          let index = listOfUsersComments.findIndex((uid) => {
-            return uid == comment.userId;
-          });
-          if (index == -1) listOfUsersComments.push(comment.userId);
-          this.listComments.push(comment);
-        });
-        this.publicationService.getListofUser(listOfUsersComments).subscribe({
-          next: (listUser: PublicUser[]) => {
-            let flag = false;
-            console.log(listUser)
-            console.log(listOfUsersComments)
-            listOfUsersComments.forEach((userFromInteractions) => {
-              listUser.forEach((userFromUsers) => {
-                if (userFromUsers != null && userFromInteractions == userFromUsers.id) flag = true;
-              });
-              if (!flag) {
-                listUser.push(new PublicUser({
-                  id: userFromInteractions,
-                  username: "",
-                  nickname: "User deleted",
-                  creator: new PublicCreator({
-                    id: "",
-                    bio: "",
-                    creatorType: "",
-                    avatar: ""
-                  }),
-                  inspirerIds: [],
-                  fanIds: [],
-                }));
-              }
-              flag = false;
-            });
-            listUser.forEach((user) => {
-              if (user != null) this.listOfUserNamesComments.push(user);
-            });
-          },
-          error: (error) => {
-            this.errorMessage = utility.onError(error, this.eventBusService);
-          }
-        });
-      },
-      error: (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    });
-
-    if (this.userId == null) return;
-
-    this.publicationService.userCommentedPublication(this.userId, this.artworkId).subscribe({
-      next: (userCommented) => {
-        this.commented = userCommented;
-      },
-      error: (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    });
-
-    this.publicationService.userLikedPublication(this.userId, this.artworkId).subscribe({
-      next: (userLiked) => {
-        this.liked = userLiked;
-      },
-      error: (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    });
-
-  }
-
   public buyArtwork(destinationAddress: string): void {
     if (this.userId == undefined) {
       window.location.replace("/login");
@@ -186,13 +101,21 @@ export class ArtworkComponent implements OnInit {
           })();
           return;
         }
-        this.router.navigate(['/payment-failed', urlPaypal]);
+        this.router.navigate(["/payment-failed", urlPaypal]);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
     this.buypoup = true;
+  }
+
+  public getUserUsername(userId: string): string {
+    let index = this.listOfUserNamesComments.findIndex((uid) => {
+      return uid.id == userId;
+    });
+    if (index == -1) return "";
+    return this.listOfUserNamesComments[index].nickname;
   }
 
   public addComment() {
@@ -237,12 +160,89 @@ export class ArtworkComponent implements OnInit {
     });
   }
 
-  public getUserUsername(userId: string): string {
-    let index = this.listOfUserNamesComments.findIndex((uid) => {
-      return uid.id == userId;
-    })
-    if (index == -1) return "";
-    return this.listOfUserNamesComments[index].nickname;
+  private callServiceInteractions() {
+    if (this.artworkId == null) return;
+    this.publicationService.getLikes(this.artworkId).subscribe({
+      next: (likesCount) => {
+        this.countLikes = likesCount;
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+
+    this.publicationService.getComments(this.artworkId).subscribe({
+      next: (listComments: any[]) => {
+        let listOfUsersComments: string[] = [];
+        this.listOfUserNamesComments = [];
+        this.listComments = [];
+        listComments.forEach((comment) => {
+          let index = listOfUsersComments.findIndex((uid) => {
+            return uid == comment.userId;
+          });
+          if (index == -1) listOfUsersComments.push(comment.userId);
+          this.listComments.push(comment);
+        });
+        this.publicationService.getListofUser(listOfUsersComments).subscribe({
+          next: (listUser: PublicUser[]) => {
+            let flag = false;
+            console.log(listUser);
+            console.log(listOfUsersComments);
+            listOfUsersComments.forEach((userFromInteractions) => {
+              listUser.forEach((userFromUsers) => {
+                if (userFromUsers != null && userFromInteractions == userFromUsers.id) flag = true;
+              });
+              if (!flag) {
+                listUser.push(new PublicUser({
+                  id: userFromInteractions,
+                  username: "",
+                  nickname: "User deleted",
+                  creator: new PublicCreator({
+                    id: "",
+                    bio: "",
+                    creatorType: "",
+                    avatar: ""
+                  }),
+                  inspirerIds: [],
+                  fanIds: []
+                }));
+              }
+              flag = false;
+            });
+            listUser.forEach((user) => {
+              if (user != null) this.listOfUserNamesComments.push(user);
+            });
+          },
+          error: (error) => {
+            this.errorMessage = utility.onError(error, this.eventBusService);
+          }
+        });
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+
+    if (this.userId == null) return;
+
+    this.publicationService.userCommentedPublication(this.userId, this.artworkId).subscribe({
+      next: (userCommented) => {
+        this.commented = userCommented;
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+
+    this.publicationService.userLikedPublication(this.userId, this.artworkId).subscribe({
+      next: (userLiked) => {
+        this.liked = userLiked;
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+
   }
 
   public addLike() {

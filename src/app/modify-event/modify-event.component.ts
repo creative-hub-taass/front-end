@@ -1,13 +1,13 @@
-import {AfterViewInit, Component, OnDestroy} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy} from "@angular/core";
 import {Creation} from "../../_models/Publication";
 import * as utility from "../../_shared/functions";
-import {Event} from "../../_models/Event"
+import {Event} from "../../_models/Event";
 import {PublicUser} from "../../_models/PublicUser";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import * as L from 'leaflet';
+import * as L from "leaflet";
 import {environment} from "../../environments/environment";
 import {Observable, Subscriber} from "rxjs";
 import {CreationType, getListCreationTypeE} from "../../_models/Enum";
@@ -29,17 +29,17 @@ export class CreationEvent implements Creation {
 }
 
 const icon = L.icon({
-  iconUrl: '../../assets/img/marker-icon.png',
-  shadowUrl: '../../assets/img/marker-shadow.png',
+  iconUrl: "../../assets/img/marker-icon.png",
+  shadowUrl: "../../assets/img/marker-shadow.png",
   popupAnchor: [13, 0]
 });
 
 const AUTH_TOKEN = environment.accessToken;
 
 @Component({
-  selector: 'app-modify-event',
-  templateUrl: './modify-event.component.html',
-  styleUrls: ['./modify-event.component.css', '../modify-artwork/modify-artwork.component.css']
+  selector: "app-modify-event",
+  templateUrl: "./modify-event.component.html",
+  styleUrls: ["./modify-event.component.css", "../modify-artwork/modify-artwork.component.css"]
 })
 export class ModifyEventComponent implements OnDestroy, AfterViewInit {
 
@@ -88,11 +88,11 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
   ) {
     //prendo l'id dell'evento, se lo sto modificando, altrimenti lo sto creando nuovo
     this.eventId = this.route.snapshot.paramMap.get("id");
-    if(this.tokenStorageService.getUser().id == null) {
+    if (this.tokenStorageService.getUser().id == null) {
       window.location.replace("/login");
       return;
     }
-    if(this.tokenStorageService.getUser().creator == null){
+    if (this.tokenStorageService.getUser().creator == null) {
       window.location.replace("/upgrade-request");
       return;
     }
@@ -125,12 +125,12 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
             error: (error) => {
               this.errorMessage = utility.onError(error, this.eventBusService);
             }
-          })
+          });
         },
         error: (error) => {
           this.errorMessage = utility.onError(error, this.eventBusService);
         }
-      })
+      });
     } else {
       //costruisco il form con informazioni di default
       this.buildFormEventEmpty();
@@ -146,45 +146,45 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
         listFollower.forEach((follower) => {
           this.listFollowers.push(new PublicUser(follower));
         });
-        this.listFollowers.push(this.tokenStorageService.getUser())
+        this.listFollowers.push(this.tokenStorageService.getUser());
       }, (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
-    )
+    );
   }
 
   ngAfterViewInit(): void {
-    if (this.eventId == null)this.loadMap();
+    if (this.eventId == null) this.loadMap();
+  }
+
+  addUsers() {
+    if (this.formCreations.user == undefined) return;
+    let tmpCreation: any = {};
+    if (this.eventId != null) {
+      tmpCreation = {
+        id: "",
+        user: this.formCreations.user.id,
+        creationType: this.formCreations.creationType,
+        eventId: this.eventId
+      };
+    } else {
+      tmpCreation = {
+        id: "",
+        user: this.formCreations.user.id,
+        creationType: this.formCreations.creationType,
+        eventId: ""
+      };
     }
-
-  private loadMap(): void {
-    this.map = L.map('map').setView([0, 0], 2);
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + AUTH_TOKEN, {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 18,
-      id: 'mapbox/streets-v11',
-      tileSize: 512,
-      zoomOffset: -1,
-      accessToken: AUTH_TOKEN
-    }).addTo(this.map);
-
-    this.map.on('click', (e: any) => {
-      this.map.removeLayer(this.marker);
-      this.eventResult.coordinates.latitude = e.latlng.lat;
-      this.eventResult.coordinates.longitude = e.latlng.lng;
-      this.map.flyTo([e.latlng.lat, e.latlng.lng], e.zoom);
-      this.marker = L.marker([e.latlng.lat, e.latlng.lng], {icon}).bindPopup('The event is located here');
-      this.marker.addTo(this.map);
+    let index = this.listCreationEvent.findIndex((elementCreationEvent) => {
+      return elementCreationEvent.user == tmpCreation.user;
     });
-
-    this.getCurrentPosition()
-      .subscribe((position: any) => {
-
-        this.map.flyTo([position.latitude, position.longitude], 10);
-
-        this.marker = L.marker([position.latitude, position.longitude], {icon}).bindPopup('The event is located here');
-        this.marker.addTo(this.map);
-      });
+    if (index != -1) return;
+    //indice dell'utente dalla lista dei follower con l'id selezionato nella view
+    //utile per prendere il nickname dell'utente inserito
+    let indexUser = this.listFollowers.findIndex((elementFollower) => {
+      return elementFollower.id == tmpCreation.user;
+    });
+    this.listCreationEvent.push(new CreationEvent("", tmpCreation.eventId, tmpCreation.user, this.listFollowers[indexUser].nickname, this.formCreations.creationType));
   }
 
   private getCurrentPosition(): any {
@@ -224,24 +224,19 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
     });
   }
 
-  private buildFormEventEmpty() {
-    this.eventResult = {
-      publicationType: "event" as const,
-      id: "",
-      timestamp: new Date().toISOString(),
-      lastUpdate: new Date().toISOString(),
-      creations: [],
-      name: "",
-      description: "",
-      image: "",
-      locationName: "",
-      coordinates: {
-        longitude: 4.886169433593751,
-        latitude: 52.399067302933304,
-      },
-      startDateTime: new Date().toISOString(),
-      endDateTime: new Date().toISOString(),
-      bookingURL: ""
+  onSubmit() {
+    let URL_REGEXP = /^[A-Za-z][A-Za-z\d.+-]*:\/*(?:\w+(?::\w+)?@)?[^\s/]+(?::\d+)?(?:\/[\w#!:.?+=&%@\-/]*)?$/;
+    if (this.eventResult.bookingURL != undefined && !URL_REGEXP.test(this.eventResult.bookingURL)) {
+      this.errorMessage = "Booking URL need to be a valid URL.";
+      return;
+    }
+    const event = window.sessionStorage.getItem("eventOrigin");
+    //aggiorno il lastUpdate
+    this.eventResult.lastUpdate = new Date().toISOString();
+    if (event) {
+      this.updateEvent();
+    } else {
+      this.saveEvent();
     }
   }
 
@@ -262,34 +257,34 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
     this.buildFormEventOrigin();
   }
 
-  addUsers() {
-    if (this.formCreations.user == undefined) return;
-    let tmpCreation: any = {};
-    if (this.eventId != null) {
-      tmpCreation = {
-        id: "",
-        user: this.formCreations.user.id,
-        creationType: this.formCreations.creationType,
-        eventId: this.eventId
-      }
-    } else {
-      tmpCreation = {
-        id: "",
-        user: this.formCreations.user.id,
-        creationType: this.formCreations.creationType,
-        eventId: ""
-      }
-    }
-    let index = this.listCreationEvent.findIndex((elementCreationEvent) => {
-      return elementCreationEvent.user == tmpCreation.user;
+  private loadMap(): void {
+    this.map = L.map("map").setView([0, 0], 2);
+    L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=" + AUTH_TOKEN, {
+      attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+      maxZoom: 18,
+      id: "mapbox/streets-v11",
+      tileSize: 512,
+      zoomOffset: -1,
+      accessToken: AUTH_TOKEN
+    }).addTo(this.map);
+
+    this.map.on("click", (e: any) => {
+      this.map.removeLayer(this.marker);
+      this.eventResult.coordinates.latitude = e.latlng.lat;
+      this.eventResult.coordinates.longitude = e.latlng.lng;
+      this.map.flyTo([e.latlng.lat, e.latlng.lng], e.zoom);
+      this.marker = L.marker([e.latlng.lat, e.latlng.lng], {icon}).bindPopup("The event is located here");
+      this.marker.addTo(this.map);
     });
-    if (index != -1) return;
-    //indice dell'utente dalla lista dei follower con l'id selezionato nella view
-    //utile per prendere il nickname dell'utente inserito
-    let indexUser = this.listFollowers.findIndex((elementFollower) => {
-      return elementFollower.id == tmpCreation.user;
-    });
-    this.listCreationEvent.push(new CreationEvent("", tmpCreation.eventId, tmpCreation.user, this.listFollowers[indexUser].nickname, this.formCreations.creationType));
+
+    this.getCurrentPosition()
+      .subscribe((position: any) => {
+
+        this.map.flyTo([position.latitude, position.longitude], 10);
+
+        this.marker = L.marker([position.latitude, position.longitude], {icon}).bindPopup("The event is located here");
+        this.marker.addTo(this.map);
+      });
   }
 
   deleteUser(id: string) {
@@ -303,20 +298,25 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
     return getListCreationTypeE();
   }
 
-  onSubmit() {
-    let URL_REGEXP = /^[A-Za-z][A-Za-z\d.+-]*:\/*(?:\w+(?::\w+)?@)?[^\s/]+(?::\d+)?(?:\/[\w#!:.?+=&%@\-/]*)?$/;
-    if(this.eventResult.bookingURL != undefined && !URL_REGEXP.test(this.eventResult.bookingURL)){
-      this.errorMessage = "Booking URL need to be a valid URL.";
-      return;
-    }
-    const event = window.sessionStorage.getItem("eventOrigin");
-    //aggiorno il lastUpdate
-    this.eventResult.lastUpdate = new Date().toISOString();
-    if (event) {
-      this.updateEvent();
-    } else {
-      this.saveEvent();
-    }
+  private buildFormEventEmpty() {
+    this.eventResult = {
+      publicationType: "event" as const,
+      id: "",
+      timestamp: new Date().toISOString(),
+      lastUpdate: new Date().toISOString(),
+      creations: [],
+      name: "",
+      description: "",
+      image: "",
+      locationName: "",
+      coordinates: {
+        longitude: 4.886169433593751,
+        latitude: 52.399067302933304
+      },
+      startDateTime: new Date().toISOString(),
+      endDateTime: new Date().toISOString(),
+      bookingURL: ""
+    };
   }
 
   private updateEvent() {
@@ -328,7 +328,7 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
           let index = this.eventResult.creations.findIndex((elementCreationOrigin) => {
             return elementCreationNew.user == elementCreationOrigin.user;
           });
-          if(index == -1) {
+          if (index == -1) {
             this.publicationService.saveEventCreation(elementCreationNew).subscribe({
               next: () => {
                 console.log("Ho salvato il creation correttamente");
@@ -352,7 +352,7 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
               error: (error) => {
                 this.errorMessage = utility.onError(error, this.eventBusService);
               }
-            })
+            });
           }
         });
       },
@@ -378,7 +378,7 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
             }
           });
         });
-        this.router.navigate(['event/' + responseEvent.id]);
+        this.router.navigate(["event/" + responseEvent.id]);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

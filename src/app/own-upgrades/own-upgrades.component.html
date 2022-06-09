@@ -1,19 +1,19 @@
 <div class="wrapper">
-  <div class="container-nav" >
-    <div class="nav" >
+  <div class="container-nav">
+    <div class="nav">
       <a href="javascript:void(0)" [routerLink]="'/profile'">Edit profile</a>
       <a href="javascript:void(0)" [routerLink]="'/orders'">Orders</a>
       <a href="javascript:void(0)" [routerLink]="'/donations'">Donations</a>
-      <a class="active" href="javascript:void(0)" [routerLink]="'/upgrade-requests'" *ngIf="this.creator == null">Upgrade Requests</a>
-      <a href="javascript:void(0)" [routerLink]="'/collaborations-requests'"  *ngIf="this.creator != null">Collaborations</a>
+      <a *ngIf="this.creator == null" [routerLink]="'/upgrade-requests'" class="active" href="javascript:void(0)">
+        Upgrade Requests
+      </a>
+      <a *ngIf="this.creator != null" [routerLink]="'/collaborations-requests'"
+        href="javascript:void(0)">Collaborations</a>
     </div>
   </div>
-  <div class="new-req">
-    <button class="btn-request" [routerLink]="'/upgrade-request'">New request</button>
-  </div>
+  <h2 style="width: 100%">Upgrade Requests</h2>
   <div class="table">
-    <h2>Upgrade Request Sent</h2>
-    <div class="row header" >
+    <div class="row header">
       <div class="cell">
         Request number
       </div>
@@ -54,6 +54,8 @@
         {{request.status}}
       </div>
     </div>
-
+  </div>
+  <div class="new-req">
+    <button [routerLink]="'/upgrade-request'" class="btn-request">New request</button>
   </div>
 </div>

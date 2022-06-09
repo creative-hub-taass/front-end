@@ -16,11 +16,11 @@
       </div>
       <div class="artwork-box">
         <input #copies="ngModel"
-               [(ngModel)]="formArtwork.copies"
-               class="form-control"
-               name="copies"
-               required
-               type="text"
+          [(ngModel)]="formArtwork.copies"
+          class="form-control"
+          name="copies"
+          required
+          type="text"
         />
         <div
           *ngIf="copies.errors && f.submitted"
@@ -36,11 +36,11 @@
       </div>
       <div class="artwork-box">
         <input #description="ngModel"
-               [(ngModel)]="formArtwork.description"
-               class="form-control"
-               name="description"
-               required
-               type="text"
+          [(ngModel)]="formArtwork.description"
+          class="form-control"
+          name="description"
+          required
+          type="text"
         />
         <div
           *ngIf="description.errors && f.submitted"
@@ -56,11 +56,11 @@
       </div>
       <div class="artwork-box">
         <input #name="ngModel"
-               [(ngModel)]="formArtwork.name"
-               class="form-control"
-               name="name"
-               required
-               type="text"
+          [(ngModel)]="formArtwork.name"
+          class="form-control"
+          name="name"
+          required
+          type="text"
         />
         <div
           *ngIf="name.errors && f.submitted"
@@ -76,11 +76,11 @@
       </div>
       <div class="artwork-box">
         <input #type="ngModel"
-               [(ngModel)]="formArtwork.type"
-               class="form-control"
-               name="type"
-               required
-               type="text"
+          [(ngModel)]="formArtwork.type"
+          class="form-control"
+          name="type"
+          required
+          type="text"
         />
         <div
           *ngIf="type.errors && f.submitted"
@@ -111,9 +111,9 @@
       </div>
       <div class="artwork-box" *ngIf="this.onSale">
         <select #currency="ngModel"
-                [(ngModel)]="formArtwork.currency"
-                class="form-control"
-                name="currency"
+          [(ngModel)]="formArtwork.currency"
+          class="form-control"
+          name="currency"
         >
           <option *ngFor="let curr of getCurrency()" [ngValue]="curr">{{curr}}</option>
         </select>
@@ -124,11 +124,11 @@
       </div>
       <div class="artwork-box" *ngIf="this.onSale">
         <input #availableCopies="ngModel"
-               [(ngModel)]="this.formArtwork.availableCopies"
-               class="form-control"
-               name="availableCopies"
-               required
-               type="text"
+          [(ngModel)]="this.formArtwork.availableCopies"
+          class="form-control"
+          name="availableCopies"
+          required
+          type="text"
         />
       </div>
 
@@ -137,10 +137,10 @@
       </div>
       <div class="artwork-box" *ngIf="this.onSale">
         <input #price="ngModel"
-               [(ngModel)]="formArtwork.price"
-               class="form-control"
-               name="price"
-               type="text"
+          [(ngModel)]="formArtwork.price"
+          class="form-control"
+          name="price"
+          type="text"
         />
       </div>
 
@@ -149,10 +149,10 @@
       </div>
       <div class="artwork-box" *ngIf="this.onSale">
         <input #paymentEmail="ngModel"
-               [(ngModel)]="formArtwork.paymentEmail"
-               class="form-control"
-               name="paymentEmail"
-               type="text"
+          [(ngModel)]="formArtwork.paymentEmail"
+          class="form-control"
+          name="paymentEmail"
+          type="text"
         />
       </div>
 
@@ -174,17 +174,17 @@
       </div>
       <div class="artwork-box">
         <input #attributes="ngModel"
-               [(ngModel)]="formAttributes.key"
-               class="form-control"
-               name="attributesKey"
-               type="text"
+          [(ngModel)]="formAttributes.key"
+          class="form-control"
+          name="attributesKey"
+          type="text"
         >
         <input #attributes="ngModel"
-               [(ngModel)]="formAttributes.value"
-               class="form-control"
-               name="attributesValue"
-               required
-               type="text"
+          [(ngModel)]="formAttributes.value"
+          class="form-control"
+          name="attributesValue"
+          required
+          type="text"
         />
         <div
           *ngIf="attributes.errors && f2.submitted"
@@ -212,10 +212,10 @@
       </div>
       <div class="artwork-box">
         <input #type="ngModel"
-               [(ngModel)]="formImages.images"
-               class="form-control"
-               name="image"
-               type="text"
+          [(ngModel)]="formImages.images"
+          class="form-control"
+          name="image"
+          type="text"
         />
       </div>
 
@@ -236,16 +236,16 @@
       </div>
       <div class="artwork-box">
         <select #creationType="ngModel"
-                [(ngModel)]="formCreations.creationType"
-                class="form-control"
-                name="creationType"
+          [(ngModel)]="formCreations.creationType"
+          class="form-control"
+          name="creationType"
         >
           <option *ngFor="let creation of getCreation()" [ngValue]="creation">{{creation}}</option>
         </select>
         <select #user="ngModel"
-                [(ngModel)]="formCreations.user"
-                class="form-control"
-                name="creationUser"
+          [(ngModel)]="formCreations.user"
+          class="form-control"
+          name="creationUser"
         >
           <option *ngFor="let user of this.listFollowers" [ngValue]="user">{{user.nickname}}</option>
         </select>

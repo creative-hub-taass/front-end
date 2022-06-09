@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {Donation} from "../../_models/Donation";
 import {PublicUser} from "../../_models/PublicUser";
 import {TokenStorageService} from "../_services/token-storage.service";
@@ -8,10 +8,11 @@ import {PaymentService} from "../_services/payment.service";
 import {User} from "../../_models/User";
 import {Creator} from "../../_models/Creator";
 import {UserService} from "../_services/user.service";
+
 @Component({
-  selector: 'app-own-donations',
-  templateUrl: './own-donations.component.html',
-  styleUrls: ['./own-donations.component.css']
+  selector: "app-own-donations",
+  templateUrl: "./own-donations.component.html",
+  styleUrls: ["./own-donations.component.css"]
 })
 export class OwnDonationsComponent implements OnInit {
   user!: User;
@@ -25,16 +26,16 @@ export class OwnDonationsComponent implements OnInit {
     private userService: UserService,
     private tokenStorageService: TokenStorageService,
     private eventBusService: EventBusService,
-    private paymentService: PaymentService){
+    private paymentService: PaymentService) {
     this.userId = this.tokenStorageService.getUser().id;
-    if(this.userId == undefined){
+    if (this.userId == undefined) {
       window.location.replace("/login");
       return;
     }
     this.userService.getInfoUser(this.userId).subscribe({
       next: (userInfo: User) => {
         this.user = userInfo;
-        if(userInfo.creator != null) this.creator = userInfo.creator;
+        if (userInfo.creator != null) this.creator = userInfo.creator;
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -43,7 +44,7 @@ export class OwnDonationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.userId == undefined)return;
+    if (this.userId == undefined) return;
     this.paymentService.getDonations(this.userId).subscribe({
       next: (listDonations: Donation[]) => {
         listDonations.forEach((donation: Donation) => {
@@ -68,7 +69,7 @@ export class OwnDonationsComponent implements OnInit {
     let index = this.listCreator.findIndex((creator) => {
       return creator.id == idCreator;
     });
-    if(index == -1)return "";
+    if (index == -1) return "";
     return this.listCreator[index].nickname;
   }
 }

@@ -15,11 +15,11 @@
       </div>
       <div class="post-box">
         <input #title="ngModel"
-               [(ngModel)]="formPost.title"
-               class="form-control"
-               name="title"
-               required
-               type="text"
+          [(ngModel)]="formPost.title"
+          class="form-control"
+          name="title"
+          required
+          type="text"
         />
         <div
           *ngIf="title.errors && f.submitted"
@@ -35,11 +35,11 @@
       </div>
       <div class="post-box">
         <input #body="ngModel"
-               [(ngModel)]="formPost.body"
-               class="form-control"
-               name="body"
-               required
-               type="text"
+          [(ngModel)]="formPost.body"
+          class="form-control"
+          name="body"
+          required
+          type="text"
         />
         <div
           *ngIf="body.errors && f.submitted"
@@ -66,16 +66,16 @@
       </div>
       <div class="post-box">
         <select #creationType="ngModel"
-                [(ngModel)]="formCreations.creationType"
-                class="form-control"
-                name="creationType"
+          [(ngModel)]="formCreations.creationType"
+          class="form-control"
+          name="creationType"
         >
           <option *ngFor="let creation of getCreation()" [ngValue]="creation">{{creation}}</option>
         </select>
         <select #user="ngModel"
-                [(ngModel)]="formCreations.user"
-                class="form-control"
-                name="creationUser"
+          [(ngModel)]="formCreations.user"
+          class="form-control"
+          name="creationUser"
         >
           <option *ngFor="let user of this.listFollowers" [ngValue]="user">{{user.nickname}}</option>
         </select>
@@ -84,7 +84,7 @@
     </form>
     <div class="post-box">
       <button class="save-btn" (click)="onSubmit()">Save Post</button>
-      <h4 class="message-box success" *ngIf="this.sent" >Post saved successfully!</h4>
+      <h4 *ngIf="this.sent" class="message-box success">Post saved successfully!</h4>
       <h4 class="message-box fail" *ngIf="this.errorMessage!=''">{{this.errorMessage}}</h4>
     </div>
   </div>

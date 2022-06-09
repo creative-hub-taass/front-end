@@ -11,11 +11,11 @@
       <div class="user-box">
         <label>E-mail</label>
         <input #email="ngModel"
-               [(ngModel)]="form.email"
-               class="form-control"
-               name="email"
-               required
-               type="text"
+          [(ngModel)]="form.email"
+          class="form-control"
+          name="email"
+          required
+          type="text"
         />
         <div
           *ngIf="email.errors && f.submitted"

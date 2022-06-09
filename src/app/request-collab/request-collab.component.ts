@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {CollaborationRequest} from "../../_models/CollaborationRequest";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {TokenStorageService} from "../_services/token-storage.service";
@@ -9,15 +9,15 @@ import * as utility from "../../_shared/functions";
 import {CollaborationRequestStatus} from "../../_models/Enum";
 
 @Component({
-  selector: 'app-request-collab',
-  templateUrl: './request-collab.component.html',
-  styleUrls: ['./request-collab.component.css', '../modify-artwork/modify-artwork.component.css']
+  selector: "app-request-collab",
+  templateUrl: "./request-collab.component.html",
+  styleUrls: ["./request-collab.component.css", "../modify-artwork/modify-artwork.component.css"]
 })
 export class RequestCollabComponent implements OnInit {
 
   creatorId: string | null;
   collabRequestResult!: CollaborationRequest;
-  listFollowers: PublicUser[] = []
+  listFollowers: PublicUser[] = [];
   errorMessage: string = "";
   submitted: boolean = false;
   listNickname: string[] = [];
@@ -43,18 +43,18 @@ export class RequestCollabComponent implements OnInit {
     public route: ActivatedRoute
   ) {
     this.creatorId = this.tokenStorageService.getUser().id;
-    if(this.creatorId == null) {
+    if (this.creatorId == null) {
       window.location.replace("/login");
       return;
     }
-    if(this.tokenStorageService.getUser().creator == null){
+    if (this.tokenStorageService.getUser().creator == null) {
       window.location.replace("/upgrade-request");
       return;
     }
   }
 
   ngOnInit(): void {
-    if(this.creatorId == null)return;
+    if (this.creatorId == null) return;
     this.creatorService.getFollowed(this.creatorId).subscribe({
       next: (listFollowed: PublicUser[]) => {
         this.listNickname.push("");
@@ -70,9 +70,9 @@ export class RequestCollabComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.creatorId == null)return;
+    if (this.creatorId == null) return;
     this.buildRequest();
-    if(this.collabRequestResult.receiverId == ""){
+    if (this.collabRequestResult.receiverId == "") {
       this.collabRequestResult.receiverId = this.creatorId;
     }
     this.creatorService.addCollabRequest(this.collabRequestResult).subscribe({
@@ -97,9 +97,9 @@ export class RequestCollabComponent implements OnInit {
 
   buildRequest() {
     let tmp: CollaborationRequest;
-    if(this.creatorId == null)return;
-    if(this.form.nickname != ""){
-      tmp= {
+    if (this.creatorId == null) return;
+    if (this.form.nickname != "") {
+      tmp = {
         id: "",
         senderId: this.creatorId,
         receiverId: this.getUserId(this.form.nickname),

@@ -34,13 +34,13 @@
       </div>
     </div>
     <!-- End of profile section -->
-      <div class="nav">
-        <a class="active" href="javascript:void(0)" [routerLink]="'/about/' + this.userId">About</a>
-        <a href="javascript:void(0)" [routerLink]="'/portfolio/' + this.userId">Portfolio</a>
-        <a href="javascript:void(0)" [routerLink]="'/collaborations/' + this.userId">Collaborations</a>
-        <a href="javascript:void(0)" [routerLink]="'/events/' + this.userId">Events</a>
-        <a href="javascript:void(0)" [routerLink]="'/shop/' + this.userId">Shop</a>
-      </div>
+    <div class="nav">
+      <a [routerLink]="'/about/' + this.userId" class="active" href="javascript:void(0)">About</a>
+      <a [routerLink]="'/portfolio/' + this.userId" href="javascript:void(0)">Portfolio</a>
+      <a [routerLink]="'/collaborations/' + this.userId" href="javascript:void(0)">Collaborations</a>
+      <a [routerLink]="'/events/' + this.userId" href="javascript:void(0)">Events</a>
+      <a [routerLink]="'/shop/' + this.userId" href="javascript:void(0)">Shop</a>
+    </div>
     <!-- End of container -->
     <div class="about-container">
       <div class="profile-bio">
@@ -49,7 +49,7 @@
         <div class="contacts">
           <h3>Contacts</h3>
           <link rel="stylesheet"
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
           <div class="contacts-links">
             <a href="javascript:void(0)" title="Spotify" class="fa fa-spotify"></a>
             <a href="javascript:void(0)" title="Facebook" class="fa fa-facebook"></a>
@@ -88,7 +88,7 @@
       </div>
     </div>
     <div id="popup1" class="overlay" *ngIf="popup">
-      <div class="popup" >
+      <div class="popup">
         <div class="content">
           <form
             #f="ngForm"
@@ -99,11 +99,11 @@
             <div class="donation-box">
               <label>Import</label>
               <input #imp="ngModel"
-                     [(ngModel)]="form.imp"
-                     class="form-control"
-                     name="imp"
-                     required
-                     type="text"
+                [(ngModel)]="form.imp"
+                class="form-control"
+                name="imp"
+                required
+                type="text"
               />
               <div
                 *ngIf="imp.errors && f.submitted"
@@ -116,9 +116,9 @@
             <div class="donation-box">
               <label>Currency</label>
               <select #currency="ngModel"
-                      [(ngModel)]="form.currency"
-                      class="form-control"
-                      name="currency"
+                [(ngModel)]="form.currency"
+                class="form-control"
+                name="currency"
               >
                 <option *ngFor="let curr of getCurrency()" [ngValue]="curr">{{curr}}</option>
               </select>

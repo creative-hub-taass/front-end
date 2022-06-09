@@ -1,5 +1,5 @@
 <div id="popup1" class="overlay" *ngIf="popupView">
-  <div class="popup" >
+  <div class="popup">
     <button class="button" (click)="popupView = false">&times;</button>
     <div class="content">
       <form
@@ -7,53 +7,53 @@
         (ngSubmit)="f.form.valid && ChangePassword()"
         name="formPassword"
         novalidate
-        >
+      >
         <div class="infoUser-box">
           <div class="info-box">
             <label>Old password</label>
             <input #oldPassword="ngModel"
-                   [(ngModel)]="formPassword.oldPassword"
-                   class="form-control"
-                   name="oldPassword"
-                   required
-                   type="password"
+              [(ngModel)]="formPassword.oldPassword"
+              class="form-control"
+              name="oldPassword"
+              required
+              type="password"
             >
             <div *ngIf="oldPassword.errors && f.submitted"
-                 class="alert alert-danger"
-                 role="alert"
-                 >
+              class="alert alert-danger"
+              role="alert"
+            >
               Old password is required!
             </div>
           </div>
           <div class="info-box">
             <label>New password</label>
             <input #newPassword="ngModel"
-                   [(ngModel)]="formPassword.newPassword"
-                   class="form-control"
-                   name="newPassword"
-                   required
-                   type="password"
+              [(ngModel)]="formPassword.newPassword"
+              class="form-control"
+              name="newPassword"
+              required
+              type="password"
             >
             <div *ngIf="newPassword.errors && f.submitted"
-                 class="alert alert-danger"
-                 role="alert"
-                 >
+              class="alert alert-danger"
+              role="alert"
+            >
               New password is required!
             </div>
           </div>
           <div class="info-box">
             <label>Rewrite new password</label>
             <input #newPassword2="ngModel"
-                   [(ngModel)]="formPassword.newPassword2"
-                   class="form-control"
-                   name="newPassword2"
-                   required
-                   type="password"
+              [(ngModel)]="formPassword.newPassword2"
+              class="form-control"
+              name="newPassword2"
+              required
+              type="password"
             >
             <div *ngIf="newPassword2.errors && f.submitted"
-                 class="alert alert-danger"
-                 role="alert"
-                 >
+              class="alert alert-danger"
+              role="alert"
+            >
               New password is required!
             </div>
           </div>
@@ -68,11 +68,11 @@
 <div class="container" *ngIf="!popupView">
   <div class="nav" *ngIf="!popupView">
     <a class="active" href="javascript:void(0)" [routerLink]="'/profile'">Edit profile</a>
-    <a href="javascript:void(0)" (click)="popupView = true">Change password</a>
     <a href="javascript:void(0)" [routerLink]="'/orders'">Orders</a>
     <a href="javascript:void(0)" [routerLink]="'/donations'">Donations</a>
     <a href="javascript:void(0)" [routerLink]="'/upgrade-requests'" *ngIf="this.creator == null">Upgrade Requests</a>
-    <a href="javascript:void(0)" [routerLink]="'/collaborations-requests'" *ngIf="this.creator != null">Collaborations</a>
+    <a *ngIf="this.creator != null" [routerLink]="'/collaborations-requests'"
+      href="javascript:void(0)">Collaborations</a>
   </div>
   <div class="profile-box">
     <h2>Modify your profile</h2>
@@ -82,99 +82,99 @@
       (ngSubmit)="f.form.valid && onSubmit()"
       name="form"
       novalidate
-      >
+    >
       <div class="infoUser-box">
-      <div class="info-box">
-        <label>Nickname</label>
-        <input #nickname="ngModel"
-               [(ngModel)]="form.nickname"
-               class="form-control"
-               name="nickname"
-               required
-               type="text"
-        >
-      </div>
-      <div class="info-box">
-        <label>E-mail</label>
-        <input #email="ngModel"
-               [(ngModel)]="form.email"
-               class="form-control"
-               name="email"
-               required
-               readonly="text"
-        >
-      </div>
+        <div class="info-box">
+          <label>Nickname</label>
+          <input #nickname="ngModel"
+            [(ngModel)]="form.nickname"
+            class="form-control"
+            name="nickname"
+            required
+            type="text"
+          >
+        </div>
+        <div class="info-box">
+          <label>E-mail</label>
+          <input #email="ngModel"
+            [(ngModel)]="form.email"
+            class="form-control"
+            name="email"
+            readonly="text"
+            required
+          >
+        </div>
       </div>
       <div class="infoCreator" *ngIf="creator != null">
         <div class="info-box">
           <label>Username</label>
           <input #username="ngModel"
-                 [(ngModel)]="form.username"
-                 class="form-control"
-                 name="username"
-                 required
-                 type="text"
+            [(ngModel)]="form.username"
+            class="form-control"
+            name="username"
+            required
+            type="text"
           >
           <div
             *ngIf="username.errors && f.submitted"
             class="alert alert-danger"
             role="alert"
           >
-           Username is required!
+            Username is required!
           </div>
         </div>
         <div class="info-box">
           <label>Name</label>
           <input #name="ngModel"
-                 [(ngModel)]="form.name"
-                 class="form-control"
-                 name="name"
-                 required
-                 type="text"
+            [(ngModel)]="form.name"
+            class="form-control"
+            name="name"
+            required
+            type="text"
           >
           <div
             *ngIf="name.errors && f.submitted"
             class="alert alert-danger"
             role="alert"
-            >
+          >
             Name is required!
           </div>
         </div>
         <div class="info-box">
           <label>Surname</label>
           <input #surname="ngModel"
-                 [(ngModel)]="form.surname"
-                 class="form-control"
-                 name="surname"
-                 required
-                 type="text"
+            [(ngModel)]="form.surname"
+            class="form-control"
+            name="surname"
+            required
+            type="text"
           >
           <div
             *ngIf="surname.errors && f.submitted"
             class="alert alert-danger"
             role="alert"
-            >
+          >
             Surname is required!
           </div>
         </div>
         <div class="info-box">
           <label>Birth Date</label>
           <input #birthDate="ngModel"
-                 [(ngModel)]="form.birthDate"
-                 class="form-control"
-                 name="birthDate"
-                 required
-                 readonly="date"
+            [(ngModel)]="form.birthDate"
+            class="form-control"
+            name="birthDate"
+            readonly="date"
+            required
           >
         </div>
         <div class="info-box">
           <label>Biography</label>
           <input #bio="ngModel"
-                 [(ngModel)]="form.bio"
-                 class="form-control"
-                 name="bio"
-                 required
-                 type="text"
+            [(ngModel)]="form.bio"
+            class="form-control"
+            name="bio"
+            required
+            type="text"
           >
           <div
             *ngIf="bio.errors && f.submitted"
@@ -186,10 +186,10 @@
         <div class="info-box">
           <label>Creator type</label>
           <select #creatorType="ngModel"
-                  [(ngModel)]="form.creatorType"
-                  class="form-control"
-                  name="creatorType"
-                  required
+            [(ngModel)]="form.creatorType"
+            class="form-control"
+            name="creatorType"
+            required
           >
             <option *ngFor="let type of getCreatorType()" [ngValue]="type">{{type}}</option>
           </select>
@@ -197,35 +197,35 @@
             *ngIf="creatorType.errors && f.submitted"
             class="alert alert-danger"
             role="alert"
-            >
+          >
             Creator type is required!
           </div>
         </div>
         <div class="info-box">
           <label>Avatar</label>
           <input #avatar="ngModel"
-                 [(ngModel)]="form.avatar"
-                 class="form-control"
-                 name="avatar"
-                 required
-                 type="text"
+            [(ngModel)]="form.avatar"
+            class="form-control"
+            name="avatar"
+            required
+            type="text"
           />
           <div
             *ngIf="avatar.errors && f.submitted"
             class="alert alert-danger"
             role="alert"
-            >
+          >
             Avatar is required!
           </div>
         </div>
         <div class="info-box">
           <label>Payment E-mail</label>
           <input #paymentEmail="ngModel"
-                 [(ngModel)]="form.paymentEmail"
-                 class="form-control"
-                 name="paymentEmail"
-                 required
-                 type="text"
+            [(ngModel)]="form.paymentEmail"
+            class="form-control"
+            name="paymentEmail"
+            required
+            type="text"
           />
           <div
             *ngIf="paymentEmail.errors && f.submitted"
@@ -240,6 +240,7 @@
     </form>
     <h4 *ngIf="this.submitted" class="message-box success">Request submitted!</h4>
     <h4 *ngIf="this.errorMessage!=''" class="message-box fail">{{this.errorMessage}}</h4>
+    <button (click)="popupView = true" class="button">Change password</button>
   </div>
   <div class="account-deletion">
     <button class="delete-btn" id="delete-button" (click)="popupDelete = true">Delete account</button>
@@ -247,7 +248,7 @@
   <div id="popup2" class="overlay" *ngIf="popupDelete">
     <div class="confirmation-popup">
       <div class="content2">
-        <h2>Do you want delete your account definitely?</h2>
+        <h2>Do you want to permanently delete your account?</h2>
         <div class="buttons">
           <button class="delete-btn" (click)="deleteUser()">Delete</button>
           <button class="cancel-btn" (click)="popupDelete = false">Cancel</button>

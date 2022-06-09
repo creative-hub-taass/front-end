@@ -113,10 +113,7 @@ img {
 
 .container {
   max-width: 100%;
-  margin-top: 100px;
-  padding: 0 0;
-  position: absolute;
-  left: 0px;
+  padding: 100px 0;
 }
 
 .btn {
@@ -401,7 +398,7 @@ img {
   align-items: center;
   max-height: 85px;
   text-align: left;
-  margin-top:25px;
+  margin-top: 25px;
 }
 
 .post-icon {
@@ -482,9 +479,10 @@ img {
   left: 20px;
 }
 
-btn-reload:hover{
+btn-reload:hover {
   background: #06dbee;
 }
+
 .contacts a {
   position: relative;
   margin: 5px;
@@ -535,7 +533,7 @@ btn-reload:hover{
   width: 70%;
   min-width: 70%;
   margin: 0 auto;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   border: 2px solid #fff;
   border-radius: 20px/50px;
   background-clip: padding-box;
@@ -552,6 +550,7 @@ btn-reload:hover{
   cursor: pointer;
   transition: all 0.3s ease-out;
 }
+
 .button:hover {
   background: #06dbee;
 }
@@ -586,6 +585,7 @@ btn-reload:hover{
   color: #333;
   font-family: Tahoma, Arial, sans-serif;
 }
+
 .popup .close {
   top: 20px;
   right: 30px;
@@ -595,10 +595,12 @@ btn-reload:hover{
   text-decoration: none;
   color: #333;
 }
+
 .popup .close:hover {
   color: #06dbee;
   cursor: pointer;
 }
+
 .popup .content {
 }
 
@@ -615,6 +617,7 @@ btn-reload:hover{
   background: transparent;
   font-family: "Jost";
 }
+
 .close-button:hover {
 
   background: #A7A7A7;
@@ -624,9 +627,9 @@ btn-reload:hover{
 }
 
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 700px) {
 
-  .popup{
+  .popup {
     width: 70%;
   }
 
@@ -649,7 +652,7 @@ btn-reload:hover{
 }
 
 .content button {
- margin-top: 20px;
+  margin-top: 20px;
 }
 
 .donation-box select {
@@ -660,6 +663,7 @@ btn-reload:hover{
   font-size: 16px;
   color: #000;
 }
+
 .full-button {
   font-family: "Jost", serif;
   background: #00A3FF;
@@ -696,6 +700,7 @@ btn-reload:hover{
   color: #636363;
   font-size: 14px;
 }
+
 .full-button:hover {
   color: #00A3FF;
   background: transparent;
@@ -711,7 +716,7 @@ btn-reload:hover{
   border-radius: 50%;
   animation: loader 500ms linear infinite;
   top: 10vh;
-  left:50%;
+  left: 50%;
   position: absolute;
   margin: 0 auto;
 }

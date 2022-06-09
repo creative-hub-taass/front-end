@@ -10,9 +10,9 @@ import {ActivatedRoute} from "@angular/router";
 import * as utility from "../../_shared/functions";
 
 @Component({
-  selector: 'app-events',
-  templateUrl: './events.component.html',
-  styleUrls: ['./events.component.css', '../about/about.component.css', '../portfolio/portfolio.component.css']
+  selector: "app-events",
+  templateUrl: "./events.component.html",
+  styleUrls: ["./events.component.css", "../about/about.component.css", "../portfolio/portfolio.component.css"]
 })
 export class EventsComponent implements OnInit {
 

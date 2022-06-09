@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
 
-import { OwnUpgradesComponent } from './own-upgrades.component';
+import {OwnUpgradesComponent} from "./own-upgrades.component";
 
-describe('OwnUpgradesComponent', () => {
+describe("OwnUpgradesComponent", () => {
   let component: OwnUpgradesComponent;
   let fixture: ComponentFixture<OwnUpgradesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OwnUpgradesComponent ]
+      declarations: [OwnUpgradesComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('OwnUpgradesComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

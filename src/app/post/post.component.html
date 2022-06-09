@@ -23,7 +23,8 @@
             <p class="description"><span>{{this.post?.body}}</span></p>
             <div class="artists">
               Authors: &nbsp;
-              <p *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()" class="artist">{{artist.getNickname()}}</p>
+              <p *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()"
+                class="artist">{{artist.getNickname()}}</p>
             </div>
             <div class="interactions">
               <div class="reaction-wrapper">
@@ -40,7 +41,8 @@
               </div>
             </div>
             <div *ngIf="this.userId != null" class="comment-wrapper">
-              <input class="comment-box" placeholder="Add a comment" type="text" name="message" value="" [(ngModel)]="message">
+              <input [(ngModel)]="message" class="comment-box" name="message" placeholder="Add a comment" type="text"
+                value="">
               <button class="comment-btn" *ngIf="this.postId" (click)="this.addComment()">post</button>
             </div>
             <div class="list-comment">
@@ -49,7 +51,8 @@
                   <p class="comment-user">{{getUserUsername(c.userId)}}:</p>
                   <p class="comment-message">{{c.message}}</p>
                 </div>
-                <img *ngIf="c.userId == userId" (click)="this.deleteComment(c.id)" class="delete-icon" src="../../assets/x1.png" alt="">
+                <img (click)="this.deleteComment(c.id)" *ngIf="c.userId == userId" alt=""
+                  class="delete-icon" src="../../assets/x1.png">
               </div>
             </div>
           </div>

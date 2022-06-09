@@ -4,7 +4,7 @@ import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {PublicUser} from "../../_models/PublicUser";
 import {Artwork} from "../../_models/Artwork";
-import {Event} from "../../_models/Event"
+import {Event} from "../../_models/Event";
 import {Creation} from "../../_models/Publication";
 import {Post} from "../../_models/Post";
 
@@ -100,12 +100,16 @@ export class PublicationService {
   }
 
   public deletePostCreation(idCreation: string): Observable<any> {
-   return this.http.delete(API_GATEWAY_PUBLICATIONS + "posts/creations/" + idCreation)
+    return this.http.delete(API_GATEWAY_PUBLICATIONS + "posts/creations/" + idCreation);
   }
 
   /* Comments */
   public addComment(userId: string, publicationId: string, message: string): Observable<any> {
-    return this.http.post<any>(API_GATEWAY_INTERACTIONS + "comment", {"userId": userId, "publicationId": publicationId, "message": message});
+    return this.http.post<any>(API_GATEWAY_INTERACTIONS + "comment", {
+      "userId": userId,
+      "publicationId": publicationId,
+      "message": message
+    });
   }
 
   public deleteComment(commentId: string): Observable<any> {
@@ -118,24 +122,27 @@ export class PublicationService {
 
   /* Likes */
   public addLike(userId: string, publicationId: string): void {
-    this.http.post(API_GATEWAY_INTERACTIONS + "like", {"userId": userId, "publicationId": publicationId}).subscribe((res)=> {console.log(res);});
+    this.http.post(API_GATEWAY_INTERACTIONS + "like", {
+      "userId": userId,
+      "publicationId": publicationId
+    }).subscribe((res) => {console.log(res);});
   }
 
   public deleteLike(userId: string, publicationId: string): void {
     const options = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       }),
       body: {
         "userId": userId,
         "publicationId": publicationId
       }
-    }
+    };
     this.http.delete(API_GATEWAY_INTERACTIONS + "like", options).subscribe(s => {console.log(s);});
   }
 
   public userLikedPublication(userId: string, publicationId: string): Observable<boolean> {
-    return this.http.get<boolean>(API_GATEWAY_INTERACTIONS + "userliked/" + userId + "/"+ publicationId);
+    return this.http.get<boolean>(API_GATEWAY_INTERACTIONS + "userliked/" + userId + "/" + publicationId);
   }
 
   public deleteArtwork(artworkId: string): Observable<any> {

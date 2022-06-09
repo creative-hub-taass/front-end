@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
 
-import { RequestCollabComponent } from './request-collab.component';
+import {RequestCollabComponent} from "./request-collab.component";
 
-describe('RequestCollabComponent', () => {
+describe("RequestCollabComponent", () => {
   let component: RequestCollabComponent;
   let fixture: ComponentFixture<RequestCollabComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RequestCollabComponent ]
+      declarations: [RequestCollabComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('RequestCollabComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

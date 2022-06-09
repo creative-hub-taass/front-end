@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {TokenStorageService} from "../_services/token-storage.service";
 import {UserService} from "../_services/user.service";
@@ -8,9 +8,9 @@ import {User} from "../../_models/User";
 import {Creator} from "../../_models/Creator";
 
 @Component({
-  selector: 'app-own-upgrades',
-  templateUrl: './own-upgrades.component.html',
-  styleUrls: ['./own-upgrades.component.css']
+  selector: "app-own-upgrades",
+  templateUrl: "./own-upgrades.component.html",
+  styleUrls: ["./own-upgrades.component.css"]
 })
 export class OwnUpgradesComponent implements OnInit {
   user!: User;
@@ -25,18 +25,18 @@ export class OwnUpgradesComponent implements OnInit {
     private userService: UserService
   ) {
     this.userId = this.tokenStorageService.getUser().id;
-    if(this.userId == null){
+    if (this.userId == null) {
       window.location.replace("/login");
       return;
     }
-    if(this.tokenStorageService.getUser().creator != null){
+    if (this.tokenStorageService.getUser().creator != null) {
       window.location.replace("/profile");
       return;
     }
     this.userService.getInfoUser(this.userId).subscribe({
       next: (userInfo: User) => {
         this.user = userInfo;
-        if(userInfo.creator != null) this.creator = userInfo.creator;
+        if (userInfo.creator != null) this.creator = userInfo.creator;
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -45,10 +45,10 @@ export class OwnUpgradesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.userId == null)return;
+    if (this.userId == null) return;
     this.userService.getListUpgradeRequest(this.userId).subscribe({
       next: (listRequest: UpgradeRequest[]) => {
-        listRequest.forEach( (request: UpgradeRequest) => {
+        listRequest.forEach((request: UpgradeRequest) => {
           this.listRequest.push(request);
         });
       },

@@ -1,8 +1,8 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
 
-import {ModifyArtworkComponent} from './modify-artwork.component';
+import {ModifyArtworkComponent} from "./modify-artwork.component";
 
-describe('ModifyArtworkComponent', () => {
+describe("ModifyArtworkComponent", () => {
   let component: ModifyArtworkComponent;
   let fixture: ComponentFixture<ModifyArtworkComponent>;
 
@@ -19,7 +19,7 @@ describe('ModifyArtworkComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

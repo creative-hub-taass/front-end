@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy} from "@angular/core";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {PublicationService} from "../_services/publication.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -26,9 +26,9 @@ export class CreationArtwork implements Creation {
 }
 
 @Component({
-  selector: 'app-modify-artwork',
-  templateUrl: './modify-artwork.component.html',
-  styleUrls: ['./modify-artwork.component.css']
+  selector: "app-modify-artwork",
+  templateUrl: "./modify-artwork.component.html",
+  styleUrls: ["./modify-artwork.component.css"]
 })
 
 export class ModifyArtworkComponent implements OnDestroy {
@@ -151,7 +151,7 @@ export class ModifyArtworkComponent implements OnDestroy {
         listFollower.forEach((follower: PublicUser) => {
           this.listFollowers.push(new PublicUser(follower));
         });
-        this.listFollowers.push(this.tokenStorageService.getUser())
+        this.listFollowers.push(this.tokenStorageService.getUser());
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -175,27 +175,34 @@ export class ModifyArtworkComponent implements OnDestroy {
     this.formArtwork.type = this.artworkResult.type;
   }
 
-
-  private buildFormArtworkEmpty() {
-    this.artworkResult = {
-      id: "",
-      timestamp: new Date().toISOString(),
-      lastUpdate: new Date().toISOString(),
-      creations: [],
-      attributes: {},
-      images: [],
-      creationDateTime: new Date().toISOString(),
-      publicationType: "artwork",
-      availableCopies: 0,
-      copies: 0,
-      currency: undefined,
-      description: "",
-      name: "",
-      onSale: false,
-      paymentEmail: "",
-      price: 0,
-      type: ""
+  public addUsers() {
+    if (this.formCreations.user == undefined) return;
+    let tmpCreation: any = {};
+    if (this.artworkId != null) {
+      tmpCreation = {
+        id: "",
+        user: this.formCreations.user.id,
+        creationType: this.formCreations.creationType,
+        artworkId: this.artworkId
+      };
+    } else {
+      tmpCreation = {
+        id: "",
+        user: this.formCreations.user.id,
+        creationType: this.formCreations.creationType,
+        artworkId: ""
+      };
     }
+    let index = this.listCreationArtwork.findIndex((elementCreationArtwork) => {
+      return elementCreationArtwork.user == tmpCreation.user;
+    });
+    if (index != -1) return;
+    //indice dell'utente dalla lista dei follower con l'id selezionato nella view
+    //utile per prendere il nickname dell'utente inserito
+    let indexUser = this.listFollowers.findIndex((elementFollower) => {
+      return elementFollower.id == tmpCreation.user;
+    });
+    this.listCreationArtwork.push(new CreationArtwork("", tmpCreation.artworkId, tmpCreation.user, this.listFollowers[indexUser].nickname, this.formCreations.creationType));
   }
 
 
@@ -234,34 +241,15 @@ export class ModifyArtworkComponent implements OnDestroy {
     this.artworkResult.images.push(this.formImages.images);
   }
 
-  public addUsers() {
-    if (this.formCreations.user == undefined) return;
-    let tmpCreation: any = {};
-    if (this.artworkId != null) {
-      tmpCreation = {
-        id: "",
-        user: this.formCreations.user.id,
-        creationType: this.formCreations.creationType,
-        artworkId: this.artworkId
-      }
-    } else {
-      tmpCreation = {
-        id: "",
-        user: this.formCreations.user.id,
-        creationType: this.formCreations.creationType,
-        artworkId: ""
-      }
-    }
-    let index = this.listCreationArtwork.findIndex((elementCreationArtwork) => {
-      return elementCreationArtwork.user == tmpCreation.user;
-    });
-    if (index != -1) return;
-    //indice dell'utente dalla lista dei follower con l'id selezionato nella view
-    //utile per prendere il nickname dell'utente inserito
-    let indexUser = this.listFollowers.findIndex((elementFollower) => {
-      return elementFollower.id == tmpCreation.user;
-    });
-    this.listCreationArtwork.push(new CreationArtwork("", tmpCreation.artworkId, tmpCreation.user, this.listFollowers[indexUser].nickname, this.formCreations.creationType));
+  public resetForm() {
+    const artworkOrigin = window.sessionStorage.getItem("artworkOrigin");
+    if (!artworkOrigin) this.buildFormArtworkEmpty;
+    else this.artworkResult = Object.assign<Artwork, Artwork>(this.artworkResult, JSON.parse(artworkOrigin));
+    //aggiorno this.listkey con le chiavi degli attributi
+    this.listKey = new Array<string>();
+    for (let key in this.artworkResult.attributes) this.listKey.push(key);
+    this.buildFormArtworkOrigin();
+    this.onSale = this.artworkResult.onSale;
   }
 
   public deleteAttribute(key: string) {
@@ -283,15 +271,10 @@ export class ModifyArtworkComponent implements OnDestroy {
 
   }
 
-  public resetForm() {
-    const artworkOrigin = window.sessionStorage.getItem("artworkOrigin");
-    if (!artworkOrigin) this.buildFormArtworkEmpty;
-    else this.artworkResult = Object.assign<Artwork, Artwork>(this.artworkResult, JSON.parse(artworkOrigin))
-    //aggiorno this.listkey con le chiavi degli attributi
-    this.listKey = new Array<string>();
-    for (let key in this.artworkResult.attributes) this.listKey.push(key);
-    this.buildFormArtworkOrigin();
-    this.onSale = this.artworkResult.onSale;
+  onCheckChange(x: string) {
+    this.formArtwork.onSale = x;
+    this.artworkResult.onSale = (x == "true");
+    this.onSale = (x == "true");
   }
 
   getCreation(): CreationType[] {
@@ -302,10 +285,26 @@ export class ModifyArtworkComponent implements OnDestroy {
     return getListCurrency();
   }
 
-  onCheckChange(x: string) {
-    this.formArtwork.onSale = x;
-    this.artworkResult.onSale = (x == 'true');
-    this.onSale = (x == "true");
+  private buildFormArtworkEmpty() {
+    this.artworkResult = {
+      id: "",
+      timestamp: new Date().toISOString(),
+      lastUpdate: new Date().toISOString(),
+      creations: [],
+      attributes: {},
+      images: [],
+      creationDateTime: new Date().toISOString(),
+      publicationType: "artwork",
+      availableCopies: 0,
+      copies: 0,
+      currency: undefined,
+      description: "",
+      name: "",
+      onSale: false,
+      paymentEmail: "",
+      price: 0,
+      type: ""
+    };
   }
 
   onSubmit() {
@@ -339,7 +338,7 @@ export class ModifyArtworkComponent implements OnDestroy {
           if (index == -1) {
             this.publicationService.saveArtworkCreation(elementCreationNew).subscribe({
               next: () => {
-                console.log("Ho salvato il creation")
+                console.log("Ho salvato il creation");
               },
               error: (error) => {
                 this.errorMessage = utility.onError(error, this.eventBusService);
@@ -386,7 +385,7 @@ export class ModifyArtworkComponent implements OnDestroy {
             }
           });
         });
-        this.router.navigate(['artwork/' + responseArtwork.id]);
+        this.router.navigate(["artwork/" + responseArtwork.id]);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

@@ -48,7 +48,7 @@ body, html {
 }
 
 .delete-btn:hover {
-  background:#DB4437;
+  background: #DB4437;
   color: #FFFFFF;
 }
 
@@ -147,6 +147,7 @@ body, html {
   height: 20px;
   margin-right: 15px;
 }
+
 .container-check {
   display: block;
   position: relative;

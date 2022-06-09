@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Order} from "../../_models/Order";
 import {Observable} from "rxjs";
@@ -17,7 +17,7 @@ const httpOptions: any = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class PaymentService {
 
@@ -28,7 +28,7 @@ export class PaymentService {
   }
 
   sendTip(donation: Donation): Observable<any> {
-    return this.http.post(API_GATEWAY_PAYMENTS + "donation", donation, httpOptions )
+    return this.http.post(API_GATEWAY_PAYMENTS + "donation", donation, httpOptions);
   }
 
   getDonations(idUser: string): Observable<any> {

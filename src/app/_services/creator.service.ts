@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
@@ -6,7 +6,7 @@ import {PublicUser} from "../../_models/PublicUser";
 import {PublicationInfo} from "../../_models/PublicationInfo";
 import {Post} from "../../_models/Post";
 import {Artwork} from "../../_models/Artwork";
-import {Event} from "../../_models/Event"
+import {Event} from "../../_models/Event";
 import {CollaborationRequest} from "../../_models/CollaborationRequest";
 
 const API_GATEWAY_USERS = environment.apiGatewayUrl + "api/v1/users/";
@@ -14,7 +14,7 @@ const API_GATEWAY_PUBLICATIONS = environment.apiGatewayUrl + "api/v1/publication
 const API_GATEWAY_INTERACTIONS = environment.apiGatewayUrl + "api/v1/interactions/";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class CreatorService {
 

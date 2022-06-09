@@ -12,9 +12,9 @@ import {ActivatedRoute} from "@angular/router";
 import * as utility from "../../_shared/functions";
 
 @Component({
-  selector: 'app-collabs',
-  templateUrl: './collabs.component.html',
-  styleUrls: ['./collabs.component.css', '../about/about.component.css', '../portfolio/portfolio.component.css']
+  selector: "app-collabs",
+  templateUrl: "./collabs.component.html",
+  styleUrls: ["./collabs.component.css", "../about/about.component.css", "../portfolio/portfolio.component.css"]
 })
 export class CollabsComponent implements OnInit {
 
@@ -196,11 +196,11 @@ export class CollabsComponent implements OnInit {
   }
 
   SendCollaboration() {
-    if(this.tokenStorageService.getUser().id == null) {
+    if (this.tokenStorageService.getUser().id == null) {
       window.location.replace("/login");
       return;
     }
-    if(this.tokenStorageService.getUser().creator == null){
+    if (this.tokenStorageService.getUser().creator == null) {
       window.location.replace("/upgrade-request");
       return;
     }

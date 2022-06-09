@@ -42,13 +42,17 @@
     <div class="loader" *ngIf="user==null"></div>
     <div class="gallery-container">
       <div class="gallery">
-        <div *ngIf="this.userId == getUserInfo().id" class="add-pub" [routerLink]="'/modify-event/'">+<br>Add event</div>
-        <div class="gallery-item" tabindex="0" *ngFor="let publication of listEvents" [routerLink]="'/event/' + publication.id">
+        <div *ngIf="this.userId == getUserInfo().id" [routerLink]="'/modify-event/'" class="add-pub">+<br>Add event
+        </div>
+        <div *ngFor="let publication of listEvents" [routerLink]="'/event/' + publication.id" class="gallery-item"
+          tabindex="0">
           <img src="{{publication.image}}" class="gallery-image" alt="">
           <div class="gallery-item-info">
             <ul>
-              <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}</li>
-              <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}</li>
+              <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i aria-hidden="true"
+                class="fas fa-heart"></i>{{this.getLikesCount(publication.id)}}</li>
+              <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i aria-hidden="true"
+                class="fas fa-comment"></i> {{this.getCommentsCount(publication.id)}}</li>
             </ul>
           </div>
         </div>

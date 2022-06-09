@@ -9,9 +9,9 @@ import {PublicCreator} from "../../_models/PublicCreator";
 import {TokenStorageService} from "../_services/token-storage.service";
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css', '../artwork/artwork.component.css']
+  selector: "app-post",
+  templateUrl: "./post.component.html",
+  styleUrls: ["./post.component.css", "../artwork/artwork.component.css"]
 })
 export class PostComponent implements OnInit {
 
@@ -63,8 +63,58 @@ export class PostComponent implements OnInit {
         (error) => {
           utility.onError(error, this.eventBusService);
         }
-      )
+      );
     }
+  }
+
+  public addComment() {
+    if (this.userId == null || !this.message || !this.postId) {
+      window.location.replace("/login");
+      return;
+    }
+    this.publicationService.addComment(this.userId, this.postId, this.message).subscribe({
+      next: (comment) => {
+        this.listComments.push(comment);
+        this.publicationService.getUser(this.userId).subscribe({
+          next: (userofComment: PublicUser) => {
+            if (userofComment != null) this.listOfUserNamesComments.push(userofComment);
+          },
+          error: (error) => {
+            this.errorMessage = utility.onError(error, this.eventBusService);
+          }
+        });
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
+    this.message = "";
+  }
+
+  public getUserUsername(userId: string): string {
+    let index = this.listOfUserNamesComments.findIndex((uid) => {
+      return uid.id == userId;
+    });
+    if (index == -1) return "";
+    return this.listOfUserNamesComments[index].nickname;
+  }
+
+  public deleteComment(commentId: string) {
+    if (this.userId == null) {
+      window.location.replace("/login");
+      return;
+    }
+    this.publicationService.deleteComment(commentId).subscribe({
+      next: () => {
+        let index = this.listComments.findIndex((elementComment) => {
+          return elementComment.id == commentId;
+        });
+        this.listComments.splice(index, 1);
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
   }
 
   private callServiceInteractions() {
@@ -89,7 +139,7 @@ export class PostComponent implements OnInit {
           });
           if (index == -1) listOfUsersComments.push(comment.userId);
           this.listComments.push(comment);
-        })
+        });
         this.publicationService.getListofUser(listOfUsersComments).subscribe({
           next: (listUser: PublicUser[]) => {
             let flag = false;
@@ -109,7 +159,7 @@ export class PostComponent implements OnInit {
                     avatar: ""
                   }),
                   inspirerIds: [],
-                  fanIds: [],
+                  fanIds: []
                 }));
               }
               flag = false;
@@ -147,56 +197,6 @@ export class PostComponent implements OnInit {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
-  }
-
-  public addComment() {
-    if (this.userId == null || !this.message || !this.postId) {
-      window.location.replace("/login");
-      return;
-    }
-    this.publicationService.addComment(this.userId, this.postId, this.message).subscribe({
-      next: (comment) => {
-        this.listComments.push(comment);
-        this.publicationService.getUser(this.userId).subscribe({
-          next: (userofComment: PublicUser) => {
-            if(userofComment != null) this.listOfUserNamesComments.push(userofComment);
-          },
-          error: (error) => {
-            this.errorMessage = utility.onError(error, this.eventBusService);
-          }
-        });
-      },
-      error: (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    });
-    this.message = "";
-  }
-
-  public deleteComment(commentId: string) {
-    if (this.userId == null) {
-      window.location.replace("/login");
-      return;
-    }
-    this.publicationService.deleteComment(commentId).subscribe({
-      next: () => {
-        let index = this.listComments.findIndex((elementComment) => {
-          return elementComment.id == commentId;
-        });
-        this.listComments.splice(index, 1);
-      },
-      error: (error) => {
-        this.errorMessage = utility.onError(error, this.eventBusService);
-      }
-    });
-  }
-
-  public getUserUsername(userId: string): string {
-    let index = this.listOfUserNamesComments.findIndex((uid) => {
-      return uid.id == userId;
-    })
-    if (index == -1) return "";
-    return this.listOfUserNamesComments[index].nickname;
   }
 
   public addLike() {

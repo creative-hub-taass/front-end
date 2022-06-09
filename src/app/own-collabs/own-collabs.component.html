@@ -1,11 +1,12 @@
 <div class="wrapper">
-  <div class="container-nav" >
-    <div class="nav" >
+  <div class="container-nav">
+    <div class="nav">
       <a href="javascript:void(0)" [routerLink]="'/profile'">Edit profile</a>
       <a href="javascript:void(0)" [routerLink]="'/orders'">Orders</a>
       <a href="javascript:void(0)" [routerLink]="'/donations'">Donations</a>
       <a href="javascript:void(0)" [routerLink]="'/upgrade-requests'" *ngIf="this.creator == null">Upgrade Requests</a>
-      <a class="active" href="javascript:void(0)" [routerLink]="'/collaborations-requests'"  *ngIf="this.creator != null">Collaborations</a>
+      <a *ngIf="this.creator != null" [routerLink]="'/collaborations-requests'" class="active"
+        href="javascript:void(0)">Collaborations</a>
     </div>
   </div>
   <div class="new-req">
@@ -13,7 +14,7 @@
   </div>
   <div class="table">
     <h2>Request sent</h2>
-    <div class="row header" >
+    <div class="row header">
       <div class="cell">
         Recipient
       </div>
@@ -60,7 +61,8 @@
         {{request.status}}
       </div>
       <div class="button-reject">
-        <img src="./assets/bin.png" alt="Delete request" *ngIf="(request.status == 'OPEN')" (click)="closeRequest(request)">
+        <img (click)="closeRequest(request)" *ngIf="(request.status == 'OPEN')" alt="Delete request"
+          src="./assets/bin.png">
       </div>
     </div>
 
@@ -111,9 +113,10 @@
       <div class="cell" data-title="Status">
         {{request.status}}
       </div>
-        <div class="button-reject">
-          <img src="./assets/delete-circled.png" alt="Reject request" *ngIf="(request.status == 'OPEN')" (click)="rejectRequest(request)">
-        </div>
+      <div class="button-reject">
+        <img (click)="rejectRequest(request)" *ngIf="(request.status == 'OPEN')" alt="Reject request"
+          src="./assets/delete-circled.png">
+      </div>
     </div>
 
   </div>

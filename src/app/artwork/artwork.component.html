@@ -32,11 +32,13 @@
               </div>
             </div>
             <p class="type">{{this.artwork?.type}}</p>
-            <p class="date"><img src="../../assets/calendar.png" alt="">{{this.artwork?.creationDateTime | date:"dd MMM yyyy"}}</p>
+            <p class="date"><img alt=""
+              src="../../assets/calendar.png">{{this.artwork?.creationDateTime | date:"dd MMM yyyy"}}</p>
             <p class="description">{{this.artwork?.description}}</p>
             <div class="artists">
               Artists: &nbsp;
-              <p *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()" class="artist">{{artist.getNickname()}}</p>
+              <p *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()"
+                class="artist">{{artist.getNickname()}}</p>
             </div>
             <div *ngIf="artwork?.onSale" class="sales-info">
               <p class="price">{{this.artwork?.price}} €</p>
@@ -61,7 +63,8 @@
               </div>
             </div>
             <div *ngIf="this.userId != null" class="comment-wrapper">
-              <input class="comment-box" placeholder="Add a comment" type="text" name="message" value="" [(ngModel)]="message">
+              <input [(ngModel)]="message" class="comment-box" name="message" placeholder="Add a comment" type="text"
+                value="">
               <button class="comment-btn" *ngIf="this.artworkId" (click)="this.addComment()">post</button>
             </div>
             <div class="list-comment">
@@ -70,7 +73,8 @@
                   <p class="comment-user">{{getUserUsername(c.userId)}}</p>
                   <p class="comment-message">{{c.message}}</p>
                 </div>
-                <img *ngIf="c.userId == userId" (click)="this.deleteComment(c.id)" class="delete-icon" src="../../assets/x1.png" alt="">
+                <img (click)="this.deleteComment(c.id)" *ngIf="c.userId == userId" alt=""
+                  class="delete-icon" src="../../assets/x1.png">
               </div>
             </div>
           </div>

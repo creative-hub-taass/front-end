@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiGatewayUrl: process.env.NG_APP_GATEWAY_URL + "/",
-  accessToken: 'pk.eyJ1IjoiemF0aHNsIiwiYSI6ImNsM3N4aTlzejAzZzgzaXFxZDZwcW9oMTQifQ.K4_UsOVwDb7UFk0GIMyKOQ'
+  accessToken: "pk.eyJ1IjoiemF0aHNsIiwiYSI6ImNsM3N4aTlzejAzZzgzaXFxZDZwcW9oMTQifQ.K4_UsOVwDb7UFk0GIMyKOQ"
 };
 /*
  * For easier debugging in development mode, you can import the following file

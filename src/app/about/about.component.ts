@@ -14,9 +14,9 @@ import {Donation} from "../../_models/Donation";
 import {Currency, getListCurrency} from "../../_models/Enum";
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+  selector: "app-about",
+  templateUrl: "./about.component.html",
+  styleUrls: ["./about.component.css"]
 })
 export class AboutComponent implements OnInit {
 
@@ -31,7 +31,7 @@ export class AboutComponent implements OnInit {
   wait: boolean = false;
 
   popup: boolean = false;
-  form: { imp: string; currency: Currency; message: string} = {
+  form: { imp: string; currency: Currency; message: string } = {
     imp: "",
     currency: Currency.EUR,
     message: ""
@@ -78,7 +78,7 @@ export class AboutComponent implements OnInit {
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
-    })
+    });
   }
 
 
@@ -149,11 +149,11 @@ export class AboutComponent implements OnInit {
   }
 
   submitTip() {
-    if(this.tokenStorageService.getUser().id == null){
+    if (this.tokenStorageService.getUser().id == null) {
       window.location.replace("/login");
       return;
     }
-    if(this.userId == this.tokenStorageService.getUser().id){
+    if (this.userId == this.tokenStorageService.getUser().id) {
       this.popup = false;
       return;
     }
@@ -166,7 +166,7 @@ export class AboutComponent implements OnInit {
     };
     this.paymentService.sendTip(new Donation(tmpDonation)).subscribe({
       next: (urlPaypal: string) => {
-        if(urlPaypal.includes("redirect",0)) {
+        if (urlPaypal.includes("redirect", 0)) {
           (async () => {
             this.wait = true;
             await delay(8000);
@@ -175,7 +175,7 @@ export class AboutComponent implements OnInit {
           })();
           return;
         }
-        this.router.navigate(['/payment-failed', urlPaypal]);
+        this.router.navigate(["/payment-failed", urlPaypal]);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

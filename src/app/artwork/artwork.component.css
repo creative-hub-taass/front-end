@@ -365,7 +365,7 @@
   border-radius: 50%;
   animation: loader 500ms linear infinite;
   top: 8vh;
-  left:22vh;
+  left: 22vh;
   position: absolute;
   margin: 0 auto;
 }

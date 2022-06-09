@@ -1,5 +1,4 @@
 
-
 .add-pub {
   margin-top: 30px;
 }
@@ -117,7 +116,7 @@ img {
   display: flex;
 }
 
-.gallery-item-likes img, .gallery-item-comments img{
+.gallery-item-likes img, .gallery-item-comments img {
   height: 15px;
 }
 

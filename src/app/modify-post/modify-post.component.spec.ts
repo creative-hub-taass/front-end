@@ -1,8 +1,8 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from "@angular/core/testing";
 
-import {ModifyPostComponent} from './modify-post.component';
+import {ModifyPostComponent} from "./modify-post.component";
 
-describe('ModifyPostComponent', () => {
+describe("ModifyPostComponent", () => {
   let component: ModifyPostComponent;
   let fixture: ComponentFixture<ModifyPostComponent>;
 
@@ -19,7 +19,7 @@ describe('ModifyPostComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

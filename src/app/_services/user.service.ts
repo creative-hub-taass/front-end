@@ -9,7 +9,8 @@ import {Artwork} from "../../_models/Artwork";
 
 
 const API_GATEWAY_USERS = environment.apiGatewayUrl + "api/v1/users/";
-const API_GATEWAY_PUBLICATIONS = environment.apiGatewayUrl + "api/v1/publications/"
+const API_GATEWAY_PUBLICATIONS = environment.apiGatewayUrl + "api/v1/publications/";
+
 @Injectable({
   providedIn: "root"
 })

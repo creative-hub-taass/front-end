@@ -22,11 +22,13 @@
                 <p *ngIf="canEdit()" (click)="togglePopup()" class="delete-btn">Delete</p>
               </div>
             </div>
-            <p class="date">{{this.event?.startDateTime| date:"dd MMM yyyy, HH:mm"}} - {{this.event?.endDateTime| date:"dd MMM yyyy, HH:mm"}}</p>
+            <p class="date">{{this.event?.startDateTime| date:"dd MMM yyyy, HH:mm"}}
+              - {{this.event?.endDateTime| date:"dd MMM yyyy, HH:mm"}}</p>
             <p class="description"><span>{{this.event?.description}}</span></p>
             <div class="artists">
               Artists: &nbsp;
-              <p *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()" class="artist">{{artist.getNickname()}}</p>
+              <p *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()"
+                class="artist">{{artist.getNickname()}}</p>
             </div>
             <p>{{this.event?.locationName}}</p>
             <div class="map-container" #map>
@@ -50,7 +52,8 @@
               </div>
             </div>
             <div *ngIf="this.userId != null" class="comment-wrapper">
-              <input class="comment-box" placeholder="Add a comment" type="text" name="message" value="" [(ngModel)]="message">
+              <input [(ngModel)]="message" class="comment-box" name="message" placeholder="Add a comment" type="text"
+                value="">
               <button class="comment-btn" *ngIf="this.eventId" (click)="this.addComment()">post</button>
             </div>
             <div class="list-comment">
@@ -59,11 +62,12 @@
                   <p class="comment-user">{{getUserUsername(c?.userId)}}:</p>
                   <p class="comment-message">{{c.message}}</p>
                 </div>
-                <img *ngIf="c.userId == userId" (click)="this.deleteComment(c?.id)" class="delete-icon" src="../../assets/x1.png" alt="">
+                <img (click)="this.deleteComment(c?.id)" *ngIf="c.userId == userId" alt=""
+                  class="delete-icon" src="../../assets/x1.png">
               </div>
             </div>
           </div>
-      </div>
+        </div>
       </div>
     </div>
   </div>

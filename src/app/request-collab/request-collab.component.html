@@ -6,47 +6,47 @@
       (ngSubmit)="f.form.valid && onSubmit()"
       name="form"
       novalidate
-      >
+    >
       <div class="user-box">
         <label>Title</label>
         <input #title="ngModel"
-               [(ngModel)]="form.title"
-               class="form-control"
-               name="title"
-               required
-               type="text"
+          [(ngModel)]="form.title"
+          class="form-control"
+          name="title"
+          required
+          type="text"
         />
         <div
           *ngIf="title.errors && f.submitted"
           class="alert alert-danger"
           role="alert"
-          >
+        >
           Title is required!
         </div>
       </div>
       <div class="user-box">
         <label>Description</label>
         <input #description="ngModel"
-               [(ngModel)]="form.description"
-               class="form-control"
-               name="description"
-               required
-               type="text"
+          [(ngModel)]="form.description"
+          class="form-control"
+          name="description"
+          required
+          type="text"
         />
         <div
           *ngIf="description.errors && f.submitted"
           class="alert alert-danger"
           role="alert"
-          >
+        >
           Description is required!
         </div>
       </div>
       <div class="user-box">
         <label>Creator receiver</label>
         <select #nickname="ngModel"
-                [(ngModel)]="form.nickname"
-                class="form-control"
-                name="nickname"
+          [(ngModel)]="form.nickname"
+          class="form-control"
+          name="nickname"
         >
           <option *ngFor="let nickname of listNickname" [ngValue]="nickname">{{nickname}}</option>
         </select>
@@ -54,33 +54,33 @@
       <div class="user-box">
         <label>Contact</label>
         <input #contact="ngModel"
-               [(ngModel)]="form.contact"
-               class="form-control"
-               name="contact"
-               required
-               type="text"
+          [(ngModel)]="form.contact"
+          class="form-control"
+          name="contact"
+          required
+          type="text"
         />
         <div
           *ngIf="contact.errors && f.submitted"
           class="alert alert-danger"
           role="alert"
-          >
+        >
           Contact is required!
         </div>
       </div>
       <div class="user-box">
         <label>Category</label>
         <input #category="ngModel"
-                [(ngModel)]="form.category"
-                class="form-control"
-                name="category"
-                required
+          [(ngModel)]="form.category"
+          class="form-control"
+          name="category"
+          required
         >
         <div
           *ngIf="category.errors && f.submitted"
           class="alert alert-danger"
           role="alert"
-          >
+        >
           Category is required!
         </div>
       </div>

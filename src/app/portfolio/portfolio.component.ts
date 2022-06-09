@@ -10,9 +10,9 @@ import {PublicationInfo} from "../../_models/PublicationInfo";
 import {Artwork} from "../../_models/Artwork";
 
 @Component({
-  selector: 'app-portfolio',
-  templateUrl: './portfolio.component.html',
-  styleUrls: ['./portfolio.component.css', '../about/about.component.css']
+  selector: "app-portfolio",
+  templateUrl: "./portfolio.component.html",
+  styleUrls: ["./portfolio.component.css", "../about/about.component.css"]
 })
 export class PortfolioComponent implements OnInit {
 

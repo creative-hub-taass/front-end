@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {CollaborationRequest} from "../../_models/CollaborationRequest";
 import {EventBusService} from "../../_shared/event-bus.service";
 import {TokenStorageService} from "../_services/token-storage.service";
@@ -12,9 +12,9 @@ import {Creator} from "../../_models/Creator";
 import {CollaborationRequestStatus} from "../../_models/Enum";
 
 @Component({
-  selector: 'app-own-collabs',
-  templateUrl: './own-collabs.component.html',
-  styleUrls: ['./own-collabs.component.css']
+  selector: "app-own-collabs",
+  templateUrl: "./own-collabs.component.html",
+  styleUrls: ["./own-collabs.component.css"]
 })
 export class OwnCollabsComponent implements OnInit {
   user!: User;
@@ -37,18 +37,18 @@ export class OwnCollabsComponent implements OnInit {
     public route: ActivatedRoute
   ) {
     this.creatorId = this.tokenStorageService.getUser().id;
-    if(this.creatorId == null) {
+    if (this.creatorId == null) {
       window.location.replace("/login");
       return;
     }
-    if(this.tokenStorageService.getUser().creator == null){
+    if (this.tokenStorageService.getUser().creator == null) {
       window.location.replace("/upgrade-request");
       return;
     }
     this.userService.getInfoUser(this.creatorId).subscribe({
       next: (userInfo: User) => {
         this.user = userInfo;
-        if(userInfo.creator != null) this.creator = userInfo.creator;
+        if (userInfo.creator != null) this.creator = userInfo.creator;
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -57,7 +57,7 @@ export class OwnCollabsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.creatorId == null)return;
+    if (this.creatorId == null) return;
     let index;
     this.creatorService.getSentRequestCollaborationOpen(this.creatorId).subscribe({
       next: (listCollaborations: CollaborationRequest[]) => {
@@ -66,9 +66,9 @@ export class OwnCollabsComponent implements OnInit {
           index = this.listSent.findIndex((elementRequest) => {
             return elementRequest.id == elementCollaboration.id;
           });
-          if(index == -1){
-              this.listSent.push(elementCollaboration);
-              tmpListIds.push(elementCollaboration.receiverId);
+          if (index == -1) {
+            this.listSent.push(elementCollaboration);
+            tmpListIds.push(elementCollaboration.receiverId);
           }
         });
         this.callServiceUsers(tmpListIds, this.listUsersSent);
@@ -85,7 +85,7 @@ export class OwnCollabsComponent implements OnInit {
           index = this.listSent.findIndex((elementRequest) => {
             return elementRequest.id == elementCollaboration.id;
           });
-          if(index == -1){
+          if (index == -1) {
             this.listSent.push(elementCollaboration);
             tmpListIds.push(elementCollaboration.receiverId);
           }
@@ -104,7 +104,7 @@ export class OwnCollabsComponent implements OnInit {
           index = this.listSent.findIndex((elementRequest) => {
             return elementRequest.id == elementCollaboration.id;
           });
-          if(index == -1){
+          if (index == -1) {
             this.listSent.push(elementCollaboration);
             tmpListIds.push(elementCollaboration.senderId);
           }
@@ -123,7 +123,7 @@ export class OwnCollabsComponent implements OnInit {
           index = this.listSent.findIndex((elementRequest) => {
             return elementRequest.id == elementCollaboration.id;
           });
-          if(index == -1){
+          if (index == -1) {
             this.listSent.push(elementCollaboration);
             tmpListIds.push(elementCollaboration.senderId);
           }
@@ -142,7 +142,7 @@ export class OwnCollabsComponent implements OnInit {
           index = this.listReceived.findIndex((elementRequest) => {
             return elementRequest.id == elementCollaboration.id;
           });
-          if(index == -1 && elementCollaboration.senderId != this.creatorId){
+          if (index == -1 && elementCollaboration.senderId != this.creatorId) {
             this.listReceived.push(elementCollaboration);
             tmpListIds.push(elementCollaboration.senderId);
           }
@@ -161,7 +161,7 @@ export class OwnCollabsComponent implements OnInit {
           index = this.listReceived.findIndex((elementRequest) => {
             return elementRequest.id == elementCollaboration.id;
           });
-          if(index == -1 && elementCollaboration.senderId != this.creatorId){
+          if (index == -1 && elementCollaboration.senderId != this.creatorId) {
             this.listReceived.push(elementCollaboration);
             tmpListIds.push(elementCollaboration.senderId);
           }
@@ -180,7 +180,7 @@ export class OwnCollabsComponent implements OnInit {
           index = this.listBroadcast.findIndex((elementRequest) => {
             return elementRequest.id == elementCollaboration.id;
           });
-          if(index == -1){
+          if (index == -1) {
             this.listBroadcast.push(elementCollaboration);
             tmpListIds.push(elementCollaboration.senderId);
           }
@@ -199,7 +199,7 @@ export class OwnCollabsComponent implements OnInit {
           index = this.listBroadcast.findIndex((elementRequest) => {
             return elementRequest.id == elementCollaboration.id;
           });
-          if(index == -1){
+          if (index == -1) {
             this.listBroadcast.push(elementCollaboration);
             tmpListIds.push(elementCollaboration.senderId);
           }
@@ -213,7 +213,7 @@ export class OwnCollabsComponent implements OnInit {
   }
 
   callServiceUsers(listIds: string[], listOutput: PublicUser[]): void {
-    if(listIds.length == 0)return;
+    if (listIds.length == 0) return;
     this.creatorService.getListofUser(listIds).subscribe({
       next: (listUsers: PublicUser[]) => {
         let index;
@@ -221,7 +221,7 @@ export class OwnCollabsComponent implements OnInit {
           index = listOutput.findIndex((element) => {
             return element.id == elementUser.id;
           });
-          if(index == -1)listOutput.push(elementUser);
+          if (index == -1) listOutput.push(elementUser);
         });
       },
       error: (error) => {
@@ -231,32 +231,32 @@ export class OwnCollabsComponent implements OnInit {
   }
 
   getUser(id: string): string {
-    if(id == null)return "";
+    if (id == null) return "";
     let index = this.listUsersSent.findIndex((elementUser) => {
       return elementUser.id == id;
     });
-    if(index != -1) {
+    if (index != -1) {
       return this.listUsersSent[index].nickname;
     }
 
     index = this.listUsersSentBroadcast.findIndex((elementUser) => {
       return elementUser.id == id;
     });
-    if(index != -1) {
+    if (index != -1) {
       return this.listUsersSentBroadcast[index].nickname;
     }
 
     index = this.listUsersBroadcast.findIndex((elementUser) => {
       return elementUser.id == id;
     });
-    if(index != -1) {
+    if (index != -1) {
       return this.listUsersBroadcast[index].nickname;
     }
 
     index = this.listUsersReceived.findIndex((elementUser) => {
       return elementUser.id == id;
     });
-    if(index != -1) {
+    if (index != -1) {
       return this.listUsersReceived[index].nickname;
     }
 
@@ -264,14 +264,14 @@ export class OwnCollabsComponent implements OnInit {
   }
 
   rejectRequest(request: CollaborationRequest) {
-    if(request == null)return;
+    if (request == null) return;
     this.creatorService.rejectRequest(request.id).subscribe({
       next: () => {
         console.log("Request rejected");
         let index = this.listReceived.findIndex((elementRequest) => {
           return request.id == elementRequest.id;
         });
-        if(index != -1)this.listReceived[index].status = CollaborationRequestStatus.CLOSED;
+        if (index != -1) this.listReceived[index].status = CollaborationRequestStatus.CLOSED;
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);
@@ -280,19 +280,19 @@ export class OwnCollabsComponent implements OnInit {
   }
 
   closeRequest(request: CollaborationRequest) {
-    if(request == null)return;
+    if (request == null) return;
     this.creatorService.rejectRequest(request.id).subscribe({
       next: () => {
         console.log("Request deleted");
         let index = this.listSent.findIndex((elementRequest) => {
           return request.id == elementRequest.id;
         });
-        if(index != -1)this.listSent[index].status = CollaborationRequestStatus.CLOSED;
+        if (index != -1) this.listSent[index].status = CollaborationRequestStatus.CLOSED;
 
         index = this.listBroadcast.findIndex((elementRequest) => {
           return request.id == elementRequest.id;
         });
-        if(index != -1)this.listBroadcast[index].status = CollaborationRequestStatus.CLOSED;
+        if (index != -1) this.listBroadcast[index].status = CollaborationRequestStatus.CLOSED;
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

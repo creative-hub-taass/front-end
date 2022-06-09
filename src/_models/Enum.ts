@@ -22,11 +22,11 @@ export enum CreationType {
 }
 
 export enum CollaborationRequestStatus {
-  OPEN ="OPEN", CLOSED ="CLOSED"
+  OPEN = "OPEN", CLOSED = "CLOSED"
 }
 
 export enum CreatorType {
-  ARTIST ="ARTIST",
+  ARTIST = "ARTIST",
   PAINTER = "PAINTER",
   ILLUSTRATOR = "ILLUSTRATOR",
   DESIGNER = "DESIGNER",
@@ -38,15 +38,17 @@ export enum CreatorType {
   MUSICIAN = "MUSICIAN",
   DANCER = "DANCER"
 }
+
 export enum UpgradeRequestStatus {
   OPEN = "OPEN", ACCEPTED = "ACCEPTED", REJECTED = "REJECTED"
 }
 
 export function getListCurrency(): Currency[] {
-  return [Currency.USD,Currency.EUR,Currency.GBP, Currency.AUD, Currency.CAD, Currency.CHF, Currency.CNH, Currency.JPY, Currency.NZD, Currency.SEK];
+  return [Currency.USD, Currency.EUR, Currency.GBP, Currency.AUD, Currency.CAD, Currency.CHF, Currency.CNH, Currency.JPY, Currency.NZD, Currency.SEK];
 }
-export  function  getListCreationTypeAP(): CreationType[] {
-  return [CreationType.AUTHOR,CreationType.COAUTHOR,CreationType.FEATURING,CreationType.COLLAB,CreationType.OTHER];
+
+export function getListCreationTypeAP(): CreationType[] {
+  return [CreationType.AUTHOR, CreationType.COAUTHOR, CreationType.FEATURING, CreationType.COLLAB, CreationType.OTHER];
 }
 
 export function getListCreationTypeE(): CreationType[] {
@@ -54,11 +56,11 @@ export function getListCreationTypeE(): CreationType[] {
 }
 
 export function getListCollaborationStatus(): CollaborationRequestStatus[] {
-  return [CollaborationRequestStatus.OPEN,CollaborationRequestStatus.CLOSED];
+  return [CollaborationRequestStatus.OPEN, CollaborationRequestStatus.CLOSED];
 }
 
 export function getListUpgradeStatus(): UpgradeRequestStatus[] {
-  return [UpgradeRequestStatus.OPEN,UpgradeRequestStatus.ACCEPTED, UpgradeRequestStatus.REJECTED];
+  return [UpgradeRequestStatus.OPEN, UpgradeRequestStatus.ACCEPTED, UpgradeRequestStatus.REJECTED];
 }
 
 export function getListCreatorType(): CreatorType[] {

@@ -53,6 +53,9 @@
       <div class="cell" data-title="Status">
         {{request.status}}
       </div>
+      <div class="button-reject">
+        <img src="./assets/bin.png" alt="" (click)="closeRequest(request)">
+      </div>
     </div>
 
   </div>
@@ -99,6 +102,9 @@
       <div class="cell" data-title="Status">
         {{request.status}}
       </div>
+        <div class="button-reject">
+          <img src="./assets/delete-circled.png" alt="" (click)="rejectRequest(request)">
+        </div>
     </div>
 
   </div>

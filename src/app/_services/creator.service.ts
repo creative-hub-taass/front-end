@@ -84,4 +84,8 @@ export class CreatorService {
   getFollowed(idCreator: string): Observable<any> {
     return this.http.get<PublicUser[]>(API_GATEWAY_USERS + idCreator + "/followed");
   }
+
+  rejectRequest(idCollaboration: string): Observable<any> {
+    return this.http.get(API_GATEWAY_INTERACTIONS + "collabs/request/close/" + idCollaboration);
+  }
 }

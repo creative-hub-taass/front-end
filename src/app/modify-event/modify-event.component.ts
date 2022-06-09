@@ -281,7 +281,7 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
       }
     }
     let index = this.listCreationEvent.findIndex((elementCreationEvent) => {
-      return elementCreationEvent.id == tmpCreation.id;
+      return elementCreationEvent.user == tmpCreation.user;
     });
     if (index != -1) return;
     //indice dell'utente dalla lista dei follower con l'id selezionato nella view
@@ -378,7 +378,7 @@ export class ModifyEventComponent implements OnDestroy, AfterViewInit {
             }
           });
         });
-        this.router.navigate(['modify-event/' + responseEvent.id]);
+        this.router.navigate(['event/' + responseEvent.id]);
       },
       error: (error) => {
         this.errorMessage = utility.onError(error, this.eventBusService);

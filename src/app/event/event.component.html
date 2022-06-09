@@ -54,7 +54,7 @@
               <button class="comment-btn" *ngIf="this.eventId" (click)="this.addComment()">post</button>
             </div>
             <div class="list-comment">
-              <div *ngFor="let c of listComments?.reverse()" class="comment">
+              <div *ngFor="let c of listComments" class="comment">
                 <div class="comment-info">
                   <p class="comment-user">{{getUserUsername(c?.userId)}}:</p>
                   <p class="comment-message">{{c.message}}</p>

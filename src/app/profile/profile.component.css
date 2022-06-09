@@ -156,8 +156,9 @@
   padding: 20px;
   background: #fff;
   border-radius: 5px;
-  height: 500px;
   width: 380px;
+  max-height: 600px;
+  overflow: auto;
 }
 
 .popup h2 {
@@ -180,7 +181,7 @@
   cursor: pointer;
 }
 .popup .content {
-  max-height: 100px;
+  #max-height: 100px;
   overflow: auto;
 }
 
@@ -232,7 +233,7 @@
   overflow: auto;
 }
 
-.content2 button {
+/*.content2 button {
   font-family: "Jost", serif;
   background: #00A3FF;
   padding: 5px 5px;
@@ -249,7 +250,7 @@
   color: #00A3FF;
   background: transparent;
   border: 2px solid #00A3FF;
-}
+}*/
 .popup2 .button {
   position: relative;
   margin-left: 90%;
@@ -484,3 +485,98 @@
     justify-content: center;
   }
 }
+
+.popup .message-box {
+  margin: 0;
+  text-align: center;
+  padding-bottom: 20px;
+  font-size: 20px;
+}
+
+.message-box {
+  margin: 20px;
+}
+
+.success {
+  color: #90BE6D;
+}
+
+.fail {
+  color: #DB4437;
+}
+
+.delete-btn {
+  color: #DB4437;
+  background: transparent;
+  font-family: "Jost", serif;
+  padding: 10px 30px;
+  border: 2px solid #DB4437;
+  border-radius: 1000px;
+  font-size: 15px;
+}
+
+.delete-btn:hover {
+  background:#DB4437;
+  color: #FFFFFF;
+}
+
+.confirmation-popup {
+  position: fixed;
+  background: #FFFFFF;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Jost";
+  text-align: center;
+  width: 500px;
+  max-height: 400px;
+  padding: 30px;
+  box-shadow: 0px 0px 5.4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.confirmation-popup .buttons, .buy-artwork-popup .buttons {
+  margin-top: 20px;
+}
+
+.confirmation-popup .buttons button, .buy-artwork-popup .buttons button {
+  background: #00A3FF;
+  color: #ffffff;
+  border: 2px solid #FFFFFF;
+  border-radius: 1000px;
+  padding: 10px 40px;
+  margin: 5px;
+}
+
+.confirmation-popup .buttons .delete-btn, .buy-artwork-popup .buttons .delete-btn {
+  background: #F94144;
+}
+
+.confirmation-popup .buttons .delete-btn:hover, .buy-artwork-popup .buttons .delete-btn:hover {
+  color: #F94144;
+  border: 2px solid #F94144;
+  background: transparent;
+}
+
+.confirmation-popup .buttons .cancel-btn, .buy-artwork-popup .buttons .cancel-btn {
+  background: #636363;
+}
+
+.confirmation-popup .buttons .cancel-btn:hover, .buy-artwork-popup .buttons .cancel-btn:hover {
+  color: #636363;
+  border: 2px solid #636363;
+  background: transparent;
+}
+
+.account-deletion {
+  margin: 20px;
+}
+
+

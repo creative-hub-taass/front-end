@@ -59,9 +59,9 @@
           </div>
         </div>
         <button id="button-password">Change password</button>
+        <h4 *ngIf="this.submittedPassword" class="message-box success">Password changed!</h4>
+        <h4 *ngIf="this.errorPassword!=''" class="message-box fail">{{this.errorPassword}}</h4>
       </form>
-      <h4 *ngIf="this.submittedPassword" style="color: limegreen">Password changed!</h4>
-      <h4 *ngIf="this.errorPassword!=''" style="color:red;">{{this.errorPassword}}</h4>
     </div>
   </div>
 </div>
@@ -221,18 +221,22 @@
       </div>
       <button id="full-button">Submit</button>
     </form>
-    <h4 *ngIf="this.submitted" style="color: limegreen">Request submitted!</h4>
-    <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
+    <h4 *ngIf="this.submitted" class="message-box success">Request submitted!</h4>
+    <h4 *ngIf="this.errorMessage!=''" class="message-box fail">{{this.errorMessage}}</h4>
   </div>
-  <button id="delete-button" (click)="popupDelete = true">Delete account</button>
+  <div class="account-deletion">
+    <button class="delete-btn" id="delete-button" (click)="popupDelete = true">Delete account</button>
+  </div>
   <div id="popup2" class="overlay" *ngIf="popupDelete">
-    <div class="popup2">
-      <button class="button" (click)="popupDelete = false">&times;</button>
+    <div class="confirmation-popup">
       <div class="content2">
-        <label>Do you want delete your account definitely?</label>
-        <button (click)="deleteUser()">Yes</button>
-        <h4 *ngIf="this.deleted" style="color: limegreen">Account deleted!</h4>
-        <h4 *ngIf="this.errorMessage!=''" style="color:red;">{{this.errorMessage}}</h4>
+        <h2>Do you want delete your account definitely?</h2>
+        <div class="buttons">
+          <button class="delete-btn" (click)="deleteUser()">Delete</button>
+          <button class="cancel-btn" (click)="popupDelete = false">Cancel</button>
+        </div>
+        <h4 *ngIf="this.deleted" class="message-box success">Account deleted!</h4>
+        <h4 *ngIf="this.errorMessage!=''" class="message-box fail">{{this.errorMessage}}</h4>
       </div>
     </div>
   </div>

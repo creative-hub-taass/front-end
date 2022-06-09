@@ -147,6 +147,7 @@ body, html {
 .info .user {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .info .profile-pic {
@@ -165,6 +166,7 @@ body, html {
   font-weight: 700;
   margin: 0;
   font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .image {

@@ -5,19 +5,24 @@ import {TokenStorageService} from "../_services/token-storage.service";
 import {EventBusService} from "../../_shared/event-bus.service";
 import * as utility from "../../_shared/functions";
 import {PaymentService} from "../_services/payment.service";
+import {User} from "../../_models/User";
+import {Creator} from "../../_models/Creator";
+import {UserService} from "../_services/user.service";
 @Component({
   selector: 'app-own-donations',
   templateUrl: './own-donations.component.html',
   styleUrls: ['./own-donations.component.css']
 })
 export class OwnDonationsComponent implements OnInit {
-
+  user!: User;
+  creator!: Creator;
   userId: string | undefined;
   errorMessage: string = "";
   listDonations: Donation[] = [];
   listCreator: PublicUser[] = [];
 
   constructor(
+    private userService: UserService,
     private tokenStorageService: TokenStorageService,
     private eventBusService: EventBusService,
     private paymentService: PaymentService){
@@ -26,6 +31,15 @@ export class OwnDonationsComponent implements OnInit {
       window.location.replace("/login");
       return;
     }
+    this.userService.getInfoUser(this.userId).subscribe({
+      next: (userInfo: User) => {
+        this.user = userInfo;
+        if(userInfo.creator != null) this.creator = userInfo.creator;
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
   }
 
   ngOnInit(): void {

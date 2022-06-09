@@ -4,6 +4,9 @@ import {TokenStorageService} from "../_services/token-storage.service";
 import {Artwork} from "../../_models/Artwork";
 import * as utility from "../../_shared/functions";
 import {PaymentService} from "../_services/payment.service";
+import {User} from "../../_models/User";
+import {UserService} from "../_services/user.service";
+import {Creator} from "../../_models/Creator";
 
 @Component({
   selector: 'app-own-orders',
@@ -11,7 +14,8 @@ import {PaymentService} from "../_services/payment.service";
   styleUrls: ['./own-orders.component.css']
 })
 export class OwnOrdersComponent implements OnInit {
-
+  user!: User;
+  creator!: Creator;
   userId: string | undefined;
   listOrders: any[] = [];
   errorMessage: string = "";
@@ -20,13 +24,23 @@ export class OwnOrdersComponent implements OnInit {
   constructor(
     private eventBusService: EventBusService,
     private tokenStorageService: TokenStorageService,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private userService: UserService
   ) {
     this.userId = this.tokenStorageService.getUser().id;
     if(this.userId == undefined){
       window.location.replace("/login");
       return;
     }
+    this.userService.getInfoUser(this.userId).subscribe({
+      next: (userInfo: User) => {
+        this.user = userInfo;
+        if(userInfo.creator != null) this.creator = userInfo.creator;
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
   }
 
   ngOnInit(): void {

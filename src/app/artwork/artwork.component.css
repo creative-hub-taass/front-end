@@ -264,6 +264,7 @@
   color: #636363;
   margin-right: 5px;
   margin-top: 0px;
+  cursor: pointer;
 }
 
 .artist:hover {
@@ -313,6 +314,7 @@
   margin-right: 5px;
   margin-top: 10px;
   min-width: 100px;
+  cursor: pointer;
 }
 
 .count-label {

@@ -1,5 +1,16 @@
 <div class="wrapper">
-
+  <div class="container-nav" >
+    <div class="nav" >
+      <a href="javascript:void(0)" [routerLink]="'/profile'">Edit profile</a>
+      <a href="javascript:void(0)" [routerLink]="'/orders'">Orders</a>
+      <a href="javascript:void(0)" [routerLink]="'/donations'">Donations</a>
+      <a href="javascript:void(0)" [routerLink]="'/upgrade-requests'" *ngIf="this.creator == null">Upgrade Requests</a>
+      <a class="active" href="javascript:void(0)" [routerLink]="'/collaborations-requests'"  *ngIf="this.creator != null">Collaborations</a>
+    </div>
+  </div>
+  <div class="new-req">
+    <button class="btn-request" [routerLink]="'/collaboration-request'">New collaboration</button>
+  </div>
   <div class="table">
     <h2>Request sent</h2>
     <div class="row header" >

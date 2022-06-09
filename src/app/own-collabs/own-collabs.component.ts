@@ -6,6 +6,9 @@ import {ActivatedRoute} from "@angular/router";
 import {CreatorService} from "../_services/creator.service";
 import * as utility from "../../_shared/functions";
 import {PublicUser} from "../../_models/PublicUser";
+import {UserService} from "../_services/user.service";
+import {User} from "../../_models/User";
+import {Creator} from "../../_models/Creator";
 
 @Component({
   selector: 'app-own-collabs',
@@ -13,7 +16,8 @@ import {PublicUser} from "../../_models/PublicUser";
   styleUrls: ['./own-collabs.component.css']
 })
 export class OwnCollabsComponent implements OnInit {
-
+  user!: User;
+  creator!: Creator;
   listUsersSent: PublicUser[] = [];
   listUsersReceived: PublicUser[] = [];
   listUsersBroadcast: PublicUser[] = [];
@@ -25,6 +29,7 @@ export class OwnCollabsComponent implements OnInit {
   errorMessage: string = "";
 
   constructor(
+    private userService: UserService,
     private eventBusService: EventBusService,
     private creatorService: CreatorService,
     private tokenStorageService: TokenStorageService,
@@ -39,6 +44,15 @@ export class OwnCollabsComponent implements OnInit {
       window.location.replace("/upgrade-request");
       return;
     }
+    this.userService.getInfoUser(this.creatorId).subscribe({
+      next: (userInfo: User) => {
+        this.user = userInfo;
+        if(userInfo.creator != null) this.creator = userInfo.creator;
+      },
+      error: (error) => {
+        this.errorMessage = utility.onError(error, this.eventBusService);
+      }
+    });
   }
 
   ngOnInit(): void {

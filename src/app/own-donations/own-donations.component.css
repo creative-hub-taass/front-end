@@ -79,3 +79,40 @@
     justify-content: center;
   }
 }
+
+.container-nav {
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.nav {
+  overflow: hidden;
+  margin: auto;
+  margin-bottom: 40px;
+}
+
+/* Style the links inside the navigation bar */
+.nav a {
+  float: right;
+  color: #000000;
+  font-family: "Jost", serif;
+  text-align: center;
+  padding: 6px 26px;
+  text-decoration: none;
+  font-size: 17px;
+  position: relative;
+  border-radius: 500px;
+}
+
+/* Change the color of links on hover */
+.nav a:hover {
+  background-color: #e3f6ff;
+}
+
+/* Add a color to the active/current link */
+.nav a.active {
+  background-color: #00A3FF;
+  color: #FFFFFF;
+}
+

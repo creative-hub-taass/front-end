@@ -11,7 +11,7 @@
     >
 
       <div class="post-box">
-        <label>Title: {{this.postResult?.title}}</label>
+        <label>Title</label>
       </div>
       <div class="post-box">
         <input #title="ngModel"
@@ -31,16 +31,14 @@
       </div>
 
       <div class="post-box">
-        <label>Body: {{this.postResult?.body}}</label>
+        <label>Body</label>
       </div>
       <div class="post-box">
-        <input #body="ngModel"
+        <textarea #body="ngModel"
           [(ngModel)]="formPost.body"
           class="form-control"
           name="body"
-          required
-          type="text"
-        />
+          required></textarea>
         <div
           *ngIf="body.errors && f.submitted"
           class="alert alert-danger"
@@ -49,7 +47,7 @@
           Body of post is required!
         </div>
       </div>
-      <button class="full-button">Update informations</button>
+      <button class="full-button">Update information</button>
     </form>
 
     <h3>Users</h3>
@@ -65,6 +63,7 @@
         <button class="delete-btn" (click)="deleteUser(user.id)">Remove</button>
       </div>
       <div class="post-box">
+        <label>Creator role</label>
         <select #creationType="ngModel"
           [(ngModel)]="formCreations.creationType"
           class="form-control"
@@ -72,6 +71,7 @@
         >
           <option *ngFor="let creation of getCreation()" [ngValue]="creation">{{creation}}</option>
         </select>
+        <label>Creator</label>
         <select #user="ngModel"
           [(ngModel)]="formCreations.user"
           class="form-control"

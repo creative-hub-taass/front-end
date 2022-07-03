@@ -32,27 +32,25 @@
       </div>
     </div>
     <div class="nav">
-      <a href="javascript:void(0)" [routerLink]="'/about/' + this.userId">About</a>
-      <a href="javascript:void(0)" [routerLink]="'/portfolio/' + this.userId">Portfolio</a>
-      <a class="active" href="javascript:void(0)" [routerLink]="'/collaborations/' + this.userId">Collaborations</a>
-      <a href="javascript:void(0)" [routerLink]="'/events/' + this.userId">Events</a>
-      <a href="javascript:void(0)" [routerLink]="'/shop/' + this.userId">Shop</a>
+      <a [routerLink]="'/about/' + this.userId">About</a>
+      <a [routerLink]="'/portfolio/' + this.userId">Portfolio</a>
+      <a [routerLink]="'/collaborations/' + this.userId" class="active">Collaborations</a>
+      <a [routerLink]="'/events/' + this.userId">Events</a>
+      <a [routerLink]="'/shop/' + this.userId">Shop</a>
     </div>
     <div class="loader" *ngIf="user==null"></div>
 
     <div class="gallery-container">
-      <div (click)="SendCollaboration()" *ngIf="(this.ownId != null) && (this.ownId == this.userId)" class="add-pub">
+      <a (click)="SendCollaboration()" *ngIf="(this.ownId != null) && (this.ownId == this.userId)" class="add-pub"
+        href="#">
         Send collaboration
-      </div>
+      </a>
       <div *ngIf="(this.listArtworks != undefined && this.listArtworks.length > 0)" class="gallery-c">
         <h2>Artworks</h2>
-        <div class="gallery-item" tabindex="0" *ngFor="let publication of listArtworks"
+        <a *ngFor="let publication of listArtworks" class="gallery-item" tabindex="0"
           [routerLink]="'/artwork/' + publication.id">
-
-
           <img src="{{publication.images[0]}}" class="gallery-image" alt="">
           <div class="gallery-item-info">
-
             <ul>
               <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
                 aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
@@ -64,17 +62,14 @@
 
           </div>
 
-        </div>
+        </a>
       </div>
       <div *ngIf="(this.listEvents != undefined && this.listEvents.length > 0)" class="gallery-c">
         <h2>Events</h2>
-        <div *ngFor="let publication of listEvents" [routerLink]="'/event/' + publication.id" class="gallery-item"
+        <a *ngFor="let publication of listEvents" [routerLink]="'/event/' + publication.id" class="gallery-item"
           tabindex="0">
-
-
           <img src="{{publication.image}}" class="gallery-image" alt="">
           <div class="gallery-item-info">
-
             <ul>
               <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
                 aria-hidden="true"></i>{{this.getLikesCount(publication.id)}}
@@ -83,14 +78,12 @@
                 aria-hidden="true"></i> {{this.getCommentsCount(publication.id)}}
               </li>
             </ul>
-
           </div>
-
-        </div>
+        </a>
       </div>
       <div *ngIf="(this.listPost != undefined && this.listPost.length > 0)" class="gallery-c">
         <h2>Posts</h2>
-        <div *ngFor="let publication of listPost" [routerLink]="'/post/' + publication.id" class="gallery-post">
+        <a *ngFor="let publication of listPost" [routerLink]="'/post/' + publication.id" class="gallery-post">
           <h3>{{publication.title}}<p id="lastUpdate">Last update: {{publication.lastUpdate | date:'medium'}}</p></h3>
           <p>{{publication.body}}</p>
           <div class="post-item-info">
@@ -109,7 +102,7 @@
             </div>
 
           </div>
-        </div>
+        </a>
       </div>
       <div class="loader" *ngIf="listPublicationInfo == undefined"></div>
     </div>

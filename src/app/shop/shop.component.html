@@ -33,18 +33,17 @@
       </div>
     </div>
     <div class="nav">
-      <a href="javascript:void(0)" [routerLink]="'/about/' + this.userId">About</a>
-      <a href="javascript:void(0)" [routerLink]="'/portfolio/' + this.userId">Portfolio</a>
-      <a href="javascript:void(0)" [routerLink]="'/collaborations/' + this.userId">Collaborations</a>
-      <a href="javascript:void(0)" [routerLink]="'/events/' + this.userId">Events</a>
-      <a class="active" href="javascript:void(0)" [routerLink]="'/shop/' + this.userId">Shop</a>
+      <a [routerLink]="'/about/' + this.userId">About</a>
+      <a [routerLink]="'/portfolio/' + this.userId">Portfolio</a>
+      <a [routerLink]="'/collaborations/' + this.userId">Collaborations</a>
+      <a [routerLink]="'/events/' + this.userId">Events</a>
+      <a [routerLink]="'/shop/' + this.userId" class="active">Shop</a>
     </div>
     <div class="loader" *ngIf="user==null"></div>
     <div class="gallery-container">
       <div class="gallery">
-        <div *ngFor="let publication of listSellArtwork" [routerLink]="'/artwork/' + publication.id"
-          class="gallery-item"
-          tabindex="0">
+        <a *ngFor="let publication of listSellArtwork" [routerLink]="'/artwork/' + publication.id"
+          class="gallery-item" tabindex="0">
           <img src="{{publication.images[0]}}" class="gallery-image" alt="">
           <div class="gallery-item-info">
             <ul>
@@ -54,7 +53,7 @@
                 class="fas fa-comment"></i> {{this.getCommentsCount(publication.id)}}</li>
             </ul>
           </div>
-        </div>
+        </a>
       </div>
       <div class="loader" *ngIf="listPublicationInfo == undefined"></div>
     </div>

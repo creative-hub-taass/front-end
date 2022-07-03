@@ -58,10 +58,10 @@
   text-align: left;
 }
 
-.profile-box .info-box input {
+.profile-box .info-box input, .profile-box .info-box textarea {
   padding: 10px;
   background: rgba(240, 240, 240, 0.8);
-  border-radius: 50px;
+  border-radius: 20px;
   border: none;
   font-size: 16px;
   color: #000;
@@ -71,7 +71,7 @@
 .profile-box .info-box select {
   padding: 10px;
   background: rgba(240, 240, 240, 0.8);
-  border-radius: 50px;
+  border-radius: 20px;
   border: none;
   font-size: 16px;
   color: #000;
@@ -287,10 +287,10 @@
   text-align: left;
 }
 
-.infoUser-box .info-box input {
+.infoUser-box .info-box input, .infoUser-box .info-box textarea {
   padding: 10px;
   background: rgba(240, 240, 240, 0.8);
-  border-radius: 50px;
+  border-radius: 20px;
   border: none;
   font-size: 16px;
   color: #000;

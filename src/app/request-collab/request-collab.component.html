@@ -1,6 +1,6 @@
 <div class="container">
   <div class="form-box">
-    <h2>Compile your collaboration Request</h2>
+    <h2>Send a new collaboration request</h2>
     <form
       #f="ngForm"
       (ngSubmit)="f.form.valid && onSubmit()"
@@ -26,13 +26,11 @@
       </div>
       <div class="user-box">
         <label>Description</label>
-        <input #description="ngModel"
+        <textarea #description="ngModel"
           [(ngModel)]="form.description"
           class="form-control"
           name="description"
-          required
-          type="text"
-        />
+          required></textarea>
         <div
           *ngIf="description.errors && f.submitted"
           class="alert alert-danger"

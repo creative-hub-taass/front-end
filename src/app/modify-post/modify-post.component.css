@@ -36,10 +36,10 @@
   text-align: left;
 }
 
-.publication-box .post-box input {
+.publication-box input, .publication-box textarea {
   padding: 10px;
   background: rgba(240, 240, 240, 0.8);
-  border-radius: 50px;
+  border-radius: 20px;
   border: none;
   font-size: 16px;
   color: #000;

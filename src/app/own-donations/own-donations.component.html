@@ -1,12 +1,11 @@
 <div class="wrapper">
   <div class="container-nav">
     <div class="nav">
-      <a href="javascript:void(0)" [routerLink]="'/profile'">Edit profile</a>
-      <a href="javascript:void(0)" [routerLink]="'/orders'">Orders</a>
-      <a class="active" href="javascript:void(0)" [routerLink]="'/donations'">Donations</a>
-      <a href="javascript:void(0)" [routerLink]="'/upgrade-requests'" *ngIf="this.creator == null">Upgrade Requests</a>
-      <a *ngIf="this.creator != null" [routerLink]="'/collaborations-requests'"
-        href="javascript:void(0)">Collaborations</a>
+      <a [routerLink]="'/profile'">Edit profile</a>
+      <a [routerLink]="'/orders'">Orders</a>
+      <a [routerLink]="'/donations'" class="active">Donations</a>
+      <a *ngIf="this.creator == null" [routerLink]="'/upgrade-requests'">Upgrade Requests</a>
+      <a *ngIf="this.creator != null" [routerLink]="'/collaborations-requests'">Collaborations</a>
     </div>
   </div>
   <h2>History of donations</h2>

@@ -34,13 +34,11 @@
         <label>Description: {{this.eventResult?.description}}</label>
       </div>
       <div class="event-box">
-        <input #description="ngModel"
+        <textarea #description="ngModel"
           [(ngModel)]="formEvent.description"
           class="form-control"
           name="description"
-          required
-          type="text"
-        />
+          required></textarea>
         <div
           *ngIf="description.errors && f.submitted"
           class="alert alert-danger"
@@ -51,7 +49,7 @@
       </div>
 
       <div class="event-box">
-        <label>Image: {{this.eventResult?.image}}</label>
+        <label>Image</label>
       </div>
       <div class="event-box">
         <input #image="ngModel"
@@ -71,7 +69,7 @@
       </div>
 
       <div class="event-box">
-        <label>locationName: {{this.eventResult?.locationName}}</label>
+        <label>Location</label>
       </div>
       <div class="event-box">
         <input #locationName="ngModel"
@@ -86,7 +84,7 @@
           class="alert alert-danger"
           role="alert"
         >
-          Location name is required!
+          Location is required!
         </div>
       </div>
 
@@ -145,7 +143,7 @@
           type="text"
         />
       </div>
-      <button class="full-button">Update informations</button>
+      <button class="full-button">Update information</button>
     </form>
 
     <h3>Users</h3>

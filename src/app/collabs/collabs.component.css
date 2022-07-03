@@ -73,6 +73,8 @@ img {
 }
 
 .gallery-post {
+  text-decoration: none;
+  color: #000000;
   text-align: justify;
   font-family: "Jost", sans-serif;
   margin: auto;

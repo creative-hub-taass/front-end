@@ -6,32 +6,32 @@
 
       <div class="page">
         <img alt="" class="page-icon" src="../assets/home.png" />
-        <a (click)="toggleMenu()" [routerLink]="['/home']" href="javascript:void(0)">Home</a>
+        <a (click)="toggleMenu()" [routerLink]="['/home']">Home</a>
       </div>
       <div *ngIf="getUserInfo().creator" class="page">
         <img alt="" class="page-icon" src="../assets/person.png" />
-        <a (click)="toggleMenu()" [routerLink]="['/about/'+getUserInfo().id]" href="javascript:void(0)">My page</a>
+        <a (click)="toggleMenu()" [routerLink]="['/about/'+getUserInfo().id]">My page</a>
       </div>
       <div *ngIf="getUserInfo().creator" class="page">
         <img alt="" class="page-icon" src="../assets/ppl.png" />
-        <a (click)="toggleMenu()" [routerLink]="['/collaborations-requests']" href="javascript:void(0)">My collabs</a>
+        <a (click)="toggleMenu()" [routerLink]="['/collaborations-requests']">My collabs</a>
       </div>
       <div *ngIf="isLoggedIn" class="page">
         <img alt="" class="page-icon" src="../assets/credit-card.png" />
-        <a (click)="toggleMenu()" [routerLink]="['/donations']" href="javascript:void(0)">Donations</a>
+        <a (click)="toggleMenu()" [routerLink]="['/donations']">Donations</a>
       </div>
       <div *ngIf="isLoggedIn" class="page">
         <img alt="" class="page-icon" src="../assets/shopbag.png" />
-        <a (click)="toggleMenu()" [routerLink]="['/orders']" href="javascript:void(0)">Orders</a>
+        <a (click)="toggleMenu()" [routerLink]="['/orders']">Orders</a>
       </div>
       <div *ngIf="!getUserInfo().creator && isLoggedIn" class="page">
         <img alt="" class="page-icon" src="../assets/upgrade.png" />
-        <a (click)="toggleMenu()" [routerLink]="['/upgrade-requests']" href="javascript:void(0)">Upgrade requests</a>
+        <a (click)="toggleMenu()" [routerLink]="['/upgrade-requests']">Upgrade requests</a>
       </div>
       <div class="page"></div>
       <div (click)="logout()" *ngIf="isLoggedIn" class="page">
         <img alt="" class="page-icon" src="../assets/logout.png" />
-        <a href="javascript:void(0)">Logout</a>
+        <a href="#">Logout</a>
       </div>
     </div>
     <div class="secondary-pages"></div>
@@ -40,15 +40,15 @@
   <div class="navbar">
     <div class="left-nav">
       <img (click)="toggleMenu()" *ngIf="isLoggedIn" alt="" class="menu" src="../assets/menu.png" />
-      <div [routerLink]="['/']" class="logo" href="javascript:void(0)">
+      <a [routerLink]="['/']" class="logo">
         <div class="primary">creative</div>
         <div class="secondary">Hub</div>
-      </div>
+      </a>
     </div>
     <div class="voices">
-      <a *ngIf="!isLoggedIn" [routerLink]="['/login']" href="javascript:void(0)">Login</a>
-      <a *ngIf="!isLoggedIn" [routerLink]="['/registration']" href="javascript:void(0)">Registration</a>
-      <a *ngIf="isLoggedIn" [routerLink]="['/profile']" href="javascript:void(0)">Hi, {{getUserInfo().nickname}}</a>
+      <a *ngIf="!isLoggedIn" [routerLink]="['/login']">Login</a>
+      <a *ngIf="!isLoggedIn" [routerLink]="['/registration']">Registration</a>
+      <a *ngIf="isLoggedIn" [routerLink]="['/profile']">Hi, {{getUserInfo().nickname}}</a>
     </div>
   </div>
   <div>

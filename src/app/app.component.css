@@ -105,6 +105,8 @@ body, html {
   font-family: "Jost";
   display: flex;
   font-size: 25px;
+  text-decoration: none !important;
+  color: unset !important;
 }
 
 .navbar .logo .primary {

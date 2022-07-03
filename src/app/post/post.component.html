@@ -15,16 +15,16 @@
             <div class="title-edit">
               <p class="title">{{this.post?.title}}</p>
               <div class="edit-container">
-                <p *ngIf="canEdit()" class="edit-btn" [routerLink]="'/modify-post/' + postId">Edit</p>
-                <p *ngIf="canEdit()" (click)="togglePopup()" class="delete-btn">Delete</p>
+                <a *ngIf="canEdit()" [routerLink]="'/modify-post/' + postId" class="edit-btn">Edit</a>
+                <a (click)="togglePopup()" *ngIf="canEdit()" class="delete-btn">Delete</a>
               </div>
             </div>
             <p class="date">{{this.post?.timestamp | date:"dd MMM yyyy"}}</p>
             <p class="description"><span>{{this.post?.body}}</span></p>
             <div class="artists">
               Authors: &nbsp;
-              <p *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()"
-                class="artist">{{artist.getNickname()}}</p>
+              <a *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()"
+                class="artist">{{artist.getNickname()}}</a>
             </div>
             <div class="interactions">
               <div class="reaction-wrapper">

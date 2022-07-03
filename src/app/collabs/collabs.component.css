@@ -69,17 +69,17 @@ img {
   color: #fff;
   cursor: pointer;
   max-height: 500px;
+  text-decoration: none !important;
 }
 
 .gallery-post {
   text-align: justify;
-  font-family: "Jost";
+  font-family: "Jost", sans-serif;
   margin: auto;
   width: 100%;
   max-width: 600px;
   display: flex;
   align-items: center;
-  font-family: "Jost";
   padding: 30px;
   box-shadow: 0px 0px 5.4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;

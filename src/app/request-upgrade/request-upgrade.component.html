@@ -1,6 +1,6 @@
 <div class="container">
   <div class="form-box">
-    <h2>Compile your upgrade request!</h2>
+    <h2>Send your upgrade request</h2>
     <form
       #f="ngForm"
       (ngSubmit)="f.form.valid && onSubmit()"
@@ -43,13 +43,11 @@
       </div>
       <div class="user-box">
         <label>Biography</label>
-        <input #bio="ngModel"
+        <textarea #bio="ngModel"
           [(ngModel)]="form.bio"
           class="form-control"
           name="bio"
-          required
-          type="text"
-        />
+          required></textarea>
         <div
           *ngIf="bio.errors && f.submitted"
           class="alert alert-danger"
@@ -60,13 +58,11 @@
       </div>
       <div class="user-box">
         <label>Portfolio</label>
-        <input #portfolio="ngModel"
+        <textarea #portfolio="ngModel"
           [(ngModel)]="form.portfolio"
           class="form-control"
           name="portfolio"
-          required
-          type="text"
-        />
+          required></textarea>
         <div
           *ngIf="portfolio.errors && f.submitted"
           class="alert alert-danger"
@@ -77,13 +73,11 @@
       </div>
       <div class="user-box">
         <label>Motivational text</label>
-        <input #motivationalText="ngModel"
+        <textarea #motivationalText="ngModel"
           [(ngModel)]="form.motivationalText"
           class="form-control"
           name="motivationalText"
-          required
-          type="text"
-        />
+          required></textarea>
         <div
           *ngIf="motivationalText.errors && f.submitted"
           class="alert alert-danger"

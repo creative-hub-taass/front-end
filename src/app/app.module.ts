@@ -38,6 +38,7 @@ import {OwnOrdersComponent} from "./own-orders/own-orders.component";
 import {OwnDonationsComponent} from "./own-donations/own-donations.component";
 import {NgxMasonryModule} from "ngx-masonry";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MarkdownModule} from "ngx-markdown";
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     CoolSocialLoginButtonsModule,
     NgbModule,
     BrowserAnimationsModule,
-    NgxMasonryModule
+    NgxMasonryModule,
+    MarkdownModule.forRoot()
   ],
   providers: [authInterceptorProviders,
     PaymentResultComponent,

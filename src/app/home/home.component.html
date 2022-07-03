@@ -12,12 +12,13 @@
     <span class="loading" *ngIf="listFeed==null && !isLoggedIn">Magic is loading...</span>
     <div class="wrapper" style="width: 100%">
       <ngx-masonry [options]="masonryOptions" [ordered]="true" class="left-col masonry-grid">
-        <div *ngFor="let element of listFeed"
+        <a *ngFor="let element of listFeed"
+          [routerLink]="['/'+element.publication.publicationType+'/'+element.publication.id]"
           [ngClass]="{'artwork': element.publication.publicationType == 'artwork', 'event': element.publication.publicationType == 'event', 'post': element.publication.publicationType == 'post'}"
           class="masonry-item"
           ngxMasonryItem>
           <div *ngFor="let user of element.getCreators()" class="info">
-            <div [routerLink]="'/about/' + user?.id" class="user">
+            <a [routerLink]="'/about/' + user?.id" class="user">
               <div class="profile-pic">
                 <img alt="" class="profile-pic" src="{{user?.creator?.avatar}}">
               </div>
@@ -25,7 +26,7 @@
                 <p class="nickname"> {{user?.nickname}}</p>
                 <p class="username">@{{user?.username}}</p>
               </div>
-            </div>
+            </a>
             <img alt="options" class="options" src="../../assets/img/option.PNG">
           </div>
           <div *ngIf="element.publication.publicationType == 'artwork'">
@@ -36,12 +37,11 @@
           </div>
           <div class="content">
             <div *ngIf="element.publication.publicationType == 'artwork'">
-              <p [routerLink]="['/artwork/'+element.publication.id]" class="name" href="javascript:void(0)">
+              <p class="name">
                 {{element.publication.name}} </p>
             </div>
             <div *ngIf="element.publication.publicationType == 'event'">
-              <p [routerLink]="['/event/'+element.publication.id]" class="name"
-                href="javascript:void(0)">{{element.publication.name}} </p>
+              <p class="name">{{element.publication.name}} </p>
               <p class="date">
                 <img alt="date" src="../../assets/calendar-grey.png">
                 {{element.publication.startDateTime | date:"dd MMM yyyy, HH:mm"}}
@@ -53,7 +53,7 @@
               </p>
             </div>
             <div *ngIf="element.publication.publicationType == 'post'">
-              <p [routerLink]="['/post/'+element.publication.id]" class="name" href="javascript:void(0)">
+              <p class="name">
                 {{element.publication.title}} </p>
               <p class="description">{{element.publication.body}}</p>
             </div>
@@ -73,7 +73,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </a>
       </ngx-masonry>
     </div>
     <div *ngIf="listFeed==null && isLoggedIn" class="loader"></div>

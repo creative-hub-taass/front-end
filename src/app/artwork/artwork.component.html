@@ -27,8 +27,8 @@
             <div class="title-edit">
               <p class="title">{{this.artwork?.name}}</p>
               <div class="edit-container">
-                <p *ngIf="canEdit()" class="edit-btn" [routerLink]="'/modify-artwork/' + artworkId">Edit</p>
-                <p *ngIf="canEdit()" (click)="togglePopup()" class="delete-btn">Delete</p>
+                <a *ngIf="canEdit()" [routerLink]="'/modify-artwork/' + artworkId" class="edit-btn">Edit</a>
+                <a (click)="togglePopup()" *ngIf="canEdit()" class="delete-btn">Delete</a>
               </div>
             </div>
             <p class="type">{{this.artwork?.type}}</p>
@@ -37,12 +37,17 @@
             <p class="description">{{this.artwork?.description}}</p>
             <div class="artists">
               Artists: &nbsp;
-              <p *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()"
-                class="artist">{{artist.getNickname()}}</p>
+              <a *ngFor="let artist of this.listUsers" [routerLink]="'/about/'+artist.getId()"
+                class="artist">{{artist.getNickname()}}</a>
             </div>
             <div *ngIf="artwork?.onSale" class="sales-info">
-              <p class="price">{{this.artwork?.price}} €</p>
-              <p class="qty">{{this.artwork?.availableCopies}} pieces left</p>
+              <div *ngIf="this.artwork?.availableCopies != 0">
+                <p class="price">{{this.artwork?.price}} €</p>
+                <p class="qty">{{this.artwork?.availableCopies}} pieces left</p>
+              </div>
+              <div *ngIf="this.artwork?.availableCopies == 0">
+                <p class="price">SOLD</p>
+              </div>
             </div>
             <div class="interactions">
               <button *ngIf="artwork?.onSale && !this.ownArtwork && this.artwork?.availableCopies!=0" class="buy-button" (click)="toggleBuyPopup()">

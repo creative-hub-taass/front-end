@@ -82,6 +82,11 @@ body, html {
   width: 400px;
 }
 
+.masonry-item, .masonry-item a {
+  text-decoration: none !important;
+  color: unset !important;
+}
+
 .artwork, .event, .post {
   height: auto;
   background: #fff;
@@ -164,7 +169,7 @@ body, html {
 
 .info .profile-pic img {
   border-radius: 100%;
-
+  object-fit: cover;
   border: none;
 }
 

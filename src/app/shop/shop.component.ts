@@ -99,7 +99,7 @@ export class ShopComponent implements OnInit {
         let listPublicationsID: string[] = new Array<string>();
         this.listPublicationInfo = new Array<PublicationInfo>();
         listArtworks.forEach((elementArtwork: Artwork) => {
-          if (elementArtwork.onSale) {
+          if (elementArtwork.onSale && elementArtwork.availableCopies > 0) {
             this.listSellArtwork.push(elementArtwork);
             listPublicationsID.push(elementArtwork.id);
             this.listPublicationInfo.push(new PublicationInfo(elementArtwork, []));

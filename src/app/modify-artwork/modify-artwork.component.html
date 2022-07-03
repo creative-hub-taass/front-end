@@ -35,13 +35,11 @@
         <label>Description: {{this.artworkResult?.description}}</label>
       </div>
       <div class="artwork-box">
-        <input #description="ngModel"
+        <textarea #description="ngModel"
           [(ngModel)]="formArtwork.description"
           class="form-control"
           name="description"
-          required
-          type="text"
-        />
+          required></textarea>
         <div
           *ngIf="description.errors && f.submitted"
           class="alert alert-danger"
@@ -156,7 +154,7 @@
         />
       </div>
 
-      <button class="full-button">Update informations</button>
+      <button class="full-button">Update information</button>
 
     </form>
 

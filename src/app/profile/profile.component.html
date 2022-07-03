@@ -67,12 +67,11 @@
 </div>
 <div class="container" *ngIf="!popupView">
   <div class="nav" *ngIf="!popupView">
-    <a class="active" href="javascript:void(0)" [routerLink]="'/profile'">Edit profile</a>
-    <a href="javascript:void(0)" [routerLink]="'/orders'">Orders</a>
-    <a href="javascript:void(0)" [routerLink]="'/donations'">Donations</a>
-    <a href="javascript:void(0)" [routerLink]="'/upgrade-requests'" *ngIf="this.creator == null">Upgrade Requests</a>
-    <a *ngIf="this.creator != null" [routerLink]="'/collaborations-requests'"
-      href="javascript:void(0)">Collaborations</a>
+    <a [routerLink]="'/profile'" class="active">Edit profile</a>
+    <a [routerLink]="'/orders'">Orders</a>
+    <a [routerLink]="'/donations'">Donations</a>
+    <a *ngIf="this.creator == null" [routerLink]="'/upgrade-requests'">Upgrade Requests</a>
+    <a *ngIf="this.creator != null" [routerLink]="'/collaborations-requests'">Collaborations</a>
   </div>
   <div class="profile-box">
     <h2>Modify your profile</h2>
@@ -100,8 +99,9 @@
             [(ngModel)]="form.email"
             class="form-control"
             name="email"
-            readonly="text"
+            readonly
             required
+            type="email"
           >
         </div>
       </div>
@@ -163,19 +163,18 @@
             [(ngModel)]="form.birthDate"
             class="form-control"
             name="birthDate"
-            readonly="date"
+            readonly
+            type="date"
             required
           >
         </div>
         <div class="info-box">
           <label>Biography</label>
-          <input #bio="ngModel"
+          <textarea #bio="ngModel"
             [(ngModel)]="form.bio"
             class="form-control"
             name="bio"
-            required
-            type="text"
-          >
+            required></textarea>
           <div
             *ngIf="bio.errors && f.submitted"
             class="alert alert-danger"

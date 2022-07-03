@@ -149,7 +149,7 @@ export class ModifyArtworkComponent implements OnDestroy {
       next: (listFollower: PublicUser[]) => {
         this.listFollowers = new Array<PublicUser>();
         listFollower.forEach((follower: PublicUser) => {
-          this.listFollowers.push(new PublicUser(follower));
+          if (follower.creator!=null) this.listFollowers.push(new PublicUser(follower));
         });
         this.listFollowers.push(this.tokenStorageService.getUser());
       },

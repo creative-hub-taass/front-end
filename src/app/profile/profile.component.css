@@ -322,6 +322,7 @@
 
 .content {
   min-height: 100%;
+  text-align: center;
 }
 
 .popup .button {
@@ -385,15 +386,14 @@
   background: #00A3FF;
   padding: 10px 30px;
   color: #ffffff;
-  width: 50%;
+  width: 200px;
   height: 42px;
   border: 2px solid #00A3FF;
   border-radius: 1000px;
   font-weight: 500;
   font-size: 15px;
-  margin-left: 25%;
   margin-top: 5px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 #button-password:hover {

@@ -280,11 +280,6 @@ export class ArtworkComponent implements OnInit {
   }
 
   public delete() {
-    this.artwork.creations.forEach((creation) => {
-      this.publicationService.deleteArtworkCreation(creation.id).subscribe(s => {
-        console.log(s);
-      });
-    });
     if (this.artworkId != null) this.publicationService.deleteArtwork(this.artworkId).subscribe(s => {
       console.log(s);
       this.router.navigate(['/home'])

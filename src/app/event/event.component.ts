@@ -173,9 +173,6 @@ export class EventComponent implements OnInit {
   }
 
   public delete() {
-    this.event.creations.forEach((creation) => {
-      this.publicationService.deleteArtworkCreation(creation.id).subscribe(s => {console.log(s);});
-    });
     if (this.eventId != null) this.publicationService.deleteEvent(this.eventId).subscribe(s => {
       console.log(s);
       this.router.navigate(['/home']);

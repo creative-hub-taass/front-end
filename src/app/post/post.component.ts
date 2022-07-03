@@ -234,11 +234,6 @@ export class PostComponent implements OnInit {
   }
 
   public delete() {
-    this.post.creations.forEach((creation) => {
-      this.publicationService.deleteArtworkCreation(creation.id).subscribe(s => {
-        console.log(s);
-      });
-    });
     if (this.postId != null) this.publicationService.deletePost(this.postId).subscribe(s => {
       console.log(s);
       this.router.navigate(['/home']);

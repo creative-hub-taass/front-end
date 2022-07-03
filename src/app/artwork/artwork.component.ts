@@ -289,6 +289,7 @@ export class ArtworkComponent implements OnInit {
     });
     if (this.artworkId != null) this.publicationService.deleteArtwork(this.artworkId).subscribe(s => {
       console.log(s);
+      window.location.replace("/home");
     });
     this.popup = false;
     //window.location.replace("/home");

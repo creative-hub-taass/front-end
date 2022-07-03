@@ -242,7 +242,6 @@ export class ArtworkComponent implements OnInit {
         this.errorMessage = utility.onError(error, this.eventBusService);
       }
     });
-
   }
 
   public addLike() {
@@ -270,7 +269,6 @@ export class ArtworkComponent implements OnInit {
       return uid.id == this.userId;
     });
     return index != -1;
-
   }
 
   public togglePopup() {
@@ -289,10 +287,9 @@ export class ArtworkComponent implements OnInit {
     });
     if (this.artworkId != null) this.publicationService.deleteArtwork(this.artworkId).subscribe(s => {
       console.log(s);
-      window.location.replace("/home");
+      this.router.navigate(['/home'])
     });
     this.popup = false;
-    //window.location.replace("/home");
   }
 
 }

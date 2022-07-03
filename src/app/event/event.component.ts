@@ -10,6 +10,7 @@ import {TokenStorageService} from "../_services/token-storage.service";
 import * as L from "leaflet";
 import {environment} from "../../environments/environment";
 import {Observable, Subscriber} from "rxjs";
+import {Router} from "@angular/router"
 
 const icon = L.icon({
   iconUrl: "../../assets/img/marker-icon.png",
@@ -46,7 +47,8 @@ export class EventComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private eventBusService: EventBusService,
     private publicationService: PublicationService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private router: Router
   ) {
     this.eventId = this.route.snapshot.paramMap.get("id");
     this.userId = this.tokenStorageService.getUser().id;
@@ -174,9 +176,11 @@ export class EventComponent implements OnInit {
     this.event.creations.forEach((creation) => {
       this.publicationService.deleteArtworkCreation(creation.id).subscribe(s => {console.log(s);});
     });
-    if (this.eventId != null) this.publicationService.deleteEvent(this.eventId).subscribe(s => {console.log(s);});
+    if (this.eventId != null) this.publicationService.deleteEvent(this.eventId).subscribe(s => {
+      console.log(s);
+      this.router.navigate(['/home']);
+    });
     this.popup = false;
-    window.location.replace("/home");
   }
 
 

@@ -7,6 +7,7 @@ import * as utility from "../../_shared/functions";
 import {ActivatedRoute} from "@angular/router";
 import {PublicCreator} from "../../_models/PublicCreator";
 import {TokenStorageService} from "../_services/token-storage.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: "app-post",
@@ -33,7 +34,8 @@ export class PostComponent implements OnInit {
     private eventBusService: EventBusService,
     private publicationService: PublicationService,
     private tokenStorageService: TokenStorageService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private router: Router
   ) {
     this.postId = this.route.snapshot.paramMap.get("id");
     this.userId = this.tokenStorageService.getUser().id;
@@ -239,9 +241,9 @@ export class PostComponent implements OnInit {
     });
     if (this.postId != null) this.publicationService.deletePost(this.postId).subscribe(s => {
       console.log(s);
+      this.router.navigate(['/home']);
     });
     this.popup = false;
-    window.location.replace("/home");
   }
 
 }

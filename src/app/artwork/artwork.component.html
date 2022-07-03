@@ -55,7 +55,7 @@
                 Purchase
                 </button>
 
-              <button *ngIf = "this.artwork?.availableCopies==0" class="sold-out-button">
+              <button *ngIf = "this.artwork?.availableCopies==0 && artwork?.onSale" class="sold-out-button">
                 <img src="../../assets/coins-w.png" alt="">
                 Sold-Out
               </button>

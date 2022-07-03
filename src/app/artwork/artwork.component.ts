@@ -291,7 +291,7 @@ export class ArtworkComponent implements OnInit {
       console.log(s);
     });
     this.popup = false;
-    window.location.replace("/home");
+    //window.location.replace("/home");
   }
 
 }

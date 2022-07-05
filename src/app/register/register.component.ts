@@ -1,11 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {AuthService} from "../_services/auth.service";
-import {
-  FacebookLoginProvider,
-  GoogleLoginProvider,
-  SocialAuthService,
-  SocialUser
-} from "@abacritt/angularx-social-login";
+import {FacebookLoginProvider, SocialAuthService, SocialUser} from "@abacritt/angularx-social-login";
 import {TokenStorageService} from "../_services/token-storage.service";
 
 @Component({
@@ -14,7 +9,6 @@ import {TokenStorageService} from "../_services/token-storage.service";
   styleUrls: ["./register.component.css"]
 })
 export class RegisterComponent implements OnInit {
-
   form: any = {
     nickname: null,
     email: null,
@@ -27,9 +21,10 @@ export class RegisterComponent implements OnInit {
   isLoginFailed = false;
   socialUser !: SocialUser;
 
-  constructor(private authService: AuthService,
-              private tokenStorage: TokenStorageService,
-              private socialAuthService: SocialAuthService) {
+  constructor(
+    private authService: AuthService,
+    private tokenStorage: TokenStorageService,
+    private socialAuthService: SocialAuthService) {
   }
 
   ngOnInit(): void {
@@ -73,12 +68,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  loginWithGoogle() {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
-
   loginWithFacebook() {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
-
 }

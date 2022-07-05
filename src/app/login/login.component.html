@@ -63,13 +63,22 @@
     <div *ngIf="!isLoggedIn" class="login-buttons">
       <p>or login using</p>
       <div class="social-logins-button">
-        <button (click)="loginWithGoogle()" class="empty-button">
-          <img src="https://img.icons8.com/ios-glyphs/30/000000/google-logo--v1.png" alt="Log in with Google">
-          Google
-        </button>
+        <div data-callback="onGoogleLogin"
+          data-client_id="1035582852846-7d31c3v088hkm1uvpv0us1uvkot349s6.apps.googleusercontent.com"
+          data-context="signin"
+          data-ux_mode="popup"
+          id="g_id_onload">
+        </div>
+        <div class="g_id_signin"
+          data-shape="pill"
+          data-size="large"
+          data-text="signin_with"
+          data-theme="outline"
+          data-type="standard">
+        </div>
         <button (click)="loginWithFacebook()" class="empty-button">
-          <img src="https://img.icons8.com/ios-filled/50/000000/facebook--v1.png" alt="Log in with Facebook">
-          Facebook
+          <img alt="Log in with Facebook" src="https://img.icons8.com/ios-filled/50/3b5998/facebook--v1.png">
+          Accedi con Facebook
         </button>
       </div>
     </div>

@@ -94,7 +94,7 @@ import {MarkdownModule} from "ngx-markdown";
           },
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider("420683265133-6d5kfiedo8shhorjhi3du2ia8ue210un.apps.googleusercontent.com")
+            provider: new GoogleLoginProvider("1035582852846-7d31c3v088hkm1uvpv0us1uvkot349s6.apps.googleusercontent.com")
           }
         ]
       } as SocialAuthServiceConfig

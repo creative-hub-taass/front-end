@@ -7,12 +7,7 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {authInterceptorProviders} from "src/_helpers/auth.interceptor";
 import {FormsModule} from "@angular/forms";
-import {
-  FacebookLoginProvider,
-  GoogleLoginProvider,
-  SocialAuthServiceConfig,
-  SocialLoginModule
-} from "@abacritt/angularx-social-login";
+import {FacebookLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from "@abacritt/angularx-social-login";
 import {CoolSocialLoginButtonsModule} from "@angular-cool/social-login-buttons";
 import {ProfileComponent} from "./profile/profile.component";
 
@@ -39,6 +34,7 @@ import {OwnDonationsComponent} from "./own-donations/own-donations.component";
 import {NgxMasonryModule} from "ngx-masonry";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MarkdownModule} from "ngx-markdown";
+import {GoogleLoginProvider} from "../_shared/google-signin-provider";
 
 
 @NgModule({

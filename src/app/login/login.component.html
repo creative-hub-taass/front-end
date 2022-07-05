@@ -15,13 +15,13 @@
           class="form-control"
           name="email"
           required
-          type="text"
+          autocomplete="email"
+          type="email"
         />
         <div
           *ngIf="email.errors && f.submitted"
           class="alert alert-danger"
-          role="alert"
-        >
+          role="alert">
           Email is required!
         </div>
       </div>
@@ -35,6 +35,7 @@
           name="password"
           required
           type="password"
+          autocomplete="current-password"
         />
         <div
           *ngIf="password.errors && f.submitted"
@@ -63,19 +64,7 @@
     <div *ngIf="!isLoggedIn" class="login-buttons">
       <p>or login using</p>
       <div class="social-logins-button">
-        <div data-callback="onGoogleLogin"
-          data-client_id="1035582852846-7d31c3v088hkm1uvpv0us1uvkot349s6.apps.googleusercontent.com"
-          data-context="signin"
-          data-ux_mode="popup"
-          id="g_id_onload">
-        </div>
-        <div class="g_id_signin"
-          data-shape="pill"
-          data-size="large"
-          data-text="signin_with"
-          data-theme="outline"
-          data-type="standard">
-        </div>
+        <div id="googleButton"></div>
         <button (click)="loginWithFacebook()" class="empty-button">
           <img alt="Log in with Facebook" src="https://img.icons8.com/ios-filled/50/3b5998/facebook--v1.png">
           Accedi con Facebook
